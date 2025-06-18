@@ -17,6 +17,13 @@ public class WelcomeFrame extends JFrame {
         contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
         contentPane.setBorder(new EmptyBorder(40, 40, 40, 40));
         setContentPane(contentPane);
+        
+        ImageIcon logoIcon = new ImageIcon(getClass().getResource("/Images/UninaFoodLabLogo.png"));
+        Image image = logoIcon.getImage().getScaledInstance(400, 400, Image.SCALE_SMOOTH);
+        JLabel logoLabel = new JLabel(new ImageIcon(image));
+        logoLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        contentPane.add(logoLabel);
+        contentPane.add(Box.createVerticalStrut(20));
 
         JLabel titleLabel = new JLabel("Benvenuto in UninaFoodLab");
         titleLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -25,7 +32,7 @@ public class WelcomeFrame extends JFrame {
         contentPane.add(titleLabel);
         contentPane.add(Box.createVerticalStrut(30));
 
-        JButton loginButton = new JButton("🔐 Login");
+        JButton loginButton = new JButton("Login");
         styleButton(loginButton, new Color(100, 149, 237));
         loginButton.addActionListener(e -> {
             new LoginFrame().setVisible(true);
@@ -34,7 +41,7 @@ public class WelcomeFrame extends JFrame {
         contentPane.add(loginButton);
         contentPane.add(Box.createVerticalStrut(15));
 
-        JButton registerButton = new JButton("📝 Registrati");
+        JButton registerButton = new JButton("Registrati");
         styleButton(registerButton, new Color(60, 179, 113));
         registerButton.addActionListener(e -> {
             new SignUpFrame().setVisible(true);

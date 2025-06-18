@@ -34,7 +34,7 @@ public class LoginFrame extends JFrame {
         contentPane.add(backButton);
         contentPane.add(Box.createVerticalStrut(10));
 
-        JLabel title = new JLabel("Login come:");
+        JLabel title = new JLabel("Login:");
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
         title.setFont(new Font("SansSerif", Font.BOLD, 22));
         contentPane.add(title);
