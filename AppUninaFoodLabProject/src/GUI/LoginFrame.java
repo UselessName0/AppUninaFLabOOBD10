@@ -1,6 +1,7 @@
 package GUI;
 
 import java.awt.*;
+import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
@@ -27,9 +28,12 @@ public class LoginFrame extends JFrame {
         backButton.setForeground(new Color(100, 149, 237));
         backButton.setFont(new Font("SansSerif", Font.PLAIN, 14));
         backButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-        backButton.addActionListener(e -> {
-            new WelcomeFrame().setVisible(true);
-            dispose();
+        backButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new WelcomeFrame().setVisible(true);
+                dispose();
+            }
         });
         contentPane.add(backButton);
         contentPane.add(Box.createVerticalStrut(10));
@@ -43,9 +47,12 @@ public class LoginFrame extends JFrame {
         // Pulsante Utente
         JButton userButton = new JButton("Utente");
         styleButton(userButton, new Color(100, 149, 237));
-        userButton.addActionListener(e -> {
-            new LoginUtenteFrame().setVisible(true);
-            dispose();
+        userButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new LoginUtenteFrame().setVisible(true);
+                dispose();
+            }
         });
         contentPane.add(userButton);
         contentPane.add(Box.createVerticalStrut(15));
@@ -53,9 +60,12 @@ public class LoginFrame extends JFrame {
         // Pulsante Chef
         JButton chefButton = new JButton("Chef");
         styleButton(chefButton, new Color(30, 144, 255));
-        chefButton.addActionListener(e -> {
-            new LoginChefFrame().setVisible(true);
-            dispose();
+        chefButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new LoginChefFrame().setVisible(true);
+                dispose();
+            }
         });
         contentPane.add(chefButton);
     }

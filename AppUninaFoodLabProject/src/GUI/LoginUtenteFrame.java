@@ -1,6 +1,7 @@
 package GUI;
 
 import java.awt.*;
+import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
@@ -27,9 +28,12 @@ public class LoginUtenteFrame extends JFrame {
         backButton.setForeground(new Color(100, 149, 237));
         backButton.setFont(new Font("SansSerif", Font.PLAIN, 14));
         backButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-        backButton.addActionListener(e -> {
-            new LoginFrame().setVisible(true);
-            dispose();
+        backButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new LoginFrame().setVisible(true);
+                dispose();
+            }
         });
         panel.add(backButton);
         panel.add(Box.createVerticalStrut(10));
@@ -61,11 +65,15 @@ public class LoginUtenteFrame extends JFrame {
         loginButton.setFocusPainted(false);
         loginButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         loginButton.setAlignmentX(Component.CENTER_ALIGNMENT);
-        loginButton.addActionListener(e -> {
-            String email = emailField.getText();
-            String password = String.valueOf(passwordField.getPassword());
-            JOptionPane.showMessageDialog(this, "Login Utente:\nEmail: " + email + "\nPassword: " + password);
-            // Verifica credenziali qui...
+        loginButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String email = emailField.getText();
+                String password = String.valueOf(passwordField.getPassword());
+                JOptionPane.showMessageDialog(LoginUtenteFrame.this,
+                    "Login Utente:\nEmail: " + email + "\nPassword: " + password);
+                // Verifica credenziali qui...
+            }
         });
         panel.add(loginButton);
     }

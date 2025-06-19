@@ -1,6 +1,7 @@
 package GUI;
 
 import java.awt.*;
+import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
@@ -26,9 +27,12 @@ public class RegisterChefFrame extends JFrame {
         backButton.setForeground(new Color(46, 139, 87));
         backButton.setFont(new Font("SansSerif", Font.PLAIN, 14));
         backButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-        backButton.addActionListener(e -> {
-            new SignUpFrame().setVisible(true);
-            dispose();
+        backButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new SignUpFrame().setVisible(true);
+                dispose();
+            }
         });
         panel.add(backButton);
         panel.add(Box.createVerticalStrut(10));
@@ -67,16 +71,19 @@ public class RegisterChefFrame extends JFrame {
         registerButton.setFocusPainted(false);
         registerButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         registerButton.setAlignmentX(Component.CENTER_ALIGNMENT);
-        registerButton.addActionListener(e -> {
-            String email = emailField.getText();
-            String pwd = String.valueOf(passwordField.getPassword());
-            String confirm = String.valueOf(confirmField.getPassword());
+        registerButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String email = emailField.getText();
+                String pwd = String.valueOf(passwordField.getPassword());
+                String confirm = String.valueOf(confirmField.getPassword());
 
-            if (!pwd.equals(confirm)) {
-                JOptionPane.showMessageDialog(this, "Le password non coincidono.");
-            } else {
-                // Salva chef...
-                JOptionPane.showMessageDialog(this, "Registrazione Chef completata!");
+                if (!pwd.equals(confirm)) {
+                    JOptionPane.showMessageDialog(RegisterChefFrame.this, "Le password non coincidono.");
+                } else {
+                    // Salva chef...
+                    JOptionPane.showMessageDialog(RegisterChefFrame.this, "Registrazione Chef completata!");
+                }
             }
         });
         panel.add(registerButton);

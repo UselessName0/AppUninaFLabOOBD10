@@ -1,6 +1,7 @@
 package GUI;
 
 import java.awt.*;
+import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
@@ -27,9 +28,12 @@ public class SignUpFrame extends JFrame {
         backButton.setForeground(new Color(60, 179, 113));
         backButton.setFont(new Font("SansSerif", Font.PLAIN, 14));
         backButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-        backButton.addActionListener(e -> {
-            new WelcomeFrame().setVisible(true);
-            dispose();
+        backButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new WelcomeFrame().setVisible(true);
+                dispose();
+            }
         });
         contentPane.add(backButton);
         contentPane.add(Box.createVerticalStrut(10));
@@ -42,16 +46,22 @@ public class SignUpFrame extends JFrame {
 
         JButton userButton = new JButton("Utente");
         styleButton(userButton, new Color(60, 179, 113));
-        userButton.addActionListener(e -> {
-            new RegisterUtenteFrame().setVisible(true);
-            dispose();
+        userButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new RegisterUtenteFrame().setVisible(true);
+                dispose();
+            }
         });
 
         JButton chefButton = new JButton("Chef");
         styleButton(chefButton, new Color(46, 139, 87));
-        chefButton.addActionListener(e -> {
-            new RegisterChefFrame().setVisible(true);
-            dispose();
+        chefButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new RegisterChefFrame().setVisible(true);
+                dispose();
+            }
         });
 
         contentPane.add(userButton);

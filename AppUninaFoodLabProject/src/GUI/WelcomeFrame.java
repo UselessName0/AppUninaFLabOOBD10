@@ -1,6 +1,7 @@
 package GUI;
 
 import java.awt.*;
+import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
@@ -17,7 +18,7 @@ public class WelcomeFrame extends JFrame {
         contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
         contentPane.setBorder(new EmptyBorder(40, 40, 40, 40));
         setContentPane(contentPane);
-        
+
         ImageIcon logoIcon = new ImageIcon(getClass().getResource("/Images/UninaFoodLabLogo.png"));
         Image image = logoIcon.getImage().getScaledInstance(400, 400, Image.SCALE_SMOOTH);
         JLabel logoLabel = new JLabel(new ImageIcon(image));
@@ -34,18 +35,24 @@ public class WelcomeFrame extends JFrame {
 
         JButton loginButton = new JButton("Login");
         styleButton(loginButton, new Color(100, 149, 237));
-        loginButton.addActionListener(e -> {
-            new LoginFrame().setVisible(true);
-            dispose();
+        loginButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new LoginFrame().setVisible(true);
+                dispose();
+            }
         });
         contentPane.add(loginButton);
         contentPane.add(Box.createVerticalStrut(15));
 
         JButton registerButton = new JButton("Registrati");
         styleButton(registerButton, new Color(60, 179, 113));
-        registerButton.addActionListener(e -> {
-            new SignUpFrame().setVisible(true);
-            dispose();
+        registerButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new SignUpFrame().setVisible(true);
+                dispose();
+            }
         });
         contentPane.add(registerButton);
     }

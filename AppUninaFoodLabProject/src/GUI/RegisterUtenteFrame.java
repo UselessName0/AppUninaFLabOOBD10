@@ -1,6 +1,7 @@
 package GUI;
 
 import java.awt.*;
+import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
@@ -26,9 +27,12 @@ public class RegisterUtenteFrame extends JFrame {
         backButton.setForeground(new Color(60, 179, 113));
         backButton.setFont(new Font("SansSerif", Font.PLAIN, 14));
         backButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-        backButton.addActionListener(e -> {
-            new SignUpFrame().setVisible(true);
-            dispose();
+        backButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new SignUpFrame().setVisible(true);
+                dispose();
+            }
         });
         panel.add(backButton);
         panel.add(Box.createVerticalStrut(10));
@@ -67,16 +71,19 @@ public class RegisterUtenteFrame extends JFrame {
         registerButton.setFocusPainted(false);
         registerButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         registerButton.setAlignmentX(Component.CENTER_ALIGNMENT);
-        registerButton.addActionListener(e -> {
-            String email = emailField.getText();
-            String pwd = String.valueOf(passwordField.getPassword());
-            String confirm = String.valueOf(confirmField.getPassword());
+        registerButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String email = emailField.getText();
+                String pwd = String.valueOf(passwordField.getPassword());
+                String confirm = String.valueOf(confirmField.getPassword());
 
-            if (!pwd.equals(confirm)) {
-                JOptionPane.showMessageDialog(this, "Le password non coincidono.");
-            } else {
-                // Salva utente...
-                JOptionPane.showMessageDialog(this, "Registrazione Utente completata!");
+                if (!pwd.equals(confirm)) {
+                    JOptionPane.showMessageDialog(RegisterUtenteFrame.this, "Le password non coincidono.");
+                } else {
+                    // Salva utente...
+                    JOptionPane.showMessageDialog(RegisterUtenteFrame.this, "Registrazione Utente completata!");
+                }
             }
         });
         panel.add(registerButton);
