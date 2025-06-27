@@ -4,66 +4,137 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
+import javax.swing.border.LineBorder;
+import java.awt.image.BufferedImage;
 
 public class WelcomeFrame extends JFrame {
 
     public WelcomeFrame() {
-        setTitle("UninaFoodLab");
+        setTitle("UninaFoodLab App");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(500, 300);
+        setPreferredSize(new Dimension(900, 720));
+        setMinimumSize(new Dimension(600, 450));
         setLocationRelativeTo(null);
 
-        JPanel contentPane = new JPanel();
-        contentPane.setBackground(Color.WHITE);
-        contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
-        contentPane.setBorder(new EmptyBorder(40, 40, 40, 40));
+        GradientPanel contentPane = new GradientPanel();
+        contentPane.setLayout(new GridBagLayout());
+        contentPane.setBorder(new EmptyBorder(30, 50, 30, 50));
         setContentPane(contentPane);
 
-        ImageIcon logoIcon = new ImageIcon(getClass().getResource("/Images/UninaFoodLabLogo.png"));
-        Image image = logoIcon.getImage().getScaledInstance(400, 400, Image.SCALE_SMOOTH);
-        JLabel logoLabel = new JLabel(new ImageIcon(image));
-        logoLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-        contentPane.add(logoLabel);
-        contentPane.add(Box.createVerticalStrut(20));
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.fill = GridBagConstraints.BOTH;
+        gbc.gridx = 0;
+        gbc.weightx = 1;
+        gbc.insets = new Insets(10, 10, 10, 10);
 
+        // Logo con proporzioni adattabili
+        JLabel logoLabel = createLogoLabel("/Images/UninaFoodLabLogo.png", 0.5);
+        gbc.gridy = 0;
+        gbc.weighty = 0.5;
+        contentPane.add(logoLabel, gbc);
+
+        // Titolo
         JLabel titleLabel = new JLabel("Benvenuto in UninaFoodLab");
-        titleLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-        titleLabel.setFont(new Font("SansSerif", Font.BOLD, 24));
-        titleLabel.setForeground(new Color(60, 60, 60));
-        contentPane.add(titleLabel);
-        contentPane.add(Box.createVerticalStrut(30));
+        titleLabel.setFont(new Font("Segoe UI", Font.BOLD, 30));
+        titleLabel.setForeground(new Color(40, 40, 40));
+        titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        gbc.gridy = 1;
+        gbc.weighty = 0.1;
+        contentPane.add(titleLabel, gbc);
 
-        JButton loginButton = new JButton("Login");
-        styleButton(loginButton, new Color(100, 149, 237));
+        // Pulsanti
+        gbc.gridy = 2;
+        gbc.weighty = 0.2;
+        contentPane.add(createButtonPanel(), gbc);
+
+        pack();
+        setVisible(true);
+    }
+
+    private JLabel createLogoLabel(String path, double scaleWidthRatio) {
+        ImageIcon logoIcon = new ImageIcon(getClass().getResource(path));
+        Image image = logoIcon.getImage();
+        int scaledWidth = (int) (getPreferredSize().width * scaleWidthRatio);
+        int scaledHeight = (int) (scaledWidth * image.getHeight(null) / image.getWidth(null));
+        Image scaled = image.getScaledInstance(scaledWidth, scaledHeight, Image.SCALE_SMOOTH);
+        JLabel label = new JLabel(new ImageIcon(scaled));
+        label.setHorizontalAlignment(SwingConstants.CENTER);
+        return label;
+    }
+
+    private JPanel createButtonPanel() {
+        JPanel panel = new JPanel();
+        panel.setOpaque(false);
+        panel.setLayout(new GridLayout(2, 1, 0, 15));
+
+        final JButton loginButton = createStyledButton("Login", new Color(66, 133, 244));
         loginButton.addActionListener(new ActionListener() {
-            @Override
             public void actionPerformed(ActionEvent e) {
                 new LoginFrame().setVisible(true);
                 dispose();
             }
         });
-        contentPane.add(loginButton);
-        contentPane.add(Box.createVerticalStrut(15));
 
-        JButton registerButton = new JButton("Registrati");
-        styleButton(registerButton, new Color(60, 179, 113));
+        final JButton registerButton = createStyledButton("Registrati", new Color(52, 168, 83));
         registerButton.addActionListener(new ActionListener() {
-            @Override
             public void actionPerformed(ActionEvent e) {
                 new SignUpFrame().setVisible(true);
                 dispose();
             }
         });
-        contentPane.add(registerButton);
+
+        panel.add(loginButton);
+        panel.add(registerButton);
+
+        return panel;
     }
 
-    private void styleButton(JButton button, Color color) {
-        button.setAlignmentX(Component.CENTER_ALIGNMENT);
-        button.setFont(new Font("SansSerif", Font.PLAIN, 18));
-        button.setBackground(color);
+    private JButton createStyledButton(final String text, final Color bgColor) {
+        final JButton button = new JButton(text);
+        button.setFont(new Font("Segoe UI", Font.PLAIN, 18));
+        button.setBackground(bgColor);
         button.setForeground(Color.WHITE);
         button.setFocusPainted(false);
         button.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-        button.setMaximumSize(new Dimension(300, 45));
+        button.setPreferredSize(new Dimension(200, 50));
+        button.setBorder(new LineBorder(bgColor.darker(), 1, true));
+        button.setOpaque(true);
+
+        button.addMouseListener(new MouseAdapter() {
+            public void mouseEntered(MouseEvent e) {
+                button.setBackground(bgColor.darker());
+            }
+
+            public void mouseExited(MouseEvent e) {
+                button.setBackground(bgColor);
+            }
+        });
+
+        return button;
+    }
+
+    // Sfondo con gradiente più vivace
+    private class GradientPanel extends JPanel {
+        protected void paintComponent(Graphics g) {
+            super.paintComponent(g);
+            Graphics2D g2d = (Graphics2D) g;
+            int w = getWidth();
+            int h = getHeight();
+
+            Color color1 = new Color(173, 216, 255); // Azzurro chiaro
+            Color color2 = new Color(255, 215, 180); // Pesca chiaro
+
+            GradientPaint gp = new GradientPaint(0, 0, color1, 0, h, color2);
+            g2d.setPaint(gp);
+            g2d.fillRect(0, 0, w, h);
+        }
+    }
+
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+                new WelcomeFrame();
+            }
+        });
     }
 }
