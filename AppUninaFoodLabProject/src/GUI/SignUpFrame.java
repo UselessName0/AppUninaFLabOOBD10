@@ -5,7 +5,6 @@ import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.GroupLayout.Alignment;
-import javax.swing.LayoutStyle.ComponentPlacement;
 
 public class SignUpFrame extends JFrame {
 
@@ -50,6 +49,14 @@ public class SignUpFrame extends JFrame {
         userButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         userButton.setBackground(new Color(100, 149, 237));
         userButton.setAlignmentX(0.5f);
+        userButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new RegisterUtenteFrame().setVisible(true);
+                dispose();
+            }
+        });
+        
         
         JButton btnChef = new JButton("Chef");
         btnChef.setMaximumSize(new Dimension(250, 40));
@@ -59,6 +66,14 @@ public class SignUpFrame extends JFrame {
         btnChef.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         btnChef.setBackground(new Color(46, 187, 39));
         btnChef.setAlignmentX(0.5f);
+        btnChef.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new RegisterChefFrame().setVisible(true);
+                dispose();
+                }
+            });
+        
         GroupLayout gl_contentPane = new GroupLayout(contentPane);
         gl_contentPane.setHorizontalGroup(
         	gl_contentPane.createParallelGroup(Alignment.TRAILING)
