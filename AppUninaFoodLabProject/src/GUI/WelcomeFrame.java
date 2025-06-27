@@ -10,7 +10,8 @@ public class WelcomeFrame extends JFrame {
     public WelcomeFrame() {
         setTitle("UninaFoodLab");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(500, 300);
+        setSize(900, 800);
+        setResizable(false);
         setLocationRelativeTo(null);
 
         JPanel contentPane = new JPanel();
