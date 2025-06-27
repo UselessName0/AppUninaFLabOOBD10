@@ -12,7 +12,7 @@ public class WelcomeFrame extends JFrame {
     public WelcomeFrame() {
         setTitle("UninaFoodLab App");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setPreferredSize(new Dimension(800, 600));
+        setPreferredSize(new Dimension(900, 720));
         setMinimumSize(new Dimension(600, 450));
         setLocationRelativeTo(null);
 
