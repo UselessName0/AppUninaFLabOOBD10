@@ -81,7 +81,6 @@ public class RegisterUtenteFrame extends JFrame {
                 if (!pwd.equals(confirm)) {
                     JOptionPane.showMessageDialog(RegisterUtenteFrame.this, "Le password non coincidono.");
                 } else {
-                    // Salva utente...
                     JOptionPane.showMessageDialog(RegisterUtenteFrame.this, "Registrazione Utente completata!");
                 }
             }

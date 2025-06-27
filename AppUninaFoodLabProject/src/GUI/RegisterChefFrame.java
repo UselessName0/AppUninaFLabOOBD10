@@ -81,7 +81,6 @@ public class RegisterChefFrame extends JFrame {
                 if (!pwd.equals(confirm)) {
                     JOptionPane.showMessageDialog(RegisterChefFrame.this, "Le password non coincidono.");
                 } else {
-                    // Salva chef...
                     JOptionPane.showMessageDialog(RegisterChefFrame.this, "Registrazione Chef completata!");
                 }
             }

@@ -19,7 +19,6 @@ public class SignUpFrame extends JFrame {
         contentPane.setBorder(new EmptyBorder(20, 30, 30, 30));
         setContentPane(contentPane);
 
-        // Bottone Indietro
         JButton backButton = new JButton("← Indietro");
         backButton.setAlignmentX(Component.LEFT_ALIGNMENT);
         backButton.setBorderPainted(false);
