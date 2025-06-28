@@ -11,7 +11,7 @@ public class RegisterUtenteFrame extends JFrame {
     public RegisterUtenteFrame() {
         setTitle("Registrazione Utente - UninaFoodLab");
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        setSize(600, 500);
+        setSize(650, 550);
         setResizable(false);
         setLocationRelativeTo(null);
 
@@ -21,7 +21,7 @@ public class RegisterUtenteFrame extends JFrame {
         setContentPane(contentPane);
 
         JButton backButton = new JButton("← Indietro");
-        backButton.setForeground(new Color(60, 179, 113));
+        backButton.setForeground(new Color(0, 0, 0));
         backButton.setFont(new Font("SansSerif", Font.PLAIN, 14));
         backButton.setFocusPainted(false);
         backButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
@@ -51,9 +51,25 @@ public class RegisterUtenteFrame extends JFrame {
         confirmField.setFont(new Font("SansSerif", Font.PLAIN, 16));
         confirmField.setBorder(BorderFactory.createTitledBorder("Conferma Password"));
 
+        JCheckBox showPasswordCheckBox = new JCheckBox("Mostra password");
+        showPasswordCheckBox.setBackground(Color.WHITE);
+        showPasswordCheckBox.setFont(new Font("SansSerif", Font.PLAIN, 14));
+        showPasswordCheckBox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (showPasswordCheckBox.isSelected()) {
+                    passwordField.setEchoChar((char) 0);
+                    confirmField.setEchoChar((char) 0);
+                } else {
+                    passwordField.setEchoChar('•');
+                    confirmField.setEchoChar('•');
+                }
+            }
+        });
+
         JButton registerButton = new JButton("Registrati");
         registerButton.setFont(new Font("SansSerif", Font.PLAIN, 18));
-        registerButton.setBackground(new Color(60, 179, 113));
+        registerButton.setBackground(new Color(100, 149, 237));
         registerButton.setForeground(Color.WHITE);
         registerButton.setFocusPainted(false);
         registerButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
@@ -70,6 +86,10 @@ public class RegisterUtenteFrame extends JFrame {
                 } else {
                     JOptionPane.showMessageDialog(RegisterUtenteFrame.this, "Registrazione Utente completata!");
                 }
+                
+                DashboardUtente dashboard = new DashboardUtente();
+                dashboard.setVisible(true);
+                dispose();
             }
         });
 
@@ -78,11 +98,12 @@ public class RegisterUtenteFrame extends JFrame {
             gl_contentPane.createParallelGroup(Alignment.LEADING)
                 .addGroup(gl_contentPane.createSequentialGroup()
                     .addComponent(backButton, GroupLayout.PREFERRED_SIZE, 102, GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(466, Short.MAX_VALUE))
+                    .addContainerGap(672, Short.MAX_VALUE))
                 .addGroup(Alignment.TRAILING, gl_contentPane.createSequentialGroup()
                     .addGap(100)
                     .addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING, false)
                         .addComponent(registerButton, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(showPasswordCheckBox, Alignment.LEADING)
                         .addComponent(confirmField, GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE)
                         .addComponent(passwordField, GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE)
                         .addComponent(emailField, GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE)
@@ -101,10 +122,13 @@ public class RegisterUtenteFrame extends JFrame {
                     .addComponent(passwordField, GroupLayout.PREFERRED_SIZE, 60, GroupLayout.PREFERRED_SIZE)
                     .addGap(20)
                     .addComponent(confirmField, GroupLayout.PREFERRED_SIZE, 60, GroupLayout.PREFERRED_SIZE)
-                    .addGap(30)
+                    .addGap(10)
+                    .addComponent(showPasswordCheckBox)
+                    .addGap(20)
                     .addComponent(registerButton, GroupLayout.PREFERRED_SIZE, 45, GroupLayout.PREFERRED_SIZE)
                     .addContainerGap(50, Short.MAX_VALUE))
         );
+
         contentPane.setLayout(gl_contentPane);
     }
 }

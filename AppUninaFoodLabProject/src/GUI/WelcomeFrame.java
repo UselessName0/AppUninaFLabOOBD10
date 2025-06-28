@@ -47,7 +47,7 @@ public class WelcomeFrame extends JFrame {
         contentPane.add(Box.createVerticalStrut(15));
 
         JButton registerButton = new JButton("Registrati");
-        styleButton(registerButton, new Color(60, 179, 113));
+        styleButton(registerButton, new Color(46, 187, 39));
         registerButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

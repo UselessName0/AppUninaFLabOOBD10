@@ -21,7 +21,7 @@ public class LoginChefFrame extends JFrame {
         setContentPane(contentPane);
 
         JButton backButton = new JButton("← Indietro");
-        backButton.setForeground(new Color(30, 144, 255));
+        backButton.setForeground(new Color(0, 0, 0));
         backButton.setFont(new Font("SansSerif", Font.PLAIN, 14));
         backButton.setFocusPainted(false);
         backButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
@@ -49,7 +49,7 @@ public class LoginChefFrame extends JFrame {
 
         JButton loginButton = new JButton("Accedi");
         loginButton.setFont(new Font("SansSerif", Font.PLAIN, 18));
-        loginButton.setBackground(new Color(30, 144, 255));
+        loginButton.setBackground(new Color(46, 187, 39));
         loginButton.setForeground(Color.WHITE);
         loginButton.setFocusPainted(false);
         loginButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));

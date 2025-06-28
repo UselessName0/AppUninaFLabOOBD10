@@ -22,7 +22,7 @@ public class LoginUtenteFrame extends JFrame {
 
         // Bottone Indietro
         JButton backButton = new JButton("← Indietro");
-        backButton.setForeground(new Color(100, 149, 237));
+        backButton.setForeground(new Color(0, 0, 0));
         backButton.setFont(new Font("SansSerif", Font.PLAIN, 14));
         backButton.setFocusPainted(false);
         backButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
@@ -62,7 +62,9 @@ public class LoginUtenteFrame extends JFrame {
                 String password = String.valueOf(passwordField.getPassword());
                 JOptionPane.showMessageDialog(LoginUtenteFrame.this,
                         "Login Utente:\nEmail: " + email + "\nPassword: " + password);
-                // Verifica credenziali qui...
+                DashboardUtente dashboard = new DashboardUtente();
+                dashboard.setVisible(true);
+                dispose();
             }
         });
 

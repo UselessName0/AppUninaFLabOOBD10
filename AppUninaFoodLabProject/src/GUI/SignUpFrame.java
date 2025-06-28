@@ -21,7 +21,7 @@ public class SignUpFrame extends JFrame {
         setContentPane(contentPane);
         
         JButton backButton = new JButton("← Indietro");
-        backButton.setForeground(new Color(100, 149, 237));
+        backButton.setForeground(new Color(0, 0, 0));
         backButton.setFont(new Font("SansSerif", Font.PLAIN, 14));
         backButton.setFocusPainted(false);
         backButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));

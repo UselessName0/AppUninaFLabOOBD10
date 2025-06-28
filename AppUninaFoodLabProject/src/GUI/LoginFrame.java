@@ -22,7 +22,7 @@ public class LoginFrame extends JFrame {
 
         // Bottone Indietro
         JButton backButton = new JButton("← Indietro");
-        backButton.setForeground(new Color(100, 149, 237));
+        backButton.setForeground(new Color(0, 0, 0));
         backButton.setFont(new Font("SansSerif", Font.PLAIN, 14));
         backButton.setFocusPainted(false);
         backButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
@@ -54,7 +54,7 @@ public class LoginFrame extends JFrame {
 
         // Pulsante Chef
         JButton chefButton = new JButton("Chef");
-        styleButton(chefButton, new Color(30, 144, 255));
+        styleButton(chefButton, new Color(46, 187, 39));
         chefButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -65,29 +65,32 @@ public class LoginFrame extends JFrame {
 
         GroupLayout gl_contentPane = new GroupLayout(contentPane);
         gl_contentPane.setHorizontalGroup(
-            gl_contentPane.createParallelGroup(Alignment.TRAILING)
-                .addGroup(gl_contentPane.createSequentialGroup()
-                    .addComponent(backButton, GroupLayout.PREFERRED_SIZE, 102, GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(424, Short.MAX_VALUE))
-                .addGroup(gl_contentPane.createSequentialGroup()
-                    .addContainerGap(159, Short.MAX_VALUE)
-                    .addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING, false)
-                        .addComponent(chefButton, GroupLayout.DEFAULT_SIZE, 225, Short.MAX_VALUE)
-                        .addComponent(userButton, GroupLayout.DEFAULT_SIZE, 225, Short.MAX_VALUE)
-                        .addComponent(lblLoginCome, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGap(142))
+        	gl_contentPane.createParallelGroup(Alignment.TRAILING)
+        		.addGroup(gl_contentPane.createSequentialGroup()
+        			.addComponent(backButton, GroupLayout.PREFERRED_SIZE, 102, GroupLayout.PREFERRED_SIZE)
+        			.addContainerGap(424, Short.MAX_VALUE))
+        		.addGroup(gl_contentPane.createSequentialGroup()
+        			.addContainerGap(159, Short.MAX_VALUE)
+        			.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING, false)
+        				.addComponent(chefButton, GroupLayout.DEFAULT_SIZE, 225, Short.MAX_VALUE)
+        				.addComponent(userButton, GroupLayout.DEFAULT_SIZE, 225, Short.MAX_VALUE))
+        			.addGap(142))
+        		.addGroup(Alignment.LEADING, gl_contentPane.createSequentialGroup()
+        			.addGap(150)
+        			.addComponent(lblLoginCome, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        			.addGap(151))
         );
         gl_contentPane.setVerticalGroup(
-            gl_contentPane.createParallelGroup(Alignment.TRAILING)
-                .addGroup(Alignment.LEADING, gl_contentPane.createSequentialGroup()
-                    .addComponent(backButton, GroupLayout.PREFERRED_SIZE, 27, GroupLayout.PREFERRED_SIZE)
-                    .addGap(108)
-                    .addComponent(lblLoginCome, GroupLayout.PREFERRED_SIZE, 29, GroupLayout.PREFERRED_SIZE)
-                    .addGap(18)
-                    .addComponent(userButton, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
-                    .addGap(18)
-                    .addComponent(chefButton, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(133, Short.MAX_VALUE))
+        	gl_contentPane.createParallelGroup(Alignment.LEADING)
+        		.addGroup(gl_contentPane.createSequentialGroup()
+        			.addComponent(backButton, GroupLayout.PREFERRED_SIZE, 27, GroupLayout.PREFERRED_SIZE)
+        			.addGap(108)
+        			.addComponent(lblLoginCome, GroupLayout.PREFERRED_SIZE, 29, GroupLayout.PREFERRED_SIZE)
+        			.addGap(18)
+        			.addComponent(userButton, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
+        			.addGap(18)
+        			.addComponent(chefButton, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
+        			.addContainerGap(133, Short.MAX_VALUE))
         );
 
         contentPane.setLayout(gl_contentPane);

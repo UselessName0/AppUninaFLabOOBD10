@@ -9,7 +9,6 @@ public class Main {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
-            	//prova commit
                 WelcomeFrame frame = new WelcomeFrame();
                 frame.setVisible(true);
             }

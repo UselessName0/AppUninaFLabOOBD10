@@ -11,7 +11,7 @@ public class RegisterChefFrame extends JFrame {
     public RegisterChefFrame() {
         setTitle("Registrazione Chef - UninaFoodLab");
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        setSize(600, 500);
+        setSize(650, 550);
         setResizable(false);
         setLocationRelativeTo(null);
 
@@ -21,7 +21,7 @@ public class RegisterChefFrame extends JFrame {
         setContentPane(contentPane);
 
         JButton backButton = new JButton("← Indietro");
-        backButton.setForeground(new Color(46, 139, 87));
+        backButton.setForeground(new Color(0, 0, 0));
         backButton.setFont(new Font("SansSerif", Font.PLAIN, 14));
         backButton.setFocusPainted(false);
         backButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
@@ -51,9 +51,25 @@ public class RegisterChefFrame extends JFrame {
         confirmField.setFont(new Font("SansSerif", Font.PLAIN, 16));
         confirmField.setBorder(BorderFactory.createTitledBorder("Conferma Password"));
 
+        JCheckBox showPasswordCheck = new JCheckBox("Mostra password");
+        showPasswordCheck.setBackground(Color.WHITE);
+        showPasswordCheck.setFont(new Font("SansSerif", Font.PLAIN, 14));
+        showPasswordCheck.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (showPasswordCheck.isSelected()) {
+                    passwordField.setEchoChar((char) 0);
+                    confirmField.setEchoChar((char) 0);
+                } else {
+                    passwordField.setEchoChar('\u2022'); // pallino standard
+                    confirmField.setEchoChar('\u2022');
+                }
+            }
+        });
+
         JButton registerButton = new JButton("Registrati");
         registerButton.setFont(new Font("SansSerif", Font.PLAIN, 18));
-        registerButton.setBackground(new Color(46, 139, 87));
+        registerButton.setBackground(new Color(46, 187, 39));
         registerButton.setForeground(Color.WHITE);
         registerButton.setFocusPainted(false);
         registerButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
@@ -83,6 +99,7 @@ public class RegisterChefFrame extends JFrame {
                     .addGap(100)
                     .addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING, false)
                         .addComponent(registerButton, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(showPasswordCheck, GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE)
                         .addComponent(confirmField, GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE)
                         .addComponent(passwordField, GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE)
                         .addComponent(emailField, GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE)
@@ -101,9 +118,11 @@ public class RegisterChefFrame extends JFrame {
                     .addComponent(passwordField, GroupLayout.PREFERRED_SIZE, 60, GroupLayout.PREFERRED_SIZE)
                     .addGap(20)
                     .addComponent(confirmField, GroupLayout.PREFERRED_SIZE, 60, GroupLayout.PREFERRED_SIZE)
-                    .addGap(30)
+                    .addGap(10)
+                    .addComponent(showPasswordCheck)
+                    .addGap(20)
                     .addComponent(registerButton, GroupLayout.PREFERRED_SIZE, 45, GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(50, Short.MAX_VALUE))
+                    .addContainerGap(30, Short.MAX_VALUE))
         );
         contentPane.setLayout(gl_contentPane);
     }
