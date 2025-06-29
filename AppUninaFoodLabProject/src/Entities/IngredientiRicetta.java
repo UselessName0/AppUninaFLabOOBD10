@@ -1,6 +1,5 @@
 package Entities;
 
-//FORSE SI PUO' IMPLEMENTARE VIA UNA LISTA IN RICETTA, METTENDO QUANTITA' E UNITA' DI MISURA IN INGREDIENTE
 public class IngredientiRicetta {
 	//ATTRIBUTI
 	private Ricetta R;
