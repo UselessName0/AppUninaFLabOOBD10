@@ -1,4 +1,5 @@
 package Entities;
+
 //FORSE SI PUO' IMPLEMENTARE VIA UNA LISTA IN RICETTA, METTENDO QUANTITA' E UNITA' DI MISURA IN INGREDIENTE
 public class IngredientiRicetta {
 	//ATTRIBUTI
@@ -6,6 +7,7 @@ public class IngredientiRicetta {
 	private Ingrediente I;
 	private float quantità;
 	private String UnitaDiMisura;
+	
 	//COSTRUTTORI
 	public IngredientiRicetta(Ricetta R, Ingrediente I, float quantità, String UnitaDiMisura) {
 		this.R = R;
@@ -13,6 +15,7 @@ public class IngredientiRicetta {
 		this.quantità = quantità;
 		this.UnitaDiMisura = UnitaDiMisura;
 	}
+	
 	//METODI
 		//GETTER AND SETTER
 		public Ricetta getR() {

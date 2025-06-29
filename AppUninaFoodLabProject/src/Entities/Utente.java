@@ -1,15 +1,14 @@
 package Entities;
 
 abstract class Utente {
-	//ATTRIBUTI
 	
+	//ATTRIBUTI
 	private String Nome;
 	private String Cognome;
 	private String Email;
 	private String Password;
 		
 	//COSTRUTTORI
-		
 	protected Utente(String Nome, String Cognome, String Email, String Password) {
 		this.Nome = Nome;
 		this.Cognome = Cognome;
@@ -18,7 +17,6 @@ abstract class Utente {
 	}
 	
 	//METODI
-	
 		//GETTER AND SETTER
 		public String getNome() {
 			return Nome;
@@ -51,6 +49,5 @@ abstract class Utente {
 		public void setPassword(String password) {
 			Password = password;
 		}
-	
 	
 }

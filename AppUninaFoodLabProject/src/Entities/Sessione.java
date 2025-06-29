@@ -4,6 +4,7 @@ import java.util.*;
 import java.time.LocalDate;
 
 public class Sessione {
+	
 	//ATTRIBUTI
 	private Corso RelatedCorso;
 	private LocalDate Data_Sessione;
@@ -23,6 +24,7 @@ public class Sessione {
 		this.LinkConferenza = LinkConferenza;
 		this.Ricetta_Appresa = Ricetta_Appresa;
 	}
+	
 	//METODI
 		//GETTER AND SETTER
 		public Corso getRelatedCorso() {

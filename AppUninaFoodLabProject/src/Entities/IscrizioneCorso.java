@@ -2,6 +2,7 @@ package Entities;
 
 import java.time.LocalDate;
 public class IscrizioneCorso {
+	
 	//ATTRIBUTI
 	private Corso C;
 	private Partecipante P;
@@ -19,6 +20,7 @@ public class IscrizioneCorso {
 		this.P = P;
 		Data_di_Iscrizione = LocalDate.now();
 	}
+	
 	//METODI
 		//GETTER E SETTERS
 		public Corso getC() {

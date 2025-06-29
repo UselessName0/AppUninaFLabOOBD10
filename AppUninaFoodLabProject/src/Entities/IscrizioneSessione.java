@@ -1,10 +1,12 @@
 package Entities;
 
 public class IscrizioneSessione {
+	
 	//ATTRIBUTI
 	private Partecipante P;
 	private Sessione S;
 	private boolean Adesione;
+	
 	//COSTRUTTORI
 	private IscrizioneSessione(Partecipante P, Sessione S, boolean Adesione) {
 		this.P = P;
@@ -15,6 +17,7 @@ public class IscrizioneSessione {
 		this.P = P;
 		this.S = S;
 	}
+	
 	//METODI
 		//GETTERS AND SETTERS
 		public Partecipante getP() {

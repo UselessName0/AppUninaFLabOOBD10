@@ -1,75 +1,79 @@
 package Entities;
 
-import java.util.*;
 import java.time.LocalDate;
 
 public class Corso {
-	//ATTRIBUTI
-	private Chef Chef_Proprietario;
-	private String Nome_Corso;
-	private String Argomento;
-	private LocalDate Data_Inizio;
-	private LocalDate Data_Creazione;
-	private String FrequenzaCorsi;
+
+    // ATTRIBUTI
+    private Chef Chef_Proprietario;
+    private String Nome_Corso;
+    private String Argomento;
+    private LocalDate Data_Inizio;
+    private LocalDate Data_Creazione;
+    private String Frequenza_Corsi;
+
+    //COSTRUTTORI
+    public Corso(Chef Chef_Proprietario, String Nome_Corso, String Argomento, LocalDate Data_Inizio, LocalDate Data_Creazione, String Frequenza_Corsi) {
+        this.Chef_Proprietario = Chef_Proprietario;
+        this.Nome_Corso = Nome_Corso;
+        this.Argomento = Argomento;
+        this.Data_Inizio = Data_Inizio;
+        this.Data_Creazione = (Data_Creazione != null) ? Data_Creazione : LocalDate.now();
+        this.Frequenza_Corsi = Frequenza_Corsi;
+    }
+
+    //COSTRUTTORE SENZA PASSAGGIO DI DATA (NULL) INIZIALIZZA A LocalDate.now
+    public Corso(Chef Chef_Proprietario, String Nome_Corso, String Argomento, LocalDate Data_Inizio, String Frequenza_Corsi) {
+        this(Chef_Proprietario, Nome_Corso, Argomento, Data_Inizio, LocalDate.now(), Frequenza_Corsi);
+    }
+    
+    //METODI
+	    // GETTERS E SETTERS
+	    public Chef getChef_Proprietario() {
+	        return Chef_Proprietario;
+	    }
 	
-	//COSTRUTTORI
-	private Corso(Chef Chef_Proprietario, String Nome_Corso, String Argomento, LocalDate Data_Inizio, Date Data_Creazione, String FrequenzaCorsi) {
-		this.Chef_Proprietario = Chef_Proprietario;
-		this.Nome_Corso = Nome_Corso;
-		this.Argomento = Argomento;
-		this.Data_Inizio = Data_Inizio;
-		this.Data_Creazione = LocalDate.now();
-		this.FrequenzaCorsi = FrequenzaCorsi;
-	}
-	//METODI
-		//GETTER AND SETTERS
-		public Chef getChef_Proprietario() {
-			return Chef_Proprietario;
-		}
+	    public void setChef_Proprietario(Chef Chef_Proprietario) {
+	        this.Chef_Proprietario = Chef_Proprietario;
+	    }
 	
-		public void setChef_Proprietario(Chef chef_Proprietario) {
-			Chef_Proprietario = chef_Proprietario;
-		}
+	    public String getNome_Corso() {
+	        return Nome_Corso;
+	    }
 	
-		public String getNome_Corso() {
-			return Nome_Corso;
-		}
+	    public void setNome_Corso(String Nome_Corso) {
+	        this.Nome_Corso = Nome_Corso;
+	    }
 	
-		public void setNome_Corso(String nome_Corso) {
-			Nome_Corso = nome_Corso;
-		}
+	    public String getArgomento() {
+	        return Argomento;
+	    }
 	
-		public String getArgomento() {
-			return Argomento;
-		}
+	    public void setArgomento(String Argomento) {
+	        this.Argomento = Argomento;
+	    }
 	
-		public void setArgomento(String argomento) {
-			Argomento = argomento;
-		}
+	    public LocalDate getData_Inizio() {
+	        return Data_Inizio;
+	    }
 	
-		public LocalDate getData_Inizio() {
-			return Data_Inizio;
-		}
+	    public void setData_Inizio(LocalDate Data_Inizio) {
+	        this.Data_Inizio = Data_Inizio;
+	    }
 	
-		public void setData_Inizio(LocalDate data_Inizio) {
-			Data_Inizio = data_Inizio;
-		}
+	    public LocalDate getData_Creazione() {
+	        return Data_Creazione;
+	    }
 	
-		public LocalDate getData_Creazione() {
-			return Data_Creazione;
-		}
+	    public void setData_Creazione(LocalDate Data_Creazione) {
+	        this.Data_Creazione = Data_Creazione;
+	    }
 	
-		public void setData_Creazione(LocalDate data_Creazione) {
-			Data_Creazione = data_Creazione;
-		}
+	    public String getFrequenzaCorsi() {
+	        return Frequenza_Corsi;
+	    }
 	
-		public String getFrequenzaCorsi() {
-			return FrequenzaCorsi;
-		}
-	
-		public void setFrequenzaCorsi(String frequenzaCorsi) {
-			FrequenzaCorsi = frequenzaCorsi;
-		}
-		
-	
+	    public void setFrequenza_Corsi(String Frequenza_Corsi) {
+	        this.Frequenza_Corsi = Frequenza_Corsi;
+	    }
 }

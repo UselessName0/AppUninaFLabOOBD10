@@ -1,6 +1,7 @@
 package Entities;
 
 public class Partecipante extends Utente {
+	
 	//ATTRIBUTI
 	private String ID_Partecipante;
 	
@@ -9,7 +10,6 @@ public class Partecipante extends Utente {
 		super(Nome, Cognome, Email, Password);
 		this.ID_Partecipante = ID_Partecipante;
 	}
-
 	
 	//METODI
 		//GETTERS E SETTERS
