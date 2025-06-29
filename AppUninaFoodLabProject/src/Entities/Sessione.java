@@ -6,6 +6,7 @@ import java.time.LocalDate;
 public class Sessione {
 	
 	//ATTRIBUTI
+	private String ID_Sessione;
 	private Corso RelatedCorso;
 	private LocalDate Data_Sessione;
 	private int Numero_Adesioni;
@@ -15,7 +16,8 @@ public class Sessione {
 	private Ricetta Ricetta_Appresa;
 	
 	//COSTRUTTORI
-	public Sessione(Corso RelatedCorso, LocalDate Data_Sessione, boolean IsPratica, String Luogo, String LinkConferenza, Ricetta Ricetta_Appresa) {
+	public Sessione(String ID_Sessione,Corso RelatedCorso, LocalDate Data_Sessione, boolean IsPratica, String Luogo, String LinkConferenza, Ricetta Ricetta_Appresa) {
+		this.ID_Sessione = ID_Sessione;
 		this.RelatedCorso = RelatedCorso;
 		this.Data_Sessione = Data_Sessione;
 		this.Numero_Adesioni = 0;
@@ -27,10 +29,17 @@ public class Sessione {
 	
 	//METODI
 		//GETTER AND SETTER
+	
+		public String getID_Sessione() {
+			return ID_Sessione;
+		}
+	
+		public void setID_Sessione(String iD_Sessione) {
+			ID_Sessione = iD_Sessione;
+		}
 		public Corso getRelatedCorso() {
 			return RelatedCorso;
 		}
-	
 		public void setRelatedCorso(Corso relatedCorso) {
 			RelatedCorso = relatedCorso;
 		}

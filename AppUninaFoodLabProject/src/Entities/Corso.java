@@ -5,6 +5,7 @@ import java.time.LocalDate;
 public class Corso {
 
     // ATTRIBUTI
+	private String ID_Corso;
     private Chef Chef_Proprietario;
     private String Nome_Corso;
     private String Argomento;
@@ -13,7 +14,8 @@ public class Corso {
     private String Frequenza_Corsi;
 
     //COSTRUTTORI
-    public Corso(Chef Chef_Proprietario, String Nome_Corso, String Argomento, LocalDate Data_Inizio, LocalDate Data_Creazione, String Frequenza_Corsi) {
+    public Corso(String IDCorso,Chef Chef_Proprietario, String Nome_Corso, String Argomento, LocalDate Data_Inizio, LocalDate Data_Creazione, String Frequenza_Corsi) {
+    	this.ID_Corso = IDCorso;
         this.Chef_Proprietario = Chef_Proprietario;
         this.Nome_Corso = Nome_Corso;
         this.Argomento = Argomento;
@@ -23,8 +25,8 @@ public class Corso {
     }
 
     //COSTRUTTORE SENZA PASSAGGIO DI DATA (NULL) INIZIALIZZA A LocalDate.now
-    public Corso(Chef Chef_Proprietario, String Nome_Corso, String Argomento, LocalDate Data_Inizio, String Frequenza_Corsi) {
-        this(Chef_Proprietario, Nome_Corso, Argomento, Data_Inizio, LocalDate.now(), Frequenza_Corsi);
+    public Corso(String IDCorso,Chef Chef_Proprietario, String Nome_Corso, String Argomento, LocalDate Data_Inizio, String Frequenza_Corsi) {
+        this(IDCorso,Chef_Proprietario, Nome_Corso, Argomento, Data_Inizio, LocalDate.now(), Frequenza_Corsi);
     }
     
     //METODI

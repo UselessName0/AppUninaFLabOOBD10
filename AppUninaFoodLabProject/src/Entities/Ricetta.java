@@ -3,17 +3,24 @@ package Entities;
 public class Ricetta {
 	
 	//ATTRIBUTI
+	private String IDRicetta;
 	private String Titolo;
 	private String Descrizione;
 	
 	//COSTRUTTORI
-	public Ricetta(String Titolo, String Descrizione) {
+	public Ricetta(String IDRicetta, String Titolo, String Descrizione) {
+		this.IDRicetta = IDRicetta;
 		this.Titolo = Titolo;
 		this.Descrizione = Descrizione;
 	}
-	
 	//METODI
-		//GETTERS AND SETTERS
+		//GETTERS AND SETTERS	
+		public String getIDRicetta() {
+			return IDRicetta;
+		}
+		public void setIDRicetta(String iDRicetta) {
+			IDRicetta = iDRicetta;
+		}
 		public String getTitolo() {
 			return Titolo;
 		}
