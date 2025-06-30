@@ -10,7 +10,7 @@ import Entities.Chef;
 public class ChefDAO {
 
     public void InserisciChef(Chef chef) {
-        String sql = "query SQL";
+        String sql = "Query SQL";
         try (Connection conn = DBManager.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
@@ -23,7 +23,7 @@ public class ChefDAO {
             stmt.executeUpdate();
 
         } catch (SQLException e) {
-            e.printStackTrace(); 
+            System.out.println("L'inserimento non è andato a buon fine!"); 
         }
     }
 }
