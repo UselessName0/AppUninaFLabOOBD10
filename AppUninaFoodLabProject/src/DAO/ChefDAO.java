@@ -9,21 +9,45 @@ import Entities.Chef;
 
 public class ChefDAO {
 
-    public void InserisciChef(Chef chef) {
-        String sql = "Query SQL";
-        try (Connection conn = DBManager.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
-
-            stmt.setString(1, chef.getID_Chef());
-            stmt.setString(2, chef.getNome());
-            stmt.setString(3, chef.getCognome());
-            stmt.setString(4, chef.getEmail());
-            stmt.setString(5, chef.getPassword());
-
-            stmt.executeUpdate();
-
-        } catch (SQLException e) {
-            System.out.println("L'inserimento non è andato a buon fine!"); 
-        }
-    }
+	//La funzione ritorna false se l'email non è presente all'interno del DB, true altrimenti
+	public boolean checkEmail(String emailInput) {
+	    String sql = "SELECT email FROM uninafoodlab.Chef WHERE email = ?";
+	    try (Connection conn = DBManager.getConnection();
+	         PreparedStatement pstmt = conn.prepareStatement(sql)) {
+	        
+	        pstmt.setString(1, emailInput);
+	        ResultSet rs = pstmt.executeQuery();
+	        
+	        if (rs.next()) 
+	            return true; 
+	        else 
+	            return false;  
+	        
+	    } catch (SQLException e) {
+	        System.out.println("Errore durante la verifica dell'email: " + e.getMessage());
+	        return false;
+	    } 
+	}
+	
+	public boolean checkPassword(String emailInput, String pwdInput) {
+		String sql = "SELECT pass FROM uninafoodlab.Chef WHERE email = ?";
+		try(Connection conn = DBManager.getConnection();
+			PreparedStatement pstmt = conn.prepareStatement(sql)) {
+			
+			pstmt.setString(1,  emailInput);
+			ResultSet rs = pstmt.executeQuery();
+			rs.next();
+			
+			if(rs.getString(1) == pwdInput)
+				return true;
+			else
+				return false;
+		} catch (SQLException e) {
+			System.out.println("Errore durante la verifica della password");
+			return false;
+		}
+	}
+	
+	//verificare il dominio password dopo una insert che va contro il vincolo 
+	
 }
