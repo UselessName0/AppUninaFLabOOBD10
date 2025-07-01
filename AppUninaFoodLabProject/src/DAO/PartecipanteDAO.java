@@ -8,5 +8,65 @@ import Database.DBManager;
 import Entities.Partecipante;
 
 public class PartecipanteDAO {
-
+	//La funzione ritorna false se l'email non è presente all'interno del DB, true altrimenti
+	public boolean checkEmail(String emailInput) {
+	    String sql = "SELECT email FROM uninafoodlab.partecipante WHERE email = ?";
+	    try (Connection conn = DBManager.getConnection();
+	         PreparedStatement pstmt = conn.prepareStatement(sql)) {
+	        
+	        pstmt.setString(1, emailInput);
+	        ResultSet rs = pstmt.executeQuery();
+	        
+	        if (rs.next()) 
+	            return true; 
+	        else 
+	            return false;  
+	        
+	    } catch (SQLException e) {
+	        System.out.println("Errore durante la verifica dell'email: " + e.getMessage());
+	        return false;
+	    } 
+	}
+	
+	public boolean checkPassword(String emailInput, String pwdInput) {
+		String sql = "SELECT pass FROM uninafoodlab.partecipante WHERE email = ?";
+		try(Connection conn = DBManager.getConnection();
+			PreparedStatement pstmt = conn.prepareStatement(sql)) {
+			
+			pstmt.setString(1,  emailInput);
+			ResultSet rs = pstmt.executeQuery();
+			rs.next();
+			
+			if(rs.getString(1) == pwdInput)
+				return true;
+			else
+				return false;
+		} catch (SQLException e) {
+			System.out.println("Errore durante la verifica della password: "+ e.getMessage());
+			return false;
+		}
+	}
+	
+	//verificare il dominio password dopo una insert che va contro il vincolo 
+	public boolean InsertPartecipante(Partecipante Partecipante_Input) {
+		String sql = "INSERT INTO uninafoodlab.partecipante(idpartecipante, nomepartecipante, email, pass)VALUES (?, ?, ?, ?);";
+			try(Connection conn = DBManager.getConnection();
+				PreparedStatement pstmt = conn.prepareStatement(sql)) {
+				
+				pstmt.setString(1, Partecipante_Input.getID_Partecipante());
+				pstmt.setString(2, Partecipante_Input.getNome());
+				pstmt.setString(3, Partecipante_Input.getEmail());
+				pstmt.setString(4, Partecipante_Input.getPassword());
+				
+				int rowsAffected = pstmt.executeUpdate();
+				return rowsAffected > 0;
+				
+			} catch(SQLException e) {
+				System.out.println("Errore durante l'inserimento della nuova entità: "+ e.getMessage());
+				if(e.getSQLState().equals("23514")) {//CODICE ERRORE PER LA VIOLAZIONE DI DOMINIO
+					System.out.println("Password non accettata, non inserire simboli speciali o lettere accentate ");
+				}
+				return false;
+			}
+	}
 }

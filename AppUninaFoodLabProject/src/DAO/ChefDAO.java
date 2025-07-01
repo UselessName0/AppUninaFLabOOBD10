@@ -43,11 +43,33 @@ public class ChefDAO {
 			else
 				return false;
 		} catch (SQLException e) {
-			System.out.println("Errore durante la verifica della password");
+			System.out.println("Errore durante la verifica della password: "+ e.getMessage());
 			return false;
 		}
 	}
 	
 	//verificare il dominio password dopo una insert che va contro il vincolo 
+	public boolean InsertChef(Chef Chef_Input) {
+		String sql = "INSERT INTO uninafoodlab.chef(idchef, nomechef, cognomechef, email, pass)VALUES (?, ?, ?, ?, ?);";
+			try(Connection conn = DBManager.getConnection();
+				PreparedStatement pstmt = conn.prepareStatement(sql)) {
+				
+				pstmt.setString(1, Chef_Input.getID_Chef());
+				pstmt.setString(2, Chef_Input.getNome());
+				pstmt.setString(3, Chef_Input.getCognome());
+				pstmt.setString(4, Chef_Input.getEmail());
+				pstmt.setString(5, Chef_Input.getPassword());
+				
+				int rowsAffected = pstmt.executeUpdate();
+				return rowsAffected > 0;
+				
+			} catch(SQLException e) {
+				System.out.println("Errore durante l'inserimento della nuova entità: "+ e.getMessage());
+				if(e.getSQLState().equals("23514")) {//CODICE ERRORE PER LA VIOLAZIONE DI DOMINIO
+					System.out.println("Password non accettata, non inserire simboli speciali o lettere accentate ");
+				}
+				return false;
+			}
+	}
 	
 }
