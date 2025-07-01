@@ -64,12 +64,69 @@ public class ChefDAO {
 				return rowsAffected > 0;
 				
 			} catch(SQLException e) {
-				System.out.println("Errore durante l'inserimento della nuova entità: "+ e.getMessage());
-				if(e.getSQLState().equals("23514")) {//CODICE ERRORE PER LA VIOLAZIONE DI DOMINIO
-					System.out.println("Password non accettata, non inserire simboli speciali o lettere accentate ");
-				}
+				System.out.println("Errore durante l'inserimento del nuovo chef: "+ e.getMessage());
 				return false;
 			}
 	}
+	
+	public String getNomeChefDAO(Chef Chef_Input) {
+		String sql = "SELECT Ch.Nomechef FROM Chef AS Ch WHERE Ch.IDChef = ?";
+			try(Connection conn = DBManager.getConnection(); 
+				PreparedStatement pstmt = conn.prepareStatement(sql)) {
+				
+				pstmt.setString(1, Chef_Input.getID_Chef());
+				ResultSet rs = pstmt.executeQuery();
+		        if (rs.next()) 
+		            return rs.getString("Nomechef");
+		        else 
+		            return null;
+		         
+			} catch(SQLException e) {
+				e.printStackTrace();
+		        return null;
+			}
+	}
+	
+	public String getCognomeChefDAO(Chef Chef_Input) {
+		String sql = "SELECT Ch.Cognomechef FROM Chef AS Ch WHERE Ch.IDChef = ?";
+			try(Connection conn = DBManager.getConnection(); 
+				PreparedStatement pstmt = conn.prepareStatement(sql)) {
+				
+				pstmt.setString(1, Chef_Input.getID_Chef());
+				ResultSet rs = pstmt.executeQuery();
+				rs.next();
+				
+		        if (rs.next()) 
+		            return rs.getString("Cognomechef");
+		        else 
+		            return null;
+		         
+			} catch(SQLException e) {
+				e.printStackTrace();
+		        return null;
+			}
+	}
+	
+	public String getEmailChefDAO(Chef Chef_Input) {
+		String sql = "SELECT Ch.Email FROM Chef AS Ch WHERE Ch.IDChef = ?";
+			try(Connection conn = DBManager.getConnection(); 
+				PreparedStatement pstmt = conn.prepareStatement(sql)) {
+				
+				pstmt.setString(1, Chef_Input.getID_Chef());
+				ResultSet rs = pstmt.executeQuery();
+				rs.next();
+				
+		        if (rs.next()) 
+		            return rs.getString("Email");
+		        else 
+		            return null;
+		         
+			} catch(SQLException e) {
+				e.printStackTrace();
+		        return null;
+			}
+	}
+	
+	
 	
 }

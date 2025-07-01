@@ -56,7 +56,11 @@ public class Corso {
 	    }
 	
 	    public LocalDate getData_Inizio() {
-	        return Data_Inizio;
+	    	return Data_Inizio;
+	    }
+	    
+	    public java.sql.Date getDataInizioAsSQLDate() {
+	        return java.sql.Date.valueOf(Data_Inizio);
 	    }
 	
 	    public void setData_Inizio(LocalDate Data_Inizio) {
@@ -66,16 +70,28 @@ public class Corso {
 	    public LocalDate getData_Creazione() {
 	        return Data_Creazione;
 	    }
+	    
+	    public java.sql.Date getDataCreazioneAsSQLDate() {
+	        return java.sql.Date.valueOf(Data_Creazione);
+	    }
 	
 	    public void setData_Creazione(LocalDate Data_Creazione) {
 	        this.Data_Creazione = Data_Creazione;
 	    }
 	
-	    public String getFrequenzaCorsi() {
+	    public String getFrequenza_Corsi() {
 	        return Frequenza_Corsi;
 	    }
 	
 	    public void setFrequenza_Corsi(String Frequenza_Corsi) {
 	        this.Frequenza_Corsi = Frequenza_Corsi;
 	    }
+
+		public String getID_Corso() {
+			return ID_Corso;
+		}
+
+		public void setID_Corso(String iD_Corso) {
+			ID_Corso = iD_Corso;
+		}   
 }

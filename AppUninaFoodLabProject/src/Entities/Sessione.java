@@ -47,6 +47,10 @@ public class Sessione {
 		public LocalDate getData_Sessione() {
 			return Data_Sessione;
 		}
+		
+		public java.sql.Date getDataSessioneAsSQLDate() {
+			return java.sql.Date.valueOf(Data_Sessione);
+		}
 	
 		public void setData_Sessione(LocalDate data_Sessione) {
 			Data_Sessione = data_Sessione;

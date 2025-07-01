@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import Database.DBManager;
+import Entities.Chef;
 import Entities.Partecipante;
 
 public class PartecipanteDAO {
@@ -63,10 +64,67 @@ public class PartecipanteDAO {
 				
 			} catch(SQLException e) {
 				System.out.println("Errore durante l'inserimento della nuova entità: "+ e.getMessage());
-				if(e.getSQLState().equals("23514")) {//CODICE ERRORE PER LA VIOLAZIONE DI DOMINIO
-					System.out.println("Password non accettata, non inserire simboli speciali o lettere accentate ");
-				}
 				return false;
+			}
+	}
+	
+	public String getNomePartecipanteDAO(Partecipante Partecipante_Input) {
+		String sql = "SELECT P.Nomepartecipante FROM Partecipante AS P WHERE P.IDPartecipante = ?";
+			try(Connection conn = DBManager.getConnection(); 
+				PreparedStatement pstmt = conn.prepareStatement(sql)) {
+				
+				pstmt.setString(1, Partecipante_Input.getID_Partecipante());
+				ResultSet rs = pstmt.executeQuery();
+				rs.next();
+				
+		        if (rs.next()) 
+		            return rs.getString("Nomepartecipante");
+		        else 
+		            return null;
+		         
+			} catch(SQLException e) {
+				e.printStackTrace();
+		        return null;
+			}
+	}
+	
+	public String getCognomePartecipanteDAO(Partecipante Partecipante_Input) {
+		String sql = "SELECT P.Cognomepartecipante FROM Partecipante AS P WHERE P.IDPartecipante = ?";
+			try(Connection conn = DBManager.getConnection(); 
+				PreparedStatement pstmt = conn.prepareStatement(sql)) {
+				
+				pstmt.setString(1, Partecipante_Input.getID_Partecipante());
+				ResultSet rs = pstmt.executeQuery();
+				rs.next();
+				
+		        if (rs.next()) 
+		            return rs.getString("Cognomepartecipante");
+		        else 
+		            return null;
+		         
+			} catch(SQLException e) {
+				e.printStackTrace();
+		        return null;
+			}
+	}
+	
+	public String getEmailPartecipanteDAO(Partecipante Partecipante_Input) {
+		String sql = "SELECT P.Email FROM Partecipante AS P WHERE P.IDPartecipante = ?";
+			try(Connection conn = DBManager.getConnection(); 
+				PreparedStatement pstmt = conn.prepareStatement(sql)) {
+				
+				pstmt.setString(1, Partecipante_Input.getID_Partecipante());
+				ResultSet rs = pstmt.executeQuery();
+				rs.next();
+				
+		        if (rs.next()) 
+		            return rs.getString("Email");
+		        else 
+		            return null;
+		         
+			} catch(SQLException e) {
+				e.printStackTrace();
+		        return null;
 			}
 	}
 }
