@@ -5,8 +5,59 @@ import java.util.ArrayList;
 import java.util.List;
 
 import Database.DBManager;
+import Entities.Chef;
 import Entities.Ricetta;
 
 public class RicettaDAO {
+	public boolean InsertRicetta(Ricetta Ricetta_Input) {
+		String sql = "INSERT INTO uninafoodlab.ricetta(idricetta, nominativoricetta)VALUES (?, ?);";
+			try(Connection conn = DBManager.getConnection();
+				PreparedStatement pstmt = conn.prepareStatement(sql)) {
+				
+				pstmt.setString(1, Ricetta_Input.getIDRicetta());
+				pstmt.setString(2, Ricetta_Input.getTitolo());
+				
+				int rowsAffected = pstmt.executeUpdate();
+				return rowsAffected > 0;
+				
+			} catch(SQLException e) {
+				System.out.println("Errore durante l'inserimento del nuovo chef: "+ e.getMessage());
+				return false;
+			}
+	}
+	
+	public String GetIDRicettaDAO(String Titolo){
+		String sql = "SELECT IDRicetta FROM uninafoodlab.ricetta WHERE nominativoricetta = ?,";
+			try(Connection conn = DBManager.getConnection();
+				PreparedStatement pstmt = conn.prepareStatement(sql)) {
+				
+				pstmt.setString(1, Titolo);
+				ResultSet rs = pstmt.executeQuery();
+				if(rs.next())
+					return rs.getString("idricetta");
+				else
+					return null;
+			} catch(SQLException e) {
+				e.printStackTrace();
+				return null;
+			}
+	}
+	
+	public String GetTitoloRicettaDAO(Ricetta Ricetta_Input){
+		String sql = "SELECT IDRicetta FROM uninafoodlab.ricetta WHERE nominativoricetta = ?,";
+			try(Connection conn = DBManager.getConnection();
+				PreparedStatement pstmt = conn.prepareStatement(sql)) {
+				
+				pstmt.setString(1, Ricetta_Input.getIDRicetta());
+				ResultSet rs = pstmt.executeQuery();
+				if(rs.next())
+					return rs.getString("titolo");
+				else
+					return null;
+			} catch(SQLException e) {
+				e.printStackTrace();
+				return null;
+			}
+	}
 
 }
