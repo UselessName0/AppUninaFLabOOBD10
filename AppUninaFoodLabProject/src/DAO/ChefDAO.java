@@ -50,7 +50,7 @@ public class ChefDAO {
 	
 	//verificare il dominio password dopo una insert che va contro il vincolo 
 	public boolean InsertChef(Chef Chef_Input) {
-		String sql = "INSERT INTO uninafoodlab.chef(idchef, nomechef, cognomechef, email, pass)VALUES (?, ?, ?, ?, ?);";
+		String sql = "INSERT INTO uninafoodlab.chef(idchef, nomechef, cognomechef, email, pass)VALUES (?, ?, ?, ?, ?)";
 			try(Connection conn = DBManager.getConnection();
 				PreparedStatement pstmt = conn.prepareStatement(sql)) {
 				
