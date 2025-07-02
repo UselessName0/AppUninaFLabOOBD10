@@ -21,7 +21,7 @@ public class RicettaDAO {
 				return rowsAffected > 0;
 				
 			} catch(SQLException e) {
-				System.out.println("Errore durante l'inserimento del nuovo chef: "+ e.getMessage());
+				System.out.println("Errore durante l'inserimento della nuova ricetta: "+ e.getMessage());
 				return false;
 			}
 	}
