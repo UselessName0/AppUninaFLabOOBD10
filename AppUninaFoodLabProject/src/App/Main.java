@@ -8,7 +8,7 @@ import javax.swing.SwingUtilities;
 
 import Database.DBManager;
 import GUI.WelcomeFrame;
-//push da giugiulaptop
+
 //Main
 public class Main {
     public static void main(String[] args) {

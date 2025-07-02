@@ -127,7 +127,7 @@ public class CorsoDAO {
 	}
 	
 	public String getIDCorsoDAO(Corso Corso_Input) {
-		String sql = "SELECT idcorso FROM Corso AS Co WHERE Co.idchef = ?, Co.nomecorso = ?, Co.datacreazione = ? ";
+		String sql = "SELECT idcorso FROM Corso AS Co WHERE (Co.idchef = ?) AND (Co.nomecorso = ?) AND (Co.datacreazione = ?)";
 		try(Connection conn = DBManager.getConnection();
 			PreparedStatement pstmt = conn.prepareStatement(sql)) {
 			
