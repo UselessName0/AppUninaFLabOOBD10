@@ -2,6 +2,8 @@ package Entities;
 
 import java.time.LocalDate;
 
+import DAO.CorsoDAO;
+
 public class Corso {
 
     // ATTRIBUTI
@@ -23,7 +25,20 @@ public class Corso {
         this.Data_Creazione = (Data_Creazione != null) ? Data_Creazione : LocalDate.now();
         this.Frequenza_Corsi = Frequenza_Corsi;
     }
-
+    
+    public Corso(String IDCorso) { //Costruttore di un corso già presente nel database via IDCorso
+    	CorsoDAO CorsoDAO = new CorsoDAO();
+    	this.ID_Corso = IDCorso;
+    	Chef tempChef = new Chef(CorsoDAO.getIDChefProprietarioDAO(IDCorso));
+    	this.Chef_Proprietario = tempChef;
+    	this.Nome_Corso = CorsoDAO.getNomeCorsoDAO(IDCorso);
+    	this.Argomento = CorsoDAO.getArgomentoCorsoDAO(IDCorso);
+    	this.Data_Inizio = CorsoDAO.getDataInizioCorsoDAO(IDCorso).toLocalDate();
+    	this.Data_Creazione = CorsoDAO.getDataCreazioneCorsoDAO(IDCorso).toLocalDate();
+    	this.Frequenza_Corsi = CorsoDAO.getFrequenzaCorsoDAO(IDCorso);
+    }
+    
+    
     //COSTRUTTORE SENZA PASSAGGIO DI DATA (NULL) INIZIALIZZA A LocalDate.now
     public Corso(String IDCorso,Chef Chef_Proprietario, String Nome_Corso, String Argomento, LocalDate Data_Inizio, String Frequenza_Corsi) {
         this(IDCorso,Chef_Proprietario, Nome_Corso, Argomento, Data_Inizio, LocalDate.now(), Frequenza_Corsi);

@@ -59,4 +59,20 @@ public class IngredienteDAO {
 				return null;
 			}	
 	}
+	public String GetNomeIngredienteDAO(String IDIngrediente_Input) {
+		String sql = "SELECT nomeingrediente FROM uninafoodlab.ingrediente WHERE idingrediente = ?";
+			try(Connection conn = DBManager.getConnection();
+				PreparedStatement pstmt = conn.prepareCall(sql)) {
+				
+				pstmt.setString(1, IDIngrediente_Input);
+				ResultSet rs = pstmt.executeQuery();
+				if(rs.next())
+					return rs.getString("nomeingrediente");
+				else
+					return null;
+			} catch(SQLException e) {
+				e.printStackTrace();
+				return null;
+			}	
+	}
 }

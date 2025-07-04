@@ -1,5 +1,8 @@
 package Entities;
 
+import DAO.PartecipanteDAO;
+
+
 public class Partecipante extends Utente {
 	
 	//ATTRIBUTI
@@ -9,6 +12,17 @@ public class Partecipante extends Utente {
 	public Partecipante(String Nome, String Cognome, String Email, String Password, String ID_Partecipante) {
 		super(Nome, Cognome, Email, Password);
 		this.ID_Partecipante = ID_Partecipante;
+	}
+	
+	public Partecipante(String IDPartecipante) {//COSTRUTTORE PER LA CREAZIONE DI UN PARTECIPANTE PRESENTE NEL DATABASE VIA IDPARTECIPANTE
+		super(null, null, null, null);
+		PartecipanteDAO partecipanteDAO = new PartecipanteDAO();
+		
+		this.ID_Partecipante = IDPartecipante;
+		this.Nome = partecipanteDAO.getNomePartecipanteDAO(IDPartecipante);
+		this.Cognome = partecipanteDAO.getCognomePartecipanteDAO(IDPartecipante);
+		this.Email = partecipanteDAO.getEmailPartecipanteDAO(IDPartecipante);
+		this.Password = partecipanteDAO.getPassPartecipanteDAO(IDPartecipante);
 	}
 	
 	//METODI

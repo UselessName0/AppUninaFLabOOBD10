@@ -87,12 +87,50 @@ public class ChefDAO {
 			}
 	}
 	
+	public String getNomeChefDAO(String IDChef_Input) {
+		String sql = "SELECT Ch.Nomechef FROM Chef AS Ch WHERE Ch.IDChef = ?";
+			try(Connection conn = DBManager.getConnection(); 
+				PreparedStatement pstmt = conn.prepareStatement(sql)) {
+				
+				pstmt.setString(1, IDChef_Input);
+				ResultSet rs = pstmt.executeQuery();
+		        if (rs.next()) 
+		            return rs.getString("Nomechef");
+		        else 
+		            return null;
+		         
+			} catch(SQLException e) {
+				e.printStackTrace();
+		        return null;
+			}
+	}
+	
 	public String getCognomeChefDAO(Chef Chef_Input) {
 		String sql = "SELECT Ch.Cognomechef FROM Chef AS Ch WHERE Ch.IDChef = ?";
 			try(Connection conn = DBManager.getConnection(); 
 				PreparedStatement pstmt = conn.prepareStatement(sql)) {
 				
 				pstmt.setString(1, Chef_Input.getID_Chef());
+				ResultSet rs = pstmt.executeQuery();
+				rs.next();
+				
+		        if (rs.next()) 
+		            return rs.getString("Cognomechef");
+		        else 
+		            return null;
+		         
+			} catch(SQLException e) {
+				e.printStackTrace();
+		        return null;
+			}
+	}
+	
+	public String getCognomeChefDAO(String IDChef_Input) {
+		String sql = "SELECT Ch.Cognomechef FROM Chef AS Ch WHERE Ch.IDChef = ?";
+			try(Connection conn = DBManager.getConnection(); 
+				PreparedStatement pstmt = conn.prepareStatement(sql)) {
+				
+				pstmt.setString(1, IDChef_Input);
 				ResultSet rs = pstmt.executeQuery();
 				rs.next();
 				
@@ -126,6 +164,46 @@ public class ChefDAO {
 		        return null;
 			}
 	}
+	
+	public String getEmailChefDAO(String IDChef_Input) {
+		String sql = "SELECT Ch.Email FROM Chef AS Ch WHERE Ch.IDChef = ?";
+			try(Connection conn = DBManager.getConnection(); 
+				PreparedStatement pstmt = conn.prepareStatement(sql)) {
+				
+				pstmt.setString(1, IDChef_Input);
+				ResultSet rs = pstmt.executeQuery();
+				rs.next();
+				
+		        if (rs.next()) 
+		            return rs.getString("Email");
+		        else 
+		            return null;
+		         
+			} catch(SQLException e) {
+				e.printStackTrace();
+		        return null;
+			}
+	}	
+	
+	public String getpassChefDAO(String IDChef_Input) {
+		String sql = "SELECT Ch.pass FROM Chef AS Ch WHERE Ch.IDChef = ?";
+			try(Connection conn = DBManager.getConnection(); 
+				PreparedStatement pstmt = conn.prepareStatement(sql)) {
+				
+				pstmt.setString(1, IDChef_Input);
+				ResultSet rs = pstmt.executeQuery();
+				rs.next();
+				
+		        if (rs.next()) 
+		            return rs.getString("pass");
+		        else 
+		            return null;
+		         
+			} catch(SQLException e) {
+				e.printStackTrace();
+		        return null;
+			}
+	}	
 	
 	
 	

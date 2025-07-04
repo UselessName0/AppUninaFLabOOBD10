@@ -54,12 +54,48 @@ public class CorsoDAO {
 		}
 	}
 	
+	public String getNomeCorsoDAO(String IDCorso_Input) {
+		String sql = "SELECT Nomecorso FROM Corso AS Co WHERE Co.idcorso = ? ";
+		try(Connection conn = DBManager.getConnection();
+			PreparedStatement pstmt = conn.prepareStatement(sql)) {
+			
+			pstmt.setString(1, IDCorso_Input);
+			ResultSet rs = pstmt.executeQuery();
+	        if (rs.next()) 
+	            return rs.getString("Nomecorso");
+	        else 
+	            return null;
+			
+		} catch(SQLException e) {
+			System.out.println("Errore durante la selezione del nome corso");
+			return null;
+		}
+	}
+	
 	public String getArgomentoCorsoDAO(Corso Corso_Input) {
 		String sql = "SELECT argomento FROM Corso AS Co WHERE Co.idcorso = ? ";
 		try(Connection conn = DBManager.getConnection();
 			PreparedStatement pstmt = conn.prepareStatement(sql)) {
 			
 			pstmt.setString(1, Corso_Input.getNome_Corso());
+			ResultSet rs = pstmt.executeQuery();
+	        if (rs.next()) 
+	            return rs.getString("argomento");
+	        else 
+	            return null;
+			
+		} catch(SQLException e) {
+			System.out.println("Errore durante la selezione dell'argomento del corso");
+			return null;
+		}
+	}
+	
+	public String getArgomentoCorsoDAO(String IDCorso_Input) {
+		String sql = "SELECT argomento FROM Corso AS Co WHERE Co.idcorso = ? ";
+		try(Connection conn = DBManager.getConnection();
+			PreparedStatement pstmt = conn.prepareStatement(sql)) {
+			
+			pstmt.setString(1, IDCorso_Input);
 			ResultSet rs = pstmt.executeQuery();
 	        if (rs.next()) 
 	            return rs.getString("argomento");
@@ -90,6 +126,24 @@ public class CorsoDAO {
 		}
 	}
 	
+	public Date getDataInizioCorsoDAO(String IDCorso_Input) {
+		String sql = "SELECT DataInizio FROM Corso AS Co WHERE Co.idcorso = ? ";
+		try(Connection conn = DBManager.getConnection();
+			PreparedStatement pstmt = conn.prepareStatement(sql)) {
+			
+			pstmt.setString(1, IDCorso_Input);
+			ResultSet rs = pstmt.executeQuery();
+	        if (rs.next()) 
+	            return rs.getDate("DataInizio");
+	        else 
+	            return null;
+			
+		} catch(SQLException e) {
+			System.out.println("Errore durante la selezione della data di inizio corso");
+			return null;
+		}
+	}
+	
 	public Date getDataCreazioneCorsoDAO(Corso Corso_Input) {
 		String sql = "SELECT datacreazione FROM Corso AS Co WHERE Co.idcorso = ? ";
 		try(Connection conn = DBManager.getConnection();
@@ -108,12 +162,47 @@ public class CorsoDAO {
 		}
 	}
 	
-	public String getFrequenzaCorsiDAO(Corso Corso_Input) {
+	public Date getDataCreazioneCorsoDAO(String IDCorso_Input) {
+		String sql = "SELECT datacreazione FROM Corso AS Co WHERE Co.idcorso = ? ";
+		try(Connection conn = DBManager.getConnection();
+			PreparedStatement pstmt = conn.prepareStatement(sql)) {
+			
+			pstmt.setString(1, IDCorso_Input);
+			ResultSet rs = pstmt.executeQuery();
+	        if (rs.next()) 
+	            return rs.getDate("datacreazione");
+	        else 
+	            return null;
+			
+		} catch(SQLException e) {
+			System.out.println("Errore durante la selezione della data di creazione del corso");
+			return null;
+		}
+	}
+	
+	public String getFrequenzaCorsoDAO(Corso Corso_Input) {
 		String sql = "SELECT frequenzacorsi FROM Corso AS Co WHERE Co.idcorso = ? ";
 		try(Connection conn = DBManager.getConnection();
 			PreparedStatement pstmt = conn.prepareStatement(sql)) {
 			
 			pstmt.setString(1, Corso_Input.getNome_Corso());
+			ResultSet rs = pstmt.executeQuery();
+	        if (rs.next()) 
+	            return rs.getString("frequenzacorsi");
+	        else 
+	            return null;
+			
+		} catch(SQLException e) {
+			System.out.println("Errore durante la selezione della frequenza dei corsi");
+			return null;
+		}
+	}
+	public String getFrequenzaCorsoDAO(String IDCorso_Input) {
+		String sql = "SELECT frequenzacorsi FROM Corso AS Co WHERE Co.idcorso = ? ";
+		try(Connection conn = DBManager.getConnection();
+			PreparedStatement pstmt = conn.prepareStatement(sql)) {
+			
+			pstmt.setString(1, IDCorso_Input);
 			ResultSet rs = pstmt.executeQuery();
 	        if (rs.next()) 
 	            return rs.getString("frequenzacorsi");
@@ -167,6 +256,25 @@ public class CorsoDAO {
 			return null;
 		}
 	}
+	public String getIDChefProprietarioDAO(String IDCorso_Input) {
+		String sql = "SELECT idchef FROM Corso AS Co WHERE Co.idcorso = ?";
+		try(Connection conn = DBManager.getConnection();
+			PreparedStatement pstmt = conn.prepareStatement(sql)) {
+			
+			pstmt.setString(1, IDCorso_Input);
+			
+			ResultSet rs = pstmt.executeQuery();
+	        if (rs.next()) 
+	            return rs.getString("idchef");
+	        else 
+	            return null;
+			
+		} catch(SQLException e) {
+			System.out.println("Errore durante la selezione dell'id chef proprietario del corso");
+			return null;
+		}
+	}
+	
 
 }
 	

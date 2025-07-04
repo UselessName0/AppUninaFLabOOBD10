@@ -1,5 +1,6 @@
 package Entities;
 
+import DAO.RicettaDAO;
 public class Ricetta {
 	
 	//ATTRIBUTI
@@ -12,6 +13,12 @@ public class Ricetta {
 		this.IDRicetta = IDRicetta;
 		this.Titolo = Titolo;
 		this.Descrizione = Descrizione;
+	}
+	
+	public Ricetta(String IDRicetta) { //Costruttore di una ricetta già presente nel database via IDRicetta
+		RicettaDAO ricettaDAO = new RicettaDAO();
+		this.IDRicetta = IDRicetta;
+		this.Titolo = ricettaDAO.GetTitoloRicettaDAO(IDRicetta);
 	}
 	//METODI
 		//GETTERS AND SETTERS	

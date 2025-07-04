@@ -3,10 +3,10 @@ package Entities;
 abstract class Utente {
 	
 	//ATTRIBUTI
-	private String Nome;
-	private String Cognome;
-	private String Email;
-	private String Password;
+	protected String Nome;
+	protected String Cognome;
+	protected String Email;
+	protected String Password;
 		
 	//COSTRUTTORI
 	protected Utente(String Nome, String Cognome, String Email, String Password) {

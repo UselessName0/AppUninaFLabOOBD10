@@ -3,6 +3,7 @@ package Entities;
 import java.util.*;
 import java.time.LocalDate;
 
+import DAO.SessioneDAO;
 public class Sessione {
 	
 	//ATTRIBUTI
@@ -25,6 +26,20 @@ public class Sessione {
 		this.Luogo = Luogo;
 		this.LinkConferenza = LinkConferenza;
 		this.Ricetta_Appresa = Ricetta_Appresa;
+	}
+	
+	public Sessione(String IDSessione) {//Costruttore di una Sessione già presente nel database via IDSessione
+		this.ID_Sessione = IDSessione;
+		SessioneDAO sessioneDAO = new SessioneDAO();
+		String idCorsoTemp = sessioneDAO.getIDCorsoSessioneDAO(IDSessione);
+		this.RelatedCorso = new Corso(idCorsoTemp);
+		this.Data_Sessione = sessioneDAO.getDataSessioneDAO(IDSessione).toLocalDate();
+		this.Numero_Adesioni = sessioneDAO.getAdesioniSessioneDAO(IDSessione);
+		this.IsPratica = sessioneDAO.getIsPraticaSessioneDAO(IDSessione);
+		this.Luogo = sessioneDAO.getLuogoSessioneDAO(IDSessione);
+		this.LinkConferenza = sessioneDAO.getLinkConferenzaSessione(IDSessione);
+		String idRicettaTemp = sessioneDAO.getRicettaSessioneDAO(IDSessione);
+		this.Ricetta_Appresa = new Ricetta(idRicettaTemp);
 	}
 	
 	//METODI

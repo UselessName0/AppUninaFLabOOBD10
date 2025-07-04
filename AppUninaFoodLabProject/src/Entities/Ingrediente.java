@@ -1,5 +1,6 @@
 package Entities;
 
+import DAO.IngredienteDAO;
 public class Ingrediente {
 	
 	//ATTRIBUTI
@@ -10,6 +11,12 @@ public class Ingrediente {
 	public Ingrediente(String IDIngrediente,String Nome) {
 		this.ID_Ingrediente = IDIngrediente;
 		this.Nome = Nome;
+	}
+	public Ingrediente(String IDIngrediente) {//Costruttore di un ingrediente già presente nel database via IDIngrediente
+		IngredienteDAO ingredienteDAO = new IngredienteDAO();
+		
+		this.ID_Ingrediente = IDIngrediente;
+		this.Nome = ingredienteDAO.GetNomeIngredienteDAO(IDIngrediente);
 	}
 	
 

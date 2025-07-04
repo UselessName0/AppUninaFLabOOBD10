@@ -59,5 +59,22 @@ public class RicettaDAO {
 				return null;
 			}
 	}
+	
+	public String GetTitoloRicettaDAO(String IDRicetta_Input){
+		String sql = "SELECT IDRicetta FROM uninafoodlab.ricetta WHERE nominativoricetta = ?,";
+			try(Connection conn = DBManager.getConnection();
+				PreparedStatement pstmt = conn.prepareStatement(sql)) {
+				
+				pstmt.setString(1, IDRicetta_Input);
+				ResultSet rs = pstmt.executeQuery();
+				if(rs.next())
+					return rs.getString("titolo");
+				else
+					return null;
+			} catch(SQLException e) {
+				e.printStackTrace();
+				return null;
+			}
+	}
 
 }

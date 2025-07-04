@@ -88,12 +88,52 @@ public class PartecipanteDAO {
 			}
 	}
 	
+	public String getNomePartecipanteDAO(String IDPartecipante_Input) {
+		String sql = "SELECT P.Nomepartecipante FROM Partecipante AS P WHERE P.IDPartecipante = ?";
+			try(Connection conn = DBManager.getConnection(); 
+				PreparedStatement pstmt = conn.prepareStatement(sql)) {
+				
+				pstmt.setString(1, IDPartecipante_Input);
+				ResultSet rs = pstmt.executeQuery();
+				rs.next();
+				
+		        if (rs.next()) 
+		            return rs.getString("Nomepartecipante");
+		        else 
+		            return null;
+		         
+			} catch(SQLException e) {
+				e.printStackTrace();
+		        return null;
+			}
+	}
+	
 	public String getCognomePartecipanteDAO(Partecipante Partecipante_Input) {
 		String sql = "SELECT P.Cognomepartecipante FROM Partecipante AS P WHERE P.IDPartecipante = ?";
 			try(Connection conn = DBManager.getConnection(); 
 				PreparedStatement pstmt = conn.prepareStatement(sql)) {
 				
 				pstmt.setString(1, Partecipante_Input.getID_Partecipante());
+				ResultSet rs = pstmt.executeQuery();
+				rs.next();
+				
+		        if (rs.next()) 
+		            return rs.getString("Cognomepartecipante");
+		        else 
+		            return null;
+		         
+			} catch(SQLException e) {
+				e.printStackTrace();
+		        return null;
+			}
+	}
+	
+	public String getCognomePartecipanteDAO(String IDPartecipante_Input) {
+		String sql = "SELECT P.Cognomepartecipante FROM Partecipante AS P WHERE P.IDPartecipante = ?";
+			try(Connection conn = DBManager.getConnection(); 
+				PreparedStatement pstmt = conn.prepareStatement(sql)) {
+				
+				pstmt.setString(1, IDPartecipante_Input);
 				ResultSet rs = pstmt.executeQuery();
 				rs.next();
 				
@@ -119,6 +159,46 @@ public class PartecipanteDAO {
 				
 		        if (rs.next()) 
 		            return rs.getString("Email");
+		        else 
+		            return null;
+		         
+			} catch(SQLException e) {
+				e.printStackTrace();
+		        return null;
+			}
+	}
+	
+	public String getEmailPartecipanteDAO(String IDPartecipante_Input) {
+		String sql = "SELECT P.Email FROM Partecipante AS P WHERE P.IDPartecipante = ?";
+			try(Connection conn = DBManager.getConnection(); 
+				PreparedStatement pstmt = conn.prepareStatement(sql)) {
+				
+				pstmt.setString(1, IDPartecipante_Input);
+				ResultSet rs = pstmt.executeQuery();
+				rs.next();
+				
+		        if (rs.next()) 
+		            return rs.getString("Email");
+		        else 
+		            return null;
+		         
+			} catch(SQLException e) {
+				e.printStackTrace();
+		        return null;
+			}
+	}
+	
+	public String getPassPartecipanteDAO(String IDPartecipante_Input) {
+		String sql = "SELECT P.pass FROM Partecipante AS P WHERE P.IDPartecipante = ?";
+			try(Connection conn = DBManager.getConnection(); 
+				PreparedStatement pstmt = conn.prepareStatement(sql)) {
+				
+				pstmt.setString(1, IDPartecipante_Input);
+				ResultSet rs = pstmt.executeQuery();
+				rs.next();
+				
+		        if (rs.next()) 
+		            return rs.getString("pass");
 		        else 
 		            return null;
 		         
