@@ -25,6 +25,10 @@ public class Partecipante extends Utente {
 		this.Password = partecipanteDAO.getPassPartecipanteDAO(IDPartecipante);
 	}
 	
+	public Partecipante() {
+		super(null, null, null, null);
+	}
+	
 	//METODI
 		//GETTERS E SETTERS
 		public String getID_Partecipante() {

@@ -45,6 +45,9 @@ public class Sessione {
 	//METODI
 		//GETTER AND SETTER
 	
+		public Sessione() {
+	}
+
 		public String getID_Sessione() {
 			return ID_Sessione;
 		}

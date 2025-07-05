@@ -31,7 +31,10 @@ public class Chef extends Utente {
 
 		}
 
+	public Chef() {
+		super(null, null, null, null);
 	}
+	
 	
 	//METODI
 		//GETTERS E SETTERS

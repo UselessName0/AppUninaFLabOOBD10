@@ -20,6 +20,10 @@ public class Ricetta {
 		this.IDRicetta = IDRicetta;
 		this.Titolo = ricettaDAO.GetTitoloRicettaDAO(IDRicetta);
 	}
+	
+	public Ricetta() {
+		
+	}
 	//METODI
 		//GETTERS AND SETTERS	
 		public String getIDRicetta() {

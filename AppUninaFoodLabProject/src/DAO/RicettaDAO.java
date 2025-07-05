@@ -6,6 +6,7 @@ import java.util.List;
 
 import Database.DBManager;
 import Entities.Chef;
+import Entities.Partecipante;
 import Entities.Ricetta;
 
 public class RicettaDAO {
@@ -76,5 +77,38 @@ public class RicettaDAO {
 				return null;
 			}
 	}
-
+	
+	public boolean DeleteRicettaDAO(String IDRicetta_Input) {
+		String sql ="DELETE FROM uninafoodlab.ricetta WHERE ricetta.idricetta = ?";
+			try(Connection conn = DBManager.getConnection();
+				PreparedStatement pstmt = conn.prepareStatement(sql)) {
+				
+				pstmt.setString(1, IDRicetta_Input);
+				int rowsAffected = pstmt.executeUpdate();
+				
+				return rowsAffected > 0;
+				
+			} catch(SQLException e) {
+				System.out.println("Errore durante l'eliminazione della ricetta : "+ e.getMessage());
+				return false;
+			}
+	}
+	
+	public List<Ricetta> GetAllRicettaDAO() {
+		List<Ricetta> ListaRicette = new ArrayList<>();
+		String sql = "SELECT * FROM uninafoodlab.ricetta;";
+		try(Connection conn = DBManager.getConnection();
+				PreparedStatement pstmt = conn.prepareStatement(sql);
+				ResultSet rs = pstmt.executeQuery()) {
+					while(rs.next()) {
+						Ricetta R = new Ricetta(); 
+						R.setIDRicetta(rs.getString("idricetta"));
+						R.setTitolo(rs.getString("nominativoricetta"));
+					}
+					return ListaRicette;	
+				}catch(SQLException e) {
+					System.out.println("Errore durante il recupero dei partecipanti: " + e.getMessage());
+					return null;
+				}
+	}
 }

@@ -44,7 +44,10 @@ public class Corso {
         this(IDCorso,Chef_Proprietario, Nome_Corso, Argomento, Data_Inizio, LocalDate.now(), Frequenza_Corsi);
     }
     
-    //METODI
+    public Corso() {
+	}
+
+		//METODI
 	    // GETTERS E SETTERS
 	    public Chef getChef_Proprietario() {
 	        return Chef_Proprietario;

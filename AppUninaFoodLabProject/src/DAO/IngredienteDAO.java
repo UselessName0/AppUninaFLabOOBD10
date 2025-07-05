@@ -6,6 +6,7 @@ import java.util.List;
 
 import Database.DBManager;
 import Entities.Ingrediente;
+import Entities.Partecipante;
 import Entities.Ricetta;
 
 public class IngredienteDAO {
@@ -59,6 +60,7 @@ public class IngredienteDAO {
 				return null;
 			}	
 	}
+	
 	public String GetNomeIngredienteDAO(String IDIngrediente_Input) {
 		String sql = "SELECT nomeingrediente FROM uninafoodlab.ingrediente WHERE idingrediente = ?";
 			try(Connection conn = DBManager.getConnection();
@@ -75,4 +77,40 @@ public class IngredienteDAO {
 				return null;
 			}	
 	}
+	
+	public boolean DeleteIngredienteDAO(String IDIngrediente_Input) {
+		String sql ="DELETE FROM uninafoodlab.corso WHERE corso.IDcorso = ?";
+			try(Connection conn = DBManager.getConnection();
+				PreparedStatement pstmt = conn.prepareStatement(sql)) {
+				
+				pstmt.setString(1, IDIngrediente_Input);
+				int rowsAffected = pstmt.executeUpdate();
+				
+				return rowsAffected > 0;
+				
+			} catch(SQLException e) {
+				System.out.println("Errore durante l'eliminazione del partecipante : "+ e.getMessage());
+				return false;
+			}
+	}
+	
+	public List<Ingrediente> getAllIngredienteDAO() {
+		List<Ingrediente> ListaIngredienti = new ArrayList<>();
+		String sql = "SELECT * FROM uninafoodlab.ingredienti;";
+		try(Connection conn = DBManager.getConnection();
+			PreparedStatement pstmt = conn.prepareStatement(sql);
+			ResultSet rs = pstmt.executeQuery()) {
+				while(rs.next()) {
+					Ingrediente i = new Ingrediente();
+					i.setIDIngrediente(rs.getString("idingrediente"));
+					i.setNome(rs.getString("nome"));
+				}
+				return ListaIngredienti;	
+			}catch(SQLException e) {
+				System.out.println("Errore durante il recupero dei partecipanti: " + e.getMessage());
+				return null;
+			}
+	}
+	
+	
 }

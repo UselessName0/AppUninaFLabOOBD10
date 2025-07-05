@@ -8,6 +8,7 @@ import java.util.List;
 import Database.DBManager;
 import Entities.Chef;
 import Entities.Corso;
+import Entities.Partecipante;
 import Entities.Sessione;
 import Entities.Ricetta;
 
@@ -308,5 +309,50 @@ public class SessioneDAO {
 			System.out.println("Errore durante la selezione dell'IDRicetta");
 			return null;
 		}
+	}
+	
+	public boolean DeleteSessioneDAO(String IDSessione_Input) {
+		String sql ="DELETE FROM uninafoodlab.sessione WHERE sessione.IDSessione = ?";
+			try(Connection conn = DBManager.getConnection();
+				PreparedStatement pstmt = conn.prepareStatement(sql)) {
+				
+				pstmt.setString(1, IDSessione_Input);
+				int rowsAffected = pstmt.executeUpdate();
+				
+				return rowsAffected > 0;
+				
+			} catch(SQLException e) {
+				System.out.println("Errore durante l'eliminazione della sessione : "+ e.getMessage());
+				return false;
+			}
+	}
+	
+	public List<Sessione> getAllSessioniDAO() {
+		List<Sessione> ListaSessioni = new ArrayList<>();
+		String sql = "SELECT * FROM uninafoodlab.sessioni;";
+		try(Connection conn = DBManager.getConnection();
+			PreparedStatement pstmt = conn.prepareStatement(sql);
+			ResultSet rs = pstmt.executeQuery()) {
+				while(rs.next()) {
+					Sessione s = new Sessione();
+					
+					s.setID_Sessione(rs.getString("idsessione"));
+					
+					Corso c = new Corso(rs.getString("idcorso"));	
+					s.setRelatedCorso(c);
+					s.setData_Sessione(rs.getDate("datasessione").toLocalDate());
+					s.setIsPratica(rs.getBoolean("ispratica"));
+					s.setNumero_Adesioni(rs.getInt("adesioni"));
+					s.setLinkConferenza(rs.getString("linkconferenza"));
+					s.setLuogo(rs.getString("luogo"));
+					Ricetta r = new Ricetta(rs.getString("idricetta"));
+					s.setRicetta_Appresa(r);
+	
+				}
+				return ListaSessioni;	
+			}catch(SQLException e) {
+				System.out.println("Errore durante il recupero dei partecipanti: " + e.getMessage());
+				return null;
+			}
 	}
 }

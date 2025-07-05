@@ -205,6 +205,44 @@ public class ChefDAO {
 			}
 	}	
 	
+	public boolean DeleteChefDAO(String IDChef_Input) {
+		String sql ="DELETE FROM uninafoodlab.chef WHERE Chef.IDChef = ?";
+			try(Connection conn = DBManager.getConnection();
+				PreparedStatement pstmt = conn.prepareStatement(sql)) {
+				
+				pstmt.setString(1, IDChef_Input);
+				int rowsAffected = pstmt.executeUpdate();
+				
+				return rowsAffected > 0;
+				
+			} catch(SQLException e) {
+				System.out.println("Errore durante l'eliminazione dello Chef : "+ e.getMessage());
+				return false;
+			}
+	}
 	
-	
+	public List<Chef> getAllChef() {
+		List<Chef> ListaChef = new ArrayList<>();
+		String sql = "SELECT * FROM uninafoodlab.Chef";
+		try(Connection conn = DBManager.getConnection();
+			PreparedStatement pstmt = conn.prepareStatement(sql);
+			ResultSet rs = pstmt.executeQuery()) {
+			
+			while(rs.next()) {
+				Chef Ch = new Chef();
+				Ch.setID_Chef(rs.getString("idchef"));
+				Ch.setNome(rs.getString("nomechef"));
+				Ch.setCognome(rs.getString("cognomechef"));
+				Ch.setEmail(rs.getString("email"));
+				Ch.setPassword(rs.getString("pass"));
+				ListaChef.add(Ch);
+			}
+			return ListaChef;
+			
+		} catch(SQLException e) {
+			System.out.println("Errore durante il recupero dei Chefs: " + e.getMessage());
+			return null;
+		}
+	}
+			
 }

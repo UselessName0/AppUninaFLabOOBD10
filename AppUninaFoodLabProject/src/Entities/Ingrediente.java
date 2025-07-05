@@ -19,8 +19,9 @@ public class Ingrediente {
 		this.Nome = ingredienteDAO.GetNomeIngredienteDAO(IDIngrediente);
 	}
 	
-
-	//METODI
+	public Ingrediente() {
+	}
+		//METODI
 		//GETTER AND SETTER
 		public String getNome() {
 			return Nome;

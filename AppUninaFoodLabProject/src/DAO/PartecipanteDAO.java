@@ -207,4 +207,42 @@ public class PartecipanteDAO {
 		        return null;
 			}
 	}
+	
+	public boolean DeletePartecipanteDAO(String IDPartecipante_Input) {
+		String sql ="DELETE FROM uninafoodlab.corso WHERE corso.IDcorso = ?";
+			try(Connection conn = DBManager.getConnection();
+				PreparedStatement pstmt = conn.prepareStatement(sql)) {
+				
+				pstmt.setString(1, IDPartecipante_Input);
+				int rowsAffected = pstmt.executeUpdate();
+				
+				return rowsAffected > 0;
+				
+			} catch(SQLException e) {
+				System.out.println("Errore durante l'eliminazione del partecipante : "+ e.getMessage());
+				return false;
+			}
+	}
+	
+	public List<Partecipante> getAllPartecipanti() {
+		List<Partecipante> ListaPartecipanti = new ArrayList<>();
+		String sql = "SELECT * FROM uninafoodlab.partecipante;";
+		try(Connection conn = DBManager.getConnection();
+			PreparedStatement pstmt = conn.prepareStatement(sql);
+			ResultSet rs = pstmt.executeQuery()) {
+				while(rs.next()) {
+					Partecipante p = new Partecipante();
+					p.setID_Partecipante(rs.getString("idpartecipante"));
+					p.setNome(rs.getString("nomepartecipante"));
+					p.setCognome("cognomepartecipante");
+					p.setEmail("email");
+					p.setPassword("pass");
+					ListaPartecipanti.add(p);
+				}
+				return ListaPartecipanti;	
+			}catch(SQLException e) {
+				System.out.println("Errore durante il recupero dei partecipanti: " + e.getMessage());
+				return null;
+			}
+	}
 }
