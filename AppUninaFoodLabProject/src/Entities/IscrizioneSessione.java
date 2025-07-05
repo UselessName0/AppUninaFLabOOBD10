@@ -8,14 +8,17 @@ public class IscrizioneSessione {
 	private boolean Adesione;
 	
 	//COSTRUTTORI
-	private IscrizioneSessione(Partecipante P, Sessione S, boolean Adesione) {
+	public IscrizioneSessione(Partecipante P, Sessione S, boolean Adesione) {
 		this.P = P;
 		this.S = S;
 		this.Adesione = Adesione;
 	}
-	private IscrizioneSessione(Partecipante P, Sessione S) {
+	public IscrizioneSessione(Partecipante P, Sessione S) {
 		this.P = P;
 		this.S = S;
+	}
+	
+	public IscrizioneSessione() {
 	}
 	
 	//METODI

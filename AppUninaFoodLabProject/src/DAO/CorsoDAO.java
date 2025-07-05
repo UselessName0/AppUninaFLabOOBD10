@@ -314,7 +314,7 @@ public class CorsoDAO {
 			return ListaCorsi;
 			
 		} catch(SQLException e) {
-			System.out.println("Errore durante il recupero dei Chefs: " + e.getMessage());
+			System.out.println("Errore durante il recupero dei Corsi: " + e.getMessage());
 			return null;
 		}
 	}

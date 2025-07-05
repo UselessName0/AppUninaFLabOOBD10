@@ -6,8 +6,10 @@ import java.util.List;
 
 import Database.DBManager;
 import Entities.IscrizioneCorso;
+import Entities.IscrizioneSessione;
 import Entities.Corso;
 import Entities.Partecipante;
+import Entities.Sessione;
 
 public class IscrizioneCorsoDAO {
 	
@@ -32,7 +34,9 @@ public class IscrizioneCorsoDAO {
 			}
 	}
 	
+				
 
+	}
 	
 	
 }

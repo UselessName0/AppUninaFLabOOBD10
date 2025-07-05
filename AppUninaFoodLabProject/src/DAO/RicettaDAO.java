@@ -107,7 +107,7 @@ public class RicettaDAO {
 					}
 					return ListaRicette;	
 				}catch(SQLException e) {
-					System.out.println("Errore durante il recupero dei partecipanti: " + e.getMessage());
+					System.out.println("Errore durante il recupero delle ricette: " + e.getMessage());
 					return null;
 				}
 	}

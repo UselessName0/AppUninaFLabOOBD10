@@ -351,7 +351,7 @@ public class SessioneDAO {
 				}
 				return ListaSessioni;	
 			}catch(SQLException e) {
-				System.out.println("Errore durante il recupero dei partecipanti: " + e.getMessage());
+				System.out.println("Errore durante il recupero delle sessioni: " + e.getMessage());
 				return null;
 			}
 	}

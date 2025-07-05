@@ -107,7 +107,7 @@ public class IngredienteDAO {
 				}
 				return ListaIngredienti;	
 			}catch(SQLException e) {
-				System.out.println("Errore durante il recupero dei partecipanti: " + e.getMessage());
+				System.out.println("Errore durante il recupero degli ingredienti: " + e.getMessage());
 				return null;
 			}
 	}
