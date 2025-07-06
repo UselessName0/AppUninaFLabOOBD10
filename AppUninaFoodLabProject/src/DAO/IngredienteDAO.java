@@ -10,6 +10,8 @@ import Entities.Partecipante;
 import Entities.Ricetta;
 
 public class IngredienteDAO {
+	
+	//Metodo per inserire un nuovo ingrediente nel database(ritorna true se l'inserimento va a buon fine, false altrimenti)
 	public boolean InsertIngrediente(Ingrediente Ingrediente_Input) {
 		String sql = "INSERT INTO uninafoodlab.ricetta(idricetta, nominativoricetta)VALUES (?, ?);";
 			try(Connection conn = DBManager.getConnection();
@@ -27,6 +29,7 @@ public class IngredienteDAO {
 			}
 	}
 	
+	//Metodo per selezionare l'IDIngrediente in base al nome dell'ingrediente
 	public String GetIDIngredienteDAO(String NomeIngrediente){
 		String sql = "SELECT IDIngrediente FROM uninafoodlab.ingrediente WHERE nomeingrediente = ?;";
 			try(Connection conn = DBManager.getConnection();
@@ -44,6 +47,7 @@ public class IngredienteDAO {
 			}
 	}
 	
+	//Metodo per selezionare il nome dell'ingrediente con un oggetto ingrediente
 	public String GetNomeIngredienteDAO(Ingrediente Ingrediente_Input) {
 		String sql = "SELECT nomeingrediente FROM uninafoodlab.ingrediente WHERE idingrediente = ?";
 			try(Connection conn = DBManager.getConnection();
@@ -61,6 +65,7 @@ public class IngredienteDAO {
 			}	
 	}
 	
+	//Metodo per selezionare il nome dell'ingrediente con un IDIngrediente
 	public String GetNomeIngredienteDAO(String IDIngrediente_Input) {
 		String sql = "SELECT nomeingrediente FROM uninafoodlab.ingrediente WHERE idingrediente = ?";
 			try(Connection conn = DBManager.getConnection();
@@ -78,6 +83,7 @@ public class IngredienteDAO {
 			}	
 	}
 	
+	//Metodo per eliminare un ingrediente dal database
 	public boolean DeleteIngredienteDAO(String IDIngrediente_Input) {
 		String sql ="DELETE FROM uninafoodlab.corso WHERE corso.IDcorso = ?";
 			try(Connection conn = DBManager.getConnection();
@@ -94,6 +100,7 @@ public class IngredienteDAO {
 			}
 	}
 	
+	//Metodo per selezionare tutti gli ingredienti dal database
 	public List<Ingrediente> getAllIngredienteDAO() {
 		List<Ingrediente> ListaIngredienti = new ArrayList<>();
 		String sql = "SELECT * FROM uninafoodlab.ingredienti;";
@@ -111,6 +118,7 @@ public class IngredienteDAO {
 				return null;
 			}
 	}
+	
 	
 	
 }

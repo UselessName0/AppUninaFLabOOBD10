@@ -1,6 +1,6 @@
 package Entities;
 
-public class IngredientiRicetta {
+public class IngredienteRicetta {
 	//ATTRIBUTI
 	private Ricetta R;
 	private Ingrediente I;
@@ -8,14 +8,17 @@ public class IngredientiRicetta {
 	private String UnitaDiMisura;
 	
 	//COSTRUTTORI
-	public IngredientiRicetta(Ricetta R, Ingrediente I, float quantità, String UnitaDiMisura) {
+	public IngredienteRicetta(Ricetta R, Ingrediente I, float quantità, String UnitaDiMisura) {
 		this.R = R;
 		this.I = I;
 		this.quantità = quantità;
 		this.UnitaDiMisura = UnitaDiMisura;
 	}
 	
-	//METODI
+	public IngredienteRicetta() {
+	}
+
+		//METODI
 		//GETTER AND SETTER
 		public Ricetta getR() {
 			return R;

@@ -13,6 +13,7 @@ import Entities.Sessione;
 
 public class IscrizioneCorsoDAO {
 	
+	//metodo per l'inserimento di una nuova iscrizione al corso nel DB usando un oggetto IscrizioneCorso (True se l'inserimento va a buon fine, False altrimenti)
 	public boolean insertIscrizioneCorso(IscrizioneCorso IscrizioneCorso_Input) {
 		String sql = "INSERT INTO uninafooddlab.iscrizionecorso(idcorso, idpartecipante, datadiiscrizione) VALUES (?, ?, ?)";
 			try(Connection conn = DBManager.getConnection();
@@ -34,9 +35,76 @@ public class IscrizioneCorsoDAO {
 			}
 	}
 	
+	//Metodo per ottenere le iscrizioni ai corsi di un partecipante
+	public List<IscrizioneCorso> GetIscrizioniCorsoByPartecipante(Partecipante p) {
+		List<IscrizioneCorso> ListaIscrizioniCorso = new ArrayList<>();
+		String sql = "SELECT * FROM uninafoolab.iscrizionecorso WHERE idpartecipante = ?";
+		try(Connection conn = DBManager.getConnection();
+			PreparedStatement pstmt = conn.prepareStatement(sql)) {
+			
+				pstmt.setString(1, p.getID_Partecipante());
+				ResultSet rs = pstmt.executeQuery();
 				
-
+				while(rs.next()) {
+					IscrizioneCorso iscrizioneCorso = new IscrizioneCorso();
+					iscrizioneCorso.setP(p);
+					Corso C = new Corso(rs.getString("idcorso"));
+					iscrizioneCorso.setC(C);
+					iscrizioneCorso.setData_di_Iscrizione(rs.getDate("datadiiscrizione").toLocalDate());
+					ListaIscrizioniCorso.add(iscrizioneCorso);
+				}
+				
+				return ListaIscrizioniCorso;
+				
+			} catch(SQLException e) {
+				System.out.println("Errore nella selezione delle iscrizioni ai corsi: " + e.getMessage());
+				return null;
+			}
 	}
 	
+	//Metodo per ottenere le iscrizioni ai corsi di un corso
+	public List<IscrizioneCorso>GetIscrizioniCorsoByCorso(Corso c) {
+		List<IscrizioneCorso> ListaIscrizioniCorso = new ArrayList<>();
+		String sql = "SELECT * FROM uninafoolab.iscrizionecorso WHERE idcorso = ?";
+		try(Connection conn = DBManager.getConnection();
+			PreparedStatement pstmt = conn.prepareStatement(sql)) {
+			
+				pstmt.setString(1, c.getID_Corso());
+				ResultSet rs = pstmt.executeQuery();
+				
+				while(rs.next()) {
+					IscrizioneCorso iscrizioneCorso = new IscrizioneCorso();
+					iscrizioneCorso.setC(c);
+					Partecipante p = new Partecipante(rs.getString("idpartecipante"));
+					iscrizioneCorso.setP(p);
+					iscrizioneCorso.setData_di_Iscrizione(rs.getDate("datadiiscrizione").toLocalDate());
+					ListaIscrizioniCorso.add(iscrizioneCorso);
+				}
+				return ListaIscrizioniCorso;
+				
+			} catch(SQLException e) {
+				System.out.println("Errore nella selezione delle iscrizioni ai corsi: " + e.getMessage());
+				return null;
+			}
+	}
+	
+	// Metodo per eliminare un'iscrizione al corso dal DB usando un oggetto IscrizioneCorso (True se l'eliminazione va a buon fine, False altrimenti)
+	public boolean DeleteIscrizioneCorso(IscrizioneCorso iscrizioneCorso) {
+		String sql = "DELETE FROM uninafooddlab.iscrizionecorso WHERE idcorso = ? AND idpartecipante = ?";
+		try(Connection conn = DBManager.getConnection();
+			PreparedStatement pstmt = conn.prepareStatement(sql)) {
+			
+			pstmt.setString(1, iscrizioneCorso.getC().getID_Corso());
+			pstmt.setString(2, iscrizioneCorso.getP().getID_Partecipante());
+			
+			int rowsAffected = pstmt.executeUpdate();
+			return rowsAffected > 0;
+			
+		} catch(SQLException e) {
+			System.out.println("Errore durante l'eliminazione dell'iscrizione al corso: " + e.getMessage());
+			return false;
+		}
+	}
+
 	
 }

@@ -22,7 +22,11 @@ public class IscrizioneCorso {
 		Data_di_Iscrizione = LocalDate.now();
 	}
 	
-	//METODI
+	public IscrizioneCorso() {
+
+	}
+
+		//METODI
 		//GETTER E SETTERS
 		public Corso getC() {
 			return C;

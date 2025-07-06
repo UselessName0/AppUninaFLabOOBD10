@@ -10,6 +10,7 @@ import Entities.Partecipante;
 import Entities.Ricetta;
 
 public class RicettaDAO {
+	//Metodo per l'inserimento di una nuova ricetta nel DB usando un oggetto Ricetta (True se l'inserimento va a buon fine, False altrimenti)
 	public boolean InsertRicetta(Ricetta Ricetta_Input) {
 		String sql = "INSERT INTO uninafoodlab.ricetta(idricetta, nominativoricetta)VALUES (?, ?);";
 			try(Connection conn = DBManager.getConnection();
@@ -27,6 +28,7 @@ public class RicettaDAO {
 			}
 	}
 	
+	//Metodo per selezionare l'IDicetta dal DB usando un titolo 
 	public String GetIDRicettaDAO(String Titolo){
 		String sql = "SELECT IDRicetta FROM uninafoodlab.ricetta WHERE nominativoricetta = ?,";
 			try(Connection conn = DBManager.getConnection();
@@ -44,6 +46,7 @@ public class RicettaDAO {
 			}
 	}
 	
+	//Metodo per selezionare il titolo di una ricetta dal DB usando un oggetto Ricetta 
 	public String GetTitoloRicettaDAO(Ricetta Ricetta_Input){
 		String sql = "SELECT IDRicetta FROM uninafoodlab.ricetta WHERE nominativoricetta = ?,";
 			try(Connection conn = DBManager.getConnection();
@@ -61,6 +64,7 @@ public class RicettaDAO {
 			}
 	}
 	
+	//Metodo per selezionare il titolo di una ricetta dal DB usando l'IDRicetta 
 	public String GetTitoloRicettaDAO(String IDRicetta_Input){
 		String sql = "SELECT IDRicetta FROM uninafoodlab.ricetta WHERE nominativoricetta = ?,";
 			try(Connection conn = DBManager.getConnection();
@@ -78,6 +82,7 @@ public class RicettaDAO {
 			}
 	}
 	
+	//Metodo per eliminare una ricetta dal DB usando l'IDRicetta (True se l'eliminazione va a buon fine, False altrimenti)
 	public boolean DeleteRicettaDAO(String IDRicetta_Input) {
 		String sql ="DELETE FROM uninafoodlab.ricetta WHERE ricetta.idricetta = ?";
 			try(Connection conn = DBManager.getConnection();
@@ -94,6 +99,7 @@ public class RicettaDAO {
 			}
 	}
 	
+	//Metodo per selezionare tutte le ricette dal DB e restituirle come una lista di oggetti Ricetta
 	public List<Ricetta> GetAllRicettaDAO() {
 		List<Ricetta> ListaRicette = new ArrayList<>();
 		String sql = "SELECT * FROM uninafoodlab.ricetta;";

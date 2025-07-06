@@ -14,6 +14,7 @@ import Entities.Ricetta;
 
 public class SessioneDAO {
 	
+	//Metodo per l'inserimento di una nuova sessione nel DB usando un oggetto Sessione (True se l'inserimento va a buon fine, False altrimenti)	
 	public boolean InsertSessione(Sessione Sessione_Input) {
 		String sql = "INSERT INTO uninafoodlab.sessione(idsessione, idcorso, datasessione, ispratica, adesioni, linkconferenza, luogo, idricetta) VALUES (?, ?, ?, ?, ?, ?, ?, ?);";
 			try(Connection conn = DBManager.getConnection();
@@ -40,6 +41,7 @@ public class SessioneDAO {
 			}
 	}
 	
+	//Metodo per selezionare l'IDSessione dal DB usando un oggetto Corso e una data
 	public String getIDSessioneDAO(Corso Corso_Input, LocalDate Data_Input) {
 		String sql = "SELECT IDSessione FROM Sessione AS S WHERE (S.IDCorso = ?) AND (S.DataSessione = ?)";
 		try(Connection conn = DBManager.getConnection();
@@ -59,6 +61,7 @@ public class SessioneDAO {
 		}
 	}
 	
+	//Metodo per selezionare l'IDSessione dal DB usando un oggetto Sessione
 	public String getIDCorsoSessioneDAO(Sessione Sessione_Input) {
 		String sql = "SELECT IDCorso FROM Sessione AS S WHERE S.IDSessione= ? ";
 		try(Connection conn = DBManager.getConnection();
@@ -77,6 +80,7 @@ public class SessioneDAO {
 		}
 	}
 	
+	//Metodo per selezionare l'IDCorso a cui appartiene la sessione dal DB usando l'IDSessione
 	public String getIDCorsoSessioneDAO(String IDSessione_Input) {
 		String sql = "SELECT IDCorso FROM Sessione AS S WHERE S.IDSessione= ? ";
 		try(Connection conn = DBManager.getConnection();
@@ -95,6 +99,7 @@ public class SessioneDAO {
 		}
 	}
 	
+	//Metodo per selezionare la data della sessione dal DB usando un oggetto Sessione
 	public Date getDataSessioneDAO(Sessione Sessione_Input) {
 		String sql = "SELECT DataSessione FROM Sessione AS S WHERE S.IDSessione= ? ";
 		try(Connection conn = DBManager.getConnection();
@@ -113,6 +118,7 @@ public class SessioneDAO {
 		}
 	}
 	
+	//Metodo per selezionare la data della sessione dal DB usando l'IDSessione
 	public Date getDataSessioneDAO(String IDSessione_Input) {
 		String sql = "SELECT DataSessione FROM Sessione AS S WHERE S.IDSessione= ? ";
 		try(Connection conn = DBManager.getConnection();
@@ -131,6 +137,7 @@ public class SessioneDAO {
 		}
 	}
 	
+	//Metodo per selezionare se la sessione è pratica o teorica dal DB usando un oggetto Sessione
 	public boolean getIsPraticaSessioneDAO(Sessione Sessione_Input) {
 		String sql = "SELECT ispratica FROM Sessione AS S WHERE S.IDSessione= ? ";
 		try(Connection conn = DBManager.getConnection();
@@ -149,6 +156,7 @@ public class SessioneDAO {
 		}
 	}
 	
+	//Metodo per selezionare se la sessione è pratica o teorica dal DB usando l'IDSessione
 	public boolean getIsPraticaSessioneDAO(String IDSessione_Input) {
 		String sql = "SELECT ispratica FROM Sessione AS S WHERE S.IDSessione= ? ";
 		try(Connection conn = DBManager.getConnection();
@@ -167,6 +175,7 @@ public class SessioneDAO {
 		}
 	}
 	
+	//Metodo per selezionare il numero di adesioni alla sessione dal DB usando un oggetto Sessione
 	public int getAdesioniSessioneDAO(Sessione Sessione_Input) {
 		String sql = "SELECT adesioni FROM Sessione AS S WHERE S.IDSessione= ? ";
 		try(Connection conn = DBManager.getConnection();
@@ -185,6 +194,7 @@ public class SessioneDAO {
 		}
 	}
 	
+	//Metodo per selezionare il numero di adesioni alla sessione dal DB usando l'IDSessione
 	public int getAdesioniSessioneDAO(String IDSessione_Input) {
 		String sql = "SELECT adesioni FROM Sessione AS S WHERE S.IDSessione= ? ";
 		try(Connection conn = DBManager.getConnection();
@@ -203,6 +213,7 @@ public class SessioneDAO {
 		}
 	}
 	
+	//Metodo per selezionare il link della conferenza della sessione dal DB usando un oggetto Sessione
 	public String getLinkConferenzaSessione(Sessione Sessione_Input) {
 		String sql = "SELECT linkconferenza FROM Sessione AS S WHERE S.IDSessione= ? ";
 		try(Connection conn = DBManager.getConnection();
@@ -221,6 +232,7 @@ public class SessioneDAO {
 		}
 	}
 	
+	//Metodo per selezionare il link della conferenza della sessione dal DB usando l'IDSessione
 	public String getLinkConferenzaSessione(String IDSessione_Input) {
 		String sql = "SELECT linkconferenza FROM Sessione AS S WHERE S.IDSessione= ? ";
 		try(Connection conn = DBManager.getConnection();
@@ -239,6 +251,7 @@ public class SessioneDAO {
 		}
 	}
 	
+	//Metodo per selezionare il luogo della sessione dal DB usando un oggetto Sessione
 	public String getLuogoSessioneDAO(Sessione Sessione_Input) {
 		String sql = "SELECT luogo FROM Sessione AS S WHERE S.IDSessione= ? ";
 		try(Connection conn = DBManager.getConnection();
@@ -256,6 +269,8 @@ public class SessioneDAO {
 			return null;
 		}
 	}
+	
+	//Metodo per selezionare il luogo della sessione dal DB usando l'IDSessione
 	public String getLuogoSessioneDAO(String IDSessione_Input) {
 		String sql = "SELECT luogo FROM Sessione AS S WHERE S.IDSessione= ? ";
 		try(Connection conn = DBManager.getConnection();
@@ -274,7 +289,7 @@ public class SessioneDAO {
 		}
 	}
 	
-	
+	//Metodo per selezionare l'IDRicetta della sessione dal DB usando un oggetto Sessione
 	public String getRicettaSessioneDAO(Sessione Sessione_Input) {
 		String sql = "SELECT IDRicetta FROM Sessione AS S WHERE S.IDSessione= ? ";
 		try(Connection conn = DBManager.getConnection();
@@ -293,6 +308,7 @@ public class SessioneDAO {
 		}
 	}
 	
+	//Metodo per selezionare l'IDRicetta della sessione dal DB usando l'IDSessione
 	public String getRicettaSessioneDAO(String IDSessione_Input) {
 		String sql = "SELECT IDRicetta FROM Sessione AS S WHERE S.IDSessione= ? ";
 		try(Connection conn = DBManager.getConnection();
@@ -311,6 +327,7 @@ public class SessioneDAO {
 		}
 	}
 	
+	//Metodo per eliminare una sessione dal DB usando un oggetto Sessione (True se l'eliminazione va a buon fine, False altrimenti)
 	public boolean DeleteSessioneDAO(String IDSessione_Input) {
 		String sql ="DELETE FROM uninafoodlab.sessione WHERE sessione.IDSessione = ?";
 			try(Connection conn = DBManager.getConnection();
@@ -327,6 +344,7 @@ public class SessioneDAO {
 			}
 	}
 	
+	//Metodo per recuperare tutte le sessioni dal DB
 	public List<Sessione> getAllSessioniDAO() {
 		List<Sessione> ListaSessioni = new ArrayList<>();
 		String sql = "SELECT * FROM uninafoodlab.sessioni;";
@@ -354,5 +372,36 @@ public class SessioneDAO {
 				System.out.println("Errore durante il recupero delle sessioni: " + e.getMessage());
 				return null;
 			}
+	}
+	
+	//Metodo per recuperare tutte le sessioni di un corso specifico dal DB
+	public List<Sessione> getAllSessioniCorsoDAO(Corso Corso_Input) {
+		List<Sessione> ListaSessioni = new ArrayList<>();
+		String sql = "SELECT * FROM uninafoodlab.sessioni WHERE idcorso = ?;";
+		try(Connection conn = DBManager.getConnection();
+			PreparedStatement pstmt = conn.prepareStatement(sql)) {
+			
+			pstmt.setString(1, Corso_Input.getID_Corso());
+			ResultSet rs = pstmt.executeQuery();
+			while(rs.next()) {
+				Sessione s = new Sessione();
+				
+				s.setID_Sessione(rs.getString("idsessione"));
+				s.setRelatedCorso(Corso_Input);
+				s.setData_Sessione(rs.getDate("datasessione").toLocalDate());
+				s.setIsPratica(rs.getBoolean("ispratica"));
+				s.setNumero_Adesioni(rs.getInt("adesioni"));
+				s.setLinkConferenza(rs.getString("linkconferenza"));
+				s.setLuogo(rs.getString("luogo"));
+				Ricetta r = new Ricetta(rs.getString("idricetta"));
+				s.setRicetta_Appresa(r);
+				
+				ListaSessioni.add(s);
+			}
+			return ListaSessioni;	
+		}catch(SQLException e) {
+			System.out.println("Errore durante il recupero delle sessioni: " + e.getMessage());
+			return null;
+		}
 	}
 }
