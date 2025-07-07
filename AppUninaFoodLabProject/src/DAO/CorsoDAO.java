@@ -141,7 +141,7 @@ public class CorsoDAO {
 			pstmt.setString(1, IDCorso_Input);
 			ResultSet rs = pstmt.executeQuery();
 	        if (rs.next()) 
-	            return rs.getDate("DataInizio");
+	            return rs.getDate("DataInizio"); //Decidere se tornare in date normale o in localDate
 	        else 
 	            return null;
 			
@@ -242,7 +242,7 @@ public class CorsoDAO {
 			
 			ResultSet rs = pstmt.executeQuery();
 	        if (rs.next()) 
-	            return rs.getString("Nomecorso");
+	            return rs.getString("idcorso");
 	        else 
 	            return null;
 			

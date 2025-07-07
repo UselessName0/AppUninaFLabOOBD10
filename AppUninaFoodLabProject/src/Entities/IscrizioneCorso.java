@@ -23,7 +23,6 @@ public class IscrizioneCorso {
 	}
 	
 	public IscrizioneCorso() {
-
 	}
 
 		//METODI
