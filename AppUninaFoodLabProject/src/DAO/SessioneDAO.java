@@ -48,7 +48,7 @@ public class SessioneDAO {
 			PreparedStatement pstmt = conn.prepareStatement(sql)) {
 			
 			pstmt.setString(1, Corso_Input.getID_Corso());
-			pstmt.setDate(2, java.sql.Date.valueOf(Data_Input));
+			pstmt.setDate(2, java.sql.Date.valueOf(Data_Input));//fare metodo per convertire LocalDate in java.sql.Date
 			ResultSet rs = pstmt.executeQuery();
 	        if (rs.next()) 
 	            return rs.getString("idsessione");
