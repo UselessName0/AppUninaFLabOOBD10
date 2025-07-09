@@ -6,6 +6,10 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.GroupLayout.Alignment;
 
+import Entities.Partecipante;
+import DAO.PartecipanteDAO;
+import Controller.ControllerPartecipante;
+
 public class LoginUtenteFrame extends JFrame {
 
     public LoginUtenteFrame() {
@@ -58,11 +62,15 @@ public class LoginUtenteFrame extends JFrame {
         loginButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+            	
+            	ControllerPartecipante CP = new ControllerPartecipante();
+            	
                 String email = emailField.getText();
                 String password = String.valueOf(passwordField.getPassword());
                 JOptionPane.showMessageDialog(LoginUtenteFrame.this,
                         "Login Utente:\nEmail: " + email + "\nPassword: " + password);
-                DashboardUtente dashboard = new DashboardUtente();
+                
+                DashboardUtente dashboard = new DashboardUtente(CP.LoginCheck(email, password));
                 dashboard.setVisible(true);
                 dispose();
             }

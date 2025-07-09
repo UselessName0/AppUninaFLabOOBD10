@@ -1,5 +1,6 @@
 package GUI;
 
+import Controller.ControllerChef;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
@@ -59,9 +60,10 @@ public class LoginChefFrame extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 String email = emailField.getText();
                 String password = String.valueOf(passwordField.getPassword());
+                ControllerChef CC = new ControllerChef();
                 JOptionPane.showMessageDialog(LoginChefFrame.this,
                     "Login Chef:\nEmail: " + email + "\nPassword: " + password);
-                // Verifica credenziali qui...
+               CC.LoginCheck(email, password);
             }
         });
 
@@ -95,5 +97,9 @@ public class LoginChefFrame extends JFrame {
                     .addContainerGap(50, Short.MAX_VALUE))
         );
         contentPane.setLayout(gl_contentPane);
+        
+      
+        
+        
     }
 }

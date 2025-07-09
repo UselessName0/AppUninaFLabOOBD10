@@ -69,9 +69,28 @@ public class ChefDAO {
 			}
 	}
 	
+	//Metodo per selezionare un idchef usando Email e Password
+	public String getIDChefDAO(String Email_Input, String Password_Input) {
+		String sql = "SELECT ch.idchef FROM uninafoodlab.chef WHERE (emailchef = ?) AND (pass = ?)";
+				try(Connection conn = DBManager.getConnection();
+					PreparedStatement pstmt = conn.prepareStatement(sql)) {
+					
+					pstmt.setString(1, Email_Input);
+					pstmt.setString(2, Password_Input);
+					
+					ResultSet rs = pstmt.executeQuery();
+					if(rs.next())
+						return rs.getString("idchef");
+					else
+						return null;
+				} catch(SQLException e) {
+					e.getMessage();
+					return null;
+				}
+	}
 	//Metodo per selezionare uno Chef dal DB usando un oggetto Chef per cercarlo
 	public String getNomeChefDAO(Chef Chef_Input) {
-		String sql = "SELECT Ch.Nomechef FROM Chef AS Ch WHERE Ch.IDChef = ?";
+		String sql = "SELECT Ch.Nomechef FROM uninafoodlab.Chef AS Ch WHERE Ch.IDChef = ?";
 			try(Connection conn = DBManager.getConnection(); 
 				PreparedStatement pstmt = conn.prepareStatement(sql)) {
 				

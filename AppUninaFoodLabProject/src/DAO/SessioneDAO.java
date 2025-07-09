@@ -404,4 +404,100 @@ public class SessioneDAO {
 			return null;
 		}
 	}
+	
+	public List<Sessione> getAllSessioniCorsoDAObyDate(LocalDate Date_Input) {
+		List<Sessione> ListaSessioni = new ArrayList<>();
+		String sql = "SELECT * FROM uninafoodlab.sessioni WHERE datasessione >= ?;";
+		try(Connection conn = DBManager.getConnection();
+			PreparedStatement pstmt = conn.prepareStatement(sql)) {
+			
+			pstmt.setDate(1, java.sql.Date.valueOf(Date_Input));
+			ResultSet rs = pstmt.executeQuery();
+			while(rs.next()) {
+				Sessione s = new Sessione();
+				
+				s.setID_Sessione(rs.getString("idsessione"));
+				
+				Corso c = new Corso(rs.getString("idcorso"));
+				s.setRelatedCorso(c);
+				s.setData_Sessione(rs.getDate("datasessione").toLocalDate());
+				s.setIsPratica(rs.getBoolean("ispratica"));
+				s.setNumero_Adesioni(rs.getInt("adesioni"));
+				s.setLinkConferenza(rs.getString("linkconferenza"));
+				s.setLuogo(rs.getString("luogo"));
+				Ricetta r = new Ricetta(rs.getString("idricetta"));
+				s.setRicetta_Appresa(r);
+				
+				ListaSessioni.add(s);
+			}
+			return ListaSessioni;	
+		}catch(SQLException e) {
+			System.out.println("Errore durante il recupero delle sessioni: " + e.getMessage());
+			return null;
+		}
+	}
+	
+	public List<Sessione> getAllSessioniCorsoDAObyLuogo(String Luogo_Input) {
+		List<Sessione> ListaSessioni = new ArrayList<>();
+		String sql = "SELECT * FROM uninafoodlab.sessioni WHERE luogo = ?;";
+		try(Connection conn = DBManager.getConnection();
+			PreparedStatement pstmt = conn.prepareStatement(sql)) {
+			
+			pstmt.setString(1, Luogo_Input);
+			ResultSet rs = pstmt.executeQuery();
+			while(rs.next()) {
+				Sessione s = new Sessione();
+				
+				s.setID_Sessione(rs.getString("idsessione"));
+				
+				Corso c = new Corso(rs.getString("idcorso"));
+				s.setRelatedCorso(c);
+				s.setData_Sessione(rs.getDate("datasessione").toLocalDate());
+				s.setIsPratica(rs.getBoolean("ispratica"));
+				s.setNumero_Adesioni(rs.getInt("adesioni"));
+				s.setLinkConferenza(rs.getString("linkconferenza"));
+				s.setLuogo(rs.getString("luogo"));
+				Ricetta r = new Ricetta(rs.getString("idricetta"));
+				s.setRicetta_Appresa(r);
+				
+				ListaSessioni.add(s);
+			}
+			return ListaSessioni;	
+		}catch(SQLException e) {
+			System.out.println("Errore durante il recupero delle sessioni: " + e.getMessage());
+			return null;
+		}
+	}
+	
+	public List<Sessione> getAllSessioniCorsoDAObyRicetta(Ricetta Ricetta_Input) {
+		List<Sessione> ListaSessioni = new ArrayList<>();
+		String sql = "SELECT * FROM uninafoodlab.sessioni WHERE idricetta = ?;";
+		try(Connection conn = DBManager.getConnection();
+			PreparedStatement pstmt = conn.prepareStatement(sql)) {
+			
+			pstmt.setString(1, Ricetta_Input.getIDRicetta());
+			ResultSet rs = pstmt.executeQuery();
+			while(rs.next()) {
+				Sessione s = new Sessione();
+				
+				s.setID_Sessione(rs.getString("idsessione"));
+				
+				Corso c = new Corso(rs.getString("idcorso"));
+				s.setRelatedCorso(c);
+				s.setData_Sessione(rs.getDate("datasessione").toLocalDate());
+				s.setIsPratica(rs.getBoolean("ispratica"));
+				s.setNumero_Adesioni(rs.getInt("adesioni"));
+				s.setLinkConferenza(rs.getString("linkconferenza"));
+				s.setLuogo(rs.getString("luogo"));
+				Ricetta r = new Ricetta(rs.getString("idricetta"));
+				s.setRicetta_Appresa(r);
+				
+				ListaSessioni.add(s);
+			}
+			return ListaSessioni;	
+		}catch(SQLException e) {
+			System.out.println("Errore durante il recupero delle sessioni: " + e.getMessage());
+			return null;
+		}
+	}
 }

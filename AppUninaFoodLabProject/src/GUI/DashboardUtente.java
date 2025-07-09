@@ -4,10 +4,16 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.GroupLayout.Alignment;
+import Entities.Partecipante;
+import DAO.PartecipanteDAO;
+import Controller.ControllerPartecipante;
+import javax.swing.LayoutStyle.ComponentPlacement;
+
 
 public class DashboardUtente extends JFrame {
+	private JTextField textField;
 
-    public DashboardUtente() {
+    public DashboardUtente(Partecipante P) {
         setTitle("Dashboard Utente - UninaFoodLab");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(900, 700);
@@ -50,15 +56,25 @@ public class DashboardUtente extends JFrame {
         menuBar.add(menuAccount);
 
         setJMenuBar(menuBar);
+        
+        textField = new JTextField();
+        textField.setColumns(10);
         GroupLayout groupLayout = new GroupLayout(getContentPane());
         groupLayout.setHorizontalGroup(
         	groupLayout.createParallelGroup(Alignment.LEADING)
-        		.addGap(0, 886, Short.MAX_VALUE)
+        		.addGroup(groupLayout.createSequentialGroup()
+        			.addGap(228)
+        			.addComponent(textField, GroupLayout.PREFERRED_SIZE, 237, GroupLayout.PREFERRED_SIZE)
+        			.addContainerGap(421, Short.MAX_VALUE))
         );
         groupLayout.setVerticalGroup(
         	groupLayout.createParallelGroup(Alignment.LEADING)
-        		.addGap(0, 641, Short.MAX_VALUE)
+        		.addGroup(groupLayout.createSequentialGroup()
+        			.addGap(68)
+        			.addComponent(textField, GroupLayout.PREFERRED_SIZE, 81, GroupLayout.PREFERRED_SIZE)
+        			.addContainerGap(492, Short.MAX_VALUE))
         );
         getContentPane().setLayout(groupLayout);
+        textField.setText("Benvenuto " + P.getNome());
     }
 }
