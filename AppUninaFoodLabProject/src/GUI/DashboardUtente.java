@@ -74,7 +74,5 @@ public class DashboardUtente extends JFrame {
         			.addComponent(textField, GroupLayout.PREFERRED_SIZE, 81, GroupLayout.PREFERRED_SIZE)
         			.addContainerGap(492, Short.MAX_VALUE))
         );
-        getContentPane().setLayout(groupLayout);
-        textField.setText("Benvenuto " + P.getNome());
     }
 }

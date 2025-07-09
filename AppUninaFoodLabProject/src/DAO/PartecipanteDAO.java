@@ -39,7 +39,7 @@ public class PartecipanteDAO {
 			ResultSet rs = pstmt.executeQuery();
 			rs.next();
 			
-			if(rs.getString(1) == pwdInput)
+			if(rs.getString(1).equals(pwdInput))
 				return true;
 			else
 				return false;

@@ -62,17 +62,27 @@ public class LoginUtenteFrame extends JFrame {
         loginButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-            	
-            	ControllerPartecipante CP = new ControllerPartecipante();
-            	
+
+                ControllerPartecipante CP = new ControllerPartecipante();
+
                 String email = emailField.getText();
                 String password = String.valueOf(passwordField.getPassword());
-                JOptionPane.showMessageDialog(LoginUtenteFrame.this,
-                        "Login Utente:\nEmail: " + email + "\nPassword: " + password);
-                
-                DashboardUtente dashboard = new DashboardUtente(CP.LoginCheck(email, password));
-                dashboard.setVisible(true);
-                dispose();
+
+                Partecipante partecipante = CP.LoginCheck(email, password);
+
+                if (partecipante != null) {
+                    JOptionPane.showMessageDialog(LoginUtenteFrame.this,
+                            "Benvenuto " + partecipante.getNome());
+
+                    DashboardUtente dashboard = new DashboardUtente(partecipante);
+                    dashboard.setVisible(true);
+                    dispose();
+                } else {
+                    JOptionPane.showMessageDialog(LoginUtenteFrame.this,
+                            "Email o password errati.",
+                            "Login fallito",
+                            JOptionPane.ERROR_MESSAGE);
+                }
             }
         });
 
