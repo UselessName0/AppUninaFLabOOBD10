@@ -8,7 +8,7 @@ public class ControllerChef {
 	
 	private ChefDAO chefDAO = new ChefDAO();
 	
-	public Chef LoginCheck(String email_Input, String password_nput) {
+	public Chef LoginCheck(String email_Input, String password_Input) {
 		try {
 			if (!chefDAO.checkEmail(email_Input)) {
 				System.out.println("Email non registrata.");
