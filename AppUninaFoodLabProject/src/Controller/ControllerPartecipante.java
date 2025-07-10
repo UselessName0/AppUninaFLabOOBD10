@@ -28,6 +28,21 @@ public class ControllerPartecipante {
 	        return null;
 	    }
 	}
-
+	//Controllare che la mail non è già stata registrata
+	public Partecipante RegisterCheck(String Email_Input, String Password_Input) {
+		try {
+			if(partecipanteDAO.checkEmail(Email_Input)) {
+				System.out.println("Email già registrata!");
+				return null;
+			}
+			else {
+				
+			}
+			
+		} catch(Exception e) {
+			System.out.println("Errore durante la registrzione: " + e.getMessage());
+			return null;
+		}
+	}
 	
 }
