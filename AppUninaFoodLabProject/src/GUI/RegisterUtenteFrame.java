@@ -86,10 +86,6 @@ public class RegisterUtenteFrame extends JFrame {
                 } else {
                     JOptionPane.showMessageDialog(RegisterUtenteFrame.this, "Registrazione Utente completata!");
                 }
-                
-                DashboardUtente dashboard = new DashboardUtente();
-                dashboard.setVisible(true);
-                dispose();
             }
         });
 

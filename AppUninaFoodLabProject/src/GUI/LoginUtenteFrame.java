@@ -67,21 +67,25 @@ public class LoginUtenteFrame extends JFrame {
 
                 String email = emailField.getText();
                 String password = String.valueOf(passwordField.getPassword());
-
                 Partecipante partecipante = CP.LoginCheck(email, password);
 
-                if (partecipante != null) {
+                if (partecipante == null) {
                     JOptionPane.showMessageDialog(LoginUtenteFrame.this,
-                            "Benvenuto " + partecipante.getNome());
+                        "Email non registrata.",
+                        "Errore",
+                        JOptionPane.ERROR_MESSAGE);
+                } else if (partecipante.getNome() == null) {
+                    JOptionPane.showMessageDialog(LoginUtenteFrame.this,
+                        "Password errata. Riprova.",
+                        "Errore",
+                        JOptionPane.ERROR_MESSAGE);
+                } else {
+                    JOptionPane.showMessageDialog(LoginUtenteFrame.this,
+                        "Benvenuto " + partecipante.getNome());
 
                     DashboardUtente dashboard = new DashboardUtente(partecipante);
                     dashboard.setVisible(true);
                     dispose();
-                } else {
-                    JOptionPane.showMessageDialog(LoginUtenteFrame.this,
-                            "Email o password errati.",
-                            "Login fallito",
-                            JOptionPane.ERROR_MESSAGE);
                 }
             }
         });

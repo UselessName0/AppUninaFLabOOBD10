@@ -11,6 +11,7 @@ import Entities.Partecipante;
 public class PartecipanteDAO {
 	//La funzione ritorna true se l'email è presente all'interno del DB, false altrimenti
 	public boolean checkEmail(String emailInput) {
+		
 	    String sql = "SELECT email FROM uninafoodlab.partecipante WHERE email = ?";
 	    try (Connection conn = DBManager.getConnection();
 	         PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -192,6 +193,31 @@ public class PartecipanteDAO {
 				e.printStackTrace();
 		        return null;
 			}
+	}
+	
+	// Metodo per ottenere un oggetto Partecipante dal DB usando l'email
+	public Partecipante getPartecipanteByEmail(String email) {
+		
+		String sql = "SELECT COUNT(*) FROM uninafoodlab.partecipante WHERE email = ?";
+	    try (Connection conn = DBManager.getConnection();
+	         PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+	        pstmt.setString(1, email);
+	        ResultSet rs = pstmt.executeQuery();
+	        rs.next();
+	        
+	        if (rs.next()) {
+	            Partecipante partecipante = new Partecipante();
+	            partecipante.setID_Partecipante(rs.getString("IDPartecipante"));
+
+	            return partecipante;
+	        } else 
+	            return null;
+
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	        return null;
+	    }
 	}
 	
 	//Metodo per selezionare la password di un partecipante dal DB usando un oggetto Partecipante
