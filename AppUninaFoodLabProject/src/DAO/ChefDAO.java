@@ -38,7 +38,7 @@ public class ChefDAO {
 			ResultSet rs = pstmt.executeQuery();
 			rs.next();
 			
-			if(rs.getString(1) == pwdInput)
+			if(rs.getString("pass").equals(pwdInput))
 				return true;
 			else
 				return false;
@@ -69,6 +69,29 @@ public class ChefDAO {
 			}
 	}
 	
+	public Chef getChefByEmail(String Email_Input) {
+		String sql = "SELECT * FROM uninafoodlab.chef WHERE email = ?";
+			try(Connection conn = DBManager.getConnection();
+				PreparedStatement pstmt = conn.prepareStatement(sql)) {
+				
+				pstmt.setString(1, Email_Input);
+				ResultSet rs = pstmt.executeQuery();
+				if(rs.next()) {
+				
+					Chef C = new Chef();
+					C.setID_Chef(rs.getString("idchef"));
+					C.setNome(rs.getString("nomechef"));
+					C.setCognome(rs.getString("cognomechef"));
+					C.setEmail(rs.getString("email"));
+					C.setPassword(rs.getString("pass"));
+					return C;
+				} else 
+					return null;
+			} catch(SQLException e) {
+				e.getMessage();
+				return null;
+			}
+	}
 	//Metodo per selezionare un idchef usando Email e Password
 	public String getIDChefDAO(String Email_Input, String Password_Input) {
 		String sql = "SELECT ch.idchef FROM uninafoodlab.chef WHERE (emailchef = ?) AND (pass = ?)";
@@ -90,14 +113,15 @@ public class ChefDAO {
 	}
 	//Metodo per selezionare uno Chef dal DB usando un oggetto Chef per cercarlo
 	public String getNomeChefDAO(Chef Chef_Input) {
-		String sql = "SELECT Ch.Nomechef FROM uninafoodlab.Chef AS Ch WHERE Ch.IDChef = ?";
+		String sql = "SELECT Ch.nomechef FROM uninafoodlab.Chef AS Ch WHERE Ch.IDChef = ?";
 			try(Connection conn = DBManager.getConnection(); 
 				PreparedStatement pstmt = conn.prepareStatement(sql)) {
 				
 				pstmt.setString(1, Chef_Input.getID_Chef());
 				ResultSet rs = pstmt.executeQuery();
-		        if (rs.next()) 
-		            return rs.getString("Nomechef");
+		        if (rs.next()) {
+		            return rs.getString("nomechef");
+		        }
 		        else 
 		            return null;
 		         
@@ -109,14 +133,16 @@ public class ChefDAO {
 	
 	//Metodo per selezionare il nome Chef dal DB usando l'IDChef per cercarlo
 	public String getNomeChefDAO(String IDChef_Input) {
-		String sql = "SELECT Ch.Nomechef FROM Chef AS Ch WHERE Ch.IDChef = ?";
+		String sql = "SELECT Ch.Nomechef FROM uninafoodlab.chef AS Ch WHERE Ch.IDChef = ?";
 			try(Connection conn = DBManager.getConnection(); 
 				PreparedStatement pstmt = conn.prepareStatement(sql)) {
 				
 				pstmt.setString(1, IDChef_Input);
 				ResultSet rs = pstmt.executeQuery();
-		        if (rs.next()) 
+		        if (rs.next()) {
+		        	System.out.println("ciao" + rs.getString("nomechef"));
 		            return rs.getString("Nomechef");
+		        }
 		        else 
 		            return null;
 		         
@@ -128,13 +154,13 @@ public class ChefDAO {
 	
 	//Metodo per selezionare il cognome Chef dal DB usando un oggetto Chef per cercarlo
 	public String getCognomeChefDAO(Chef Chef_Input) {
-		String sql = "SELECT Ch.Cognomechef FROM Chef AS Ch WHERE Ch.IDChef = ?";
+		String sql = "SELECT Ch.Cognomechef FROM uninafoodlab.chef AS Ch WHERE Ch.IDChef = ?";
 			try(Connection conn = DBManager.getConnection(); 
 				PreparedStatement pstmt = conn.prepareStatement(sql)) {
 				
 				pstmt.setString(1, Chef_Input.getID_Chef());
 				ResultSet rs = pstmt.executeQuery();
-				rs.next();
+				
 				
 		        if (rs.next()) 
 		            return rs.getString("Cognomechef");
@@ -149,13 +175,13 @@ public class ChefDAO {
 	
 	//Metodo per selezionare il cognome Chef dal DB usando l'IDChef per cercarlo
 	public String getCognomeChefDAO(String IDChef_Input) {
-		String sql = "SELECT Ch.Cognomechef FROM Chef AS Ch WHERE Ch.IDChef = ?";
+		String sql = "SELECT Ch.Cognomechef FROM uninafoodlab.chef AS Ch WHERE Ch.IDChef = ?";
 			try(Connection conn = DBManager.getConnection(); 
 				PreparedStatement pstmt = conn.prepareStatement(sql)) {
 				
 				pstmt.setString(1, IDChef_Input);
 				ResultSet rs = pstmt.executeQuery();
-				rs.next();
+				
 				
 		        if (rs.next()) 
 		            return rs.getString("Cognomechef");
@@ -170,13 +196,13 @@ public class ChefDAO {
 	
 	//Metodo per selezionare l'email Chef dal DB usando un oggetto Chef per cercarlo
 	public String getEmailChefDAO(Chef Chef_Input) {
-		String sql = "SELECT Ch.Email FROM Chef AS Ch WHERE Ch.IDChef = ?";
+		String sql = "SELECT Ch.Email FROM uninafoodlab.chef AS Ch WHERE Ch.IDChef = ?";
 			try(Connection conn = DBManager.getConnection(); 
 				PreparedStatement pstmt = conn.prepareStatement(sql)) {
 				
 				pstmt.setString(1, Chef_Input.getID_Chef());
 				ResultSet rs = pstmt.executeQuery();
-				rs.next();
+				
 				
 		        if (rs.next()) 
 		            return rs.getString("Email");
@@ -191,13 +217,13 @@ public class ChefDAO {
 	
 	//Metodo per selezionare l'email Chef dal DB usando l'IDChef per cercarlo
 	public String getEmailChefDAO(String IDChef_Input) {
-		String sql = "SELECT Ch.Email FROM Chef AS Ch WHERE Ch.IDChef = ?";
+		String sql = "SELECT Ch.Email FROM uninafoodlab.chef AS Ch WHERE Ch.IDChef = ?";
 			try(Connection conn = DBManager.getConnection(); 
 				PreparedStatement pstmt = conn.prepareStatement(sql)) {
 				
 				pstmt.setString(1, IDChef_Input);
 				ResultSet rs = pstmt.executeQuery();
-				rs.next();
+				
 				
 		        if (rs.next()) 
 		            return rs.getString("Email");
@@ -214,13 +240,13 @@ public class ChefDAO {
 	
 	//Metodo per selezionare la password Chef dal DB usando l'IDChef per cercarlo
 	public String getpassChefDAO(String IDChef_Input) {
-		String sql = "SELECT Ch.pass FROM Chef AS Ch WHERE Ch.IDChef = ?";
+		String sql = "SELECT Ch.pass FROM uninafoodlab.chef AS Ch WHERE Ch.IDChef = ?";
 			try(Connection conn = DBManager.getConnection(); 
 				PreparedStatement pstmt = conn.prepareStatement(sql)) {
 				
 				pstmt.setString(1, IDChef_Input);
 				ResultSet rs = pstmt.executeQuery();
-				rs.next();
+				
 				
 		        if (rs.next()) 
 		            return rs.getString("pass");

@@ -12,17 +12,14 @@ public class PartecipanteDAO {
 	//La funzione ritorna true se l'email è presente all'interno del DB, false altrimenti
 	public boolean checkEmail(String emailInput) {
 		
-	    String sql = "SELECT email FROM uninafoodlab.partecipante WHERE email = ?";
+	    String sql = "SELECT 1 FROM uninafoodlab.partecipante WHERE email = ?";
 	    try (Connection conn = DBManager.getConnection();
 	         PreparedStatement pstmt = conn.prepareStatement(sql)) {
 	        
 	        pstmt.setString(1, emailInput);
 	        ResultSet rs = pstmt.executeQuery();
 	        
-	        if (rs.next()) 
-	            return true; 
-	        else 
-	            return false;  
+	        return rs.next(); // Se esiste almeno una riga, l'email è presente 
 	        
 	    } catch (SQLException e) {
 	        System.out.println("Errore durante la verifica dell'email: " + e.getMessage());
@@ -72,13 +69,13 @@ public class PartecipanteDAO {
 	
 	//Metodo per selezionare il nome di un partecipante dal DB usando un oggetto Partecipante
 	public String getNomePartecipanteDAO(Partecipante Partecipante_Input) {
-		String sql = "SELECT P.Nomepartecipante FROM Partecipante AS P WHERE P.IDPartecipante = ?";
+		String sql = "SELECT P.Nomepartecipante FROM uninafoodlab.Partecipante AS P WHERE P.IDPartecipante = ?";
 			try(Connection conn = DBManager.getConnection(); 
 				PreparedStatement pstmt = conn.prepareStatement(sql)) {
 				
 				pstmt.setString(1, Partecipante_Input.getID_Partecipante());
 				ResultSet rs = pstmt.executeQuery();
-				rs.next();
+				
 				
 		        if (rs.next()) 
 		            return rs.getString("Nomepartecipante");
@@ -93,13 +90,13 @@ public class PartecipanteDAO {
 	
 	//Metodo per selezionare il nome di un partecipante dal DB usando l'IDPartecipante
 	public String getNomePartecipanteDAO(String IDPartecipante_Input) {
-		String sql = "SELECT P.Nomepartecipante FROM Partecipante AS P WHERE P.IDPartecipante = ?";
+		String sql = "SELECT P.Nomepartecipante FROM uninafoodlab.partecipante AS P WHERE P.IDPartecipante = ?";
 			try(Connection conn = DBManager.getConnection(); 
 				PreparedStatement pstmt = conn.prepareStatement(sql)) {
 				
 				pstmt.setString(1, IDPartecipante_Input);
 				ResultSet rs = pstmt.executeQuery();
-				rs.next();
+				
 				
 		        if (rs.next()) 
 		            return rs.getString("Nomepartecipante");
@@ -114,13 +111,13 @@ public class PartecipanteDAO {
 	
 	//Metodo per selezionare il cognome di un partecipante dal DB usando un oggetto Partecipante
 	public String getCognomePartecipanteDAO(Partecipante Partecipante_Input) {
-		String sql = "SELECT P.Cognomepartecipante FROM Partecipante AS P WHERE P.IDPartecipante = ?";
+		String sql = "SELECT P.Cognomepartecipante FROM uninafoodlab.partecipante AS P WHERE P.IDPartecipante = ?";
 			try(Connection conn = DBManager.getConnection(); 
 				PreparedStatement pstmt = conn.prepareStatement(sql)) {
 				
 				pstmt.setString(1, Partecipante_Input.getID_Partecipante());
 				ResultSet rs = pstmt.executeQuery();
-				rs.next();
+				
 				
 		        if (rs.next()) 
 		            return rs.getString("Cognomepartecipante");
@@ -134,13 +131,13 @@ public class PartecipanteDAO {
 	}
 	//Metodo per selezionare il cognome di un partecipante dal DB usando l'IDPartecipante
 	public String getCognomePartecipanteDAO(String IDPartecipante_Input) {
-		String sql = "SELECT P.Cognomepartecipante FROM Partecipante AS P WHERE P.IDPartecipante = ?";
+		String sql = "SELECT P.Cognomepartecipante FROM uninafoodlab.Partecipante AS P WHERE P.IDPartecipante = ?";
 			try(Connection conn = DBManager.getConnection(); 
 				PreparedStatement pstmt = conn.prepareStatement(sql)) {
 				
 				pstmt.setString(1, IDPartecipante_Input);
 				ResultSet rs = pstmt.executeQuery();
-				rs.next();
+				
 				
 		        if (rs.next()) 
 		            return rs.getString("Cognomepartecipante");
@@ -155,13 +152,13 @@ public class PartecipanteDAO {
 	
 	//Metodo per selezionare l'email di un partecipante dal DB usando un oggetto Partecipante
 	public String getEmailPartecipanteDAO(Partecipante Partecipante_Input) {
-		String sql = "SELECT P.Email FROM Partecipante AS P WHERE P.IDPartecipante = ?";
+		String sql = "SELECT P.Email FROM uninafoodlab.Partecipante AS P WHERE P.IDPartecipante = ?";
 			try(Connection conn = DBManager.getConnection(); 
 				PreparedStatement pstmt = conn.prepareStatement(sql)) {
 				
 				pstmt.setString(1, Partecipante_Input.getID_Partecipante());
 				ResultSet rs = pstmt.executeQuery();
-				rs.next();
+				
 				
 		        if (rs.next()) 
 		            return rs.getString("Email");
@@ -176,13 +173,13 @@ public class PartecipanteDAO {
 	
 	//Metodo per selezionare l'email di un partecipante dal DB usando l'IDPartecipante
 	public String getEmailPartecipanteDAO(String IDPartecipante_Input) {
-		String sql = "SELECT P.Email FROM Partecipante AS P WHERE P.IDPartecipante = ?";
+		String sql = "SELECT P.Email FROM uninafoodlab.Partecipante AS P WHERE P.IDPartecipante = ?";
 			try(Connection conn = DBManager.getConnection(); 
 				PreparedStatement pstmt = conn.prepareStatement(sql)) {
 				
 				pstmt.setString(1, IDPartecipante_Input);
 				ResultSet rs = pstmt.executeQuery();
-				rs.next();
+				
 				
 		        if (rs.next()) 
 		            return rs.getString("Email");
@@ -198,18 +195,19 @@ public class PartecipanteDAO {
 	// Metodo per ottenere un oggetto Partecipante dal DB usando l'email
 	public Partecipante getPartecipanteByEmail(String email) {
 		
-		String sql = "SELECT COUNT(*) FROM uninafoodlab.partecipante WHERE email = ?";
+		String sql = "SELECT * FROM uninafoodlab.partecipante WHERE email = ?";
 	    try (Connection conn = DBManager.getConnection();
 	         PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
 	        pstmt.setString(1, email);
 	        ResultSet rs = pstmt.executeQuery();
-	        rs.next();
 	        
 	        if (rs.next()) {
 	            Partecipante partecipante = new Partecipante();
-	            partecipante.setID_Partecipante(rs.getString("IDPartecipante"));
-
+	            partecipante.setID_Partecipante(rs.getString("idpartecipante"));
+	            partecipante.setNome(rs.getString("nomepartecipante"));
+	            partecipante.setEmail(rs.getString("email"));
+	            partecipante.setPassword(rs.getString("pass"));
 	            return partecipante;
 	        } else 
 	            return null;
@@ -222,13 +220,13 @@ public class PartecipanteDAO {
 	
 	//Metodo per selezionare la password di un partecipante dal DB usando un oggetto Partecipante
 	public String getPassPartecipanteDAO(String IDPartecipante_Input) {
-		String sql = "SELECT P.pass FROM Partecipante AS P WHERE P.IDPartecipante = ?";
+		String sql = "SELECT P.pass FROM uninafoodlab.Partecipante AS P WHERE P.IDPartecipante = ?";
 			try(Connection conn = DBManager.getConnection(); 
 				PreparedStatement pstmt = conn.prepareStatement(sql)) {
 				
 				pstmt.setString(1, IDPartecipante_Input);
 				ResultSet rs = pstmt.executeQuery();
-				rs.next();
+				
 				
 		        if (rs.next()) 
 		            return rs.getString("pass");

@@ -43,7 +43,7 @@ public class SessioneDAO {
 	
 	//Metodo per selezionare l'IDSessione dal DB usando un oggetto Corso e una data
 	public String getIDSessioneDAO(Corso Corso_Input, LocalDate Data_Input) {
-		String sql = "SELECT IDSessione FROM Sessione AS S WHERE (S.IDCorso = ?) AND (S.DataSessione = ?)";
+		String sql = "SELECT IDSessione FROM uninafoodlab.Sessione AS S WHERE (S.IDCorso = ?) AND (S.DataSessione = ?)";
 		try(Connection conn = DBManager.getConnection();
 			PreparedStatement pstmt = conn.prepareStatement(sql)) {
 			
@@ -63,7 +63,7 @@ public class SessioneDAO {
 	
 	//Metodo per selezionare l'IDSessione dal DB usando un oggetto Sessione
 	public String getIDCorsoSessioneDAO(Sessione Sessione_Input) {
-		String sql = "SELECT IDCorso FROM Sessione AS S WHERE S.IDSessione= ? ";
+		String sql = "SELECT IDCorso FROM uninafoodlab.Sessione AS S WHERE S.IDSessione= ? ";
 		try(Connection conn = DBManager.getConnection();
 			PreparedStatement pstmt = conn.prepareStatement(sql)) {
 			
@@ -82,7 +82,7 @@ public class SessioneDAO {
 	
 	//Metodo per selezionare l'IDCorso a cui appartiene la sessione dal DB usando l'IDSessione
 	public String getIDCorsoSessioneDAO(String IDSessione_Input) {
-		String sql = "SELECT IDCorso FROM Sessione AS S WHERE S.IDSessione= ? ";
+		String sql = "SELECT IDCorso FROM uninafoodlab.Sessione AS S WHERE S.IDSessione= ? ";
 		try(Connection conn = DBManager.getConnection();
 			PreparedStatement pstmt = conn.prepareStatement(sql)) {
 			
@@ -101,7 +101,7 @@ public class SessioneDAO {
 	
 	//Metodo per selezionare la data della sessione dal DB usando un oggetto Sessione
 	public Date getDataSessioneDAO(Sessione Sessione_Input) {
-		String sql = "SELECT DataSessione FROM Sessione AS S WHERE S.IDSessione= ? ";
+		String sql = "SELECT DataSessione FROM uninafoodlab.Sessione AS S WHERE S.IDSessione= ? ";
 		try(Connection conn = DBManager.getConnection();
 			PreparedStatement pstmt = conn.prepareStatement(sql)) {
 			
@@ -120,7 +120,7 @@ public class SessioneDAO {
 	
 	//Metodo per selezionare la data della sessione dal DB usando l'IDSessione
 	public Date getDataSessioneDAO(String IDSessione_Input) {
-		String sql = "SELECT DataSessione FROM Sessione AS S WHERE S.IDSessione= ? ";
+		String sql = "SELECT DataSessione FROM uninafoodlab.Sessione AS S WHERE S.IDSessione= ? ";
 		try(Connection conn = DBManager.getConnection();
 			PreparedStatement pstmt = conn.prepareStatement(sql)) {
 			
@@ -139,7 +139,7 @@ public class SessioneDAO {
 	
 	//Metodo per selezionare se la sessione è pratica o teorica dal DB usando un oggetto Sessione
 	public boolean getIsPraticaSessioneDAO(Sessione Sessione_Input) {
-		String sql = "SELECT ispratica FROM Sessione AS S WHERE S.IDSessione= ? ";
+		String sql = "SELECT ispratica FROM uninafoodlab.Sessione AS S WHERE S.IDSessione= ? ";
 		try(Connection conn = DBManager.getConnection();
 			PreparedStatement pstmt = conn.prepareStatement(sql)) {
 			
@@ -158,7 +158,7 @@ public class SessioneDAO {
 	
 	//Metodo per selezionare se la sessione è pratica o teorica dal DB usando l'IDSessione
 	public boolean getIsPraticaSessioneDAO(String IDSessione_Input) {
-		String sql = "SELECT ispratica FROM Sessione AS S WHERE S.IDSessione= ? ";
+		String sql = "SELECT ispratica FROM uninafoodlab.Sessione AS S WHERE S.IDSessione= ? ";
 		try(Connection conn = DBManager.getConnection();
 			PreparedStatement pstmt = conn.prepareStatement(sql)) {
 			
@@ -177,7 +177,7 @@ public class SessioneDAO {
 	
 	//Metodo per selezionare il numero di adesioni alla sessione dal DB usando un oggetto Sessione
 	public int getAdesioniSessioneDAO(Sessione Sessione_Input) {
-		String sql = "SELECT adesioni FROM Sessione AS S WHERE S.IDSessione= ? ";
+		String sql = "SELECT adesioni FROM uninafoodlab.Sessione AS S WHERE S.IDSessione= ? ";
 		try(Connection conn = DBManager.getConnection();
 			PreparedStatement pstmt = conn.prepareStatement(sql)) {
 			
@@ -196,7 +196,7 @@ public class SessioneDAO {
 	
 	//Metodo per selezionare il numero di adesioni alla sessione dal DB usando l'IDSessione
 	public int getAdesioniSessioneDAO(String IDSessione_Input) {
-		String sql = "SELECT adesioni FROM Sessione AS S WHERE S.IDSessione= ? ";
+		String sql = "SELECT adesioni FROM uninafoodlab.Sessione AS S WHERE S.IDSessione= ? ";
 		try(Connection conn = DBManager.getConnection();
 			PreparedStatement pstmt = conn.prepareStatement(sql)) {
 			
@@ -215,7 +215,7 @@ public class SessioneDAO {
 	
 	//Metodo per selezionare il link della conferenza della sessione dal DB usando un oggetto Sessione
 	public String getLinkConferenzaSessione(Sessione Sessione_Input) {
-		String sql = "SELECT linkconferenza FROM Sessione AS S WHERE S.IDSessione= ? ";
+		String sql = "SELECT linkconferenza FROM uninafoodlab.Sessione AS S WHERE S.IDSessione= ? ";
 		try(Connection conn = DBManager.getConnection();
 			PreparedStatement pstmt = conn.prepareStatement(sql)) {
 			
@@ -234,7 +234,7 @@ public class SessioneDAO {
 	
 	//Metodo per selezionare il link della conferenza della sessione dal DB usando l'IDSessione
 	public String getLinkConferenzaSessione(String IDSessione_Input) {
-		String sql = "SELECT linkconferenza FROM Sessione AS S WHERE S.IDSessione= ? ";
+		String sql = "SELECT linkconferenza FROM uninafoodlab.Sessione AS S WHERE S.IDSessione= ? ";
 		try(Connection conn = DBManager.getConnection();
 			PreparedStatement pstmt = conn.prepareStatement(sql)) {
 			
@@ -253,7 +253,7 @@ public class SessioneDAO {
 	
 	//Metodo per selezionare il luogo della sessione dal DB usando un oggetto Sessione
 	public String getLuogoSessioneDAO(Sessione Sessione_Input) {
-		String sql = "SELECT luogo FROM Sessione AS S WHERE S.IDSessione= ? ";
+		String sql = "SELECT luogo FROM uninafoodlab.Sessione AS S WHERE S.IDSessione= ? ";
 		try(Connection conn = DBManager.getConnection();
 			PreparedStatement pstmt = conn.prepareStatement(sql)) {
 			
@@ -272,7 +272,7 @@ public class SessioneDAO {
 	
 	//Metodo per selezionare il luogo della sessione dal DB usando l'IDSessione
 	public String getLuogoSessioneDAO(String IDSessione_Input) {
-		String sql = "SELECT luogo FROM Sessione AS S WHERE S.IDSessione= ? ";
+		String sql = "SELECT luogo FROM uninafoodlab.Sessione AS S WHERE S.IDSessione= ? ";
 		try(Connection conn = DBManager.getConnection();
 			PreparedStatement pstmt = conn.prepareStatement(sql)) {
 			
@@ -291,7 +291,7 @@ public class SessioneDAO {
 	
 	//Metodo per selezionare l'IDRicetta della sessione dal DB usando un oggetto Sessione
 	public String getRicettaSessioneDAO(Sessione Sessione_Input) {
-		String sql = "SELECT IDRicetta FROM Sessione AS S WHERE S.IDSessione= ? ";
+		String sql = "SELECT IDRicetta FROM uninafoodlab.Sessione AS S WHERE S.IDSessione= ? ";
 		try(Connection conn = DBManager.getConnection();
 			PreparedStatement pstmt = conn.prepareStatement(sql)) {
 			
@@ -310,7 +310,7 @@ public class SessioneDAO {
 	
 	//Metodo per selezionare l'IDRicetta della sessione dal DB usando l'IDSessione
 	public String getRicettaSessioneDAO(String IDSessione_Input) {
-		String sql = "SELECT IDRicetta FROM Sessione AS S WHERE S.IDSessione= ? ";
+		String sql = "SELECT IDRicetta FROM uninafoodlab.Sessione AS S WHERE S.IDSessione= ? ";
 		try(Connection conn = DBManager.getConnection();
 			PreparedStatement pstmt = conn.prepareStatement(sql)) {
 			
@@ -347,7 +347,7 @@ public class SessioneDAO {
 	//Metodo per recuperare tutte le sessioni dal DB
 	public List<Sessione> getAllSessioniDAO() {
 		List<Sessione> ListaSessioni = new ArrayList<>();
-		String sql = "SELECT * FROM uninafoodlab.sessioni;";
+		String sql = "SELECT * FROM uninafoodlab.sessione;";
 		try(Connection conn = DBManager.getConnection();
 			PreparedStatement pstmt = conn.prepareStatement(sql);
 			ResultSet rs = pstmt.executeQuery()) {
@@ -377,7 +377,7 @@ public class SessioneDAO {
 	//Metodo per recuperare tutte le sessioni di un corso specifico dal DB
 	public List<Sessione> getAllSessioniCorsoDAO(Corso Corso_Input) {
 		List<Sessione> ListaSessioni = new ArrayList<>();
-		String sql = "SELECT * FROM uninafoodlab.sessioni WHERE idcorso = ?;";
+		String sql = "SELECT * FROM uninafoodlab.sessione WHERE idcorso = ?;";
 		try(Connection conn = DBManager.getConnection();
 			PreparedStatement pstmt = conn.prepareStatement(sql)) {
 			
@@ -407,7 +407,7 @@ public class SessioneDAO {
 	
 	public List<Sessione> getAllSessioniCorsoDAObyDate(LocalDate Date_Input) {
 		List<Sessione> ListaSessioni = new ArrayList<>();
-		String sql = "SELECT * FROM uninafoodlab.sessioni WHERE datasessione >= ?;";
+		String sql = "SELECT * FROM uninafoodlab.sessione WHERE datasessione >= ?;";
 		try(Connection conn = DBManager.getConnection();
 			PreparedStatement pstmt = conn.prepareStatement(sql)) {
 			
@@ -439,7 +439,7 @@ public class SessioneDAO {
 	
 	public List<Sessione> getAllSessioniCorsoDAObyLuogo(String Luogo_Input) {
 		List<Sessione> ListaSessioni = new ArrayList<>();
-		String sql = "SELECT * FROM uninafoodlab.sessioni WHERE luogo = ?;";
+		String sql = "SELECT * FROM uninafoodlab.sessione WHERE luogo = ?;";
 		try(Connection conn = DBManager.getConnection();
 			PreparedStatement pstmt = conn.prepareStatement(sql)) {
 			
@@ -471,7 +471,7 @@ public class SessioneDAO {
 	
 	public List<Sessione> getAllSessioniCorsoDAObyRicetta(Ricetta Ricetta_Input) {
 		List<Sessione> ListaSessioni = new ArrayList<>();
-		String sql = "SELECT * FROM uninafoodlab.sessioni WHERE idricetta = ?;";
+		String sql = "SELECT * FROM uninafoodlab.sessione WHERE idricetta = ?;";
 		try(Connection conn = DBManager.getConnection();
 			PreparedStatement pstmt = conn.prepareStatement(sql)) {
 			

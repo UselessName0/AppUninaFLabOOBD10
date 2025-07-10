@@ -39,7 +39,7 @@ public class CorsoDAO {
 	
 	//Metodo per recuperare il nome del corso con un oggetto Corso
 	public String getNomeCorsoDAO(Corso Corso_Input) {
-		String sql = "SELECT Nomecorso FROM Corso AS Co WHERE Co.idcorso = ? ";
+		String sql = "SELECT Nomecorso FROM uninafoodlab.Corso AS Co WHERE Co.idcorso = ? ";
 		try(Connection conn = DBManager.getConnection();
 			PreparedStatement pstmt = conn.prepareStatement(sql)) {
 			
@@ -58,7 +58,7 @@ public class CorsoDAO {
 	
 	//Metodo per recuperare il nome del corso con un IDCorso
 	public String getNomeCorsoDAO(String IDCorso_Input) {
-		String sql = "SELECT Nomecorso FROM Corso AS Co WHERE Co.idcorso = ? ";
+		String sql = "SELECT Nomecorso FROM uninafoodlab.Corso AS Co WHERE Co.idcorso = ? ";
 		try(Connection conn = DBManager.getConnection();
 			PreparedStatement pstmt = conn.prepareStatement(sql)) {
 			
@@ -77,7 +77,7 @@ public class CorsoDAO {
 	
 	//Metodo per recuperare l'argomento del corso con un oggetto Corso
 	public String getArgomentoCorsoDAO(Corso Corso_Input) {
-		String sql = "SELECT argomento FROM Corso AS Co WHERE Co.idcorso = ? ";
+		String sql = "SELECT argomento FROM uninafoodlab.Corso AS Co WHERE Co.idcorso = ? ";
 		try(Connection conn = DBManager.getConnection();
 			PreparedStatement pstmt = conn.prepareStatement(sql)) {
 			
@@ -96,7 +96,7 @@ public class CorsoDAO {
 	
 	//Metodo per recuperare l'argomento del corso con un IDCorso
 	public String getArgomentoCorsoDAO(String IDCorso_Input) {
-		String sql = "SELECT argomento FROM Corso AS Co WHERE Co.idcorso = ? ";
+		String sql = "SELECT argomento FROM uninafoodlab.Corso AS Co WHERE Co.idcorso = ? ";
 		try(Connection conn = DBManager.getConnection();
 			PreparedStatement pstmt = conn.prepareStatement(sql)) {
 			
@@ -115,7 +115,7 @@ public class CorsoDAO {
 	
 	//Metodo per recuperare la data di inizio del corso con un oggetto Corso
 	public Date getDataInizioCorsoDAO(Corso Corso_Input) {
-		String sql = "SELECT DataInizio FROM Corso AS Co WHERE Co.idcorso = ? ";
+		String sql = "SELECT DataInizio FROM uninafoodlab.Corso AS Co WHERE Co.idcorso = ? ";
 		try(Connection conn = DBManager.getConnection();
 			PreparedStatement pstmt = conn.prepareStatement(sql)) {
 			
@@ -134,7 +134,7 @@ public class CorsoDAO {
 	
 	//Metodo per recuperare la data di inizio del corso con un IDCorso
 	public Date getDataInizioCorsoDAO(String IDCorso_Input) {
-		String sql = "SELECT DataInizio FROM Corso AS Co WHERE Co.idcorso = ? ";
+		String sql = "SELECT DataInizio FROM uninafoodlab.Corso AS Co WHERE Co.idcorso = ? ";
 		try(Connection conn = DBManager.getConnection();
 			PreparedStatement pstmt = conn.prepareStatement(sql)) {
 			
@@ -153,7 +153,7 @@ public class CorsoDAO {
 	
 	//Metodo per recuperare la data di creazione del corso con un oggetto Corso
 	public Date getDataCreazioneCorsoDAO(Corso Corso_Input) {
-		String sql = "SELECT datacreazione FROM Corso AS Co WHERE Co.idcorso = ? ";
+		String sql = "SELECT datacreazione FROM uninafoodlab.Corso AS Co WHERE Co.idcorso = ? ";
 		try(Connection conn = DBManager.getConnection();
 			PreparedStatement pstmt = conn.prepareStatement(sql)) {
 			
@@ -172,7 +172,7 @@ public class CorsoDAO {
 	
 	//Metodo per recuperare la data di creazione del corso con un IDCorso
 	public Date getDataCreazioneCorsoDAO(String IDCorso_Input) {
-		String sql = "SELECT datacreazione FROM Corso AS Co WHERE Co.idcorso = ? ";
+		String sql = "SELECT datacreazione FROM uninafoodlab.Corso AS Co WHERE Co.idcorso = ? ";
 		try(Connection conn = DBManager.getConnection();
 			PreparedStatement pstmt = conn.prepareStatement(sql)) {
 			
@@ -191,7 +191,7 @@ public class CorsoDAO {
 	
 	//Metodo per recuperare la frequenza del corso con un oggetto Corso
 	public String getFrequenzaCorsoDAO(Corso Corso_Input) {
-		String sql = "SELECT frequenzacorsi FROM Corso AS Co WHERE Co.idcorso = ? ";
+		String sql = "SELECT frequenzacorsi FROM uninafoodlab.Corso AS Co WHERE Co.idcorso = ? ";
 		try(Connection conn = DBManager.getConnection();
 			PreparedStatement pstmt = conn.prepareStatement(sql)) {
 			
@@ -210,7 +210,7 @@ public class CorsoDAO {
 	
 	//Metodo per recuperare la frequenza del corso con un IDCorso
 	public String getFrequenzaCorsoDAO(String IDCorso_Input) {
-		String sql = "SELECT frequenzacorsi FROM Corso AS Co WHERE Co.idcorso = ? ";
+		String sql = "SELECT frequenzacorsi FROM uninafoodlab.Corso AS Co WHERE Co.idcorso = ? ";
 		try(Connection conn = DBManager.getConnection();
 			PreparedStatement pstmt = conn.prepareStatement(sql)) {
 			
@@ -230,7 +230,7 @@ public class CorsoDAO {
 	
 	//Metodo per recuperare l'ID del corso con un oggetto Corso
 	public String getIDCorsoDAO(Corso Corso_Input) {
-		String sql = "SELECT idcorso FROM Corso AS Co WHERE (Co.idchef = ?) AND (Co.nomecorso = ?) AND (Co.datacreazione = ?)";
+		String sql = "SELECT idcorso FROM uninafoodlab.Corso AS Co WHERE (Co.idchef = ?) AND (Co.nomecorso = ?) AND (Co.datacreazione = ?)";
 		try(Connection conn = DBManager.getConnection();
 			PreparedStatement pstmt = conn.prepareStatement(sql)) {
 			
@@ -254,7 +254,7 @@ public class CorsoDAO {
 	
 	//Metodo per recuperare lo chef proprietario con un oggetto Corso
 	public String getIDChefProprietarioDAO(Corso Corso_Input) {
-		String sql = "SELECT idchef FROM Corso AS Co WHERE Co.idcorso = ?";
+		String sql = "SELECT idchef FROM uninafoodlab.Corso AS Co WHERE Co.idcorso = ?";
 		try(Connection conn = DBManager.getConnection();
 			PreparedStatement pstmt = conn.prepareStatement(sql)) {
 			
@@ -274,7 +274,7 @@ public class CorsoDAO {
 	
 	//Metodo per recuperare lo chef proprietario con un IDCorso
 	public String getIDChefProprietarioDAO(String IDCorso_Input) {
-		String sql = "SELECT idchef FROM Corso AS Co WHERE Co.idcorso = ?";
+		String sql = "SELECT idchef FROM uninafoodlab.Corso AS Co WHERE Co.idcorso = ?";
 		try(Connection conn = DBManager.getConnection();
 			PreparedStatement pstmt = conn.prepareStatement(sql)) {
 			

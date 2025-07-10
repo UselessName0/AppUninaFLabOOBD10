@@ -20,7 +20,8 @@ public class ControllerChef {
 				return null;
 			}
 
-			return new Chef(chefDAO.getIDChefDAO(email_Input, password_Input));
+			Chef chef = chefDAO.getChefByEmail(email_Input);
+			return chef;
 
 		} catch (Exception e) {
 			System.out.println("Errore durante il login: " + e.getMessage());

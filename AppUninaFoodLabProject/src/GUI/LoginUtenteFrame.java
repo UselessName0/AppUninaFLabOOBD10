@@ -71,13 +71,7 @@ public class LoginUtenteFrame extends JFrame {
 
                 if (partecipante == null) {
                     JOptionPane.showMessageDialog(LoginUtenteFrame.this,
-                        "Email non registrata.",
-                        "Errore",
-                        JOptionPane.ERROR_MESSAGE);
-                } else if (partecipante.getNome() == null) {
-                    JOptionPane.showMessageDialog(LoginUtenteFrame.this,
-                        "Password errata. Riprova.",
-                        "Errore",
+                        "Ricontrollare le credenziali inserite","ERRORE",
                         JOptionPane.ERROR_MESSAGE);
                 } else {
                     JOptionPane.showMessageDialog(LoginUtenteFrame.this,

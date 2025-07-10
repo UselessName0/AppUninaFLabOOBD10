@@ -45,6 +45,8 @@ public class Chef extends Utente {
 			ID_Chef = iD_Chef;
 		}
 	
+		
+		
 	public void InstanziaCorso(String IDCorso,String Nome_Corso, String Argomento, LocalDate Data_Inizio, String FrequenzaCorsi) {
 		Corso C = new Corso(IDCorso, this, Nome_Corso, Argomento, Data_Inizio, FrequenzaCorsi);
 	}

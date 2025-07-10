@@ -1,6 +1,8 @@
 package GUI;
 
 import Controller.ControllerChef;
+import Entities.Chef;
+
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
@@ -58,12 +60,24 @@ public class LoginChefFrame extends JFrame {
         loginButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String email = emailField.getText();
+            	ControllerChef CC = new ControllerChef();
+                
+            	String email = emailField.getText();
                 String password = String.valueOf(passwordField.getPassword());
-                ControllerChef CC = new ControllerChef();
-                JOptionPane.showMessageDialog(LoginChefFrame.this,
-                    "Login Chef:\nEmail: " + email + "\nPassword: " + password);
-               CC.LoginCheck(email, password);
+                Chef chef = CC.LoginCheck(email, password);
+                if (chef == null) {
+                    JOptionPane.showMessageDialog(LoginChefFrame.this,
+                        "Ricontrollare le credenziali inserite.",
+                        "ERRORE",
+                        JOptionPane.ERROR_MESSAGE);
+                } else {
+                    JOptionPane.showMessageDialog(LoginChefFrame.this,
+                        "Benvenuto " + chef.getNome() +" "+ chef.getCognome());
+
+                    DashboardChef dashboard = new DashboardChef(chef);
+                    dashboard.setVisible(true);
+                    dispose();
+                }
             }
         });
 

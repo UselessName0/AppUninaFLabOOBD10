@@ -13,7 +13,7 @@ public class IngredienteRicettaDAO {
 	
 	//metodo per l'inserimento di un nuovo ingrediente in una ricetta nel DB usando un oggetto IngredienteRicetta (True se l'inserimento va a buon fine, False altrimenti)
 	public boolean insertIngredientiRicetta(IngredienteRicetta IngredientiRicetta_Input) {
-		String sql = "INSERT INTO ingredientiricetta(idricetta, idingrediente, quantita, unitadimisura) VALUES (?, ?, ?, ?)";
+		String sql = "INSERT INTO uninafoodlab.ingredientiricetta(idricetta, idingrediente, quantita, unitadimisura) VALUES (?, ?, ?, ?)";
 		try(Connection conn = DBManager.getConnection();
 			PreparedStatement pstmt = conn.prepareStatement(sql)) {
 			
@@ -37,7 +37,7 @@ public class IngredienteRicettaDAO {
 	//Metodo per ottenere una lista di ingredienti associati a una ricetta specifica
 	public List<IngredienteRicetta> getIngredientiRicettabyRicetta(Ricetta R) {
 		List<IngredienteRicetta> ingredientiList = new ArrayList<>();
-		String sql = "SELECT * FROM ingredientiricetta WHERE idricetta = ?";
+		String sql = "SELECT * FROM uninafoodlab.ingredientiricetta WHERE idricetta = ?";
 		
 		try(Connection conn = DBManager.getConnection();
 			PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -71,7 +71,7 @@ public class IngredienteRicettaDAO {
 	//Metodo per ottenere una lista di ricette associate a un ingrediente specifico
 	public List<IngredienteRicetta> getIngredientiRicettabyIngrediente(Ingrediente I) {
 		List<IngredienteRicetta> ListaIngredienti = new ArrayList<>();
-		String sql = "SELECT * FROM ingredientiricetta WHERE idingrediente = ?";
+		String sql = "SELECT * FROM uninafoodlab.ingredientiricetta WHERE idingrediente = ?";
 		
 		try(Connection conn = DBManager.getConnection();
 			PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -100,7 +100,7 @@ public class IngredienteRicettaDAO {
 	
 	//Metodo per eliminare un ingrediente da una ricetta nel DB usando un oggetto IngredienteRicetta (True se la cancellazione va a buon fine, False altrimenti)
 	public boolean DeleteIngredientiRicetta(IngredienteRicetta IR) {
-		String sql = "DELETE FROM ingredientiricetta WHERE idricetta = ? AND idingrediente = ?";
+		String sql = "DELETE FROM uninafoodlab.ingredientiricetta WHERE idricetta = ? AND idingrediente = ?";
 		try(Connection conn = DBManager.getConnection();
 			PreparedStatement pstmt = conn.prepareStatement(sql)) {
 			
