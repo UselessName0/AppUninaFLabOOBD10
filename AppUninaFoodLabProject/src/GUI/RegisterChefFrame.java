@@ -88,21 +88,27 @@ public class RegisterChefFrame extends JFrame {
                 String email = emailField.getText();
                 String pwd = String.valueOf(passwordField.getPassword());
                 String confirm = String.valueOf(confirmField.getPassword());
-
-                if (!pwd.equals(confirm)) {
-                    JOptionPane.showMessageDialog(RegisterChefFrame.this, "Le password non coincidono.");
-                } else {
-                	Chef c = new Chef();
-                	c = CC.RegisterCheck(email, pwd);
-                	if(c==null)
-                		JOptionPane.showMessageDialog(RegisterChefFrame.this, "Registrazione Chef non andata a buon fine");
-                	else {
-                		JOptionPane.showMessageDialog(RegisterChefFrame.this, "Registrazione Chef completata!");
-                		DashboardChef DC = new DashboardChef(c);
-                		DC.setVisible(true);
-                		dispose();
-                	}
+                if(!email.isEmpty() && !pwd.isEmpty()) {
+                	if (!pwd.equals(confirm)) {
+                        JOptionPane.showMessageDialog(RegisterChefFrame.this, "Le password non coincidono.");
+                    } else {
+                    	Chef c = new Chef();
+                    	c = CC.RegisterCheck(email, pwd);
+                    	if(c==null)
+                    		JOptionPane.showMessageDialog(RegisterChefFrame.this, "Registrazione Chef non andata a buon fine");
+                    	else {
+                    		JOptionPane.showMessageDialog(RegisterChefFrame.this, "Registrazione Chef completata!");
+                    		DashboardChef DC = new DashboardChef(c);
+                    		DC.setVisible(true);
+                    		dispose();
+                    	}
+                    }
                 }
+                else {
+                	JOptionPane.showMessageDialog(RegisterChefFrame.this, "Almeno uno dei campi credenziale vuoto");
+                }
+                	
+                
             }
         });
 

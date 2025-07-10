@@ -1,10 +1,12 @@
 package App;
 
+import java.awt.CardLayout;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
 import Database.DBManager;

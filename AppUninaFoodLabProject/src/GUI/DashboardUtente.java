@@ -11,7 +11,6 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 
 
 public class DashboardUtente extends JFrame {
-	private JTextField textField;
 
     public DashboardUtente(Partecipante P) {
         setTitle("Dashboard Utente - UninaFoodLab");
@@ -36,8 +35,8 @@ public class DashboardUtente extends JFrame {
         menuSessioni.add(itemVediCalendario);
 
         JMenu menuChef = new JMenu("Chef");
-        JMenuItem itemInfoChef = new JMenuItem("Info Chef");
-        menuChef.add(itemInfoChef);
+        JMenuItem itemListaChef = new JMenuItem("Lista Chef");
+        menuChef.add(itemListaChef);
 
         JMenu menuRicette = new JMenu("Ricette");
         JMenuItem itemLeMieRicette = new JMenuItem("Le Mie Ricette");
@@ -45,7 +44,14 @@ public class DashboardUtente extends JFrame {
 
         JMenu menuAccount = new JMenu("Account");
         JMenuItem itemLogout = new JMenuItem("Logout");
-        JMenuItem itemInfo = new JMenuItem("Info Personali");
+        itemLogout.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        		WelcomeFrame WF = new WelcomeFrame();
+        		WF.setVisible(true);
+        		dispose();
+        	}
+        });
+        JMenuItem itemInfo = new JMenuItem("Il mio profilo ");
         menuAccount.add(itemLogout);
         menuAccount.add(itemInfo);
 
@@ -56,23 +62,14 @@ public class DashboardUtente extends JFrame {
         menuBar.add(menuAccount);
 
         setJMenuBar(menuBar);
-        
-        textField = new JTextField();
-        textField.setColumns(10);
         GroupLayout groupLayout = new GroupLayout(getContentPane());
         groupLayout.setHorizontalGroup(
         	groupLayout.createParallelGroup(Alignment.LEADING)
-        		.addGroup(groupLayout.createSequentialGroup()
-        			.addGap(228)
-        			.addComponent(textField, GroupLayout.PREFERRED_SIZE, 237, GroupLayout.PREFERRED_SIZE)
-        			.addContainerGap(421, Short.MAX_VALUE))
+        		.addGap(0, 1403, Short.MAX_VALUE)
         );
         groupLayout.setVerticalGroup(
         	groupLayout.createParallelGroup(Alignment.LEADING)
-        		.addGroup(groupLayout.createSequentialGroup()
-        			.addGap(68)
-        			.addComponent(textField, GroupLayout.PREFERRED_SIZE, 81, GroupLayout.PREFERRED_SIZE)
-        			.addContainerGap(492, Short.MAX_VALUE))
+        		.addGap(0, 707, Short.MAX_VALUE)
         );
     }
 }

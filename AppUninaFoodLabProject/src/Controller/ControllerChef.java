@@ -39,7 +39,6 @@ public class ControllerChef {
 	public Chef RegisterCheck(String Email_Input, String Password_Input) {
 		try {
 			if(chefDAO.checkEmail(Email_Input)) {
-				System.out.println("Email già registrata!");
 				return null;
 			}
 			else {
@@ -50,18 +49,26 @@ public class ControllerChef {
 					ResultSet rs = pstmt.executeQuery();
 					String nuovoId;
 					if (rs.next()) {
-						String ultimoid = rs.getString("max_id");
-						int numero = Integer.parseInt(ultimoid.substring(2));
-					    nuovoId = "CH" + String.valueOf(numero + 1);
-					    c.setID_Chef(nuovoId);
-					    c.setNome("nome");
-					    c.setCognome("cognome");
-						c.setEmail(Email_Input);
-						c.setPassword(Password_Input);
-						if(InsertChef(c))
-							return c;
-						else
+						if((!Email_Input.isEmpty()) || (!Password_Input.isEmpty())) {
+							String ultimoid = rs.getString("max_id");
+							int numero = Integer.parseInt(ultimoid.substring(2));
+						    nuovoId = "CH" + String.valueOf(numero + 1);
+						    c.setID_Chef(nuovoId);
+						    c.setNome("nome");
+						    c.setCognome("cognome");
+							c.setEmail(Email_Input);
+							c.setPassword(Password_Input);
+							if(InsertChef(c))
+								return c;
+							else
+								return null;
+						}
+						else {
+							System.out.println("Uno dei campi è vuoto");
 							return null;
+						}
+							
+						
 					}
 					else 
 						return null;
@@ -73,11 +80,12 @@ public class ControllerChef {
 			return null;
 		}
 	}
+	
+	
 	public boolean InsertChef(Chef c) {
 		ChefDAO cDAO = new ChefDAO();
 		
 		if(cDAO.InsertChefDAO(c)) {
-			System.out.println("Inserimento nel DB avvenuto con successo");
 			return true;
 		}
 		else

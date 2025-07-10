@@ -81,25 +81,30 @@ public class RegisterUtenteFrame extends JFrame {
         registerButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+            	
             	ControllerPartecipante CP = new ControllerPartecipante();
             	
                 String email = emailField.getText();
                 String pwd = String.valueOf(passwordField.getPassword());
                 String confirm = String.valueOf(confirmField.getPassword());
-
-                if (!pwd.equals(confirm)) {
-                    JOptionPane.showMessageDialog(RegisterUtenteFrame.this, "Le password non coincidono.");
-                } else {
-                	Partecipante p = new Partecipante();
-                	p = CP.RegisterCheck(email, pwd);
-                	if(p==null)
-                		JOptionPane.showMessageDialog(RegisterUtenteFrame.this, "Registrazione Utente non andata a buon fine");
-                	else {
-                		JOptionPane.showMessageDialog(RegisterUtenteFrame.this, "Registrazione Utente completata!");
-                		DashboardUtente DU = new DashboardUtente(p);
-                		DU.setVisible(true);
-                		dispose();
-                	}
+                if(!email.isEmpty() && !pwd.isEmpty()) {
+                	if (!pwd.equals(confirm)) {
+                        JOptionPane.showMessageDialog(RegisterUtenteFrame.this, "Le password non coincidono.");
+                    } else {
+                    	Partecipante p = new Partecipante();
+                    	p = CP.RegisterCheck(email, pwd);
+                    	if(p==null)
+                    		JOptionPane.showMessageDialog(RegisterUtenteFrame.this, "Registrazione Utente non andata a buon fine");
+                    	else {
+                    		JOptionPane.showMessageDialog(RegisterUtenteFrame.this, "Registrazione Utente completata!");
+                    		DashboardUtente DU = new DashboardUtente(p);
+                    		DU.setVisible(true);
+                    		dispose();
+                    	}
+                    }
+                }
+                else {
+                	JOptionPane.showMessageDialog(RegisterUtenteFrame.this, "Almeno uno dei campi credenziale vuoto");
                 }
             }
         });
