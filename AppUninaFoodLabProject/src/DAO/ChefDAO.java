@@ -49,7 +49,7 @@ public class ChefDAO {
 	}
 	
 	//Metodo per l'inserimento di un nuovo Chef nel DB usando un oggetto Chef(True se l'inserimento va a buon fine, False altrimenti)
-	public boolean InsertChef(Chef Chef_Input) {
+	public boolean InsertChefDAO(Chef Chef_Input) {
 		String sql = "INSERT INTO uninafoodlab.chef(idchef, nomechef, cognomechef, email, pass)VALUES (?, ?, ?, ?, ?)";
 			try(Connection conn = DBManager.getConnection();
 				PreparedStatement pstmt = conn.prepareStatement(sql)) {

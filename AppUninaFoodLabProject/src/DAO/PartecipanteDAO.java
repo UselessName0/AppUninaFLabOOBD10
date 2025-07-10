@@ -48,7 +48,7 @@ public class PartecipanteDAO {
 	}
 	
 	//metodo per l'inserimento di un nuovo partecipante nel DB usando un oggetto Partecipante (True se l'inserimento va a buon fine, False altrimenti)
-	public boolean InsertPartecipante(Partecipante Partecipante_Input) {
+	public boolean InsertPartecipanteDAO(Partecipante Partecipante_Input) {
 		String sql = "INSERT INTO uninafoodlab.partecipante(idpartecipante, nomepartecipante, email, pass)VALUES (?, ?, ?, ?);";
 			try(Connection conn = DBManager.getConnection();
 				PreparedStatement pstmt = conn.prepareStatement(sql)) {

@@ -1,7 +1,11 @@
 package Controller;
 
 import Entities.Partecipante;
+
+import java.sql.*;
+
 import DAO.PartecipanteDAO;
+import Database.DBManager;
 public class ControllerPartecipante {
 
 	private PartecipanteDAO partecipanteDAO = new PartecipanteDAO();
@@ -36,7 +40,29 @@ public class ControllerPartecipante {
 				return null;
 			}
 			else {
-				
+				Partecipante p = new Partecipante();
+				String sql = "SELECT MAX(idpartecipante) AS max_id FROM uninafoodlab.partecipante";
+				try(Connection conn = DBManager.getConnection();
+					PreparedStatement pstmt = conn.prepareStatement(sql)) {
+					ResultSet rs = pstmt.executeQuery();
+					String nuovoId;
+					if (rs.next()) {
+						String ultimoid = rs.getString("max_id");
+						int numero = Integer.parseInt(ultimoid.substring(2));
+					    nuovoId = "PT" + String.valueOf(numero + 1);
+					    p.setID_Partecipante(nuovoId);
+					    p.setNome("nome");
+					    p.setCognome("cognome");
+						p.setEmail(Email_Input);
+						p.setPassword(Password_Input);
+						if(InsertPartecipante(p))
+							return p;
+						else
+							return null;
+					}
+					else 
+						return null;
+				}
 			}
 			
 		} catch(Exception e) {
@@ -44,5 +70,14 @@ public class ControllerPartecipante {
 			return null;
 		}
 	}
-	
+	public boolean InsertPartecipante(Partecipante p) {
+		PartecipanteDAO pDAO = new PartecipanteDAO();
+		
+		if(pDAO.InsertPartecipanteDAO(p)) {
+			System.out.println("Inserimento nel DB avvenuto con successo");
+			return true;
+		}
+		else
+			return false;
+	}
 }

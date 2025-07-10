@@ -4,6 +4,12 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
+
+import Controller.ControllerChef;
+import Controller.ControllerPartecipante;
+import Entities.Chef;
+import Entities.Partecipante;
+
 import javax.swing.GroupLayout.Alignment;
 
 public class RegisterChefFrame extends JFrame {
@@ -77,6 +83,8 @@ public class RegisterChefFrame extends JFrame {
         registerButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+            	ControllerChef CC = new ControllerChef();
+            	
                 String email = emailField.getText();
                 String pwd = String.valueOf(passwordField.getPassword());
                 String confirm = String.valueOf(confirmField.getPassword());
@@ -84,7 +92,16 @@ public class RegisterChefFrame extends JFrame {
                 if (!pwd.equals(confirm)) {
                     JOptionPane.showMessageDialog(RegisterChefFrame.this, "Le password non coincidono.");
                 } else {
-                    JOptionPane.showMessageDialog(RegisterChefFrame.this, "Registrazione Chef completata!");
+                	Chef c = new Chef();
+                	c = CC.RegisterCheck(email, pwd);
+                	if(c==null)
+                		JOptionPane.showMessageDialog(RegisterChefFrame.this, "Registrazione Chef non andata a buon fine");
+                	else {
+                		JOptionPane.showMessageDialog(RegisterChefFrame.this, "Registrazione Chef completata!");
+                		DashboardChef DC = new DashboardChef(c);
+                		DC.setVisible(true);
+                		dispose();
+                	}
                 }
             }
         });
