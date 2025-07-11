@@ -36,7 +36,7 @@ public class ControllerChef {
 		}
 	}
 	
-	public Chef RegisterCheck(String Email_Input, String Password_Input) {
+	public Chef RegisterCheck(String Email_Input, String Password_Input, String Nome_Input, String Cognome_Input) {
 		try {
 			if(chefDAO.checkEmail(Email_Input)) {
 				return null;
@@ -54,8 +54,8 @@ public class ControllerChef {
 							int numero = Integer.parseInt(ultimoid.substring(2));
 						    nuovoId = "CH" + String.valueOf(numero + 1);
 						    c.setID_Chef(nuovoId);
-						    c.setNome("nome");
-						    c.setCognome("cognome");
+						    c.setNome(Nome_Input);
+						    c.setCognome(Cognome_Input);
 							c.setEmail(Email_Input);
 							c.setPassword(Password_Input);
 							if(InsertChef(c))

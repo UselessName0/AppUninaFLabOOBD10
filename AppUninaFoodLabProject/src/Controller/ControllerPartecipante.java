@@ -33,7 +33,7 @@ public class ControllerPartecipante {
 	    }
 	}
 	//Controllare che la mail non è già stata registrata
-	public Partecipante RegisterCheck(String Email_Input, String Password_Input) {
+	public Partecipante RegisterCheck(String Email_Input, String Password_Input, String Nome_Input, String Cognome_Input) {
 		try {
 			if(partecipanteDAO.checkEmail(Email_Input)) {
 				System.out.println("Email già registrata!");
@@ -51,8 +51,8 @@ public class ControllerPartecipante {
 						int numero = Integer.parseInt(ultimoid.substring(2));
 					    nuovoId = "PT" + String.valueOf(numero + 1);
 					    p.setID_Partecipante(nuovoId);
-					    p.setNome("nome");
-					    p.setCognome("cognome");
+					    p.setNome(Nome_Input);
+					    p.setCognome(Cognome_Input);
 						p.setEmail(Email_Input);
 						p.setPassword(Password_Input);
 						if(InsertPartecipante(p))
