@@ -8,8 +8,18 @@ import javax.swing.event.MenuListener;
 import Entities.Partecipante;
 
 public class DashboardUtente extends JFrame {
-
-    private JMenu menuAttivo = null;
+    
+	//COSTRUTTORI
+    public DashboardUtente() {
+        setTitle("Dashboard Utente - UninaFoodLab");
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setSize(1000, 750);
+        setLocationRelativeTo(null);
+        setResizable(false);
+        getContentPane().setLayout(new BorderLayout());
+        setJMenuBar(CreaMenuBar(this));
+        getContentPane().add(creaContentPanel(), BorderLayout.CENTER);
+    }
  
     public DashboardUtente(Partecipante P) {
         setTitle("Dashboard Utente - UninaFoodLab");
@@ -18,7 +28,46 @@ public class DashboardUtente extends JFrame {
         setLocationRelativeTo(null);
         setResizable(false);
         getContentPane().setLayout(new BorderLayout());
+        setJMenuBar(CreaMenuBar(this));
+        getContentPane().add(creaContentPanel(), BorderLayout.CENTER);
+    }
+    
+ //METODI
+    //Metodo per creare il contentPanel centrale
+    private JPanel creaContentPanel() {
+        JPanel contentPanel = new JPanel(new GridBagLayout());
+        contentPanel.setBackground(new Color(210, 255, 255));
+        contentPanel.setBorder(BorderFactory.createEmptyBorder(30, 40, 30, 40));
 
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(20, 20, 20, 20);
+        gbc.fill = GridBagConstraints.BOTH;
+        gbc.weightx = 1;
+        gbc.weighty = 1;
+
+        gbc.gridx = 0; gbc.gridy = 0;
+        contentPanel.add(creaSezione("Corsi", new String[] { "Corsi disponibili", "Le mie iscrizioni" }, new Color(189, 226, 249)), gbc);
+
+        gbc.gridx = 1; gbc.gridy = 0;
+        contentPanel.add(creaSezione("Sessioni", new String[] { "Le mie sessioni", "Calendario sessioni" }, new Color(200, 240, 210)), gbc);
+
+        gbc.gridx = 0; gbc.gridy = 1;
+        contentPanel.add(creaSezione("Ricette", new String[] { "Le mie ricette" }, new Color(200, 240, 210)), gbc);
+
+        gbc.gridx = 1; gbc.gridy = 1;
+        contentPanel.add(creaSezione("Chef", new String[] { "Lista Chef" }, new Color(189, 226, 249)), gbc);
+
+        gbc.gridx = 0; gbc.gridy = 2;
+        gbc.gridwidth = 2;
+        contentPanel.add(creaSezione("Account", new String[] { "Il mio profilo", "Logout" }, new Color(255, 250, 205)), gbc);
+
+        return contentPanel;
+    }
+    
+    //Metodo per creare una menù bar
+    private JMenu menuAttivo = null;
+    
+    private JMenuBar CreaMenuBar(JFrame frame) {
         JMenuBar menuBar = new JMenuBar();
 
         JMenu menuCorsi = new JMenu("Corsi");
@@ -126,35 +175,10 @@ public class DashboardUtente extends JFrame {
         menuBar.add(menuAccount);
 
         setJMenuBar(menuBar);
-
-        JPanel contentPanel = new JPanel(new GridBagLayout());
-        contentPanel.setBackground(new Color(210, 255, 255));
-        contentPanel.setBorder(BorderFactory.createEmptyBorder(30, 40, 30, 40));
-        GridBagConstraints gbc = new GridBagConstraints();
-        gbc.insets = new Insets(20, 20, 20, 20);
-        gbc.fill = GridBagConstraints.BOTH;
-        gbc.weightx = 1;
-        gbc.weighty = 1;
-
-        gbc.gridx = 0; gbc.gridy = 0;
-        contentPanel.add(creaSezione("Corsi", new String[] { "Corsi disponibili", "Le mie iscrizioni" }, new Color(189, 226, 249)), gbc);
-
-        gbc.gridx = 1; gbc.gridy = 0;
-        contentPanel.add(creaSezione("Sessioni", new String[] { "Le mie sessioni", "Calendario sessioni" }, new Color(200, 240, 210)), gbc);
-
-        gbc.gridx = 0; gbc.gridy = 1;
-        contentPanel.add(creaSezione("Ricette", new String[] { "Le mie ricette" }, new Color(200, 240, 210)), gbc);
-
-        gbc.gridx = 1; gbc.gridy = 1;
-        contentPanel.add(creaSezione("Chef", new String[] { "Lista Chef" }, new Color(189, 226, 249)), gbc);
-
-        gbc.gridx = 0; gbc.gridy = 2;
-        gbc.gridwidth = 2;
-        contentPanel.add(creaSezione("Account", new String[] { "Il mio profilo", "Logout" }, new Color(255, 250, 205)), gbc);
-
-        getContentPane().add(contentPanel, BorderLayout.CENTER);
+        return menuBar;
     }
-
+     
+    //Metodo che permette di evidenziare il menù
     private void evidenziaMenu(JMenu nuovoMenu) {
         if (menuAttivo != null) {
             ripristinaMenu(menuAttivo);
@@ -164,7 +188,8 @@ public class DashboardUtente extends JFrame {
         nuovoMenu.setForeground(Color.BLACK);
         menuAttivo = nuovoMenu;
     }
-
+    
+    //Metodo che permette di ripristinare il menù dopo che è stato evidenziato
     private void ripristinaMenu(JMenu menu) {
         menu.setOpaque(false);
         menu.setBackground(null);
@@ -173,7 +198,8 @@ public class DashboardUtente extends JFrame {
             menuAttivo = null;
         }
     }
-
+    
+    //Metodo che permette di creare una sezione specifica
     private JPanel creaSezione(String titolo, String[] voci, Color bgColor) {
         JPanel panel = new JPanel(new BorderLayout());
         panel.setBackground(bgColor);
@@ -275,6 +301,7 @@ public class DashboardUtente extends JFrame {
         return panel;
     }
 
+    //Metodo che attraverso HTML permette di creare l'effetto hover sul testo, al passaggio del mouse
     private MouseListener creaHoverEffect(final JLabel voce) {
         return new MouseAdapter() {
             public void mouseEntered(MouseEvent e) {
