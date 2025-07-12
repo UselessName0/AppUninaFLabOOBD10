@@ -98,7 +98,7 @@ public class DashboardUtente extends JFrame {
 
         itemVediCorsi.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                new CorsiDisponibiliFrame().setVisible(true);
+                new CorsiDisponibiliFrame(p).setVisible(true);
                 dispose();
             }
         });
@@ -229,7 +229,7 @@ public class DashboardUtente extends JFrame {
             if (voceText.equals("Corsi disponibili")) {
                 voce.addMouseListener(new MouseAdapter() {
                     public void mouseClicked(MouseEvent e) {
-                        new CorsiDisponibiliFrame().setVisible(true);
+                        new CorsiDisponibiliFrame(p).setVisible(true);
                         dispose();
                     }
                 });

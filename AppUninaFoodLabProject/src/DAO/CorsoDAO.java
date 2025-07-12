@@ -134,14 +134,20 @@ public class CorsoDAO {
 	
 	//Metodo per recuperare la data di inizio del corso con un IDCorso
 	public Date getDataInizioCorsoDAO(String IDCorso_Input) {
+		Date d;
 		String sql = "SELECT DataInizio FROM uninafoodlab.Corso AS Co WHERE Co.idcorso = ? ";
 		try(Connection conn = DBManager.getConnection();
 			PreparedStatement pstmt = conn.prepareStatement(sql)) {
 			
 			pstmt.setString(1, IDCorso_Input);
 			ResultSet rs = pstmt.executeQuery();
-	        if (rs.next()) 
-	            return rs.getDate("DataInizio"); //Decidere se tornare in date normale o in localDate
+	        if (rs.next()) { 
+	        	d = rs.getDate("DataInizio");
+	        	if(d == null)
+	        		return null;
+	        	else
+	        		return d; //Decidere se tornare in date normale o in localDate
+	        }
 	        else 
 	            return null;
 			
@@ -463,7 +469,7 @@ public class CorsoDAO {
 	
 	public List<Corso> getCorsiDovePartecipanteNonIscrittoDAO(Partecipante p){
 		List<Corso> ListaCorsi = new ArrayList<>();
-		String sql = "SELECT DISTINCT idcorso FROM uninafoodlab.corso WHERE idcorso NOT in ( SELECT idcorso FROM uninafoodlab.iscrizionecorsi WHERE idpartecipante = ?";
+		String sql = "SELECT DISTINCT idcorso FROM uninafoodlab.corso WHERE idcorso NOT in ( SELECT idcorso FROM uninafoodlab.iscrizionecorso WHERE idpartecipante = ?)";
 		try(Connection conn = DBManager.getConnection();
 			PreparedStatement pstmt = conn.prepareStatement(sql)) {
 			

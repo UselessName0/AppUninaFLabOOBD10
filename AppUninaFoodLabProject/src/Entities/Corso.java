@@ -33,9 +33,15 @@ public class Corso {
     	this.Chef_Proprietario = tempChef;
     	this.Nome_Corso = CorsoDAO.getNomeCorsoDAO(IDCorso);
     	this.Argomento = CorsoDAO.getArgomentoCorsoDAO(IDCorso);
-    	this.Data_Inizio = CorsoDAO.getDataInizioCorsoDAO(IDCorso).toLocalDate();
+    	if(CorsoDAO.getDataInizioCorsoDAO(IDCorso) != null)
+    		this.Data_Inizio = CorsoDAO.getDataInizioCorsoDAO(IDCorso).toLocalDate();
+    	else 
+    		this.Data_Inizio = null;
     	this.Data_Creazione = CorsoDAO.getDataCreazioneCorsoDAO(IDCorso).toLocalDate();
-    	this.Frequenza_Corsi = CorsoDAO.getFrequenzaCorsoDAO(IDCorso);
+    	if(CorsoDAO.getFrequenzaCorsoDAO(IDCorso) == null)
+    		this.Frequenza_Corsi = "Libero";
+    	else
+    		this.Frequenza_Corsi = CorsoDAO.getFrequenzaCorsoDAO(IDCorso);
     }
     
     
@@ -111,5 +117,10 @@ public class Corso {
 
 		public void setID_Corso(String iD_Corso) {
 			ID_Corso = iD_Corso;
+		}
+
+		public String getDescrizione() {
+			// TODO Auto-generated method stub
+			return null;
 		}   
 }

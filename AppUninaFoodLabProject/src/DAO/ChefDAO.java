@@ -36,12 +36,11 @@ public class ChefDAO {
 			
 			pstmt.setString(1,  emailInput);
 			ResultSet rs = pstmt.executeQuery();
-			rs.next();
-			
-			if(rs.getString("pass").equals(pwdInput))
-				return true;
-			else
+			if(rs.next()) {
+				return rs.getString("pass").equals(pwdInput);
+			}else {
 				return false;
+			}
 		} catch (SQLException e) {
 			System.out.println("Errore durante la verifica della password: "+ e.getMessage());
 			return false;
@@ -140,7 +139,7 @@ public class ChefDAO {
 				pstmt.setString(1, IDChef_Input);
 				ResultSet rs = pstmt.executeQuery();
 		        if (rs.next()) {
-		        	System.out.println("ciao" + rs.getString("nomechef"));
+//		        	System.out.println("ciao" + rs.getString("nomechef"));
 		            return rs.getString("Nomechef");
 		        }
 		        else 
