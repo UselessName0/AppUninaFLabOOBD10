@@ -1,10 +1,13 @@
 package Controller;
-
+import java.util.*;
 import Entities.Partecipante;
-
+import Entities.Chef;
+import Entities.Corso;
 import java.sql.*;
+import java.time.LocalDate;
 
 import DAO.PartecipanteDAO;
+import DAO.CorsoDAO;
 import Database.DBManager;
 public class ControllerPartecipante {
 
@@ -79,5 +82,65 @@ public class ControllerPartecipante {
 		}
 		else
 			return false;
+	}
+	public List<Corso> GetCorsiFromDB(){
+		CorsoDAO cDAO = new CorsoDAO();
+		return cDAO.getAllCorsi();
+	}
+	
+	public List<Corso> GetCorsiByNome(String Nome){
+		CorsoDAO cDAO = new CorsoDAO();
+		if(!Nome.isEmpty()) {			
+			return cDAO.getAllCorsiByNome(Nome);
+		}
+		return cDAO.getAllCorsi();
+	}
+	
+	public List<Corso> GetCorsiByArgomento(String Argomento){
+		CorsoDAO cDAO = new CorsoDAO();
+		if(!Argomento.isEmpty()) {
+			return cDAO.getAllCorsiByArgomento(Argomento);
+		}
+		return cDAO.getAllCorsi();
+	}
+	
+	public List<Corso> GetCorsiByData(LocalDate Date){
+		CorsoDAO cDAO = new CorsoDAO();
+		if(!Date.equals(null)){
+			return cDAO.getAllCorsiByDataInizio(Date);
+		}
+		return cDAO.getAllCorsi();
+	}
+	
+	public List<Corso> GetCorsiByChef(Chef C){
+		CorsoDAO cDAO = new CorsoDAO();
+		if(!C.equals(null)) {
+			return cDAO.getAllCorsiByChef(C);
+		}
+		return cDAO.getAllCorsi();
+	}
+	
+	public List<Corso> GetCorsiDaPiuFiltri(List<Corso> Corso1, List<Corso> Corso2){
+		List<Corso> Temp = Corso1;
+		Temp.retainAll(Corso2);
+		
+		return Temp;
+	}
+	
+	public List<Corso> GetCorsiDovePartecipanteNonIscritto(Partecipante p){
+		CorsoDAO cDAO = new CorsoDAO();
+		if(!p.equals(null))
+			return cDAO.getCorsiDovePartecipanteNonIscrittoDAO(p);
+		else
+			return cDAO.getAllCorsi();
+		
+	}
+	
+	public List<Corso> GetCorsiDovePartecipanteIscritto(Partecipante p){
+		CorsoDAO cDAO = new CorsoDAO();
+		if(!p.equals(null))
+			return cDAO.getCorsiDovePartecipanteIscirtto(p);
+		else
+			return cDAO.getAllCorsi();
 	}
 }

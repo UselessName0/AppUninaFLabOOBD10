@@ -8,7 +8,10 @@ import javax.swing.event.MenuListener;
 import Entities.Partecipante;
 
 public class DashboardUtente extends JFrame {
-    
+    //ATTRIBUTI
+	Partecipante p;
+	
+	
 	//COSTRUTTORI
     public DashboardUtente() {
         setTitle("Dashboard Utente - UninaFoodLab");
@@ -22,6 +25,7 @@ public class DashboardUtente extends JFrame {
     }
  
     public DashboardUtente(Partecipante P) {
+    	this.p = P;
         setTitle("Dashboard Utente - UninaFoodLab");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(1000, 750);

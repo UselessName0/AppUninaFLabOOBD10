@@ -312,7 +312,7 @@ public class CorsoDAO {
 	//Metodo per aggiornare un corso nel database
 	public List<Corso> getAllCorsi() {
 		List<Corso> ListaCorsi = new ArrayList<>();
-		String sql = "SELECT * FROM uninafoodlab.Corsi";
+		String sql = "SELECT * FROM uninafoodlab.corso";
 		try(Connection conn = DBManager.getConnection();
 			PreparedStatement pstmt = conn.prepareStatement(sql);
 			ResultSet rs = pstmt.executeQuery()) {
@@ -341,7 +341,7 @@ public class CorsoDAO {
 	//Metodo per recuperare tutti i corsi di un determinato chef
 	public List<Corso> getAllCorsiByChef(Chef chef) {
 		List<Corso> ListaCorsi = new ArrayList<>();
-		String sql = "SELECT * FROM uninafoodlab.Corsi WHERE idchef = ?";
+		String sql = "SELECT * FROM uninafoodlab.corso WHERE idchef = ?";
 		try(Connection conn = DBManager.getConnection();
 			PreparedStatement pstmt = conn.prepareStatement(sql)) {
 			
@@ -371,7 +371,7 @@ public class CorsoDAO {
 	//Metodo per recuperare tutti i corsi in base al nom
 	public List<Corso> getAllCorsiByNome(String nome) {
 		List<Corso> ListaCorsi = new ArrayList<>();
-		String sql = "SELECT * FROM uninafoodlab.Corsi WHERE nomecorso LIKE ?";
+		String sql = "SELECT * FROM uninafoodlab.corso WHERE nomecorso LIKE ?";
 		try(Connection conn = DBManager.getConnection();
 			PreparedStatement pstmt = conn.prepareStatement(sql)) {
 			
@@ -402,7 +402,7 @@ public class CorsoDAO {
 	//Metodo per recuperare tutti i corsi in base all'argomento
 	public List<Corso> getAllCorsiByArgomento(String argomento) {
 		List<Corso> ListaCorsi = new ArrayList<>();
-		String sql = "SELECT * FROM uninafoodlab.Corsi WHERE argomento LIKE ?";
+		String sql = "SELECT * FROM uninafoodlab.Corso WHERE argomento LIKE ?";
 		try(Connection conn = DBManager.getConnection();
 			PreparedStatement pstmt = conn.prepareStatement(sql)) {
 			
@@ -433,7 +433,7 @@ public class CorsoDAO {
 	//Metodo per recuperare tutti i corsi in base alla data di inizio
 	public List<Corso> getAllCorsiByDataInizio(LocalDate dataInizio) {
 		List<Corso> ListaCorsi = new ArrayList<>();
-		String sql = "SELECT * FROM uninafoodlab.Corsi WHERE datainizio >= ?";
+		String sql = "SELECT * FROM uninafoodlab.Corso WHERE datainizio >= ?";
 		try(Connection conn = DBManager.getConnection();
 			PreparedStatement pstmt = conn.prepareStatement(sql)) {
 			
@@ -457,6 +457,49 @@ public class CorsoDAO {
 			
 		} catch(SQLException e) {
 			System.out.println("Errore durante il recupero dei Corsi per Data Inizio: " + e.getMessage());
+			return null;
+		}
+	}
+	
+	public List<Corso> getCorsiDovePartecipanteNonIscrittoDAO(Partecipante p){
+		List<Corso> ListaCorsi = new ArrayList<>();
+		String sql = "SELECT DISTINCT idcorso FROM uninafoodlab.corso WHERE idcorso NOT in ( SELECT idcorso FROM uninafoodlab.iscrizionecorsi WHERE idpartecipante = ?";
+		try(Connection conn = DBManager.getConnection();
+			PreparedStatement pstmt = conn.prepareStatement(sql)) {
+			
+			pstmt.setString(1, p.getID_Partecipante());
+			ResultSet rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				Corso C = new Corso(rs.getString("idcorso"));
+				ListaCorsi.add(C);
+			}
+			return ListaCorsi;
+			
+		} catch(SQLException e) {
+			System.out.println("Errore durante il recupero dei Corsi a cui il partecipante non è iscritto " + e.getMessage());
+			return null;
+		}
+	}
+	
+	public List<Corso> getCorsiDovePartecipanteIscirtto(Partecipante p){
+		List<Corso> ListaCorsi = new ArrayList<>();
+		String sql = "SELECT DISTINCT idcorso FROM uninafoodlab.corso WHERE idcorso in ( SELECT idcorso FROM uninafoodlab.iscrizionecorsi WHERE idpartecipante = ?";
+		try(Connection conn = DBManager.getConnection();
+			PreparedStatement pstmt = conn.prepareStatement(sql)) {
+			
+			pstmt.setString(1, p.getID_Partecipante());
+			ResultSet rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				Corso C = new Corso(rs.getString("idcorso"));
+				
+				ListaCorsi.add(C);
+			}
+			return ListaCorsi;
+			
+		} catch(SQLException e) {
+			System.out.println("Errore durante il recupero dei Corsi a cui il partecipante è iscritto " + e.getMessage());
 			return null;
 		}
 	}

@@ -10,9 +10,9 @@ import javax.swing.event.MenuEvent;
 import javax.swing.event.MenuListener;
 import javax.swing.GroupLayout.Alignment;
 
-public class CorsiDisponibiliFrame extends JFrame {
-
-    private JMenu menuAttivo = null;
+public class CorsiDisponibiliFrame extends JFrame {;
+    
+	private JMenu menuAttivo = null;
 
     public CorsiDisponibiliFrame() {
         setTitle("Corsi Disponibili");
