@@ -4,6 +4,8 @@ import java.util.*;
 import java.util.List;
 import java.awt.*;
 import java.awt.event.*;
+import java.time.LocalDate;
+
 import javax.swing.*;
 import javax.swing.event.*;
 
@@ -49,7 +51,7 @@ public class CorsiDisponibiliFrame extends JFrame {
         	Corso c = datiCorsi.get(i);
         	righe[i][0] = c.getNome_Corso();
         	righe[i][1] = c.getChef_Proprietario().getNome() + " " + c.getChef_Proprietario().getCognome();
-        	righe[i][2] = "DESCRIZIONE";
+        	righe[i][2] = c.getDescrizione();
         	}
         
         
@@ -116,8 +118,9 @@ public class CorsiDisponibiliFrame extends JFrame {
 
         //Suddivisione: descrizione, data e frequenza
 //        String[] righe = descrizioneCompleta.split("\n");
-        String descrizione = "descrizione";
-        String dataInizio = c.getData_Inizio().toString();
+        String descrizione = c.getDescrizione();
+        LocalDate dataInizio = c.getData_Inizio();
+        String dataInizioStringa = (dataInizio!= null) ? dataInizio.toString() : "Data inizio non ancora pubblicata";
         String frequenza = c.getFrequenza_Corsi();
 
         JTextArea txtDescrizione = new JTextArea(descrizione);
@@ -129,7 +132,7 @@ public class CorsiDisponibiliFrame extends JFrame {
         txtDescrizione.setBackground(new Color(245, 250, 255));
         txtDescrizione.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
 
-        JLabel lblData = new JLabel(dataInizio);
+        JLabel lblData = new JLabel(dataInizioStringa);
         lblData.setBounds(20, 160, 400, 25);
         lblData.setFont(new Font("Arial", Font.PLAIN, 14));
 

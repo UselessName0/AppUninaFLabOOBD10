@@ -298,6 +298,44 @@ public class CorsoDAO {
 		}
 	}
 	
+	public String getDescrizioneDAO(Corso Corso_Input) {
+		String sql = "SELECT descrizione from uninafoodlab.corso AS co WHERE co.idcorso = ?";
+		try(Connection conn = DBManager.getConnection();
+			PreparedStatement pstmt = conn.prepareStatement(sql)) {
+			
+			pstmt.setString(1, Corso_Input.getID_Corso());
+			
+			ResultSet rs = pstmt.executeQuery();
+			if(rs.next())
+				return rs.getString("descrizione");
+			else
+				return null;
+			
+		} catch(SQLException e) {
+			System.out.println("Errore durante la selezione della descrizione del corso");
+			return null;
+		}
+	}
+	
+	public String getDescrizioneDAO(String idcorso_input) {
+		String sql = "SELECT descrizione from uninafoodlab.corso AS co WHERE co.idcorso = ?";
+		try(Connection conn = DBManager.getConnection();
+			PreparedStatement pstmt = conn.prepareStatement(sql)) {
+			
+			pstmt.setString(1, idcorso_input);
+			
+			ResultSet rs = pstmt.executeQuery();
+			if(rs.next())
+				return rs.getString("descrizione");
+			else
+				return null;
+			
+		} catch(SQLException e) {
+			System.out.println("Errore durante la selezione della descrizione del corso");
+			return null;
+		}
+	}
+	
 	//Metodo per eliminare un corso dal database
 	public boolean DeleteCorsoDAO(String IDCorso_Input) {
 		String sql ="DELETE FROM uninafoodlab.corso WHERE corso.IDcorso = ?";
@@ -333,10 +371,29 @@ public class CorsoDAO {
 				C.setData_Inizio(rs.getDate("datainizio").toLocalDate());
 				C.setData_Creazione(rs.getDate("datacreazione").toLocalDate());
 				C.setFrequenza_Corsi(rs.getString("frequenzacorsi"));
-			
+				C.setDescrizione(rs.getString("descrizione"));
+				
 				ListaCorsi.add(C);
 			}
 			return ListaCorsi;
+			
+		} catch(SQLException e) {
+			System.out.println("Errore durante il recupero dei Corsi: " + e.getMessage());
+			return null;
+		}
+	}
+	
+	public List<String> getAllidCorsi() {
+		List<String> ListaidCorsi = new ArrayList<>();
+		String sql = "SELECT idcorso FROM uninafoodlab.corso";
+		try(Connection conn = DBManager.getConnection();
+			PreparedStatement pstmt = conn.prepareStatement(sql);
+			ResultSet rs = pstmt.executeQuery()) {
+			
+			while(rs.next()) {
+				ListaidCorsi.add(rs.getString("idcorso"));
+			}
+			return ListaidCorsi;
 			
 		} catch(SQLException e) {
 			System.out.println("Errore durante il recupero dei Corsi: " + e.getMessage());
@@ -506,6 +563,26 @@ public class CorsoDAO {
 			
 		} catch(SQLException e) {
 			System.out.println("Errore durante il recupero dei Corsi a cui il partecipante è iscritto " + e.getMessage());
+			return null;
+		}
+	}
+
+	public List<String> getIDCorsiDovePartecipanteNonIscrittoDAO(Partecipante p) {
+		List<String> ListaidCorsi = new ArrayList<>();
+		String sql = "SELECT DISTINCT idcorso FROM uninafoodlab.corso WHERE idcorso NOT in ( SELECT idcorso FROM uninafoodlab.iscrizionecorso WHERE idpartecipante = ?)";
+		try(Connection conn = DBManager.getConnection();
+			PreparedStatement pstmt = conn.prepareStatement(sql)) {
+			
+			pstmt.setString(1, p.getID_Partecipante());
+			ResultSet rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				ListaidCorsi.add(rs.getString("idcorso"));
+			}
+			return ListaidCorsi;
+			
+		} catch(SQLException e) {
+			System.out.println("Errore durante il recupero dei Corsi a cui il partecipante non è iscritto " + e.getMessage());
 			return null;
 		}
 	}

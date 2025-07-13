@@ -14,9 +14,10 @@ public class Corso {
     private LocalDate Data_Inizio;
     private LocalDate Data_Creazione;
     private String Frequenza_Corsi;
+    private String Descrizione;
 
     //COSTRUTTORI
-    public Corso(String IDCorso,Chef Chef_Proprietario, String Nome_Corso, String Argomento, LocalDate Data_Inizio, LocalDate Data_Creazione, String Frequenza_Corsi) {
+    public Corso(String IDCorso,Chef Chef_Proprietario, String Nome_Corso, String Argomento, LocalDate Data_Inizio, LocalDate Data_Creazione, String Frequenza_Corsi, String Descrizione) {
     	this.ID_Corso = IDCorso;
         this.Chef_Proprietario = Chef_Proprietario;
         this.Nome_Corso = Nome_Corso;
@@ -24,6 +25,7 @@ public class Corso {
         this.Data_Inizio = Data_Inizio;
         this.Data_Creazione = (Data_Creazione != null) ? Data_Creazione : LocalDate.now();
         this.Frequenza_Corsi = Frequenza_Corsi;
+        this.Descrizione = Descrizione;
     }
     
     public Corso(String IDCorso) { //Costruttore di un corso già presente nel database via IDCorso
@@ -42,12 +44,13 @@ public class Corso {
     		this.Frequenza_Corsi = "Libero";
     	else
     		this.Frequenza_Corsi = CorsoDAO.getFrequenzaCorsoDAO(IDCorso);
+    	this.Descrizione = CorsoDAO.getDescrizioneDAO(IDCorso);
     }
     
     
     //COSTRUTTORE SENZA PASSAGGIO DI DATA (NULL) INIZIALIZZA A LocalDate.now
-    public Corso(String IDCorso,Chef Chef_Proprietario, String Nome_Corso, String Argomento, LocalDate Data_Inizio, String Frequenza_Corsi) {
-        this(IDCorso,Chef_Proprietario, Nome_Corso, Argomento, Data_Inizio, LocalDate.now(), Frequenza_Corsi);
+    public Corso(String IDCorso,Chef Chef_Proprietario, String Nome_Corso, String Argomento, LocalDate Data_Inizio, String Frequenza_Corsi, String Descrizione) {
+        this(IDCorso,Chef_Proprietario, Nome_Corso, Argomento, Data_Inizio, LocalDate.now(), Frequenza_Corsi, Descrizione);
     }
     
     public Corso() {
@@ -79,7 +82,7 @@ public class Corso {
 	        this.Argomento = Argomento;
 	    }
 	
-	    public LocalDate getData_Inizio() {
+	    public LocalDate getData_Inizio() { 
 	    	return Data_Inizio;
 	    }
 	    
@@ -120,7 +123,9 @@ public class Corso {
 		}
 
 		public String getDescrizione() {
-			// TODO Auto-generated method stub
-			return null;
+			return Descrizione;
 		}   
+		public void setDescrizione(String Descrizione) {
+			this.Descrizione = Descrizione;
+		}
 }

@@ -136,6 +136,14 @@ public class ControllerPartecipante {
 		
 	}
 	
+	public List<String> GetIDCorsiDovePartecipanteNonIscritto(Partecipante p){
+		CorsoDAO cDAO = new CorsoDAO();
+		if(!p.equals(null))
+			return cDAO.getIDCorsiDovePartecipanteNonIscrittoDAO(p);
+		else
+			return cDAO.getAllidCorsi();
+	}
+
 	public List<Corso> GetCorsiDovePartecipanteIscritto(Partecipante p){
 		CorsoDAO cDAO = new CorsoDAO();
 		if(!p.equals(null))
