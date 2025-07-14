@@ -8,22 +8,12 @@ import javax.swing.event.MenuListener;
 import Entities.Partecipante;
 
 public class DashboardUtente extends JFrame {
-    //ATTRIBUTI
+    
+	//ATTRIBUTI
 	Partecipante p;
-	
-	
+
 	//COSTRUTTORI
-    public DashboardUtente() {
-        setTitle("Dashboard Utente - UninaFoodLab");
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(1000, 750);
-        setLocationRelativeTo(null);
-        setResizable(false);
-        getContentPane().setLayout(new BorderLayout());
-        setJMenuBar(CreaMenuBar(this));
-        getContentPane().add(creaContentPanel(), BorderLayout.CENTER);
-    }
- 
+	
     public DashboardUtente(Partecipante P) {
     	this.p = P;
         setTitle("Dashboard Utente - UninaFoodLab");
@@ -105,7 +95,7 @@ public class DashboardUtente extends JFrame {
         
         itemMieIscrizioni.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
-        		new LeMieIscrizioniFrame().setVisible(true);
+        		new LeMieIscrizioniFrame(p).setVisible(true);
         		dispose();
         	}
         });
@@ -238,7 +228,7 @@ public class DashboardUtente extends JFrame {
             if (voceText.equals("Le mie iscrizioni")) {
                 voce.addMouseListener(new MouseAdapter() {
                     public void mouseClicked(MouseEvent e) {
-                        new LeMieIscrizioniFrame().setVisible(true);
+                        new LeMieIscrizioniFrame(p).setVisible(true);
                         dispose();
                     }
                 });

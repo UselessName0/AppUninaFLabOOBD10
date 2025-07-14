@@ -41,21 +41,17 @@ public class CorsiDisponibiliFrame extends JFrame {
         titolo.setHorizontalAlignment(SwingConstants.CENTER);
         titolo.setForeground(new Color(50, 80, 150));
 
-        
         final List<Corso> datiCorsi = CP.GetCorsiDovePartecipanteNonIscritto(p);
-        
         String[] colonne = {"Nome Corso", "Chef"};
-        
+
         Object[][] righe = new Object[datiCorsi.size()][3];
         for(int i = 0; i< datiCorsi.size(); i++) {
         	Corso c = datiCorsi.get(i);
         	righe[i][0] = c.getNome_Corso();
         	righe[i][1] = c.getChef_Proprietario().getNome() + " " + c.getChef_Proprietario().getCognome();
         	righe[i][2] = c.getDescrizione();
-        	}
-        
-        
-        
+        }
+
         final JTable tabellaCorsi = new JTable(righe, colonne);
         tabellaCorsi.setFont(new Font("Arial", Font.PLAIN, 16));
         tabellaCorsi.setRowHeight(28);
@@ -78,29 +74,44 @@ public class CorsiDisponibiliFrame extends JFrame {
 
         JButton btnIndietro = new JButton("← Indietro");
         btnIndietro.setFont(new Font("Arial", Font.PLAIN, 14));
-        btnIndietro.setBackground(new Color(180, 220, 200));
+        btnIndietro.setBackground(new Color(220, 240, 250));
         btnIndietro.setFocusPainted(false);
-        btnIndietro.setBorder(BorderFactory.createLineBorder(new Color(100, 150, 100), 1));
+        btnIndietro.setBorder(BorderFactory.createLineBorder(new Color(50, 80 , 150), 1));
         btnIndietro.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                new DashboardUtente().setVisible(true);
+                new DashboardUtente(p).setVisible(true);
                 dispose();
             }
         });
 
+        //Pannello centrale per centrare la tabelloa
         JPanel pannelloCentrale = new JPanel();
-        pannelloCentrale.setLayout(new BoxLayout(pannelloCentrale, BoxLayout.Y_AXIS));
         pannelloCentrale.setBackground(sfondoPrincipale);
+        GroupLayout layout = new GroupLayout(pannelloCentrale);
+        pannelloCentrale.setLayout(layout);
+        layout.setAutoCreateGaps(true);
+        layout.setAutoCreateContainerGaps(true);
 
-        pannelloCentrale.add(titolo);
-        pannelloCentrale.add(Box.createVerticalStrut(20));
-        pannelloCentrale.add(scrollPane);
-        pannelloCentrale.add(Box.createVerticalStrut(20));
-        pannelloCentrale.add(btnIndietro);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(GroupLayout.Alignment.CENTER)
+                .addComponent(titolo)
+                .addComponent(scrollPane)
+                .addComponent(btnIndietro, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+        );
+
+        layout.setVerticalGroup(
+            layout.createSequentialGroup()
+                .addComponent(titolo)
+                .addGap(20)
+                .addComponent(scrollPane)
+                .addGap(20)
+                .addComponent(btnIndietro, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+        );
 
         contentPane.add(pannelloCentrale, BorderLayout.CENTER);
     }
-
+    
+    //Metodo per mostrare dettagli del corso interessato
     private void mostraDettagliCorso(Corso c) {
         JFrame finestraDettagli = new JFrame("Dettagli del Corso");
         finestraDettagli.setSize(440, 360);
@@ -116,8 +127,6 @@ public class CorsiDisponibiliFrame extends JFrame {
         lblChef.setBounds(20, 55, 400, 25);
         lblChef.setFont(new Font("Arial", Font.PLAIN, 14));
 
-        //Suddivisione: descrizione, data e frequenza
-//        String[] righe = descrizioneCompleta.split("\n");
         String descrizione = c.getDescrizione();
         LocalDate dataInizio = c.getData_Inizio();
         String dataInizioStringa = (dataInizio!= null) ? dataInizio.toString() : "Data inizio non ancora pubblicata";
@@ -163,6 +172,7 @@ public class CorsiDisponibiliFrame extends JFrame {
         finestraDettagli.setVisible(true);
     }
 
+    //Metodo per creare la menù bar
     private JMenuBar creaMenuBar(JFrame frame) {
         JMenuBar menuBar = new JMenuBar();
         JMenu menuCorsi = new JMenu("Corsi");
@@ -180,60 +190,44 @@ public class CorsiDisponibiliFrame extends JFrame {
         JMenuItem itemInfo = new JMenuItem("Il mio profilo");
         JMenuItem itemLogout = new JMenuItem("Logout");
 
-        itemLogout.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                new WelcomeFrame().setVisible(true);
-                dispose();
-            }
+        itemLogout.addActionListener(e -> {
+            new WelcomeFrame().setVisible(true);
+            dispose();
         });
 
-        itemVediCorsi.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                new CorsiDisponibiliFrame(p).setVisible(true);
-                dispose();
-            }
+        itemVediCorsi.addActionListener(e -> {
+            new CorsiDisponibiliFrame(p).setVisible(true);
+            dispose();
         });
 
-        itemMieIscrizioni.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                new LeMieIscrizioniFrame().setVisible(true);
-                dispose();
-            }
+        itemMieIscrizioni.addActionListener(e -> {
+            new LeMieIscrizioniFrame(p).setVisible(true);
+            dispose();
         });
 
-        itemVediSessioni.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                new LeMieSessioniFrame().setVisible(true);
-                dispose();
-            }
+        itemVediSessioni.addActionListener(e -> {
+            new LeMieSessioniFrame().setVisible(true);
+            dispose();
         });
 
-        itemVediCalendario.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                new CalendarioSessioniFrame().setVisible(true);
-                dispose();
-            }
+        itemVediCalendario.addActionListener(e -> {
+            new CalendarioSessioniFrame().setVisible(true);
+            dispose();
         });
 
-        itemListaChef.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                new ListaChefFrame().setVisible(true);
-                dispose();
-            }
+        itemListaChef.addActionListener(e -> {
+            new ListaChefFrame().setVisible(true);
+            dispose();
         });
 
-        itemLeMieRicette.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                new LeMieRicetteFrame().setVisible(true);
-                dispose();
-            }
+        itemLeMieRicette.addActionListener(e -> {
+            new LeMieRicetteFrame().setVisible(true);
+            dispose();
         });
 
-        itemInfo.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                new ilMioProfiloFrame().setVisible(true);
-                dispose();
-            }
+        itemInfo.addActionListener(e -> {
+            new ilMioProfiloFrame().setVisible(true);
+            dispose();
         });
 
         MenuListener menuListener = new MenuListener() {
@@ -272,7 +266,7 @@ public class CorsiDisponibiliFrame extends JFrame {
         return menuBar;
     }
 
-    //Metodo per evidenziare il menù creando un effetto hover
+    //Metodi per evidenziare la menù bar
     private void evidenziaMenu(JMenu nuovoMenu) {
         if (menuAttivo != null) {
             ripristinaMenu(menuAttivo);
