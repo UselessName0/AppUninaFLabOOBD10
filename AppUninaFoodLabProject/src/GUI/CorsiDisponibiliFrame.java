@@ -159,7 +159,14 @@ public class CorsiDisponibiliFrame extends JFrame {
         btnIscriviti.setFocusPainted(false);
         btnIscriviti.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                JOptionPane.showMessageDialog(finestraDettagli, "🎉 Iscritto al corso " + c.getNome_Corso() + "!");
+            	if(CP.IscriviPartecipanteACorso(p, c))
+            		{
+            		JOptionPane.showMessageDialog(finestraDettagli, "🎉 Iscritto al corso " + c.getNome_Corso() + "!");
+            		}
+            	else
+            		{
+            		JOptionPane.showMessageDialog(finestraDettagli, "Errore nell'iscrizione al corso " + c.getNome_Corso() + "!");
+            		}
                 finestraDettagli.dispose();
             }
         });

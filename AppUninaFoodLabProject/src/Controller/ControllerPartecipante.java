@@ -3,11 +3,14 @@ import java.util.*;
 import Entities.Partecipante;
 import Entities.Chef;
 import Entities.Corso;
+import Entities.IscrizioneCorso;
+
 import java.sql.*;
 import java.time.LocalDate;
 
 import DAO.PartecipanteDAO;
 import DAO.CorsoDAO;
+import DAO.IscrizioneCorsoDAO;
 import Database.DBManager;
 public class ControllerPartecipante {
 
@@ -151,4 +154,22 @@ public class ControllerPartecipante {
 		else
 			return cDAO.getAllCorsi();
 	}
+	
+	public boolean IscriviPartecipanteACorso(Partecipante p, Corso c) {
+		if(p != null && c != null) {
+			IscrizioneCorso IC = new IscrizioneCorso(c, p, LocalDate.now());
+			IscrizioneCorsoDAO icDAO = new IscrizioneCorsoDAO();
+			if(icDAO.insertIscrizioneCorso(IC)) {
+				System.out.println("Iscrizione avvenuta con successo");
+				return true;
+			} else {
+				System.out.println("Iscrizione fallita");
+				return false;
+			}
+		} else {
+			System.out.println("Partecipante o Corso non valido");
+			return false;
+		}
+	}
+	
 }

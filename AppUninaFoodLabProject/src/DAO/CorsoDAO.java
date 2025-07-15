@@ -526,7 +526,7 @@ public class CorsoDAO {
 	
 	public List<Corso> getCorsiDovePartecipanteNonIscrittoDAO(Partecipante p){
 		List<Corso> ListaCorsi = new ArrayList<>();
-		String sql = "SELECT DISTINCT idcorso FROM uninafoodlab.corso WHERE idcorso NOT in ( SELECT idcorso FROM uninafoodlab.iscrizionecorso WHERE idpartecipante = ?)";
+		String sql = "SELECT co.* , ch.* FROM uninafoodlab.corso AS co JOIN uninafoodlab.chef AS ch ON co.idchef = ch.idchef WHERE co.idcorso NOT IN (SELECT idcorso FROM uninafoodlab.iscrizionecorso WHERE idpartecipante = ?)";
 		try(Connection conn = DBManager.getConnection();
 			PreparedStatement pstmt = conn.prepareStatement(sql)) {
 			
@@ -534,8 +534,26 @@ public class CorsoDAO {
 			ResultSet rs = pstmt.executeQuery();
 			
 			while(rs.next()) {
-				Corso C = new Corso(rs.getString("idcorso"));
-				ListaCorsi.add(C);
+				Chef ch = new Chef();
+				ch.setID_Chef(rs.getString("idchef"));
+				ch.setNome(rs.getString("nomechef"));
+				ch.setCognome(rs.getString("cognomechef"));
+				ch.setEmail(rs.getString("email"));
+				ch.setPassword(rs.getString("pass"));
+				Corso co = new Corso();
+				co.setID_Corso(rs.getString("idcorso"));
+				co.setChef_Proprietario(ch);
+				co.setNome_Corso(rs.getString("nomecorso"));
+				co.setArgomento(rs.getString("argomento"));
+				Date dataInizio = rs.getDate("datainizio");
+				if(dataInizio != null)
+					co.setData_Inizio(dataInizio.toLocalDate());
+				else
+					co.setData_Inizio(null);
+				co.setData_Creazione(rs.getDate("datacreazione").toLocalDate());
+				co.setFrequenza_Corsi(rs.getString("frequenzacorsi"));
+				co.setDescrizione(rs.getString("descrizione"));
+				ListaCorsi.add(co);
 			}
 			return ListaCorsi;
 			
@@ -586,44 +604,5 @@ public class CorsoDAO {
 			return null;
 		}
 	}
-	
-	public List<Corso> getCorsiSeguitiDAO(Partecipante p) {
-	    List<Corso> corsiSeguiti = new ArrayList<>();
-
-	    String sql = "SELECT * FROM uninafoodlab.corso AS c " +
-	                 "JOIN uninafoodlab.iscrizionecorso AS i ON c.idcorso = i.idcorso " +
-	                 "WHERE i.idpartecipante = ?";
-
-	    try (Connection conn = DBManager.getConnection();
-	         PreparedStatement pstmt = conn.prepareStatement(sql)) {
-
-	        pstmt.setString(1, p.getID_Partecipante());
-	        ResultSet rs = pstmt.executeQuery();
-
-	        while (rs.next()) {
-	            String idChef = rs.getString("idchef");
-	            Chef chefProprietario = ChefDAO.getChefById(idChef);
-
-	            Date sqlDate = rs.getDate("datainizio");
-	            LocalDate dataInizio = (sqlDate != null) ? sqlDate.toLocalDate() : null;
-
-	            Corso c = new Corso(
-	                rs.getString("idcorso"),
-	                rs.getString("nomecorso"),
-	                rs.getString("descrizione"),
-	                dataInizio,
-	                chefProprietario
-	            );
-
-	            corsiSeguiti.add(c);
-	        }
-
-	    } catch (SQLException e) {
-	        System.out.println("Errore nel recupero dei corsi seguiti: " + e.getMessage());
-	    }
-
-	    return corsiSeguiti;
-	}
-
 }
 	

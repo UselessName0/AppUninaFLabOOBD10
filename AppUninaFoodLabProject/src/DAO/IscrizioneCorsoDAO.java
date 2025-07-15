@@ -21,10 +21,11 @@ public class IscrizioneCorsoDAO {
 				
 				Corso tempCorso = IscrizioneCorso_Input.getC();
 				Partecipante tempPartecipante = IscrizioneCorso_Input.getP();
+				System.out.println(tempCorso.getID_Corso() + tempPartecipante.getID_Partecipante() + IscrizioneCorso_Input.getDataIscrizioneAsSQLDate());
 				
 				pstmt.setString(1, tempCorso.getID_Corso());
 				pstmt.setString(2, tempPartecipante.getID_Partecipante());
-				pstmt.setDate(3, IscrizioneCorso_Input.getDataIscrizioneAsSQLDate());
+				pstmt.setDate(3, IscrizioneCorso_Input.get);
 				
 				int rowsAffected = pstmt.executeUpdate();
 				return rowsAffected > 0;
