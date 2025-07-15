@@ -28,6 +28,32 @@ public class ChefDAO {
 	        return false;
 	    } 
 	}
+	
+	public static Chef getChefById(String idChef) {
+        String sql = "SELECT idchef, nomechef, cognomechef, email FROM uninafoodlab.chef WHERE idchef = ?";
+        try (Connection conn = DBManager.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setString(1, idChef);
+            ResultSet rs = pstmt.executeQuery();
+
+            if (rs.next()) {
+                return new Chef(
+                    rs.getString("idchef"),
+                    rs.getString("nomechef"),
+                    rs.getString("cognomechef"),
+                    rs.getString("email")
+                );
+            } else {
+                return null;
+            }
+
+        } catch (SQLException e) {
+            System.err.println("Errore nel recupero chef con id " + idChef + ": " + e.getMessage());
+            return null;
+        }
+    }
+	
 	//La funzione ritorna true se la password inserita corrisponde a quella presente nel DB, false altrimenti
 	public boolean checkPassword(String emailInput, String pwdInput) {
 		String sql = "SELECT pass FROM uninafoodlab.Chef WHERE email = ?";
@@ -110,6 +136,7 @@ public class ChefDAO {
 					return null;
 				}
 	}
+	
 	//Metodo per selezionare uno Chef dal DB usando un oggetto Chef per cercarlo
 	public String getNomeChefDAO(Chef Chef_Input) {
 		String sql = "SELECT Ch.nomechef FROM uninafoodlab.Chef AS Ch WHERE Ch.IDChef = ?";

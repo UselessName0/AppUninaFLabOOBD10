@@ -29,12 +29,15 @@ public class Chef extends Utente {
 		this.Password = chefDAO.getpassChefDAO(IDChef);
 		
 
-		}
+	}
 
 	public Chef() {
 		super(null, null, null, null);
 	}
 	
+    public Chef(String idchef, String nome, String cognome, String email) {
+    	super(nome, cognome, idchef, email);
+    }
 	
 	//METODI
 		//GETTERS E SETTERS

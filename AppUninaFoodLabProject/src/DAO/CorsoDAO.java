@@ -586,5 +586,44 @@ public class CorsoDAO {
 			return null;
 		}
 	}
+	
+	public List<Corso> getCorsiSeguitiDAO(Partecipante p) {
+	    List<Corso> corsiSeguiti = new ArrayList<>();
+
+	    String sql = "SELECT * FROM uninafoodlab.corso AS c " +
+	                 "JOIN uninafoodlab.iscrizionecorso AS i ON c.idcorso = i.idcorso " +
+	                 "WHERE i.idpartecipante = ?";
+
+	    try (Connection conn = DBManager.getConnection();
+	         PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+	        pstmt.setString(1, p.getID_Partecipante());
+	        ResultSet rs = pstmt.executeQuery();
+
+	        while (rs.next()) {
+	            String idChef = rs.getString("idchef");
+	            Chef chefProprietario = ChefDAO.getChefById(idChef);
+
+	            Date sqlDate = rs.getDate("datainizio");
+	            LocalDate dataInizio = (sqlDate != null) ? sqlDate.toLocalDate() : null;
+
+	            Corso c = new Corso(
+	                rs.getString("idcorso"),
+	                rs.getString("nomecorso"),
+	                rs.getString("descrizione"),
+	                dataInizio,
+	                chefProprietario
+	            );
+
+	            corsiSeguiti.add(c);
+	        }
+
+	    } catch (SQLException e) {
+	        System.out.println("Errore nel recupero dei corsi seguiti: " + e.getMessage());
+	    }
+
+	    return corsiSeguiti;
+	}
+
 }
 	

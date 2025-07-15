@@ -92,47 +92,47 @@ public class DashboardUtente extends JFrame {
                 dispose();
             }
         });
-        
+
         itemMieIscrizioni.addActionListener(new ActionListener() {
-        	public void actionPerformed(ActionEvent e) {
-        		new LeMieIscrizioniFrame(p).setVisible(true);
-        		dispose();
-        	}
+            public void actionPerformed(ActionEvent e) {
+                new LeMieIscrizioniFrame(p).setVisible(true);
+                dispose();
+            }
         });
-        
+
         itemVediSessioni.addActionListener(new ActionListener() {
-        	public void actionPerformed(ActionEvent e) {
-        		new LeMieSessioniFrame().setVisible(true);
-        		dispose();
-        	}
+            public void actionPerformed(ActionEvent e) {
+                new LeMieSessioniFrame(p).setVisible(true);
+                dispose();
+            }
         });
-        
+
         itemVediCalendario.addActionListener(new ActionListener() {
-        	public void actionPerformed(ActionEvent e) {
-        		new CalendarioSessioniFrame().setVisible(true);
-        		dispose();
-        	}
+            public void actionPerformed(ActionEvent e) {
+                new CalendarioSessioniFrame(p).setVisible(true);
+                dispose();
+            }
         });
-        
+
         itemListaChef.addActionListener(new ActionListener() {
-        	public void actionPerformed(ActionEvent e) {
-        		new ListaChefFrame().setVisible(true);
-        		dispose();
-        	}
+            public void actionPerformed(ActionEvent e) {
+                new ListaChefFrame(p).setVisible(true);
+                dispose();
+            }
         });
-        
+
         itemLeMieRicette.addActionListener(new ActionListener() {
-        	public void actionPerformed(ActionEvent e) {
-        		new LeMieRicetteFrame().setVisible(true);
-        		dispose();
-        	}
+            public void actionPerformed(ActionEvent e) {
+                new LeMieRicetteFrame(p).setVisible(true);
+                dispose();
+            }
         });
-        
+
         itemInfo.addActionListener(new ActionListener() {
-        	public void actionPerformed(ActionEvent e) {
-        		new ilMioProfiloFrame().setVisible(true);
-        		dispose();
-        	}
+            public void actionPerformed(ActionEvent e) {
+                new ilMioProfiloFrame(p).setVisible(true);
+                dispose();
+            }
         });
 
         MenuListener menuListener = new MenuListener() {
@@ -237,7 +237,7 @@ public class DashboardUtente extends JFrame {
             if (voceText.equals("Le mie sessioni")) {
                 voce.addMouseListener(new MouseAdapter() {
                     public void mouseClicked(MouseEvent e) {
-                        new LeMieSessioniFrame().setVisible(true);
+                        new LeMieSessioniFrame(p).setVisible(true);
                         dispose();
                     }
                 });
@@ -246,7 +246,7 @@ public class DashboardUtente extends JFrame {
             if (voceText.equals("Calendario sessioni")) {
                 voce.addMouseListener(new MouseAdapter() {
                     public void mouseClicked(MouseEvent e) {
-                        new CalendarioSessioniFrame().setVisible(true);
+                        new CalendarioSessioniFrame(p).setVisible(true);
                         dispose();
                     }
                 });
@@ -255,7 +255,7 @@ public class DashboardUtente extends JFrame {
             if (voceText.equals("Le mie ricette")) {
                 voce.addMouseListener(new MouseAdapter() {
                     public void mouseClicked(MouseEvent e) {
-                        new LeMieRicetteFrame().setVisible(true);
+                        new LeMieRicetteFrame(p).setVisible(true);
                         dispose();
                     }
                 });
@@ -264,7 +264,7 @@ public class DashboardUtente extends JFrame {
             if (voceText.equals("Lista Chef")) {
                 voce.addMouseListener(new MouseAdapter() {
                     public void mouseClicked(MouseEvent e) {
-                        new ListaChefFrame().setVisible(true);
+                        new ListaChefFrame(p).setVisible(true);
                         dispose();
                     }
                 });
@@ -273,7 +273,7 @@ public class DashboardUtente extends JFrame {
             if (voceText.equals("Il mio profilo")) {
                 voce.addMouseListener(new MouseAdapter() {
                     public void mouseClicked(MouseEvent e) {
-                        new ilMioProfiloFrame().setVisible(true);
+                        new ilMioProfiloFrame(p).setVisible(true);
                         dispose();
                     }
                 });

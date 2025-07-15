@@ -15,10 +15,13 @@ import Entities.Corso;
 import Entities.Partecipante;
 
 public class CorsiDisponibiliFrame extends JFrame {
+	
+	//Attributi
 	ControllerPartecipante CP = new ControllerPartecipante();
     Partecipante p;
 	private JMenu menuAttivo = null;
 
+	//Costruttori
     public CorsiDisponibiliFrame(Partecipante p) {
     	this.p = p;
         setTitle("Corsi Disponibili");
@@ -111,7 +114,7 @@ public class CorsiDisponibiliFrame extends JFrame {
         contentPane.add(pannelloCentrale, BorderLayout.CENTER);
     }
     
-    //Metodo per mostrare dettagli del corso interessato
+    //Metodi
     private void mostraDettagliCorso(Corso c) {
         JFrame finestraDettagli = new JFrame("Dettagli del Corso");
         finestraDettagli.setSize(440, 360);
@@ -172,7 +175,6 @@ public class CorsiDisponibiliFrame extends JFrame {
         finestraDettagli.setVisible(true);
     }
 
-    //Metodo per creare la menù bar
     private JMenuBar creaMenuBar(JFrame frame) {
         JMenuBar menuBar = new JMenuBar();
         JMenu menuCorsi = new JMenu("Corsi");
@@ -190,44 +192,60 @@ public class CorsiDisponibiliFrame extends JFrame {
         JMenuItem itemInfo = new JMenuItem("Il mio profilo");
         JMenuItem itemLogout = new JMenuItem("Logout");
 
-        itemLogout.addActionListener(e -> {
-            new WelcomeFrame().setVisible(true);
-            dispose();
+        itemLogout.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                new WelcomeFrame().setVisible(true);
+                dispose();
+            }
         });
 
-        itemVediCorsi.addActionListener(e -> {
-            new CorsiDisponibiliFrame(p).setVisible(true);
-            dispose();
+        itemVediCorsi.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                new CorsiDisponibiliFrame(p).setVisible(true);
+                dispose();
+            }
         });
 
-        itemMieIscrizioni.addActionListener(e -> {
-            new LeMieIscrizioniFrame(p).setVisible(true);
-            dispose();
+        itemMieIscrizioni.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                new LeMieIscrizioniFrame(p).setVisible(true);
+                dispose();
+            }
         });
 
-        itemVediSessioni.addActionListener(e -> {
-            new LeMieSessioniFrame().setVisible(true);
-            dispose();
+        itemVediSessioni.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                new LeMieSessioniFrame(p).setVisible(true);
+                dispose();
+            }
         });
 
-        itemVediCalendario.addActionListener(e -> {
-            new CalendarioSessioniFrame().setVisible(true);
-            dispose();
+        itemVediCalendario.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                new CalendarioSessioniFrame(p).setVisible(true);
+                dispose();
+            }
         });
 
-        itemListaChef.addActionListener(e -> {
-            new ListaChefFrame().setVisible(true);
-            dispose();
+        itemListaChef.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                new ListaChefFrame(p).setVisible(true);
+                dispose();
+            }
         });
 
-        itemLeMieRicette.addActionListener(e -> {
-            new LeMieRicetteFrame().setVisible(true);
-            dispose();
+        itemLeMieRicette.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                new LeMieRicetteFrame(p).setVisible(true);
+                dispose();
+            }
         });
 
-        itemInfo.addActionListener(e -> {
-            new ilMioProfiloFrame().setVisible(true);
-            dispose();
+        itemInfo.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                new ilMioProfiloFrame(p).setVisible(true);
+                dispose();
+            }
         });
 
         MenuListener menuListener = new MenuListener() {

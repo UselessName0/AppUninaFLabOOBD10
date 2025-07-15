@@ -55,6 +55,14 @@ public class Corso {
     
     public Corso() {
 	}
+    
+    public Corso(String idCorso, String nome, String descrizione, LocalDate dataInizio, Chef Chef_Proprietario) {
+        this.ID_Corso = idCorso;
+        this.Nome_Corso = nome;
+        this.Descrizione = descrizione;
+        this.Data_Inizio = dataInizio;
+        this.Chef_Proprietario = Chef_Proprietario;
+    }
 
 		//METODI
 	    // GETTERS E SETTERS

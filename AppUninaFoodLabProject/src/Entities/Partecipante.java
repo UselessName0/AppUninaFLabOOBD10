@@ -39,6 +39,10 @@ public class Partecipante extends Utente {
 			ID_Partecipante = iD_Partecipante;
 		}
 		
+		public String getCognome() {
+			return Cognome;
+		}
+		
 	
 	
 	

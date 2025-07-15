@@ -121,35 +121,35 @@ public class LeMieIscrizioniFrame extends JFrame {
 
         itemVediSessioni.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                new LeMieSessioniFrame().setVisible(true);
+                new LeMieSessioniFrame(p).setVisible(true);
                 dispose();
             }
         });
 
         itemVediCalendario.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                new CalendarioSessioniFrame().setVisible(true);
+                new CalendarioSessioniFrame(p).setVisible(true);
                 dispose();
             }
         });
 
         itemListaChef.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                new ListaChefFrame().setVisible(true);
+                new ListaChefFrame(p).setVisible(true);
                 dispose();
             }
         });
 
         itemLeMieRicette.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                new LeMieRicetteFrame().setVisible(true);
+                new LeMieRicetteFrame(p).setVisible(true);
                 dispose();
             }
         });
 
         itemInfo.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                new ilMioProfiloFrame().setVisible(true);
+                new ilMioProfiloFrame(p).setVisible(true);
                 dispose();
             }
         });
