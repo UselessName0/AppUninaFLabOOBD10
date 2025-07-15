@@ -565,7 +565,7 @@ public class CorsoDAO {
 	
 	public List<Corso> getCorsiDovePartecipanteIscirtto(Partecipante p){
 		List<Corso> ListaCorsi = new ArrayList<>();
-		String sql = "SELECT DISTINCT idcorso FROM uninafoodlab.corso WHERE idcorso in ( SELECT idcorso FROM uninafoodlab.iscrizionecorsi WHERE idpartecipante = ?";
+		String sql = "SELECT co.* , ch.* FROM uninafoodlab.corso AS co JOIN uninafoodlab.chef AS ch ON co.idchef = ch.idchef WHERE co.idcorso IN (SELECT idcorso FROM uninafoodlab.iscrizionecorso WHERE idpartecipante = ?)";
 		try(Connection conn = DBManager.getConnection();
 			PreparedStatement pstmt = conn.prepareStatement(sql)) {
 			
@@ -573,9 +573,26 @@ public class CorsoDAO {
 			ResultSet rs = pstmt.executeQuery();
 			
 			while(rs.next()) {
-				Corso C = new Corso(rs.getString("idcorso"));
-				
-				ListaCorsi.add(C);
+				Chef ch = new Chef();
+				ch.setID_Chef(rs.getString("idchef"));
+				ch.setNome(rs.getString("nomechef"));
+				ch.setCognome(rs.getString("cognomechef"));
+				ch.setEmail(rs.getString("email"));
+				ch.setPassword(rs.getString("pass"));
+				Corso co = new Corso();
+				co.setID_Corso(rs.getString("idcorso"));
+				co.setChef_Proprietario(ch);
+				co.setNome_Corso(rs.getString("nomecorso"));
+				co.setArgomento(rs.getString("argomento"));
+				Date dataInizio = rs.getDate("datainizio");
+				if(dataInizio != null)
+					co.setData_Inizio(dataInizio.toLocalDate());
+				else
+					co.setData_Inizio(null);
+				co.setData_Creazione(rs.getDate("datacreazione").toLocalDate());
+				co.setFrequenza_Corsi(rs.getString("frequenzacorsi"));
+				co.setDescrizione(rs.getString("descrizione"));
+				ListaCorsi.add(co);
 			}
 			return ListaCorsi;
 			

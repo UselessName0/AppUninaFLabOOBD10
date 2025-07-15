@@ -9,6 +9,7 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -28,6 +29,7 @@ import javax.swing.event.MenuListener;
 
 import Controller.ControllerPartecipante;
 import Entities.Partecipante;
+import Entities.Sessione;
 
 public class LeMieSessioniFrame extends JFrame {
 	
@@ -62,8 +64,16 @@ public class LeMieSessioniFrame extends JFrame {
         panel.add(titolo, BorderLayout.NORTH);
     	
       //Tabella
+        final List<Sessione> datiSessioni = CP.GetSessioneDovePartecipanteIscritto(p);
+        
         String[] colonne = { "Nome Corso", "Data Sessione" };
-        Object[][] righe = new Object[0][2];
+        Object[][] righe = new Object[datiSessioni.size()][2];
+        for(int i = 0; i < datiSessioni.size(); i++) {
+        	Sessione s = datiSessioni.get(i);
+        	righe[i][0] = s.getRelatedCorso().getNome_Corso();
+        	righe[i][1] = s.getData_Sessione();
+        }
+        
         JTable tabellaCorsi = new JTable(righe, colonne);
         tabellaCorsi.setFont(new Font("Arial", Font.PLAIN, 16));
         tabellaCorsi.setRowHeight(28);

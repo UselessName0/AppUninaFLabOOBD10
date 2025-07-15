@@ -2,12 +2,15 @@ package GUI;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.util.List;
+
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.event.MenuEvent;
 import javax.swing.event.MenuListener;
 
 import Controller.ControllerPartecipante;
+import Entities.Corso;
 import Entities.Partecipante;
 
 public class LeMieIscrizioniFrame extends JFrame {
@@ -40,9 +43,16 @@ public class LeMieIscrizioniFrame extends JFrame {
         titolo.setFont(new Font("Arial", Font.BOLD, 28));
         panel.add(titolo, BorderLayout.NORTH);
 
+        
+        final List<Corso> datiCorsi = CP.GetCorsiDovePartecipanteIscritto(p);
         //Tabella
         String[] colonne = { "Nome Corso", "Data Inizio" };
-        Object[][] righe = new Object[0][2];
+        Object[][] righe = new Object[datiCorsi.size()][2];
+        for(int i = 0; i < datiCorsi.size(); i++) {
+        	Corso c = datiCorsi.get(i);
+        	righe[i][0] = c.getNome_Corso();
+        	righe[i][1] = c.getData_Inizio();
+        }
         JTable tabellaCorsi = new JTable(righe, colonne);
         tabellaCorsi.setFont(new Font("Arial", Font.PLAIN, 16));
         tabellaCorsi.setRowHeight(28);

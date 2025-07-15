@@ -1,6 +1,7 @@
 package DAO;
 
 import java.sql.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -104,17 +105,45 @@ public class RicettaDAO {
 		List<Ricetta> ListaRicette = new ArrayList<>();
 		String sql = "SELECT * FROM uninafoodlab.ricetta;";
 		try(Connection conn = DBManager.getConnection();
-				PreparedStatement pstmt = conn.prepareStatement(sql);
-				ResultSet rs = pstmt.executeQuery()) {
+			PreparedStatement pstmt = conn.prepareStatement(sql);
+			
+			ResultSet rs = pstmt.executeQuery()) {
+			
 					while(rs.next()) {
 						Ricetta R = new Ricetta(); 
 						R.setIDRicetta(rs.getString("idricetta"));
 						R.setTitolo(rs.getString("nominativoricetta"));
+						
+						ListaRicette.add(R);
 					}
 					return ListaRicette;	
 				}catch(SQLException e) {
 					System.out.println("Errore durante il recupero delle ricette: " + e.getMessage());
 					return null;
 				}
+	}
+	
+	public List<Ricetta> GetAllRicettaImparateDaPartecipante(Partecipante p) { //PRENDO SOLO LE RICETTE DELLE SESSIONI AVVENUTE PRIMA DI OGGI
+		List<Ricetta> ListaRicette = new ArrayList<>();
+		String sql = "SELECT r.* FROM uninafoodlab.ricetta AS r JOIN uninafoodlab.sessione AS s ON r.idricetta = s.idricetta JOIN uninafoodlab.iscrizionesessione AS ises ON ises.idsessione = s.idsessione WHERE ises.idpartecipante = ? AND s.datasessione < ?;";
+		try(Connection conn = DBManager.getConnection();
+			PreparedStatement pstmt = conn.prepareStatement(sql))
+			{
+				pstmt.setString(1, p.getID_Partecipante());
+				pstmt.setDate(2, Date.valueOf(LocalDate.now()));
+				ResultSet rs = pstmt.executeQuery(); 
+				while(rs.next()) {
+					Ricetta R = new Ricetta();
+					R.setIDRicetta(rs.getString("idricetta"));
+					R.setTitolo(rs.getString("nominativoricetta"));
+					
+					ListaRicette.add(R);
+			
+					}
+				return ListaRicette;
+			}catch(SQLException e) {
+				System.out.println("Errore durante il recupero delle ricette del partecipante : " +e.getMessage());
+				return null;
+			}
 	}
 }

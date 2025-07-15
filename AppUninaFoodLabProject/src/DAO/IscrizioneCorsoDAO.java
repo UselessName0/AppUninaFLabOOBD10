@@ -15,23 +15,23 @@ public class IscrizioneCorsoDAO {
 	
 	//metodo per l'inserimento di una nuova iscrizione al corso nel DB usando un oggetto IscrizioneCorso (True se l'inserimento va a buon fine, False altrimenti)
 	public boolean insertIscrizioneCorso(IscrizioneCorso IscrizioneCorso_Input) {
-		String sql = "INSERT INTO uninafooddlab.iscrizionecorso(idcorso, idpartecipante, datadiiscrizione) VALUES (?, ?, ?)";
+		String sql = "INSERT INTO uninafoodlab.iscrizionecorso(idcorso, idpartecipante, datadiiscrizione) VALUES (?, ?, ?)";
 			try(Connection conn = DBManager.getConnection();
 				PreparedStatement pstmt = conn.prepareStatement(sql)) {
 				
 				Corso tempCorso = IscrizioneCorso_Input.getC();
 				Partecipante tempPartecipante = IscrizioneCorso_Input.getP();
-				System.out.println(tempCorso.getID_Corso() + tempPartecipante.getID_Partecipante() + IscrizioneCorso_Input.getDataIscrizioneAsSQLDate());
+				System.out.println(IscrizioneCorso_Input.getDataIscrizioneAsSQLDate());
 				
 				pstmt.setString(1, tempCorso.getID_Corso());
 				pstmt.setString(2, tempPartecipante.getID_Partecipante());
-				pstmt.setDate(3, IscrizioneCorso_Input.get);
+				pstmt.setDate(3, IscrizioneCorso_Input.getDataIscrizioneAsSQLDate());
 				
 				int rowsAffected = pstmt.executeUpdate();
 				return rowsAffected > 0;
 				
 			} catch(SQLException e) {
-				System.out.println("Errore durante l'inserimento dell'iscrizione al corso!");
+				System.out.println("Errore durante l'inserimento dell'iscrizione al corso : " + e.getMessage());
 				return false;
 			}
 	}

@@ -8,6 +8,7 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -27,6 +28,7 @@ import javax.swing.event.MenuListener;
 
 import Controller.ControllerPartecipante;
 import Entities.Partecipante;
+import Entities.Ricetta;
 
 public class LeMieRicetteFrame extends JFrame {
 	
@@ -62,8 +64,15 @@ public class LeMieRicetteFrame extends JFrame {
         panel.add(titolo, BorderLayout.NORTH);
     	
       //Tabella
+        final List<Ricetta> datiRicette = CP.GetRicettaDiPartecipante(p);
+        
         String[] colonne = { "Nome Ricetta" };
-        Object[][] righe = new Object[0][1];
+        Object[][] righe = new Object[datiRicette.size()][1];
+        for(int i = 0; i < datiRicette.size(); i++) {
+        	Ricetta r = datiRicette.get(i);
+        	righe[i][0] = r.getTitolo();
+        }
+        
         JTable tabellaCorsi = new JTable(righe, colonne);
         tabellaCorsi.setFont(new Font("Arial", Font.PLAIN, 16));
         tabellaCorsi.setRowHeight(28);

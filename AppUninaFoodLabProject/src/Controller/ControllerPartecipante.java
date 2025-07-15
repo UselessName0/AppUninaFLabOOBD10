@@ -1,16 +1,21 @@
 package Controller;
 import java.util.*;
 import Entities.Partecipante;
+import Entities.Sessione;
 import Entities.Chef;
 import Entities.Corso;
 import Entities.IscrizioneCorso;
+import Entities.Ricetta;
 
 import java.sql.*;
 import java.time.LocalDate;
 
 import DAO.PartecipanteDAO;
+import DAO.RicettaDAO;
+import DAO.SessioneDAO;
 import DAO.CorsoDAO;
 import DAO.IscrizioneCorsoDAO;
+import DAO.RicettaDAO;
 import Database.DBManager;
 public class ControllerPartecipante {
 
@@ -172,4 +177,23 @@ public class ControllerPartecipante {
 		}
 	}
 	
+	public List<Sessione> GetSessioneDovePartecipanteIscritto(Partecipante p){
+		SessioneDAO sDAO = new SessioneDAO();
+		if(!p.equals(null))
+			return sDAO.getSessioniDiPartecipante(p);
+		else {
+			System.out.println("Partecipante nullo impossibile recuperare le sue sessioni.");
+			return sDAO.getAllSessioniDAO();
+		}
+	}
+	
+	public List<Ricetta> GetRicettaDiPartecipante(Partecipante p){
+		RicettaDAO rDAO = new RicettaDAO();
+		if(!p.equals(null))
+			return rDAO.GetAllRicettaImparateDaPartecipante(p);
+		else {
+			System.out.println("Partecipante nullo impossibile recuperare le sue ricette");
+			return null;
+		}
+	}
 }
