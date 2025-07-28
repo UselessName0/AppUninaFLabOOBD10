@@ -16,6 +16,7 @@ public class IscrizioneSessione {
 	public IscrizioneSessione(Partecipante P, Sessione S) {
 		this.P = P;
 		this.S = S;
+		this.Adesione = false;
 	}
 	
 	public IscrizioneSessione() {

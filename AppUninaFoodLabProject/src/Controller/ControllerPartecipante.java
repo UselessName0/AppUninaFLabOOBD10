@@ -6,6 +6,7 @@ import Entities.Chef;
 import Entities.Corso;
 import Entities.IscrizioneCorso;
 import Entities.Ricetta;
+import Entities.IscrizioneSessione;
 
 import java.sql.*;
 import java.time.LocalDate;
@@ -13,8 +14,10 @@ import java.time.LocalDate;
 import DAO.PartecipanteDAO;
 import DAO.RicettaDAO;
 import DAO.SessioneDAO;
+import DAO.ChefDAO;
 import DAO.CorsoDAO;
 import DAO.IscrizioneCorsoDAO;
+import DAO.IscrizioneSessioneDAO;
 import DAO.RicettaDAO;
 import Database.DBManager;
 public class ControllerPartecipante {
@@ -195,5 +198,37 @@ public class ControllerPartecipante {
 			System.out.println("Partecipante nullo impossibile recuperare le sue ricette");
 			return null;
 		}
+	}
+	
+	public List<Chef> GetListaChefFromDB(){
+		ChefDAO cDAO = new ChefDAO();
+		return cDAO.getAllChef();
+	}
+	
+	public int GetNumeroCorsiSeguiti(Partecipante p) {
+		if(p != null) {
+			CorsoDAO cDAO = new CorsoDAO();
+			return cDAO.getNumeroCorsiPartecipante(p);
+		} else {
+			System.out.println("Partecipante nullo, impossibile recuperare il numero di corsi seguiti.");
+			return 0;
+		}
+	}
+	
+	public List<Sessione> GetListaSessioni() {
+		SessioneDAO sDAO = new SessioneDAO();
+		return sDAO.getAllSessioniDAO();
+	}
+	
+	public boolean IscriviPartecipanteASessione(Partecipante p, Sessione s) {
+		if(p != null && s != null) {
+			IscrizioneCorsoDAO icDAO = new IscrizioneCorsoDAO();
+			if(icDAO.CheckIscrizioneCorso(p, s.getRelatedCorso())) {
+				IscrizioneSessione is = new IscrizioneSessione(p, s);
+				IscrizioneSessioneDAO isDAO = new IscrizioneSessioneDAO();
+				return isDAO.insertIscrizioneSessione(is); 
+			}	
+		}
+		return false;
 	}
 }

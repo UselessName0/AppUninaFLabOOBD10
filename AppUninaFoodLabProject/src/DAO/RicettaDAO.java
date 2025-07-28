@@ -31,7 +31,7 @@ public class RicettaDAO {
 	
 	//Metodo per selezionare l'IDicetta dal DB usando un titolo 
 	public String GetIDRicettaDAO(String Titolo){
-		String sql = "SELECT IDRicetta FROM uninafoodlab.ricetta WHERE nominativoricetta = ?,";
+		String sql = "SELECT IDRicetta FROM uninafoodlab.ricetta WHERE nominativoricetta = ?;";
 			try(Connection conn = DBManager.getConnection();
 				PreparedStatement pstmt = conn.prepareStatement(sql)) {
 				
@@ -49,7 +49,7 @@ public class RicettaDAO {
 	
 	//Metodo per selezionare il titolo di una ricetta dal DB usando un oggetto Ricetta 
 	public String GetTitoloRicettaDAO(Ricetta Ricetta_Input){
-		String sql = "SELECT IDRicetta FROM uninafoodlab.ricetta WHERE nominativoricetta = ?,";
+		String sql = "SELECT IDRicetta FROM uninafoodlab.ricetta WHERE nominativoricetta = ?;";
 			try(Connection conn = DBManager.getConnection();
 				PreparedStatement pstmt = conn.prepareStatement(sql)) {
 				
@@ -67,7 +67,7 @@ public class RicettaDAO {
 	
 	//Metodo per selezionare il titolo di una ricetta dal DB usando l'IDRicetta 
 	public String GetTitoloRicettaDAO(String IDRicetta_Input){
-		String sql = "SELECT IDRicetta FROM uninafoodlab.ricetta WHERE nominativoricetta = ?,";
+		String sql = "SELECT IDRicetta FROM uninafoodlab.ricetta WHERE nominativoricetta = ?;";
 			try(Connection conn = DBManager.getConnection();
 				PreparedStatement pstmt = conn.prepareStatement(sql)) {
 				
@@ -85,7 +85,7 @@ public class RicettaDAO {
 	
 	//Metodo per eliminare una ricetta dal DB usando l'IDRicetta (True se l'eliminazione va a buon fine, False altrimenti)
 	public boolean DeleteRicettaDAO(String IDRicetta_Input) {
-		String sql ="DELETE FROM uninafoodlab.ricetta WHERE ricetta.idricetta = ?";
+		String sql ="DELETE FROM uninafoodlab.ricetta WHERE ricetta.idricetta = ?;";
 			try(Connection conn = DBManager.getConnection();
 				PreparedStatement pstmt = conn.prepareStatement(sql)) {
 				

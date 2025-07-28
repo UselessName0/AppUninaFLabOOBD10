@@ -347,25 +347,42 @@ public class SessioneDAO {
 	//Metodo per recuperare tutte le sessioni dal DB
 	public List<Sessione> getAllSessioniDAO() {
 		List<Sessione> ListaSessioni = new ArrayList<>();
-		String sql = "SELECT * FROM uninafoodlab.sessione;";
+		String sql = "SELECT co.* , s.* , r.* FROM uninafoodlab.sessione AS s JOIN uninafoodlab.iscrizionesessione AS ic ON s.idsessione = ic.idsessione JOIN uninafoodlab.corso AS co ON s.idcorso = co.idcorso JOIN uninafoodlab.ricetta AS r ON r.idricetta = s.idricetta WHERE s.datasessione > ? ORDER BY s.datasessione;";
+		//Funziona, semplicemente non ci sono sessioni dopo oggi, da mettere
 		try(Connection conn = DBManager.getConnection();
-			PreparedStatement pstmt = conn.prepareStatement(sql);
-			ResultSet rs = pstmt.executeQuery()) {
+			PreparedStatement pstmt = conn.prepareStatement(sql)) {
+			pstmt.setDate(1, java.sql.Date.valueOf(LocalDate.now()));
+			ResultSet rs = pstmt.executeQuery(); 
+			
+			
 				while(rs.next()) {
 					Sessione s = new Sessione();
 					
 					s.setID_Sessione(rs.getString("idsessione"));
 					
-					Corso c = new Corso(rs.getString("idcorso"));	
-					s.setRelatedCorso(c);
+					Corso co = new Corso();
+					co.setID_Corso(rs.getString("idcorso"));
+					co.setNome_Corso(rs.getString("nomecorso"));
+					co.setArgomento(rs.getString("argomento"));
+					co.setData_Inizio(rs.getDate("datainizio").toLocalDate());
+					co.setData_Creazione(rs.getDate("datacreazione").toLocalDate());
+					co.setFrequenza_Corsi(rs.getString("frequenzacorsi"));
+					co.setDescrizione("descrizione");
+					
+					s.setRelatedCorso(co);
 					s.setData_Sessione(rs.getDate("datasessione").toLocalDate());
-					s.setIsPratica(rs.getBoolean("ispratica"));
+					s.setIsPratica(rs.getBoolean("isPratica"));
 					s.setNumero_Adesioni(rs.getInt("adesioni"));
-					s.setLinkConferenza(rs.getString("linkconferenza"));
-					s.setLuogo(rs.getString("luogo"));
-					Ricetta r = new Ricetta(rs.getString("idricetta"));
+					s.setLinkConferenza("linkconferenza");
+					s.setLuogo("luogo");
+					
+					Ricetta r = new Ricetta();
+					r.setIDRicetta(rs.getString("idricetta"));
+					r.setTitolo(rs.getString("nominativoricetta"));
+					
 					s.setRicetta_Appresa(r);
-	
+					
+					ListaSessioni.add(s);
 				}
 				return ListaSessioni;	
 			}catch(SQLException e) {

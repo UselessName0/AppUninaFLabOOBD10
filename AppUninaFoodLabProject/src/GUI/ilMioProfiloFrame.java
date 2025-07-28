@@ -59,7 +59,7 @@ public class ilMioProfiloFrame extends JFrame {
         JLabel dataNome = new JLabel(p.getNome());
         JLabel dataCognome = new JLabel(p.getCognome());
         JLabel dataEmail = new JLabel(p.getEmail());
-        JLabel dataCorsiSeguiti = new JLabel(String.valueOf(new CorsoDAO().getCorsiSeguitiDAO(p).size()));
+        JLabel dataCorsiSeguiti = new JLabel(CP.GetNumeroCorsiSeguiti(p) + " Corsi");
 
         dataNome.setFont(dataFont);
         dataCognome.setFont(dataFont);

@@ -43,7 +43,7 @@ public class LeMieSessioniFrame extends JFrame {
     public LeMieSessioniFrame(Partecipante p) {
     	
         this.p = p;
-        setTitle("Le Mie Iscrizioni");
+        setTitle("Le Mie Sessioni");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(800, 600);
         setLocationRelativeTo(null);

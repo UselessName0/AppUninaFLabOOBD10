@@ -9,6 +9,7 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -28,6 +29,7 @@ import javax.swing.event.MenuListener;
 
 import Controller.ControllerPartecipante;
 import Entities.Partecipante;
+import Entities.Sessione;
 
 public class CalendarioSessioniFrame extends JFrame {
 	
@@ -43,7 +45,7 @@ public class CalendarioSessioniFrame extends JFrame {
     public CalendarioSessioniFrame(Partecipante p) {
     	
     	this.p = p;
-        setTitle("Le Mie Iscrizioni");
+        setTitle("Calendario Sessioni");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(800, 600);
         setLocationRelativeTo(null);
@@ -58,14 +60,21 @@ public class CalendarioSessioniFrame extends JFrame {
         panel.setBackground(sfondoPrincipale);
         panel.setLayout(new BorderLayout(0, 20));
 
-        JLabel titolo = new JLabel("Le mie Sessioni", SwingConstants.CENTER);
+        JLabel titolo = new JLabel("Calendario Sessioni", SwingConstants.CENTER);
         titolo.setForeground(new Color(50, 80, 150));
         titolo.setFont(new Font("Arial", Font.BOLD, 28));
         panel.add(titolo, BorderLayout.NORTH);
     	
       //Tabella
+        List<Sessione> listaSessioni = CP.GetListaSessioni();
         String[] colonne = { "Nome Corso", "Data Sessione" };
-        Object[][] righe = new Object[0][2];
+        Object[][] righe = new Object[listaSessioni.size()][2];
+        
+        for(int i = 0; i<listaSessioni.size(); i++) {
+			Sessione s = listaSessioni.get(i);
+			righe[i][0] = s.getRelatedCorso().getNome_Corso();
+			righe[i][1] = s.getData_Sessione().toString();
+		}
         JTable tabellaCorsi = new JTable(righe, colonne);
         tabellaCorsi.setFont(new Font("Arial", Font.PLAIN, 16));
         tabellaCorsi.setRowHeight(28);

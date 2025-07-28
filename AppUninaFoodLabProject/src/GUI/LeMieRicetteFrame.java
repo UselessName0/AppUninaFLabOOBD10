@@ -43,7 +43,7 @@ public class LeMieRicetteFrame extends JFrame {
     public LeMieRicetteFrame(Partecipante p) {
     	
     	this.p = p;
-        setTitle("Le Mie Iscrizioni");
+        setTitle("Le Mie Ricette");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(800, 600);
         setLocationRelativeTo(null);
@@ -58,7 +58,7 @@ public class LeMieRicetteFrame extends JFrame {
         panel.setBackground(sfondoPrincipale);
         panel.setLayout(new BorderLayout(0, 20));
 
-        JLabel titolo = new JLabel("Le mie Sessioni", SwingConstants.CENTER);
+        JLabel titolo = new JLabel("Le mie Ricette", SwingConstants.CENTER);
         titolo.setForeground(new Color(50, 80, 150));
         titolo.setFont(new Font("Arial", Font.BOLD, 28));
         panel.add(titolo, BorderLayout.NORTH);

@@ -106,6 +106,23 @@ public class IscrizioneCorsoDAO {
 			return false;
 		}
 	}
-
+	
+	//Metodo per controllare l'iscrizione al corso di un partecipante, restituisce true se il partecipante è iscritto al corso
+	public boolean CheckIscrizioneCorso(Partecipante p, Corso c) {
+		String sql = "SELECT * FROM uninafoodlab.iscrizionecorso AS ic WHERE ic.idcorso = ? AND idpartecipante ?;";
+		try(Connection conn = DBManager.getConnection();
+			PreparedStatement pstmt = conn.prepareStatement(sql)) {
+			
+			pstmt.setString(1, c.getID_Corso());
+			pstmt.setString(1, p.getID_Partecipante());
+			
+			ResultSet rs = pstmt.executeQuery();
+			
+			return rs.next();
+		} catch(SQLException e) {
+			System.out.println("Errore durante il controllo dell'iscrizione al corso" + e.getMessage());
+			return false;
+		}
+	}
 	
 }

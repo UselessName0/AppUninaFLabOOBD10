@@ -621,5 +621,24 @@ public class CorsoDAO {
 			return null;
 		}
 	}
+	
+	public int getNumeroCorsiPartecipante(Partecipante p) {
+		String sql = "SELECT COUNT(*) AS numero_corsi FROM uninafoodlab.iscrizionecorso WHERE idpartecipante = ?";
+		try(Connection conn = DBManager.getConnection();
+			PreparedStatement pstmt = conn.prepareStatement(sql)) {
+			
+			pstmt.setString(1, p.getID_Partecipante());
+			ResultSet rs = pstmt.executeQuery();
+			if(rs.next()) {
+				return rs.getInt("numero_corsi");
+			} else {
+				return 0;
+			}
+			
+		} catch(SQLException e) {
+			System.out.println("Errore durante il recupero del numero di corsi a cui il partecipante è iscritto: " + e.getMessage());
+			return 0;
+		}
+	}
 }
 	

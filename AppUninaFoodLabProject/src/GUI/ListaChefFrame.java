@@ -8,6 +8,7 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -26,6 +27,7 @@ import javax.swing.event.MenuEvent;
 import javax.swing.event.MenuListener;
 
 import Controller.ControllerPartecipante;
+import Entities.Chef;
 import Entities.Partecipante;
 
 public class ListaChefFrame extends JFrame {
@@ -40,7 +42,7 @@ public class ListaChefFrame extends JFrame {
     public ListaChefFrame(Partecipante p) {
     	
     	this.p = p;
-        setTitle("Le Mie Iscrizioni");
+        setTitle("Lista Chef");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(800, 600);
         setLocationRelativeTo(null);
@@ -55,14 +57,24 @@ public class ListaChefFrame extends JFrame {
         panel.setBackground(sfondoPrincipale);
         panel.setLayout(new BorderLayout(0, 20));
 
-        JLabel titolo = new JLabel("Le mie Sessioni", SwingConstants.CENTER);
+        JLabel titolo = new JLabel("Lista Chef", SwingConstants.CENTER);
         titolo.setForeground(new Color(50, 80, 150));
         titolo.setFont(new Font("Arial", Font.BOLD, 28));
         panel.add(titolo, BorderLayout.NORTH);
     	
       //Tabella
+        
+        final List<Chef> listaChef = CP.GetListaChefFromDB();
+        
         String[] colonne = { "Nome", "Cognome" };
-        Object[][] righe = new Object[0][2];
+        Object[][] righe = new Object[listaChef.size()][2];
+        
+        for(int i = 0; i < listaChef.size(); i++) {
+			Chef chef = listaChef.get(i);
+			righe[i][0] = chef.getNome();
+			righe[i][1] = chef.getCognome();
+		}
+        
         JTable tabellaCorsi = new JTable(righe, colonne);
         tabellaCorsi.setFont(new Font("Arial", Font.PLAIN, 16));
         tabellaCorsi.setRowHeight(28);
