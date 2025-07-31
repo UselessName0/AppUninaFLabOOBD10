@@ -561,4 +561,46 @@ public class SessioneDAO {
 			return null;
 		}
 	}
+	
+	public List<Sessione> getAllSessioniDiChef(Chef c){
+		List<Sessione> ListaSessioni = new ArrayList<>();
+		String sql = "SELECT s.*, co.*, r.* FROM uninafoodlab.sessione JOIN uninafoodlab.corso AS co ON s.idcorso = co.idcorso JOIN uninafoodlab.ricetta AS r ON r.idricetta = s.idricetta WHERE co.idchef = ?;";
+		try(Connection conn = DBManager.getConnection();
+			PreparedStatement pstmt = conn.prepareStatement(sql)) {
+			
+			pstmt.setString(1, c.getID_Chef());
+			ResultSet rs = pstmt.executeQuery();
+			while(rs.next()) {
+				Sessione s = new Sessione();
+				
+				s.setID_Sessione(rs.getString("idsessione"));
+				
+				Corso co = new Corso();
+				co.setID_Corso(rs.getString("idcorso"));
+				co.setNome_Corso(rs.getString("nomecorso"));
+				co.setArgomento(rs.getString("argomento"));
+				co.setData_Inizio(rs.getDate("datainizio").toLocalDate());
+				co.setData_Creazione(rs.getDate("datacreazione").toLocalDate());
+				co.setFrequenza_Corsi(rs.getString("frequenzacorsi"));
+				co.setDescrizione(rs.getString("descrizione"));
+				co.setChef_Proprietario(c);
+				s.setRelatedCorso(co);
+				s.setData_Sessione(rs.getDate("datasessione").toLocalDate());
+				s.setIsPratica(rs.getBoolean("ispratica"));
+				s.setNumero_Adesioni(rs.getInt("adesioni"));
+				s.setLinkConferenza(rs.getString("linkconferenza"));
+				s.setLuogo(rs.getString("luogo"));
+				Ricetta r = new Ricetta();
+				r.setIDRicetta(rs.getString("idricetta"));
+				r.setTitolo(rs.getString("nominativoricetta"));
+				s.setRicetta_Appresa(r);
+				
+				ListaSessioni.add(s);
+			}
+			return ListaSessioni;
+	}catch(SQLException e) {
+			System.out.println("Errore durante il recupero delle sessioni dello chef: " + e.getMessage());
+			return null;
+		}
+	}
 }

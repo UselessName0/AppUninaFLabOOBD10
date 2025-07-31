@@ -1,14 +1,19 @@
 package Controller;
 
 import Entities.Chef;
+import Entities.Corso;
 import Entities.Partecipante;
+import Entities.Sessione;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.List;
 
 import DAO.ChefDAO;
+import DAO.CorsoDAO;
 import DAO.PartecipanteDAO;
+import DAO.SessioneDAO;
 import Database.DBManager;
 
 public class ControllerChef {
@@ -91,4 +96,22 @@ public class ControllerChef {
 		else
 			return false;
 	}
-}	
+	
+	public List<Corso> GetCorsiByChef(Chef C){
+		CorsoDAO cDAO = new CorsoDAO();
+		if(!C.equals(null)) {
+			return cDAO.getAllCorsiByChef(C);
+		}
+		return cDAO.getAllCorsi();
+	}
+	
+	public List<Sessione> GetSessioniByChef(Chef c){
+		SessioneDAO sDAO = new SessioneDAO();
+		if(!c.equals(null) ) {
+			return sDAO.getAllSessioniDiChef(c);
+		}
+		return sDAO.getAllSessioniDAO();
+	}
+	
+	
+}

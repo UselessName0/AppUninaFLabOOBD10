@@ -231,4 +231,16 @@ public class ControllerPartecipante {
 		}
 		return false;
 	}
+	
+	public boolean IscriviPartecipanteASessioneConAdesione(Partecipante p, Sessione s, boolean adesione) {
+		if(p != null && s != null) {
+			IscrizioneCorsoDAO icDAO = new IscrizioneCorsoDAO();
+			if(icDAO.CheckIscrizioneCorso(p, s.getRelatedCorso())) {
+				IscrizioneSessione is = new IscrizioneSessione(p, s, adesione);
+				IscrizioneSessioneDAO isDAO = new IscrizioneSessioneDAO();
+				return isDAO.insertIscrizioneSessione(is); 
+			}	
+		}
+		return false;
+	}
 }
