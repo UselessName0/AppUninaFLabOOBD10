@@ -7,6 +7,7 @@ import javax.swing.event.MenuListener;
 
 import Controller.ControllerPartecipante;
 import DAO.CorsoDAO;
+import Entities.Chef;
 import Entities.Partecipante;
 
 import java.awt.*;
@@ -20,6 +21,7 @@ public class ilMioProfiloFrame extends JFrame {
 	//Attributi
     private ControllerPartecipante CP = new ControllerPartecipante();
     private Partecipante p;
+    private Chef c;
     private JMenu menuAttivo = null;
     Color sfondoPrincipale = new Color(220, 240, 250);
     private JPanel contentPane;
@@ -125,6 +127,10 @@ public class ilMioProfiloFrame extends JFrame {
         gl.setAutoCreateContainerGaps(true);
 
         contentPane.setLayout(gl);
+    }
+    
+    public ilMioProfiloFrame(Chef C) {
+    	this.c = C;
     }
     
     //Metodi

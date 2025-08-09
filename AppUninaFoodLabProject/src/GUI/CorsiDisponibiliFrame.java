@@ -19,11 +19,104 @@ public class CorsiDisponibiliFrame extends JFrame {
 	//Attributi
 	ControllerPartecipante CP = new ControllerPartecipante();
     Partecipante p;
+    Chef c;
 	private JMenu menuAttivo = null;
 
 	//Costruttori
     public CorsiDisponibiliFrame(Partecipante p) {
     	this.p = p;
+        setTitle("Corsi Disponibili");
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setSize(800, 600);
+        setLocationRelativeTo(null);
+        setResizable(false);
+        setJMenuBar(creaMenuBar(this));
+
+        Color sfondoPrincipale = new Color(220, 240, 250);  
+        Color sfondoTabella = new Color(210, 240, 210);   
+
+        JPanel contentPane = new JPanel(new BorderLayout(20, 20));
+        contentPane.setBackground(sfondoPrincipale);
+        contentPane.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+        setContentPane(contentPane);
+
+        JLabel titolo = new JLabel("Elenco dei Corsi Disponibili");
+        titolo.setFont(new Font("Arial", Font.BOLD, 24));
+        titolo.setHorizontalAlignment(SwingConstants.CENTER);
+        titolo.setForeground(new Color(50, 80, 150));
+
+        final List<Corso> datiCorsi = CP.GetCorsiDovePartecipanteNonIscritto(p);
+        String[] colonne = {"Nome Corso", "Chef"};
+
+        Object[][] righe = new Object[datiCorsi.size()][3];
+        for(int i = 0; i< datiCorsi.size(); i++) {
+        	Corso c = datiCorsi.get(i);
+        	righe[i][0] = c.getNome_Corso();
+        	righe[i][1] = c.getChef_Proprietario().getNome() + " " + c.getChef_Proprietario().getCognome();
+        	righe[i][2] = c.getDescrizione();
+        }
+
+        final JTable tabellaCorsi = new JTable(righe, colonne);
+        tabellaCorsi.setFont(new Font("Arial", Font.PLAIN, 16));
+        tabellaCorsi.setRowHeight(28);
+        tabellaCorsi.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        tabellaCorsi.setBackground(sfondoTabella);
+        tabellaCorsi.setGridColor(Color.LIGHT_GRAY);
+        JScrollPane scrollPane = new JScrollPane(tabellaCorsi);
+
+        tabellaCorsi.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+            public void valueChanged(ListSelectionEvent event) {
+                if (!event.getValueIsAdjusting()) {
+                    int riga = tabellaCorsi.getSelectedRow();
+                    if (riga >= 0) {
+                    	Corso c = datiCorsi.get(riga);
+                        mostraDettagliCorso(c);
+                    }
+                }
+            }
+        });
+
+        JButton btnIndietro = new JButton("← Indietro");
+        btnIndietro.setFont(new Font("Arial", Font.PLAIN, 14));
+        btnIndietro.setBackground(new Color(220, 240, 250));
+        btnIndietro.setFocusPainted(false);
+        btnIndietro.setBorder(BorderFactory.createLineBorder(new Color(50, 80 , 150), 1));
+        btnIndietro.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                new DashboardUtente(p).setVisible(true);
+                dispose();
+            }
+        });
+
+        //Pannello centrale per centrare la tabelloa
+        JPanel pannelloCentrale = new JPanel();
+        pannelloCentrale.setBackground(sfondoPrincipale);
+        GroupLayout layout = new GroupLayout(pannelloCentrale);
+        pannelloCentrale.setLayout(layout);
+        layout.setAutoCreateGaps(true);
+        layout.setAutoCreateContainerGaps(true);
+
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(GroupLayout.Alignment.CENTER)
+                .addComponent(titolo)
+                .addComponent(scrollPane)
+                .addComponent(btnIndietro, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+        );
+
+        layout.setVerticalGroup(
+            layout.createSequentialGroup()
+                .addComponent(titolo)
+                .addGap(20)
+                .addComponent(scrollPane)
+                .addGap(20)
+                .addComponent(btnIndietro, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+        );
+
+        contentPane.add(pannelloCentrale, BorderLayout.CENTER);
+    }
+    
+    public CorsiDisponibiliFrame(Chef C) {
+    	this.c = C;
         setTitle("Corsi Disponibili");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(800, 600);
@@ -152,31 +245,11 @@ public class CorsiDisponibiliFrame extends JFrame {
         lblFrequenza.setBounds(20, 190, 400, 25);
         lblFrequenza.setFont(new Font("Arial", Font.PLAIN, 14));
 
-        JButton btnIscriviti = new JButton("Iscriviti");
-        btnIscriviti.setBounds(160, 230, 100, 30);
-        btnIscriviti.setBackground(new Color(180, 220, 240));
-        btnIscriviti.setBorder(BorderFactory.createLineBorder(new Color(120, 180, 220), 1));
-        btnIscriviti.setFocusPainted(false);
-        btnIscriviti.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-            	if(CP.IscriviPartecipanteACorso(p, c))
-            		{
-            		JOptionPane.showMessageDialog(finestraDettagli, "🎉 Iscritto al corso " + c.getNome_Corso() + "!");
-            		}
-            	else
-            		{
-            		JOptionPane.showMessageDialog(finestraDettagli, "Errore nell'iscrizione al corso " + c.getNome_Corso() + "!");
-            		}
-                finestraDettagli.dispose();
-            }
-        });
-
         finestraDettagli.getContentPane().add(lblNome);
         finestraDettagli.getContentPane().add(lblChef);
         finestraDettagli.getContentPane().add(txtDescrizione);
         finestraDettagli.getContentPane().add(lblData);
         finestraDettagli.getContentPane().add(lblFrequenza);
-        finestraDettagli.getContentPane().add(btnIscriviti);
 
         finestraDettagli.setResizable(false);
         finestraDettagli.setVisible(true);
