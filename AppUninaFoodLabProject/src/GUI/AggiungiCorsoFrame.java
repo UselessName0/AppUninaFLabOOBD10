@@ -14,16 +14,15 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 
 public class AggiungiCorsoFrame extends JFrame {
 
+	//ATTRIBUTI
     private JPanel contentPane;
     private Chef c;
-    Color sfondoPrincipale = new Color(220, 240, 250);
-
-    // Componenti per l'inserimento dei dati
     private JComboBox<String> categoriaComboBox;
     private JTextField dataInizioField;
     private JTextField frequenzaField;
-    private JTextField numeroSessioniField;
+    private JTextField ricetteField;
 
+    //COSTRUTTORI
     public AggiungiCorsoFrame(Chef C) {
         
     	this.c = C;
@@ -31,22 +30,19 @@ public class AggiungiCorsoFrame extends JFrame {
         setSize(800, 600);
         setLocationRelativeTo(null);
         setResizable(false);
+        CreaMenuBar(this);
 
-        // Impostazioni base del frame
         setTitle("Aggiungi Corso");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(100, 100, 500, 350);
 
-        // Pannello principale
         contentPane = new JPanel();
         contentPane.setBorder(new EmptyBorder(10, 10, 10, 10));
         setContentPane(contentPane);
 
-        // Pannello centrale per i campi di input
         JPanel inputPanel = new JPanel();
         inputPanel.setLayout(new GridLayout(5, 2, 10, 10));
 
-        // Categoria
         JLabel label_2 = new JLabel("Categoria:");
         label_2.setFont(new Font("Arial", Font.BOLD, 14));
         inputPanel.add(label_2);
@@ -57,58 +53,57 @@ public class AggiungiCorsoFrame extends JFrame {
         categoriaComboBox.addItem("Vegetariano");
         inputPanel.add(categoriaComboBox);
 
-        // Data di inizio
         JLabel label_1 = new JLabel("Data di inizio (gg/mm/aaaa):");
         label_1.setFont(new Font("Arial", Font.BOLD, 14));
         inputPanel.add(label_1);
         dataInizioField = new JTextField();
         inputPanel.add(dataInizioField);
 
-        // Frequenza
-        JLabel lblFrequenza = new JLabel("Frequenza:");
+        JLabel lblFrequenza = new JLabel("Frequenza sessioni:");
         lblFrequenza.setFont(new Font("Arial", Font.BOLD, 14));
         inputPanel.add(lblFrequenza);
         frequenzaField = new JTextField();
         inputPanel.add(frequenzaField);
-
-        // Numero di sessioni
-        JLabel label = new JLabel("Numero di sessioni:");
+        
+        JLabel label = new JLabel("Ricette:");
         label.setFont(new Font("Arial", Font.BOLD, 14));
         inputPanel.add(label);
-        numeroSessioniField = new JTextField();
-        inputPanel.add(numeroSessioniField);
+        ricetteField = new JTextField();
+        inputPanel.add(ricetteField);
 
-        // Pannello inferiore per i pulsanti
+        //Pannello per i pulsanti
         JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout(new FlowLayout(FlowLayout.RIGHT));
         
-                JButton btnIndietro = new JButton("← Indietro");
-                buttonPanel.add(btnIndietro);
-                btnIndietro.setFont(new Font("Arial", Font.PLAIN, 14));
-                btnIndietro.setFocusPainted(false);
-                btnIndietro.setBorder(BorderFactory.createLineBorder(new Color(50, 80, 150), 1));
-                btnIndietro.setBackground(new Color(240, 240, 240));
+        JButton btnIndietro = new JButton("← Indietro");
+        buttonPanel.add(btnIndietro);
+        btnIndietro.setFont(new Font("Arial", Font.PLAIN, 14));
+        btnIndietro.setFocusPainted(false);
+        btnIndietro.setBorder(BorderFactory.createLineBorder(new Color(50, 80, 150), 1));
+        btnIndietro.setBackground(new Color(240, 240, 240));
                 
-                        btnIndietro.addActionListener(new ActionListener() {
-                            public void actionPerformed(ActionEvent e) {
-                                new DashboardChef(c).setVisible(true);
-                                dispose();
-                            }
-                        });
+        btnIndietro.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        		new DashboardChef(c).setVisible(true);
+        		dispose();
+        	}
+        });
+                        
         GroupLayout gl_contentPane = new GroupLayout(contentPane);
         gl_contentPane.setHorizontalGroup(
         	gl_contentPane.createParallelGroup(Alignment.LEADING)
-        		.addComponent(inputPanel, GroupLayout.PREFERRED_SIZE, 466, GroupLayout.PREFERRED_SIZE)
-        		.addGroup(gl_contentPane.createSequentialGroup()
-        			.addComponent(buttonPanel, GroupLayout.PREFERRED_SIZE, 466, GroupLayout.PREFERRED_SIZE)
-        			.addGap(74))
+        		.addGroup(Alignment.TRAILING, gl_contentPane.createSequentialGroup()
+        			.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
+        				.addComponent(buttonPanel, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 530, Short.MAX_VALUE)
+        				.addComponent(inputPanel, GroupLayout.DEFAULT_SIZE, 530, Short.MAX_VALUE))
+        			.addContainerGap())
         );
         gl_contentPane.setVerticalGroup(
         	gl_contentPane.createParallelGroup(Alignment.LEADING)
         		.addGroup(gl_contentPane.createSequentialGroup()
         			.addGap(20)
         			.addComponent(inputPanel, GroupLayout.PREFERRED_SIZE, 213, GroupLayout.PREFERRED_SIZE)
-        			.addPreferredGap(ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
+        			.addPreferredGap(ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
         			.addComponent(buttonPanel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
         );
         
@@ -121,7 +116,8 @@ public class AggiungiCorsoFrame extends JFrame {
         contentPane.setLayout(gl_contentPane);
     }
     
-private JMenu menuAttivo = null;
+    //METODI 
+    private JMenu menuAttivo = null;
     
     private JMenuBar CreaMenuBar(JFrame frame) {
         JMenuBar menuBar = new JMenuBar();
@@ -135,7 +131,7 @@ private JMenu menuAttivo = null;
         JMenuItem itemVediCorsi = new JMenuItem("Corsi Disponibili");
         JMenuItem itemAggiungiCorso = new JMenuItem("Aggiungi Corso");
         JMenuItem itemAggiungiSessione = new JMenuItem("Aggiungi Sessione");
-        JMenuItem itemSessioniDisponibili = new JMenuItem("Sessioni Disponibili");
+        JMenuItem itemSessioniDisponibili = new JMenuItem("Calendario Sessioni");
         JMenuItem itemListaRicette = new JMenuItem("Lista Ricette");
         JMenuItem itemStatistiche = new JMenuItem("Statistiche");
         JMenuItem itemReport = new JMenuItem("Report");
@@ -172,7 +168,7 @@ private JMenu menuAttivo = null;
 
         itemSessioniDisponibili.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                new SessioniDisponibiliFrame(c).setVisible(true);
+                new CalendarioSessioniFrame(c).setVisible(true);
                 dispose();
             }
         });
@@ -244,7 +240,7 @@ private JMenu menuAttivo = null;
         return menuBar;
     }
     
-  //Metodo che permette di evidenziare il menù
+    //Metodo che permette di evidenziare il menù
     private void evidenziaMenu(JMenu nuovoMenu) {
         if (menuAttivo != null) {
             ripristinaMenu(menuAttivo);

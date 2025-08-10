@@ -65,7 +65,7 @@ public class DashboardChef extends JFrame {
         contentPanel.add(creaSezione("Corsi", new String[] { "Aggiungi corso", "Corsi disponibili" }, new Color(189, 226, 249)), gbc);
 
         gbc.gridx = 1; gbc.gridy = 0;
-        contentPanel.add(creaSezione("Sessioni", new String[] { "Aggiungi sessione", "Sessioni disponibili" }, new Color(200, 240, 210)), gbc);
+        contentPanel.add(creaSezione("Sessioni", new String[] { "Aggiungi sessione", "Calendario sessioni" }, new Color(200, 240, 210)), gbc);
 
         gbc.gridx = 0; gbc.gridy = 1;
         contentPanel.add(creaSezione("Ricette", new String[] { "Lista ricette" }, new Color(200, 240, 210)), gbc);
@@ -94,7 +94,7 @@ public class DashboardChef extends JFrame {
         JMenuItem itemVediCorsi = new JMenuItem("Corsi Disponibili");
         JMenuItem itemAggiungiCorso = new JMenuItem("Aggiungi Corso");
         JMenuItem itemAggiungiSessione = new JMenuItem("Aggiungi Sessione");
-        JMenuItem itemSessioniDisponibili = new JMenuItem("Sessioni Disponibili");
+        JMenuItem itemSessioniDisponibili = new JMenuItem("Calendario Sessioni");
         JMenuItem itemListaRicette = new JMenuItem("Lista Ricette");
         JMenuItem itemStatistiche = new JMenuItem("Statistiche");
         JMenuItem itemReport = new JMenuItem("Report");
@@ -131,7 +131,7 @@ public class DashboardChef extends JFrame {
 
         itemSessioniDisponibili.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                new SessioniDisponibiliFrame(c).setVisible(true);
+                new CalendarioSessioniFrame(c).setVisible(true);
                 dispose();
             }
         });
@@ -265,7 +265,7 @@ public class DashboardChef extends JFrame {
                 });
             }
             
-            if (voceText.equals("Aggiungi Sessione")) {
+            if (voceText.equals("Aggiungi sessione")) {
                 voce.addMouseListener(new MouseAdapter() {
                     public void mouseClicked(MouseEvent e) {
                         new AggiungiSessioneFrame(c).setVisible(true);
@@ -274,10 +274,10 @@ public class DashboardChef extends JFrame {
                 });
             }
             
-            if (voceText.equals("Sessioni disponibili")) {
+            if (voceText.equals("Calendario sessioni")) {
                 voce.addMouseListener(new MouseAdapter() {
                     public void mouseClicked(MouseEvent e) {
-                        new SessioniDisponibiliFrame(c).setVisible(true);
+                        new CalendarioSessioniFrame(c).setVisible(true);
                         dispose();
                     }
                 });
