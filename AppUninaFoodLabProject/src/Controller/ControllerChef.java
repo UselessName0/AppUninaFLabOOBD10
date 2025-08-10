@@ -113,5 +113,20 @@ public class ControllerChef {
 		return sDAO.getAllSessioniDAO();
 	}
 	
+	public boolean InserisciCorso(Corso c) {
+		CorsoDAO cDAO = new CorsoDAO();
+		if(cDAO.InsertCorso(c)) {
+			return true;
+		}
+		else
+			return false;
+	}
 	
+	public int GetNumeroCorsiCreati(Chef c) {
+		ChefDAO cDAO = new ChefDAO();
+		if(!c.equals(null)) {
+			return cDAO.getNumeroCorsiByChef(c);
+		}
+		return 0;
+	}
 }

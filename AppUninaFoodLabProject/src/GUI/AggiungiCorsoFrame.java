@@ -8,13 +8,19 @@ import javax.swing.event.MenuListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.time.LocalDate;
+
 import Entities.Chef;
+import Entities.Corso;
+import Controller.ControllerChef;
+
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
 
 public class AggiungiCorsoFrame extends JFrame {
 
 	//ATTRIBUTI
+	private ControllerChef CC = new ControllerChef();
     private JPanel contentPane;
     private Chef c;
     private JComboBox<String> categoriaComboBox;
@@ -108,6 +114,20 @@ public class AggiungiCorsoFrame extends JFrame {
         );
         
         JButton btnAggiungi = new JButton("Aggiungi");
+        btnAggiungi.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        		Corso c = new Corso();
+        		c.setArgomento((String) categoriaComboBox.getSelectedItem());
+        		c.setChef_Proprietario(C);
+        		c.setData_Creazione(LocalDate.now());
+        		//c.setDescrizione();
+        		//c.setFrequenza_Corsi();
+        		//c.setData_Inizio();
+        		
+        		CC.InserisciCorso(c);
+        		
+        	}
+        });
         btnAggiungi.setFont(new Font("Arial", Font.PLAIN, 14));
         btnAggiungi.setFocusPainted(false);
         btnAggiungi.setBorder(BorderFactory.createLineBorder(new Color(50, 80, 150), 1));

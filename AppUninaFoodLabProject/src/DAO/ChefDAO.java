@@ -354,4 +354,23 @@ public class ChefDAO {
 		}
 	}
 			
+	public int getNumeroCorsiByChef(Chef c) {
+		String sql = "SELECT COUNT(*) AS ncorsi FROM uninafoodlab.Corso WHERE idchef = ?";
+		try (Connection conn = DBManager.getConnection();
+			 PreparedStatement pstmt = conn.prepareStatement(sql)) {
+			
+			pstmt.setString(1, c.getID_Chef());
+			ResultSet rs = pstmt.executeQuery();
+			
+			if (rs.next()) {
+				return rs.getInt("ncorsi");
+			} else {
+				return 0; // Nessun corso trovato
+			}
+			
+		} catch (SQLException e) {
+			System.out.println("Errore durante il conteggio dei corsi: " + e.getMessage());
+			return 0;
+		}
+	}
 }

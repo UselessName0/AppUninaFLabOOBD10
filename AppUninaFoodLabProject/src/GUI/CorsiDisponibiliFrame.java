@@ -9,6 +9,7 @@ import java.time.LocalDate;
 import javax.swing.*;
 import javax.swing.event.*;
 
+import Controller.ControllerChef;
 import Controller.ControllerPartecipante;
 import Entities.Chef;
 import Entities.Corso;
@@ -18,6 +19,7 @@ public class CorsiDisponibiliFrame extends JFrame {
 	
 	//Attributi
 	ControllerPartecipante CP = new ControllerPartecipante();
+	ControllerChef CC = new ControllerChef();
     Partecipante p;
     Chef c;
 	private JMenu menuAttivo = null;
@@ -44,8 +46,14 @@ public class CorsiDisponibiliFrame extends JFrame {
         titolo.setFont(new Font("Arial", Font.BOLD, 24));
         titolo.setHorizontalAlignment(SwingConstants.CENTER);
         titolo.setForeground(new Color(50, 80, 150));
-
-        final List<Corso> datiCorsi = CP.GetCorsiDovePartecipanteNonIscritto(p);
+        titolo.setText("Corsi Disponibili per " + p.getNome() + " " + p.getCognome());
+        List<Corso> datiCorsi;
+        if(p != null) {
+        	datiCorsi = CP.GetCorsiDovePartecipanteNonIscritto(p);
+		} else {
+			datiCorsi = CP.GetCorsiFromDB();
+    	}
+        
         String[] colonne = {"Nome Corso", "Chef"};
 
         Object[][] righe = new Object[datiCorsi.size()][3];
