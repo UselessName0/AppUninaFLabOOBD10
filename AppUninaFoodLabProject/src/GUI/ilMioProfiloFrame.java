@@ -181,7 +181,7 @@ public class ilMioProfiloFrame extends JFrame {
 
         btnIndietro.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                new DashboardUtente(p).setVisible(true);
+                new DashboardChef(c).setVisible(true);
                 dispose();
             }
         });

@@ -48,11 +48,8 @@ public class CorsiDisponibiliFrame extends JFrame {
         titolo.setForeground(new Color(50, 80, 150));
         titolo.setText("Corsi Disponibili per " + p.getNome() + " " + p.getCognome());
         List<Corso> datiCorsi;
-        if(p != null) {
-        	datiCorsi = CP.GetCorsiDovePartecipanteNonIscritto(p);
-		} else {
-			datiCorsi = CP.GetCorsiFromDB();
-    	}
+        
+        datiCorsi = CP.GetCorsiDovePartecipanteNonIscritto(p);
         
         String[] colonne = {"Nome Corso", "Chef"};
 
@@ -78,7 +75,7 @@ public class CorsiDisponibiliFrame extends JFrame {
                     int riga = tabellaCorsi.getSelectedRow();
                     if (riga >= 0) {
                     	Corso c = datiCorsi.get(riga);
-                        mostraDettagliCorso(c);
+                        mostraDettagliCorsoPartecipante(c);
                     }
                 }
             }
@@ -145,7 +142,7 @@ public class CorsiDisponibiliFrame extends JFrame {
         titolo.setHorizontalAlignment(SwingConstants.CENTER);
         titolo.setForeground(new Color(50, 80, 150));
 
-        final List<Corso> datiCorsi = CP.GetCorsiDovePartecipanteNonIscritto(p);
+        final List<Corso> datiCorsi = CP.GetCorsiFromDB();
         String[] colonne = {"Nome Corso", "Chef"};
 
         Object[][] righe = new Object[datiCorsi.size()][3];
@@ -170,7 +167,7 @@ public class CorsiDisponibiliFrame extends JFrame {
                     int riga = tabellaCorsi.getSelectedRow();
                     if (riga >= 0) {
                     	Corso c = datiCorsi.get(riga);
-                        mostraDettagliCorso(c);
+                        mostraDettagliCorsoChef(c);
                     }
                 }
             }
@@ -183,7 +180,7 @@ public class CorsiDisponibiliFrame extends JFrame {
         btnIndietro.setBorder(BorderFactory.createLineBorder(new Color(50, 80 , 150), 1));
         btnIndietro.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                new DashboardUtente(p).setVisible(true);
+                new DashboardChef(c).setVisible(true);
                 dispose();
             }
         });
@@ -216,7 +213,7 @@ public class CorsiDisponibiliFrame extends JFrame {
     }
     
     //Metodi
-    private void mostraDettagliCorso(Corso c) {
+    private void mostraDettagliCorsoPartecipante(Corso c) {
         JFrame finestraDettagli = new JFrame("Dettagli del Corso");
         finestraDettagli.setSize(440, 360);
         finestraDettagli.setLocationRelativeTo(null);
@@ -281,6 +278,53 @@ public class CorsiDisponibiliFrame extends JFrame {
         finestraDettagli.setResizable(false);
         finestraDettagli.setVisible(true);
         finestraDettagli.getContentPane().add(btnIscriviti);
+    }
+    
+    private void mostraDettagliCorsoChef(Corso c) {
+        JFrame finestraDettagli = new JFrame("Dettagli del Corso");
+        finestraDettagli.setSize(440, 360);
+        finestraDettagli.setLocationRelativeTo(null);
+        finestraDettagli.getContentPane().setLayout(null);
+        finestraDettagli.getContentPane().setBackground(new Color(230, 240, 250));
+
+        JLabel lblNome = new JLabel("Corso: " + c.getNome_Corso());
+        lblNome.setBounds(20, 20, 400, 25);
+        lblNome.setFont(new Font("Arial", Font.BOLD, 16));
+
+        JLabel lblChef = new JLabel("Chef: " + c.getChef_Proprietario().getNome() + " " + c.getChef_Proprietario().getCognome());
+        lblChef.setBounds(20, 55, 400, 25);
+        lblChef.setFont(new Font("Arial", Font.PLAIN, 14));
+
+        String descrizione = c.getDescrizione();
+        LocalDate dataInizio = c.getData_Inizio();
+        String dataInizioStringa = (dataInizio!= null) ? dataInizio.toString() : "Data inizio non ancora pubblicata";
+        String frequenza = c.getFrequenza_Corsi();
+
+        JTextArea txtDescrizione = new JTextArea(descrizione);
+        txtDescrizione.setBounds(20, 90, 400, 60);
+        txtDescrizione.setFont(new Font("Arial", Font.PLAIN, 14));
+        txtDescrizione.setWrapStyleWord(true);
+        txtDescrizione.setLineWrap(true);
+        txtDescrizione.setEditable(false);
+        txtDescrizione.setBackground(new Color(245, 250, 255));
+        txtDescrizione.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
+
+        JLabel lblData = new JLabel(dataInizioStringa);
+        lblData.setBounds(20, 160, 400, 25);
+        lblData.setFont(new Font("Arial", Font.PLAIN, 14));
+
+        JLabel lblFrequenza = new JLabel(frequenza);
+        lblFrequenza.setBounds(20, 190, 400, 25);
+        lblFrequenza.setFont(new Font("Arial", Font.PLAIN, 14));
+
+        finestraDettagli.getContentPane().add(lblNome);
+        finestraDettagli.getContentPane().add(lblChef);
+        finestraDettagli.getContentPane().add(txtDescrizione);
+        finestraDettagli.getContentPane().add(lblData);
+        finestraDettagli.getContentPane().add(lblFrequenza);
+        
+        finestraDettagli.setResizable(false);
+        finestraDettagli.setVisible(true);
     }
 
     private JMenuBar creaMenuBar(JFrame frame) {
