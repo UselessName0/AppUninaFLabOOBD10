@@ -250,9 +250,29 @@ public class CorsiDisponibiliFrame extends JFrame {
         finestraDettagli.getContentPane().add(txtDescrizione);
         finestraDettagli.getContentPane().add(lblData);
         finestraDettagli.getContentPane().add(lblFrequenza);
+        
+        JButton btnIscriviti = new JButton("Iscriviti");
+        btnIscriviti.setBounds(160, 230, 100, 30);
+        btnIscriviti.setBackground(new Color(180, 220, 240));
+        btnIscriviti.setBorder(BorderFactory.createLineBorder(new Color(120, 180, 220), 1));
+        btnIscriviti.setFocusPainted(false);
+        btnIscriviti.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+            	if(CP.IscriviPartecipanteACorso(p, c))
+            		{
+            		JOptionPane.showMessageDialog(finestraDettagli, "🎉 Iscritto al corso " + c.getNome_Corso() + "!");
+            		}
+            	else
+            		{
+            		JOptionPane.showMessageDialog(finestraDettagli, "Errore nell'iscrizione al corso " + c.getNome_Corso() + "!");
+            		}
+                finestraDettagli.dispose();
+            }
+        });
 
         finestraDettagli.setResizable(false);
         finestraDettagli.setVisible(true);
+        finestraDettagli.getContentPane().add(btnIscriviti);
     }
 
     private JMenuBar creaMenuBar(JFrame frame) {
