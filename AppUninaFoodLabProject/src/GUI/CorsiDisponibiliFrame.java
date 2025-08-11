@@ -122,7 +122,7 @@ public class CorsiDisponibiliFrame extends JFrame {
     
     public CorsiDisponibiliFrame(Chef C) {
     	this.c = C;
-        setTitle("Corsi Disponibili");
+        setTitle("Corsi altrui");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(800, 600);
         setLocationRelativeTo(null);
@@ -137,12 +137,12 @@ public class CorsiDisponibiliFrame extends JFrame {
         contentPane.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
         setContentPane(contentPane);
 
-        JLabel titolo = new JLabel("Elenco dei Corsi Disponibili");
+        JLabel titolo = new JLabel("Elenco dei corsi altrui");
         titolo.setFont(new Font("Arial", Font.BOLD, 24));
         titolo.setHorizontalAlignment(SwingConstants.CENTER);
         titolo.setForeground(new Color(50, 80, 150));
 
-        final List<Corso> datiCorsi = CP.GetCorsiFromDB();
+        final List<Corso> datiCorsi = CC.GetCorsiExceptChef(C);
         String[] colonne = {"Nome Corso", "Chef"};
 
         Object[][] righe = new Object[datiCorsi.size()][3];

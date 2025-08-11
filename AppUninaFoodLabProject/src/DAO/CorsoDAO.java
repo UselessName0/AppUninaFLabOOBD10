@@ -649,5 +649,42 @@ public class CorsoDAO {
 			return 0;
 		}
 	}
+	
+	public List<Corso> getAllCorsiExceptChef(Chef c) {
+		List<Corso> ListaCorsi = new ArrayList<>();
+		String sql = "SELECT * FROM uninafoodlab.corso AS co JOIN uninafoodlab.chef AS ch ON co.idchef = ch.idchef WHERE co.idchef != ?";
+		try(Connection conn = DBManager.getConnection();
+			PreparedStatement pstmt = conn.prepareStatement(sql)) {
+			
+			pstmt.setString(1, c.getID_Chef());
+			ResultSet rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				Corso C = new Corso();
+				C.setID_Corso(rs.getString("idcorso"));
+				Chef Ch = new Chef();
+				Ch.setID_Chef(rs.getString("idchef"));
+				Ch.setNome(rs.getString("nomechef"));
+				Ch.setCognome(rs.getString("cognomechef"));
+				C.setChef_Proprietario(Ch);
+				C.setNome_Corso(rs.getString("nomecorso"));
+				C.setArgomento(rs.getString("argomento"));
+				Date dataInizio = rs.getDate("datainizio");
+				if(dataInizio != null)
+					C.setData_Inizio(dataInizio.toLocalDate());
+				else
+					C.setData_Inizio(null);
+				C.setData_Creazione(rs.getDate("datacreazione").toLocalDate());
+				C.setFrequenza_Corsi(rs.getString("frequenzacorsi"));
+				
+				ListaCorsi.add(C);
+			}
+			return ListaCorsi;
+			
+		} catch(SQLException e) {
+			System.out.println("Errore durante il recupero dei Corsi: " + e.getMessage());
+			return null;
+		}
+	}
 }
 	

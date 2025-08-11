@@ -129,4 +129,46 @@ public class ControllerChef {
 		}
 		return 0;
 	}
-}
+	
+	public List<Corso> GetCorsiExceptChef(Chef c){
+		CorsoDAO cDAO = new CorsoDAO();
+		if(!c.equals(null)) {
+			return cDAO.getAllCorsiExceptChef(c);
+		}
+		return cDAO.getAllCorsi();
+	}
+	
+	public boolean InsertCorso(Chef C, String nomecorso, String argomento, String descrizione, String frequenzacorsi) {
+		CorsoDAO cDAO = new CorsoDAO();
+		if(!C.equals(null) && !C.getID_Chef().isEmpty() && !nomecorso.isEmpty() && !argomento.isEmpty() && !descrizione.isEmpty() && !frequenzacorsi.isEmpty()) {
+			Corso c = new Corso();
+			c.setChef_Proprietario(C);
+			c.setNome_Corso(nomecorso);
+			c.setArgomento(argomento);
+			c.setDescrizione(descrizione);
+			c.setFrequenza_Corsi(frequenzacorsi);
+			c.setData_Creazione(java.time.LocalDate.now());
+			String sql = "SELECT MAX(idcorso) AS max_id FROM uninafoodlab.chef";
+			try(Connection conn = DBManager.getConnection();
+				PreparedStatement pstmt = conn.prepareStatement(sql)) {
+				ResultSet rs = pstmt.executeQuery();
+				String nuovoId;
+				if (rs.next()) {
+					String ultimoid = rs.getString("max_id");
+					int numero = Integer.parseInt(ultimoid.substring(2));
+					nuovoId = "CH" + String.valueOf(numero + 1);
+					c.setID_Corso(nuovoId);
+				}else{
+				System.out.println("Errore durante la generazione dell'ID del corso.");
+				return false;
+				}
+			}catch(Exception e) {
+				System.out.println("Errore durante la generazione dell'ID del corso: " + e.getMessage());
+				return false;
+			}
+			return cDAO.InsertCorso(c);
+		}
+		System.out.println("ERRORE Dati corso non validi.");
+		return false;
+	}
+}	

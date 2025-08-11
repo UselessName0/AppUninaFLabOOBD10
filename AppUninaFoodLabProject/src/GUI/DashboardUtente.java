@@ -40,7 +40,7 @@ public class DashboardUtente extends JFrame {
         gbc.weighty = 1;
 
         gbc.gridx = 0; gbc.gridy = 0;
-        contentPanel.add(creaSezione("Corsi", new String[] { "Corsi disponibili", "Le mie iscrizioni" }, new Color(189, 226, 249)), gbc);
+        contentPanel.add(creaSezione("Corsi", new String[] { "Corsi altrui", "Le mie iscrizioni" }, new Color(189, 226, 249)), gbc);
 
         gbc.gridx = 1; gbc.gridy = 0;
         contentPanel.add(creaSezione("Sessioni", new String[] { "Le mie sessioni", "Calendario sessioni" }, new Color(200, 240, 210)), gbc);
@@ -70,7 +70,7 @@ public class DashboardUtente extends JFrame {
         JMenu menuRicette = new JMenu("Ricette");
         JMenu menuAccount = new JMenu("Account");
 
-        JMenuItem itemVediCorsi = new JMenuItem("Corsi Disponibili");
+        JMenuItem itemVediCorsi = new JMenuItem("Corsi altrui");
         JMenuItem itemMieIscrizioni = new JMenuItem("Le Mie Iscrizioni");
         JMenuItem itemVediSessioni = new JMenuItem("Le Mie Sessioni");
         JMenuItem itemVediCalendario = new JMenuItem("Calendario Sessioni");
@@ -216,7 +216,7 @@ public class DashboardUtente extends JFrame {
             voce.setBorder(BorderFactory.createEmptyBorder(2, 20, 2, 10));
             voce.addMouseListener(creaHoverEffect(voce));
 
-            if (voceText.equals("Corsi disponibili")) {
+            if (voceText.equals("Corsi altrui")) {
                 voce.addMouseListener(new MouseAdapter() {
                     public void mouseClicked(MouseEvent e) {
                         new CorsiDisponibiliFrame(p).setVisible(true);
