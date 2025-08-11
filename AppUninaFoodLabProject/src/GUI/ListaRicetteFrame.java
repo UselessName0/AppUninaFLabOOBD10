@@ -40,7 +40,6 @@ public class ListaRicetteFrame extends JFrame {
         CreaMenuBar(this);
 		
         setTitle("Aggiungi Sessione");
-        setBounds(100, 100, 500, 350);
         
         contentPane = new JPanel();
         contentPane.setBorder(new EmptyBorder(10, 10, 10, 10));
@@ -109,7 +108,7 @@ public class ListaRicetteFrame extends JFrame {
         JMenu menuStatsNReport = new JMenu("Stats&Reports");
         JMenu menuAccount = new JMenu("Account");
 
-        JMenuItem itemVediCorsi = new JMenuItem("Corsi Disponibili");
+        JMenuItem itemVediCorsi = new JMenuItem("Corsi altrui");
         JMenuItem itemAggiungiCorso = new JMenuItem("Aggiungi Corso");
         JMenuItem itemAggiungiSessione = new JMenuItem("Aggiungi Sessione");
         JMenuItem itemSessioniDisponibili = new JMenuItem("Calendario Sessioni");

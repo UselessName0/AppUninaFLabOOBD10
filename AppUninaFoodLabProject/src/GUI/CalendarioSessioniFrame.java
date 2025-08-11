@@ -43,8 +43,7 @@ public class CalendarioSessioniFrame extends JFrame {
     Color sfondoTabella = new Color(210, 240, 210);
     
     
-    //Costruttori
-    
+   //Costruttori
    public CalendarioSessioniFrame(Chef C) {
     	
     	this.c = C;
@@ -53,7 +52,6 @@ public class CalendarioSessioniFrame extends JFrame {
         setSize(800, 600);
         setLocationRelativeTo(null);
         setResizable(false);
-
         setJMenuBar(creaMenuBar());
         
         //Pannello principale
@@ -195,7 +193,7 @@ public class CalendarioSessioniFrame extends JFrame {
         JMenu menuRicette = new JMenu("Ricette");
         JMenu menuAccount = new JMenu("Account");
 
-        JMenuItem itemVediCorsi = new JMenuItem("Corsi Disponibili");
+        JMenuItem itemVediCorsi = new JMenuItem("Corsi altrui");
         JMenuItem itemMieIscrizioni = new JMenuItem("Le Mie Iscrizioni");
         JMenuItem itemVediSessioni = new JMenuItem("Le Mie Sessioni");
         JMenuItem itemVediCalendario = new JMenuItem("Calendario Sessioni");

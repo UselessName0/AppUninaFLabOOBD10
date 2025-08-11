@@ -17,7 +17,9 @@ public class ReportFrame extends JFrame {
 	public ReportFrame(Chef C) {
 		this.c = C;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+        setSize(800, 600);
+        setLocationRelativeTo(null);
+        setResizable(false);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
