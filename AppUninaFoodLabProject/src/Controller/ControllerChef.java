@@ -3,16 +3,19 @@ package Controller;
 import Entities.Chef;
 import Entities.Corso;
 import Entities.Partecipante;
+import Entities.Ricetta;
 import Entities.Sessione;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.time.LocalDate;
 import java.util.List;
 
 import DAO.ChefDAO;
 import DAO.CorsoDAO;
 import DAO.PartecipanteDAO;
+import DAO.RicettaDAO;
 import DAO.SessioneDAO;
 import Database.DBManager;
 
@@ -156,7 +159,7 @@ public class ControllerChef {
 				if (rs.next()) {
 					String ultimoid = rs.getString("max_id");
 					int numero = Integer.parseInt(ultimoid.substring(2));
-					nuovoId = "CH" + String.valueOf(numero + 1);
+					nuovoId = "CO" + String.valueOf(numero + 1);
 					c.setID_Corso(nuovoId);
 				}else{
 				System.out.println("Errore durante la generazione dell'ID del corso.");
@@ -171,4 +174,54 @@ public class ControllerChef {
 		System.out.println("ERRORE Dati corso non validi.");
 		return false;
 	}
-}	
+	
+	public boolean InserisciSessione(Chef Ch, Corso Co, LocalDate DataSe, boolean IsPratica, String Luogo, String LinkConferenza) {
+		SessioneDAO sDAO = new SessioneDAO();
+		if(!Ch.equals(null) && !Co.equals(null) && !DataSe.equals(null)) {
+			if(IsPratica && !Luogo.isEmpty() || !IsPratica && !LinkConferenza.isEmpty()) {
+				Sessione s = new Sessione();
+				s.setRelatedCorso(Co);
+				s.setData_Sessione(DataSe);
+				s.setIsPratica(IsPratica);
+				s.setLuogo(Luogo);
+				s.setLinkConferenza(LinkConferenza);
+				s.setNumero_Adesioni(0);
+				
+				String sql = "SELECT MAX(idsessione) AS max_id FROM uninafoodlab.sessione";
+				try(Connection conn = DBManager.getConnection();
+					PreparedStatement pstmt = conn.prepareStatement(sql)) {
+					ResultSet rs = pstmt.executeQuery();
+					String nuovoId;
+					if (rs.next()) {
+						String ultimoid = rs.getString("max_id");
+						int numero = Integer.parseInt(ultimoid.substring(2));
+						nuovoId = "IS" + String.valueOf(numero + 1);
+						s.setID_Sessione(nuovoId);
+					}else{
+						System.out.println("Errore durante la generazione dell'ID della sessione.");
+						return false;
+					}
+				}catch(Exception e) {
+					System.out.println("Errore durante la generazione dell'ID della sessione: " + e.getMessage());
+					return false;
+				}
+				
+				return sDAO.InsertSessione(s);
+			}
+			else {
+				System.out.println("ERRORE Dati sessione non validi.");
+				return false;
+			}
+		}
+		System.out.println("ERRORE Dati sessione non validi.");
+		return false;
+	}
+	
+	public List<Ricetta> GetRicetteByChef(Chef c) {
+		RicettaDAO rDAO = new RicettaDAO();
+		if(c != null) {
+			return rDAO.getRicetteByChef(c);
+		}
+		return null;
+	}
+}

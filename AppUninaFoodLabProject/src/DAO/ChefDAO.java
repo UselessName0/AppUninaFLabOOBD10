@@ -6,6 +6,7 @@ import java.util.List;
 
 import Database.DBManager;
 import Entities.Chef;
+import Entities.Ricetta;
 
 public class ChefDAO {
 
@@ -373,4 +374,5 @@ public class ChefDAO {
 			return 0;
 		}
 	}
+
 }

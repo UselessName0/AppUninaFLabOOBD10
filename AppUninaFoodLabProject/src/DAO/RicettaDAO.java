@@ -146,4 +146,26 @@ public class RicettaDAO {
 				return null;
 			}
 	}
+
+	public List<Ricetta> getRicetteByChef(Chef c) {
+		List<Ricetta> ListaRicette = new ArrayList<>();
+		String sql = "SELECT r.* FROM uninafoodlab.ricetta AS r JOIN uninafoodlab.sessione AS s ON r.idricetta = s.idricetta JOIN uninafoodlab.corso AS co ON co.idcorso = s.idcorso WHERE co.idchef = ?";
+		try(Connection conn = DBManager.getConnection();
+		    PreparedStatement pstmt = conn.prepareStatement(sql))
+			{
+				pstmt.setString(1, c.getID_Chef());
+				ResultSet rs = pstmt.executeQuery();
+				while(rs.next()) {
+					Ricetta R = new Ricetta();
+					R.setIDRicetta(rs.getString("idricetta"));
+					R.setTitolo(rs.getString("nominativoricetta"));
+					
+					ListaRicette.add(R);
+				}
+				return ListaRicette;
+			}catch(SQLException e) {
+				System.out.println("Errore durante il recupero delle ricette del chef : " + e.getMessage());
+				return null;
+			}
+	}
 }
