@@ -62,7 +62,7 @@ public class DashboardChef extends JFrame {
         gbc.weighty = 1;
 
         gbc.gridx = 0; gbc.gridy = 0;
-        contentPanel.add(creaSezione("Corsi", new String[] { "Aggiungi corso", "Corsi Altrui" }, new Color(189, 226, 249)), gbc);
+        contentPanel.add(creaSezione("Corsi", new String[] { "Aggiungi corso", "Corsi altrui" }, new Color(189, 226, 249)), gbc);
 
         gbc.gridx = 1; gbc.gridy = 0;
         contentPanel.add(creaSezione("Sessioni", new String[] { "Aggiungi sessione", "Calendario sessioni" }, new Color(200, 240, 210)), gbc);

@@ -15,6 +15,8 @@ import Entities.Corso;
 import Controller.ControllerChef;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.border.LineBorder;
+
 
 public class AggiungiCorsoFrame extends JFrame {
 
@@ -24,7 +26,6 @@ public class AggiungiCorsoFrame extends JFrame {
     private Chef c;
     private JComboBox<String> categoriaComboBox;
     private JTextField dataInizioField;
-    private JComboBox<String> frequenzaComboBox;
 
     // COSTRUTTORE
     public AggiungiCorsoFrame(Chef C) {
@@ -59,20 +60,18 @@ public class AggiungiCorsoFrame extends JFrame {
 
         JLabel labelDataInizio = new JLabel("Data di inizio (gg/mm/aaaa):");
         labelDataInizio.setFont(new Font("Arial", Font.BOLD, 14));
-
         dataInizioField = new JTextField();
 
         JLabel labelFrequenza = new JLabel("Frequenza:");
         labelFrequenza.setFont(new Font("Arial", Font.BOLD, 14));
-
-        frequenzaComboBox = new JComboBox<>();
-        frequenzaComboBox.addItem("1 volta a settimana");
-        frequenzaComboBox.addItem("2 volte a settimana");
-        frequenzaComboBox.addItem("3 volte a settimana");
-        frequenzaComboBox.addItem("Da impostare");
+        categoriaComboBox.addItem("");
 
         JLabel labelDescrizione = new JLabel("Descrizione:");
         labelDescrizione.setFont(new Font("Arial", Font.BOLD, 14));
+        JTextArea textArea = new JTextArea();
+        textArea.setWrapStyleWord(true);
+        textArea.setLineWrap(true);
+        textArea.setBorder(new LineBorder(Color.BLACK, 1));
 
         // Bottoni
         JButton btnIndietro = new JButton("← Indietro");
@@ -106,31 +105,20 @@ public class AggiungiCorsoFrame extends JFrame {
             }
         });
         
-        JTextArea textArea = new JTextArea();
-        textArea.setWrapStyleWord(true);
-        textArea.setLineWrap(true);
+        JComboBox<String> frequenzaComboBox = new JComboBox<String>();
 
         // Layout
         GroupLayout layout = new GroupLayout(contentPane);
         layout.setHorizontalGroup(
-        	layout.createParallelGroup(Alignment.CENTER)
-        		.addGroup(Alignment.TRAILING, layout.createSequentialGroup()
+        	layout.createParallelGroup(Alignment.TRAILING)
+        		.addGroup(layout.createSequentialGroup()
         			.addContainerGap()
         			.addGroup(layout.createParallelGroup(Alignment.LEADING)
-        				.addGroup(layout.createParallelGroup(Alignment.LEADING)
-        					.addGroup(layout.createParallelGroup(Alignment.LEADING)
-        						.addGroup(layout.createSequentialGroup()
-        							.addComponent(labelCategoria, GroupLayout.DEFAULT_SIZE, 298, Short.MAX_VALUE)
-        							.addGap(36))
-        						.addGroup(layout.createSequentialGroup()
-        							.addComponent(labelFrequenza, GroupLayout.DEFAULT_SIZE, 330, Short.MAX_VALUE)
-        							.addPreferredGap(ComponentPlacement.RELATED)))
-        					.addGroup(layout.createSequentialGroup()
-        						.addComponent(labelDescrizione)
-        						.addPreferredGap(ComponentPlacement.RELATED)))
-        				.addGroup(layout.createSequentialGroup()
-        					.addComponent(labelDataInizio)
-        					.addPreferredGap(ComponentPlacement.RELATED)))
+        				.addComponent(labelDescrizione)
+        				.addComponent(labelCategoria, GroupLayout.DEFAULT_SIZE, 330, Short.MAX_VALUE)
+        				.addComponent(labelDataInizio)
+        				.addComponent(labelFrequenza, GroupLayout.DEFAULT_SIZE, 330, Short.MAX_VALUE))
+        			.addPreferredGap(ComponentPlacement.RELATED)
         			.addGroup(layout.createParallelGroup(Alignment.LEADING)
         				.addGroup(layout.createSequentialGroup()
         					.addGap(142)
@@ -138,42 +126,42 @@ public class AggiungiCorsoFrame extends JFrame {
         					.addPreferredGap(ComponentPlacement.UNRELATED)
         					.addComponent(btnAggiungi, GroupLayout.PREFERRED_SIZE, 120, GroupLayout.PREFERRED_SIZE))
         				.addComponent(categoriaComboBox, 300, 300, 300)
-        				.addComponent(dataInizioField, 300, 300, 300)
-        				.addComponent(frequenzaComboBox, 300, 300, 300)
-        				.addComponent(textArea, GroupLayout.PREFERRED_SIZE, 298, GroupLayout.PREFERRED_SIZE))
-        			.addGap(10))
+        				.addGroup(layout.createParallelGroup(Alignment.TRAILING, false)
+        					.addComponent(textArea, Alignment.LEADING)
+        					.addComponent(dataInizioField, Alignment.LEADING, 300, 300, Short.MAX_VALUE))
+        				.addComponent(frequenzaComboBox, GroupLayout.PREFERRED_SIZE, 300, GroupLayout.PREFERRED_SIZE))
+        			.addContainerGap())
         );
         layout.setVerticalGroup(
         	layout.createParallelGroup(Alignment.LEADING)
         		.addGroup(layout.createSequentialGroup()
         			.addGap(18)
-        			.addGroup(layout.createParallelGroup(Alignment.TRAILING)
-        				.addComponent(labelCategoria)
-        				.addGroup(layout.createSequentialGroup()
-        					.addComponent(categoriaComboBox, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
-        					.addPreferredGap(ComponentPlacement.UNRELATED)
-        					.addComponent(dataInizioField, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
-        					.addPreferredGap(ComponentPlacement.RELATED)))
-        			.addGroup(layout.createParallelGroup(Alignment.TRAILING)
-        				.addGroup(Alignment.LEADING, layout.createSequentialGroup()
-        					.addGap(6)
-        					.addComponent(labelDataInizio)
-        					.addPreferredGap(ComponentPlacement.RELATED)
-        					.addComponent(labelFrequenza))
-        				.addGroup(layout.createSequentialGroup()
-        					.addPreferredGap(ComponentPlacement.RELATED)
-        					.addComponent(frequenzaComboBox, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)))
+        			.addGroup(layout.createParallelGroup(Alignment.LEADING)
+        				.addComponent(categoriaComboBox, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
+        				.addComponent(labelCategoria))
         			.addPreferredGap(ComponentPlacement.UNRELATED)
-        			.addGroup(layout.createParallelGroup(Alignment.LEADING, false)
+        			.addGroup(layout.createParallelGroup(Alignment.LEADING)
+        				.addComponent(labelDataInizio)
+        				.addComponent(dataInizioField, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE))
+        			.addGap(6)
+        			.addGroup(layout.createParallelGroup(Alignment.TRAILING)
+        				.addGroup(layout.createSequentialGroup()
+        					.addComponent(labelFrequenza)
+        					.addGap(39))
+        				.addGroup(layout.createSequentialGroup()
+        					.addComponent(frequenzaComboBox, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
+        					.addGap(18)))
+        			.addGroup(layout.createParallelGroup(Alignment.TRAILING, false)
         				.addGroup(layout.createSequentialGroup()
         					.addComponent(labelDescrizione)
         					.addGap(365))
-        				.addGroup(Alignment.TRAILING, layout.createSequentialGroup()
+        				.addGroup(layout.createSequentialGroup()
         					.addComponent(textArea, GroupLayout.PREFERRED_SIZE, 148, GroupLayout.PREFERRED_SIZE)
         					.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         					.addGroup(layout.createParallelGroup(Alignment.BASELINE)
-        						.addComponent(btnAggiungi, GroupLayout.PREFERRED_SIZE, 35, GroupLayout.PREFERRED_SIZE)
-        						.addComponent(btnIndietro, GroupLayout.PREFERRED_SIZE, 35, GroupLayout.PREFERRED_SIZE)))))
+        						.addComponent(btnIndietro, GroupLayout.PREFERRED_SIZE, 35, GroupLayout.PREFERRED_SIZE)
+        						.addComponent(btnAggiungi, GroupLayout.PREFERRED_SIZE, 35, GroupLayout.PREFERRED_SIZE))
+        					.addGap(34))))
         );
         contentPane.setLayout(layout);
 
@@ -193,7 +181,7 @@ public class AggiungiCorsoFrame extends JFrame {
         JMenu menuStatsNReport = new JMenu("Stats&Reports");
         JMenu menuAccount = new JMenu("Account");
 
-        JMenuItem itemVediCorsi = new JMenuItem("Corsi altrui");
+        JMenuItem itemVediCorsi = new JMenuItem("Corsi Altrui");
         JMenuItem itemAggiungiCorso = new JMenuItem("Aggiungi Corso");
         JMenuItem itemAggiungiSessione = new JMenuItem("Aggiungi Sessione");
         JMenuItem itemSessioniDisponibili = new JMenuItem("Calendario Sessioni");
