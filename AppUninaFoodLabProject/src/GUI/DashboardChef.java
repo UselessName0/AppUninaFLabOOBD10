@@ -247,7 +247,7 @@ public class DashboardChef extends JFrame {
             voce.setBorder(BorderFactory.createEmptyBorder(2, 20, 2, 10));
             voce.addMouseListener(creaHoverEffect(voce));
 
-            if (voceText.equals("Corsi Altrui")) {
+            if (voceText.equals("Corsi altrui")) {
                 voce.addMouseListener(new MouseAdapter() {
                     public void mouseClicked(MouseEvent e) {
                         new CorsiDisponibiliFrame(c).setVisible(true);
