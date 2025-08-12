@@ -52,7 +52,7 @@ public class CalendarioSessioniFrame extends JFrame {
         setSize(800, 600);
         setLocationRelativeTo(null);
         setResizable(false);
-        setJMenuBar(creaMenuBar());
+        setJMenuBar(CreaMenuBarChef(this));
         
         //Pannello principale
         JPanel panel = new JPanel();
@@ -307,6 +307,150 @@ public class CalendarioSessioniFrame extends JFrame {
     }
 
     private void ripristinaMenu(JMenu menu) {
+        menu.setOpaque(false);
+        menu.setBackground(null);
+        menu.setForeground(Color.BLACK);
+        if (menu == menuAttivo) {
+            menuAttivo = null;
+        }
+    }
+    
+    //Metodo menu bar chef
+    private JMenuBar CreaMenuBarChef(JFrame frame) {
+        JMenuBar menuBar = new JMenuBar();
+
+        JMenu menuCorsi = new JMenu("Corsi");
+        JMenu menuSessioni = new JMenu("Sessioni");
+        JMenu menuRicette = new JMenu("Ricette");
+        JMenu menuStatsNReport = new JMenu("Stats&Reports");
+        JMenu menuAccount = new JMenu("Account");
+
+        JMenuItem itemVediCorsi = new JMenuItem("Corsi Altrui");
+        JMenuItem itemAggiungiCorso = new JMenuItem("Aggiungi Corso");
+        
+        JMenuItem itemAggiungiSessione = new JMenuItem("Aggiungi Sessione");
+        JMenuItem itemSessioniDisponibili = new JMenuItem("Calendario Sessioni");
+        JMenuItem itemListaRicette = new JMenuItem("Lista Ricette");
+        JMenuItem itemStatistiche = new JMenuItem("Statistiche");
+        JMenuItem itemReport = new JMenuItem("Report");
+        JMenuItem itemInfo = new JMenuItem("Il mio profilo");
+        JMenuItem itemLogout = new JMenuItem("Logout");
+
+        itemLogout.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                new WelcomeFrame().setVisible(true);
+                dispose();
+            }
+        });
+
+        itemVediCorsi.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                new CorsiDisponibiliFrame(c).setVisible(true);
+                dispose();
+            }
+        });
+
+        itemAggiungiCorso.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                new AggiungiCorsoFrame(c).setVisible(true);
+                dispose();
+            }
+        });
+
+        itemAggiungiSessione.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                new AggiungiSessioneFrame(c).setVisible(true);
+                dispose();
+            }
+        });
+
+        itemSessioniDisponibili.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                new CalendarioSessioniFrame(c).setVisible(true);
+                dispose();
+            }
+        });
+
+        itemListaRicette.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                new ListaRicetteFrame(c).setVisible(true);
+                dispose();
+            }
+        });
+        
+        itemStatistiche.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                new StatisticheFrame(c).setVisible(true);
+                dispose();
+            }
+        });
+        
+        itemReport.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                new ReportFrame(c).setVisible(true);
+                dispose();
+            }
+        });
+
+        itemInfo.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                new ilMioProfiloFrame(c).setVisible(true);
+                dispose();
+            }
+        });
+
+        MenuListener menuListener = new MenuListener() {
+            public void menuSelected(MenuEvent e) {
+                evidenziaMenu1((JMenu) e.getSource());
+            }
+            public void menuDeselected(MenuEvent e) {
+                ripristinaMenu1((JMenu) e.getSource());
+            }
+            public void menuCanceled(MenuEvent e) {
+                ripristinaMenu1((JMenu) e.getSource());
+            }
+        };
+
+        menuCorsi.addMenuListener(menuListener);
+        menuSessioni.addMenuListener(menuListener);
+        menuRicette.addMenuListener(menuListener);
+        menuRicette.addMenuListener(menuListener);
+        menuStatsNReport.addMenuListener(menuListener);
+        menuAccount.addMenuListener(menuListener);
+
+        menuCorsi.add(itemVediCorsi);
+        menuCorsi.add(itemAggiungiCorso);
+        menuSessioni.add(itemAggiungiSessione);
+        menuSessioni.add(itemSessioniDisponibili);
+        menuRicette.add(itemListaRicette);
+        menuStatsNReport.add(itemStatistiche);
+        menuStatsNReport.add(itemReport);
+        menuAccount.add(itemInfo);
+        menuAccount.add(itemLogout);
+
+        menuBar.add(menuCorsi);
+        menuBar.add(menuSessioni);
+        menuBar.add(menuRicette);
+        menuBar.add(menuStatsNReport);
+        menuBar.add(menuAccount);
+
+        setJMenuBar(menuBar);
+        return menuBar;
+    }
+    
+    //Metodo che permette di evidenziare il menù
+    private void evidenziaMenu1(JMenu nuovoMenu) {
+        if (menuAttivo != null) {
+            ripristinaMenu(menuAttivo);
+        }
+        nuovoMenu.setOpaque(true);
+        nuovoMenu.setBackground(new Color(100, 149, 37));
+        nuovoMenu.setForeground(Color.BLACK);
+        menuAttivo = nuovoMenu;
+    }
+    
+    //Metodo che permette di ripristinare il menù dopo che è stato evidenziato
+    private void ripristinaMenu1(JMenu menu) {
         menu.setOpaque(false);
         menu.setBackground(null);
         menu.setForeground(Color.BLACK);

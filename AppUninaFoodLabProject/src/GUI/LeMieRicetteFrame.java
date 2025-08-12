@@ -63,7 +63,7 @@ public class LeMieRicetteFrame extends JFrame {
         titolo.setFont(new Font("Arial", Font.BOLD, 28));
         panel.add(titolo, BorderLayout.NORTH);
     	
-      //Tabella
+        //Tabella
         final List<Ricetta> datiRicette = CP.GetRicettaDiPartecipante(p);
         
         String[] colonne = { "Nome Ricetta" };

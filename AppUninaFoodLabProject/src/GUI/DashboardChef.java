@@ -62,7 +62,7 @@ public class DashboardChef extends JFrame {
         gbc.weighty = 1;
 
         gbc.gridx = 0; gbc.gridy = 0;
-        contentPanel.add(creaSezione("Corsi", new String[] { "Aggiungi corso", "Corsi altrui" }, new Color(189, 226, 249)), gbc);
+        contentPanel.add(creaSezione("Corsi", new String[] { "Aggiungi corso", "Corsi altrui", "I miei corsi" }, new Color(189, 226, 249)), gbc);
 
         gbc.gridx = 1; gbc.gridy = 0;
         contentPanel.add(creaSezione("Sessioni", new String[] { "Aggiungi sessione", "Calendario sessioni" }, new Color(200, 240, 210)), gbc);
@@ -93,6 +93,7 @@ public class DashboardChef extends JFrame {
 
         JMenuItem itemVediCorsi = new JMenuItem("Corsi Altrui");
         JMenuItem itemAggiungiCorso = new JMenuItem("Aggiungi Corso");
+        JMenuItem itemImieiCorsi = new JMenuItem("I Miei Corsi");
         JMenuItem itemAggiungiSessione = new JMenuItem("Aggiungi Sessione");
         JMenuItem itemSessioniDisponibili = new JMenuItem("Calendario Sessioni");
         JMenuItem itemListaRicette = new JMenuItem("Lista Ricette");
@@ -118,6 +119,13 @@ public class DashboardChef extends JFrame {
         itemAggiungiCorso.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 new AggiungiCorsoFrame(c).setVisible(true);
+                dispose();
+            }
+        });
+        
+        itemImieiCorsi.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                new IMieiCorsiFrame(c).setVisible(true);
                 dispose();
             }
         });
@@ -185,6 +193,7 @@ public class DashboardChef extends JFrame {
 
         menuCorsi.add(itemVediCorsi);
         menuCorsi.add(itemAggiungiCorso);
+        menuCorsi.add(itemImieiCorsi);
         menuSessioni.add(itemAggiungiSessione);
         menuSessioni.add(itemSessioniDisponibili);
         menuRicette.add(itemListaRicette);
@@ -260,6 +269,15 @@ public class DashboardChef extends JFrame {
                 voce.addMouseListener(new MouseAdapter() {
                     public void mouseClicked(MouseEvent e) {
                         new AggiungiCorsoFrame(c).setVisible(true);
+                        dispose();
+                    }
+                });
+            }
+            
+            if (voceText.equals("I miei corsi")) {
+                voce.addMouseListener(new MouseAdapter() {
+                    public void mouseClicked(MouseEvent e) {
+                        new IMieiCorsiFrame(c).setVisible(true);
                         dispose();
                     }
                 });
