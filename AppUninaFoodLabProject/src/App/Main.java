@@ -33,6 +33,5 @@ public class Main {
             System.out.println("❌ Errore di connessione: " + e.getMessage());
         }
         
-        
     }
 }

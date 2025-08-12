@@ -603,4 +603,26 @@ public class SessioneDAO {
 			return null;
 		}
 	}
+
+	public int[] getNumeroSessioniByMonth(Chef c) {
+		String sql = "SELECT date_trunc('month', sessione.datasessione) AS mese, COUNT(*) AS nsessioni FROM uninafoodlab.sessione JOIN uninafoodlab.corso ON sessione.idcorso = corso.idcorso WHERE corso.idchef = ? AND sessione.datasessione >= CURRENT_DATE - INTERVAL '12 months' GROUP BY mese ORDER BY mese;";
+		try(Connection conn = DBManager.getConnection();
+			PreparedStatement pstmt = conn.prepareStatement(sql)) {
+			
+			pstmt.setString(1, c.getID_Chef());
+			
+			ResultSet rs = pstmt.executeQuery();
+			
+			int[] sessionCounts = new int[12];
+			while(rs.next()) {
+				LocalDate month = rs.getDate("mese").toLocalDate();
+				int monthIndex = month.getMonthValue() - 1; // Convert month to 0-based index
+				sessionCounts[monthIndex] = rs.getInt("nsessioni");
+			}
+			return sessionCounts;
+		} catch(SQLException e) {
+			System.out.println("Errore durante il recupero del numero di sessioni per mese: " + e.getMessage());
+			return new int[12]; // Return an array of zeros if there's an error
+		}
+	}
 }

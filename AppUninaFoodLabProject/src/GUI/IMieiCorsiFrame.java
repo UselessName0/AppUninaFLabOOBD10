@@ -5,6 +5,7 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.time.LocalDate;
 import java.util.List;
 
 import javax.swing.BorderFactory;
@@ -18,11 +19,14 @@ import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.JTextArea;
 import javax.swing.ListSelectionModel;
 import javax.swing.SwingConstants;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.border.EmptyBorder;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.event.MenuEvent;
 import javax.swing.event.MenuListener;
 
@@ -76,6 +80,18 @@ public class IMieiCorsiFrame extends JFrame {
    
 		JScrollPane scrollPane = new JScrollPane(tabellaCorsi);
 		scrollPane.setPreferredSize(new Dimension(700, 360));
+		
+		tabellaCorsi.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+            public void valueChanged(ListSelectionEvent event) {
+                if (!event.getValueIsAdjusting()) {
+                    int riga = tabellaCorsi.getSelectedRow();
+                    if (riga >= 0) {
+                    	Corso c = datiCorsi.get(riga);
+                        mostraDettagliCorsoChef(c);
+                    }
+                }
+            }
+        });
 
 		JButton btnIndietro = new JButton("← Indietro");
 		btnIndietro.setFont(new Font("Arial", Font.PLAIN, 14));
@@ -125,6 +141,48 @@ public class IMieiCorsiFrame extends JFrame {
 
 	// METODI
 	private JMenu menuAttivo = null;
+	
+	private void mostraDettagliCorsoChef(Corso c) {
+        JFrame finestraDettagli = new JFrame("Dettagli del Corso");
+        finestraDettagli.setSize(440, 360);
+        finestraDettagli.setLocationRelativeTo(null);
+        finestraDettagli.getContentPane().setLayout(null);
+        finestraDettagli.getContentPane().setBackground(new Color(230, 240, 250));
+
+        JLabel lblNome = new JLabel("Corso: " + c.getNome_Corso());
+        lblNome.setBounds(20, 20, 400, 25);
+        lblNome.setFont(new Font("Arial", Font.BOLD, 16));
+
+        String descrizione = c.getDescrizione();
+        LocalDate dataInizio = c.getData_Inizio();
+        String dataInizioStringa = (dataInizio!= null) ? dataInizio.toString() : "Data inizio non ancora pubblicata";
+        String frequenza = c.getFrequenza_Corsi();
+
+        JTextArea txtDescrizione = new JTextArea(descrizione);
+        txtDescrizione.setBounds(20, 90, 400, 60);
+        txtDescrizione.setFont(new Font("Arial", Font.PLAIN, 14));
+        txtDescrizione.setWrapStyleWord(true);
+        txtDescrizione.setLineWrap(true);
+        txtDescrizione.setEditable(false);
+        txtDescrizione.setBackground(new Color(245, 250, 255));
+        txtDescrizione.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
+
+        JLabel lblData = new JLabel(dataInizioStringa);
+        lblData.setBounds(20, 160, 400, 25);
+        lblData.setFont(new Font("Arial", Font.PLAIN, 14));
+
+        JLabel lblFrequenza = new JLabel(frequenza);
+        lblFrequenza.setBounds(20, 190, 400, 25);
+        lblFrequenza.setFont(new Font("Arial", Font.PLAIN, 14));
+
+        finestraDettagli.getContentPane().add(lblNome);
+        finestraDettagli.getContentPane().add(txtDescrizione);
+        finestraDettagli.getContentPane().add(lblData);
+        finestraDettagli.getContentPane().add(lblFrequenza);
+        
+        finestraDettagli.setResizable(false);
+        finestraDettagli.setVisible(true);
+    }
 
 	private JMenuBar CreaMenuBar(JFrame frame) {
 		JMenuBar menuBar = new JMenuBar();

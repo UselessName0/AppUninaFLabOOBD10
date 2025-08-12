@@ -25,7 +25,7 @@ public class AggiungiCorsoFrame extends JFrame {
     private JPanel contentPane;
     private Chef c;
     private JComboBox<String> categoriaComboBox;
-    private JTextField dataInizioField;
+    private JTextField nomeCorsoField;
     private JComboBox<String> frequenzaComboBox;
 
     // COSTRUTTORE
@@ -52,7 +52,7 @@ public class AggiungiCorsoFrame extends JFrame {
         // Label e campi
         JLabel labelNomeCorso = new JLabel("Nome corso:");
         labelNomeCorso.setFont(new Font("Arial", Font.BOLD, 18));
-        dataInizioField = new JTextField();
+        nomeCorsoField = new JTextField();
 
         JLabel labelCategoria = new JLabel("Categoria:");
         labelCategoria.setFont(new Font("Arial", Font.BOLD, 18));
@@ -104,6 +104,25 @@ public class AggiungiCorsoFrame extends JFrame {
         btnAggiungi_1.setFocusPainted(false);
         btnAggiungi_1.setBorder(BorderFactory.createLineBorder(new Color(50, 80, 150), 1));
         btnAggiungi_1.setBackground(UIManager.getColor("Button.background"));
+        btnAggiungi_1.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                Corso corso = new Corso();
+                corso.setArgomento((String) categoriaComboBox.getSelectedItem());
+                corso.setNome_Corso(nomeCorsoField.getText());
+                corso.setChef_Proprietario(C);
+                corso.setData_Creazione(LocalDate.now());
+                corso.setDescrizione(textArea.getText());
+                corso.setFrequenza_Corsi((String) frequenzaComboBox.getSelectedItem());
+
+                if(CC.InsertCorso(corso)) {
+					JOptionPane.showMessageDialog(contentPane, "Corso aggiunto con successo!", "Successo", JOptionPane.INFORMATION_MESSAGE);
+					new DashboardChef(c).setVisible(true);
+					dispose();
+				} else {
+					JOptionPane.showMessageDialog(contentPane, "Errore durante l'aggiunta del corso. Riprova.", "Errore", JOptionPane.ERROR_MESSAGE);
+				}
+            }
+        });
 
         // Layout aggiornato
         GroupLayout layout = new GroupLayout(contentPane);
@@ -123,7 +142,7 @@ public class AggiungiCorsoFrame extends JFrame {
         								.addComponent(labelDescrizione))
         							.addPreferredGap(ComponentPlacement.RELATED)
         							.addGroup(layout.createParallelGroup(Alignment.LEADING)
-        								.addComponent(dataInizioField, 300, 300, 300)
+        								.addComponent(nomeCorsoField, 300, 300, 300)
         								.addComponent(categoriaComboBox, 300, 300, 300)
         								.addComponent(frequenzaComboBox, 300, 300, 300)
         								.addComponent(textArea, GroupLayout.PREFERRED_SIZE, 298, GroupLayout.PREFERRED_SIZE)))
@@ -140,7 +159,7 @@ public class AggiungiCorsoFrame extends JFrame {
         			.addComponent(titoloLabel)
         			.addGap(30)
         			.addGroup(layout.createParallelGroup(Alignment.BASELINE)
-        				.addComponent(dataInizioField, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
+        				.addComponent(nomeCorsoField, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
         				.addComponent(labelNomeCorso))
         			.addPreferredGap(ComponentPlacement.UNRELATED)
         			.addGroup(layout.createParallelGroup(Alignment.BASELINE)

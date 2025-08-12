@@ -426,8 +426,16 @@ public class CorsoDAO {
 				C.setChef_Proprietario(chef);
 				C.setNome_Corso(rs.getString("nomecorso"));
 				C.setArgomento(rs.getString("argomento"));
-				C.setData_Inizio(rs.getDate("datainizio").toLocalDate());
-				C.setData_Creazione(rs.getDate("datacreazione").toLocalDate());
+				if(rs.getDate("datainizio") != null) {
+					C.setData_Inizio(rs.getDate("datainizio").toLocalDate());
+				} else {
+					C.setData_Inizio(null);
+				}	
+				if(rs.getDate("datacreazione") != null) {
+					C.setData_Creazione(rs.getDate("datacreazione").toLocalDate());
+				} else {
+					C.setData_Creazione(null);
+				}
 				C.setFrequenza_Corsi(rs.getString("frequenzacorsi"));
 				
 				ListaCorsi.add(C);

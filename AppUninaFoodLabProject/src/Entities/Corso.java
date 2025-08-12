@@ -22,7 +22,7 @@ public class Corso {
         this.Chef_Proprietario = Chef_Proprietario;
         this.Nome_Corso = Nome_Corso;
         this.Argomento = Argomento;
-        this.Data_Inizio = Data_Inizio;
+        this.Data_Inizio = (Data_Inizio != null) ? Data_Inizio : null; // Se Data_Inizio è null, non viene inizializzata
         this.Data_Creazione = (Data_Creazione != null) ? Data_Creazione : LocalDate.now();
         this.Frequenza_Corsi = Frequenza_Corsi;
         this.Descrizione = Descrizione;
@@ -95,6 +95,9 @@ public class Corso {
 	    }
 	    
 	    public java.sql.Date getDataInizioAsSQLDate() {
+	    	if (Data_Inizio == null) {
+	    		return null; // Gestione del caso in cui Data_Inizio è null
+	    	}
 	        return java.sql.Date.valueOf(Data_Inizio);
 	    }
 	

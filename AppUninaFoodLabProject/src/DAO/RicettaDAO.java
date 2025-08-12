@@ -168,4 +168,22 @@ public class RicettaDAO {
 				return null;
 			}
 	}
+
+	public int getNumeroRicetteByChef(Chef c) {
+		String sql = "SELECT COUNT(*) AS nricette FROM uninafoodlab.ricetta AS r JOIN uninafoodlab.sessione AS s ON r.idricetta = s.idricetta JOIN uninafoodlab.corso AS co ON co.idcorso = s.idcorso WHERE co.idchef = ?";
+		try(Connection conn = DBManager.getConnection();
+		    PreparedStatement pstmt = conn.prepareStatement(sql))
+			{
+				pstmt.setString(1, c.getID_Chef());
+				ResultSet rs = pstmt.executeQuery();
+				if(rs.next()) {
+					return rs.getInt("nricette");
+				} else {
+					return 0;
+				}
+			} catch(SQLException e) {
+				System.out.println("Errore durante il recupero del numero di ricette del chef : " + e.getMessage());
+				return 0;
+			}
+	}
 }

@@ -116,15 +116,6 @@ public class ControllerChef {
 		return sDAO.getAllSessioniDAO();
 	}
 	
-	public boolean InserisciCorso(Corso c) {
-		CorsoDAO cDAO = new CorsoDAO();
-		if(cDAO.InsertCorso(c)) {
-			return true;
-		}
-		else
-			return false;
-	}
-	
 	public int GetNumeroCorsiCreati(Chef c) {
 		ChefDAO cDAO = new ChefDAO();
 		if(!c.equals(null)) {
@@ -141,25 +132,21 @@ public class ControllerChef {
 		return cDAO.getAllCorsi();
 	}
 	
-	public boolean InsertCorso(Chef C, String nomecorso, String argomento, String descrizione, String frequenzacorsi) {
+	public boolean InsertCorso(Corso c) {
 		CorsoDAO cDAO = new CorsoDAO();
-		if(!C.equals(null) && !C.getID_Chef().isEmpty() && !nomecorso.isEmpty() && !argomento.isEmpty() && !descrizione.isEmpty() && !frequenzacorsi.isEmpty()) {
-			Corso c = new Corso();
-			c.setChef_Proprietario(C);
-			c.setNome_Corso(nomecorso);
-			c.setArgomento(argomento);
-			c.setDescrizione(descrizione);
-			c.setFrequenza_Corsi(frequenzacorsi);
+		if(!c.equals(null) && !(c.getChef_Proprietario() ==null) && !c.getNome_Corso().isEmpty() && !c.getArgomento().isEmpty() && !c.getDescrizione().isEmpty() && !c.getFrequenza_Corsi().isEmpty()) {
 			c.setData_Creazione(java.time.LocalDate.now());
-			String sql = "SELECT MAX(idcorso) AS max_id FROM uninafoodlab.chef";
+			String sql = "SELECT MAX(idcorso) AS max_id FROM uninafoodlab.corso";
 			try(Connection conn = DBManager.getConnection();
 				PreparedStatement pstmt = conn.prepareStatement(sql)) {
 				ResultSet rs = pstmt.executeQuery();
 				String nuovoId;
 				if (rs.next()) {
 					String ultimoid = rs.getString("max_id");
+					System.out.println("Ultimo ID del corso: " + ultimoid);
 					int numero = Integer.parseInt(ultimoid.substring(2));
 					nuovoId = "CO" + String.valueOf(numero + 1);
+					System.out.println("Nuovo ID del corso: " + nuovoId);
 					c.setID_Corso(nuovoId);
 				}else{
 				System.out.println("Errore durante la generazione dell'ID del corso.");
@@ -222,6 +209,27 @@ public class ControllerChef {
 		if(c != null) {
 			return rDAO.getRicetteByChef(c);
 		}
+		return null;
+	}
+	
+	public int GetNumeroRicetteByChef(Chef c) {
+		RicettaDAO rDAO = new RicettaDAO();
+		if(c != null) {
+			return rDAO.getNumeroRicetteByChef(c);
+		}
+		return 0;
+	}
+	
+	public int[] GetNumeroSessioniByMonth(Chef c) {
+		SessioneDAO sDAO = new SessioneDAO();
+		if(c != null) {
+			int [] numeroSessioni = sDAO.getNumeroSessioniByMonth(c);
+			for(int i = 0; i < 12; i++) {
+				System.out.println("Numero di sessioni nel mese " + (i + 1) + ": " + numeroSessioni[i]);
+			}
+			return numeroSessioni;
+		}
+		
 		return null;
 	}
 	
