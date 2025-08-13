@@ -54,7 +54,7 @@ public class IMieiCorsiFrame extends JFrame {
 		setLocationRelativeTo(null);
 		setResizable(false);
 		setJMenuBar(CreaMenuBar(this));
-		setTitle("Aggiungi Corso");
+		setTitle("I miei corsi");
 
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(20, 20, 20, 20));

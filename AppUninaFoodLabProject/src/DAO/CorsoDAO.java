@@ -14,7 +14,7 @@ public class CorsoDAO {
 	
 	//Metodo per inserire un nuovo corso nel database(True se l'inserimento va a buon fine, False altrimenti)
 	public boolean InsertCorso(Corso Corso_Input) {
-		String sql = "INSERT INTO uninafoodlab.corso(idcorso, idchef, nomecorso, argomento, datainizio, datacreazione, frequenzacorsi)VALUES (?, ?, ?, ?, ?, ?, ?);";
+		String sql = "INSERT INTO uninafoodlab.corso(idcorso, idchef, nomecorso, argomento, datainizio, datacreazione, frequenzacorsi, descrizione)VALUES (?, ?, ?, ?, ?, ?, ?, ?);";
 			try(Connection conn = DBManager.getConnection();
 				PreparedStatement pstmt = conn.prepareStatement(sql)) {
 				
@@ -27,6 +27,7 @@ public class CorsoDAO {
 				pstmt.setDate(5, Corso_Input.getDataInizioAsSQLDate()); 
 				pstmt.setDate(6, Corso_Input.getDataCreazioneAsSQLDate());
 				pstmt.setString(7, Corso_Input.getFrequenza_Corsi());
+				pstmt.setString(8, Corso_Input.getDescrizione());
 				
 				int rowsAffected = pstmt.executeUpdate();
 				return rowsAffected > 0;
