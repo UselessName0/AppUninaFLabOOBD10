@@ -11,14 +11,22 @@ import java.awt.event.ActionListener;
 import javax.swing.BorderFactory;
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
+import javax.swing.UIManager;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.border.EmptyBorder;
+import javax.swing.border.LineBorder;
 import javax.swing.event.MenuEvent;
 import javax.swing.event.MenuListener;
 
@@ -26,31 +34,39 @@ import Entities.Chef;
 
 public class AggiungiSessioneFrame extends JFrame {
 
-	//ATTRIBUTI
+	// ATTRIBUTI
 	private JPanel contentPane;
 	private Chef c;
+    private JComboBox<String> selezionaCorsoComboBox;
+    private JTextField luogoField;
+    private JTextField conferenzaField;
+    private JTextField dataInizioField;
+    private JCheckBox  praticaCheckBox;
 
-	//COSTRUTTORI
+	// COSTRUTTORI
 	public AggiungiSessioneFrame(Chef C) {
 		this.c = C;
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(800, 600);
         setLocationRelativeTo(null);
         setResizable(false);
-        CreaMenuBar(this);
-		
+        setJMenuBar(CreaMenuBar(this));
+        Color sfondoPrincipale = new Color(220, 240, 250);
         setTitle("Aggiungi Sessione");
         
         contentPane = new JPanel();
         contentPane.setBorder(new EmptyBorder(10, 10, 10, 10));
         setContentPane(contentPane);
+        contentPane.setBackground(sfondoPrincipale);
         
         JPanel inputPanel = new JPanel();
         inputPanel.setLayout(new GridLayout(5, 2, 10, 10));
         
-        //Idea: selezionare il corso specifico del quale si vuole aggiungere una sessione
-        //volendo si può anche fare una sezione per la modifica di una sessione post inserimento qui
+        JLabel titoloLabel = new JLabel("Aggiungi una sessione", SwingConstants.CENTER);
+        titoloLabel.setForeground(new Color(50, 80, 150));
+        titoloLabel.setFont(new Font("Arial", Font.BOLD, 24));
         
+        // Bottoni
         JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout(new FlowLayout(FlowLayout.RIGHT));
         
@@ -60,45 +76,114 @@ public class AggiungiSessioneFrame extends JFrame {
         btnIndietro.setFocusPainted(false);
         btnIndietro.setBorder(BorderFactory.createLineBorder(new Color(50, 80, 150), 1));
         btnIndietro.setBackground(new Color(240, 240, 240));
-                
         btnIndietro.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
         		new DashboardChef(c).setVisible(true);
         		dispose();
         	}
         });
+        
+        JButton btnAggiungi_1 = new JButton("Aggiungi");
+        btnAggiungi_1.setFont(new Font("Arial", Font.PLAIN, 14));
+        btnAggiungi_1.setFocusPainted(false);
+        btnAggiungi_1.setBorder(BorderFactory.createLineBorder(new Color(50, 80, 150), 1));
+        btnAggiungi_1.setBackground(UIManager.getColor("Button.background"));
+
+        JLabel labelCorsoRelativo = new JLabel("Corso relativo:");
+        labelCorsoRelativo.setFont(new Font("Arial", Font.BOLD, 18));
+
+        selezionaCorsoComboBox = new JComboBox<>();
+        selezionaCorsoComboBox.addItem("");
+        selezionaCorsoComboBox.addItem("METTERE I CORSI CHEF");
+        
+        JLabel labelDataInizio = new JLabel("Data inizio:");
+        labelDataInizio.setFont(new Font("Arial", Font.BOLD, 18));
+        dataInizioField = new JTextField();
+        
+        JLabel labelPratica = new JLabel("Sessione pratica:");
+        labelPratica.setFont(new Font("Arial", Font.BOLD, 18));
+        praticaCheckBox = new JCheckBox();
+        praticaCheckBox.setBackground(sfondoPrincipale);
+
+        JLabel labelLuogo = new JLabel("Luogo:");
+        labelLuogo.setFont(new Font("Arial", Font.BOLD, 18));
+        luogoField = new JTextField();
+
+        JLabel labelConferenza = new JLabel("Conferenza:");
+        labelConferenza.setFont(new Font("Arial", Font.BOLD, 18));
+        conferenzaField = new JTextField();
+        
+        //aggiungere coso di ricetta che non so
                         
-        GroupLayout gl_contentPane = new GroupLayout(contentPane);
-        gl_contentPane.setHorizontalGroup(
-        	gl_contentPane.createParallelGroup(Alignment.LEADING)
-        		.addGroup(Alignment.TRAILING, gl_contentPane.createSequentialGroup()
-        			.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
-        				.addComponent(buttonPanel, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 530, Short.MAX_VALUE)
-        				.addComponent(inputPanel, GroupLayout.DEFAULT_SIZE, 530, Short.MAX_VALUE))
+        GroupLayout layout = new GroupLayout(contentPane);
+        layout.setHorizontalGroup(
+        	layout.createParallelGroup(Alignment.TRAILING)
+        		.addGroup(layout.createSequentialGroup()
+        			.addContainerGap()
+        			.addGroup(layout.createParallelGroup(Alignment.TRAILING)
+        				.addComponent(titoloLabel, GroupLayout.DEFAULT_SIZE, 760, Short.MAX_VALUE)
+        				.addGroup(layout.createSequentialGroup()
+        					.addGroup(layout.createParallelGroup(Alignment.LEADING)
+        						.addComponent(labelCorsoRelativo, GroupLayout.DEFAULT_SIZE, 446, Short.MAX_VALUE)
+        						.addComponent(labelDataInizio, GroupLayout.DEFAULT_SIZE, 446, Short.MAX_VALUE)
+        						.addComponent(labelPratica, GroupLayout.DEFAULT_SIZE, 446, Short.MAX_VALUE) // <- aggiunta
+        						.addComponent(labelLuogo, GroupLayout.DEFAULT_SIZE, 446, Short.MAX_VALUE)
+        						.addComponent(labelConferenza, GroupLayout.DEFAULT_SIZE, 446, Short.MAX_VALUE))
+        					.addPreferredGap(ComponentPlacement.RELATED)
+        					.addGroup(layout.createParallelGroup(Alignment.LEADING)
+        						.addComponent(selezionaCorsoComboBox, 300, 300, 300)
+        						.addComponent(dataInizioField, 300, 300, 300)
+        						.addComponent(praticaCheckBox, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE) // <- aggiunta
+        						.addComponent(luogoField, 300, 300, 300)
+        						.addComponent(conferenzaField, 300, 300, 300))))
+        			.addContainerGap())
+        		.addGroup(layout.createSequentialGroup()
+        			.addContainerGap(400, Short.MAX_VALUE)
+        			.addComponent(btnIndietro, GroupLayout.PREFERRED_SIZE, 120, GroupLayout.PREFERRED_SIZE)
+        			.addGap(43)
+        			.addComponent(btnAggiungi_1, GroupLayout.PREFERRED_SIZE, 120, GroupLayout.PREFERRED_SIZE)
+        			.addGap(20))
+        );
+        layout.setVerticalGroup(
+        	layout.createParallelGroup(Alignment.LEADING)
+        		.addGroup(layout.createSequentialGroup()
+        			.addGap(10)
+        			.addComponent(titoloLabel)
+        			.addGap(30)
+        			.addGroup(layout.createParallelGroup(Alignment.BASELINE)
+        				.addComponent(selezionaCorsoComboBox, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
+        				.addComponent(labelCorsoRelativo))
+        			.addPreferredGap(ComponentPlacement.UNRELATED)
+        			.addGroup(layout.createParallelGroup(Alignment.BASELINE)
+        				.addComponent(dataInizioField, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
+        				.addComponent(labelDataInizio))
+        			.addGap(6)
+        			.addGroup(layout.createParallelGroup(Alignment.BASELINE) // <- aggiunta
+        				.addComponent(praticaCheckBox, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
+        				.addComponent(labelPratica))
+        			.addGap(6)
+        			.addGroup(layout.createParallelGroup(Alignment.BASELINE)
+        				.addComponent(luogoField, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
+        				.addComponent(labelLuogo))
+        			.addGap(18)
+        			.addGroup(layout.createParallelGroup(Alignment.BASELINE)
+        				.addComponent(conferenzaField, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
+        				.addComponent(labelConferenza))
+        			.addPreferredGap(ComponentPlacement.RELATED, 199, Short.MAX_VALUE)
+        			.addGroup(layout.createParallelGroup(Alignment.BASELINE)
+        				.addComponent(btnAggiungi_1, GroupLayout.PREFERRED_SIZE, 35, GroupLayout.PREFERRED_SIZE)
+        				.addComponent(btnIndietro, GroupLayout.PREFERRED_SIZE, 35, GroupLayout.PREFERRED_SIZE))
         			.addContainerGap())
         );
-        gl_contentPane.setVerticalGroup(
-        	gl_contentPane.createParallelGroup(Alignment.LEADING)
-        		.addGroup(gl_contentPane.createSequentialGroup()
-        			.addGap(20)
-        			.addComponent(inputPanel, GroupLayout.PREFERRED_SIZE, 213, GroupLayout.PREFERRED_SIZE)
-        			.addPreferredGap(ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
-        			.addComponent(buttonPanel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-        );
-        
-        JButton btnAggiungi = new JButton("Aggiungi");
-        btnAggiungi.setFont(new Font("Arial", Font.PLAIN, 14));
-        btnAggiungi.setFocusPainted(false);
-        btnAggiungi.setBorder(BorderFactory.createLineBorder(new Color(50, 80, 150), 1));
-        btnAggiungi.setBackground(new Color(240, 240, 240));
-        buttonPanel.add(btnAggiungi);
-        contentPane.setLayout(gl_contentPane);
+        contentPane.setLayout(layout);
+
+        layout.setAutoCreateGaps(true);
+        layout.setAutoCreateContainerGaps(true);
 	}
 	
-	//METODI 
-    private JMenu menuAttivo = null;
-    
-    private JMenuBar CreaMenuBar(JFrame frame) {
+	// METODI 
+	private JMenu menuAttivo = null;
+	private JMenuBar CreaMenuBar(JFrame frame) {
         JMenuBar menuBar = new JMenuBar();
 
         JMenu menuCorsi = new JMenu("Corsi");
@@ -107,8 +192,9 @@ public class AggiungiSessioneFrame extends JFrame {
         JMenu menuStatsNReport = new JMenu("Stats&Reports");
         JMenu menuAccount = new JMenu("Account");
 
-        JMenuItem itemVediCorsi = new JMenuItem("Corsi altrui");
+        JMenuItem itemVediCorsi = new JMenuItem("Corsi Altrui");
         JMenuItem itemAggiungiCorso = new JMenuItem("Aggiungi Corso");
+        JMenuItem itemImieiCorsi = new JMenuItem("I Miei Corsi");
         JMenuItem itemAggiungiSessione = new JMenuItem("Aggiungi Sessione");
         JMenuItem itemSessioniDisponibili = new JMenuItem("Calendario Sessioni");
         JMenuItem itemListaRicette = new JMenuItem("Lista Ricette");
@@ -127,6 +213,13 @@ public class AggiungiSessioneFrame extends JFrame {
         itemVediCorsi.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 new CorsiDisponibiliFrame(c).setVisible(true);
+                dispose();
+            }
+        });
+        
+        itemImieiCorsi.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                new IMieiCorsiFrame(c).setVisible(true);
                 dispose();
             }
         });
@@ -201,6 +294,7 @@ public class AggiungiSessioneFrame extends JFrame {
 
         menuCorsi.add(itemVediCorsi);
         menuCorsi.add(itemAggiungiCorso);
+        menuCorsi.add(itemImieiCorsi);
         menuSessioni.add(itemAggiungiSessione);
         menuSessioni.add(itemSessioniDisponibili);
         menuRicette.add(itemListaRicette);
@@ -219,7 +313,7 @@ public class AggiungiSessioneFrame extends JFrame {
         return menuBar;
     }
     
-    //Metodo che permette di evidenziare il menù
+    // Metodo che permette di evidenziare il menù
     private void evidenziaMenu(JMenu nuovoMenu) {
         if (menuAttivo != null) {
             ripristinaMenu(menuAttivo);
@@ -230,7 +324,7 @@ public class AggiungiSessioneFrame extends JFrame {
         menuAttivo = nuovoMenu;
     }
     
-    //Metodo che permette di ripristinare il menù dopo che è stato evidenziato
+    // Metodo che permette di ripristinare il menù dopo che è stato evidenziato
     private void ripristinaMenu(JMenu menu) {
         menu.setOpaque(false);
         menu.setBackground(null);
@@ -239,5 +333,4 @@ public class AggiungiSessioneFrame extends JFrame {
             menuAttivo = null;
         }
     }
-
 }
