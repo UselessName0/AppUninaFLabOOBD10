@@ -27,6 +27,7 @@ public class CorsoDAO {
 				pstmt.setDate(5, Corso_Input.getDataInizioAsSQLDate()); 
 				pstmt.setDate(6, Corso_Input.getDataCreazioneAsSQLDate());
 				pstmt.setString(7, Corso_Input.getFrequenza_Corsi());
+				pstmt.setString(8, Corso_Input.getDescrizione());
 				
 				int rowsAffected = pstmt.executeUpdate();
 				return rowsAffected > 0;
