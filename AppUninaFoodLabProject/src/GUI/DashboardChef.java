@@ -49,7 +49,7 @@ public class DashboardChef extends JFrame {
 	}
 	
 	//METODI
-	//Metodo per la creazione del pannello centrale
+	//Metodo per la creazione del pannello centralee
     private JPanel creaContentPanel() {
         JPanel contentPanel = new JPanel(new GridBagLayout());
         contentPanel.setBackground(new Color(210, 255, 255));
