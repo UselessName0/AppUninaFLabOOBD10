@@ -694,5 +694,69 @@ public class CorsoDAO {
 			return null;
 		}
 	}
+
+	public int getNumeroIscrittiCorso(Corso c) {
+		String sql = "SELECT COUNT(*) AS nIscritti FROM uninafoodlab.iscrizionecorso WHERE idcorso = ?";
+		try(Connection conn = DBManager.getConnection();
+			PreparedStatement pstmt = conn.prepareStatement(sql)) {
+			
+			pstmt.setString(1, c.getID_Corso());
+			ResultSet rs = pstmt.executeQuery();
+			if(rs.next()) {
+				return rs.getInt("nIscritti");
+			} else {
+				return 0;
+			}
+			} catch(SQLException e) {
+				System.out.println("Errore durante il recupero del numero di iscritti al corso: " + e.getMessage());
+				return 0;
+		}
+	}
+	
+	public boolean CheckIfNoSessioniByCorso(Corso c) {
+		String sql = "SELECT COUNT(*) AS nSessioni FROM uninafoodlab.sessione WHERE idcorso = ?";
+		try(Connection conn = DBManager.getConnection();
+			PreparedStatement pstmt = conn.prepareStatement(sql)) {
+			
+			pstmt.setString(1, c.getID_Corso());
+			ResultSet rs = pstmt.executeQuery();
+			if(rs.next()) {
+				return rs.getInt("nSessioni") == 0;
+			} else {
+				return false;
+			}
+			
+		} catch(SQLException e) {
+			System.out.println("Errore durante il controllo delle sessioni del corso: " + e.getMessage());
+			return false;
+		}
+	}
+
+	public void UpdateCorso(Corso co) {
+		String sql = "UPDATE uninafoodlab.corso SET nomecorso = ?, argomento = ?, datainizio = ?, frequenzacorsi = ?, descrizione = ? WHERE idcorso = ?";
+		try(Connection conn = DBManager.getConnection();
+			PreparedStatement pstmt = conn.prepareStatement(sql)) {
+			
+			pstmt.setString(1, co.getNome_Corso());
+			pstmt.setString(2, co.getArgomento());
+			if(co.getData_Inizio() != null) {
+				pstmt.setDate(3, Date.valueOf(co.getData_Inizio()));
+			} else {
+				pstmt.setNull(3, Types.DATE);
+			}
+			pstmt.setString(4, co.getFrequenza_Corsi());
+			pstmt.setString(5, co.getDescrizione());
+			pstmt.setString(6, co.getID_Corso());
+			
+			int rowsAffected = pstmt.executeUpdate();
+			if(rowsAffected < 0) {
+				System.out.println("Nessun corso aggiornato.");
+			}
+			
+		} catch(SQLException e) {
+			System.out.println("Errore durante l'aggiornamento del corso: " + e.getMessage());
+		}
+		
+	}
 }
 	

@@ -164,6 +164,7 @@ public class ControllerChef {
 	
 	public boolean InserisciSessione(Chef Ch, Corso Co, LocalDate DataSe, boolean IsPratica, String Luogo, String LinkConferenza) {
 		SessioneDAO sDAO = new SessioneDAO();
+		CorsoDAO cDAO = new CorsoDAO();
 		if(!Ch.equals(null) && !Co.equals(null) && !DataSe.equals(null)) {
 			if(IsPratica && !Luogo.isEmpty() || !IsPratica && !LinkConferenza.isEmpty()) {
 				Sessione s = new Sessione();
@@ -192,7 +193,10 @@ public class ControllerChef {
 					System.out.println("Errore durante la generazione dell'ID della sessione: " + e.getMessage());
 					return false;
 				}
-				
+				if(cDAO.CheckIfNoSessioniByCorso(Co)) {
+					Co.setData_Inizio(DataSe);
+					cDAO.UpdateCorso(Co);
+				}
 				return sDAO.InsertSessione(s);
 			}
 			else {
@@ -233,4 +237,29 @@ public class ControllerChef {
 		return null;
 	}
 	
+	public int GetNumeroIscrittiCorso(Corso c) {
+		CorsoDAO cDAO = new CorsoDAO();
+		if(c != null) {
+			return cDAO.getNumeroIscrittiCorso(c);
+		}
+		return 0;
+	}
+	
+	public int GetNumeroIscrittiSessione(Sessione s) {
+		SessioneDAO sDAO = new SessioneDAO();
+		if(s != null) {
+			return sDAO.getNumeroIscrittiSessione(s);
+		}
+		return 0;
+	}
+	
+	public boolean UpdateSessione(Sessione s) {
+		SessioneDAO sDAO = new SessioneDAO();
+		if(s != null && !s.getID_Sessione().isEmpty() && s.getRelatedCorso() != null && s.getData_Sessione() != null) {
+			return sDAO.UpdateSessione(s);
+		} else {
+			System.out.println("Dati sessione non validi.");
+			return false;
+		}
+	}
 }

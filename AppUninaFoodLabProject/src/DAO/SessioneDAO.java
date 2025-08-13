@@ -625,4 +625,45 @@ public class SessioneDAO {
 			return new int[12]; // Return an array of zeros if there's an error
 		}
 	}
+
+	public int getNumeroIscrittiSessione(Sessione s) {
+		String sql = "SELECT COUNT(*) AS nIscritti FROM uninafoodlab.iscrizionesessione WHERE idsessione = ?";
+		try(Connection conn = DBManager.getConnection();
+			PreparedStatement pstmt = conn.prepareStatement(sql)) {
+			
+			pstmt.setString(1, s.getID_Sessione());
+			ResultSet rs = pstmt.executeQuery();
+			if(rs.next()) {
+				return rs.getInt("nIscritti");
+			} else {
+				return 0;
+			}
+			} catch(SQLException e) {
+				System.out.println("Errore durante il recupero del numero di iscritti alla sessione: " + e.getMessage());
+				return 0;
+		}
+	}
+
+	public boolean UpdateSessione(Sessione s) {
+		String sql = "UPDATE uninafoodlab.sessione SET idcorso = ?, datasessione = ?, ispratica = ?, adesioni = ?, linkconferenza = ?, luogo = ?, idricetta = ? WHERE idsessione = ?;";
+		try(Connection conn = DBManager.getConnection();
+			PreparedStatement pstmt = conn.prepareStatement(sql)) {
+			
+			pstmt.setString(1, s.getRelatedCorso().getID_Corso());
+			pstmt.setDate(2, java.sql.Date.valueOf(s.getData_Sessione()));
+			pstmt.setBoolean(3, s.isIsPratica());
+			pstmt.setInt(4, s.getNumero_Adesioni());
+			pstmt.setString(5, s.getLinkConferenza());
+			pstmt.setString(6, s.getLuogo());
+			pstmt.setString(7, s.getRicetta_Appresa().getIDRicetta());
+			pstmt.setString(8, s.getID_Sessione());
+			
+			int rowsAffected = pstmt.executeUpdate();
+			return rowsAffected > 0;
+			
+		} catch(SQLException e) {
+			System.out.println("Errore durante l'aggiornamento della sessione: " + e.getMessage());
+			return false;
+		}
+	}
 }
