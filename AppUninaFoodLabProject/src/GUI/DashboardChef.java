@@ -68,7 +68,7 @@ public class DashboardChef extends JFrame {
         contentPanel.add(creaSezione("Sessioni", new String[] { "Aggiungi sessione", "Calendario sessioni" }, new Color(200, 240, 210)), gbc);
 
         gbc.gridx = 0; gbc.gridy = 1;
-        contentPanel.add(creaSezione("Ricette", new String[] { "Lista ricette" }, new Color(200, 240, 210)), gbc);
+        contentPanel.add(creaSezione("Ricette", new String[] { "Lista ricette", "Crea ricetta" }, new Color(200, 240, 210)), gbc);
 
         gbc.gridx = 1; gbc.gridy = 1;
         contentPanel.add(creaSezione("Stats & Reports", new String[] { "Statistiche", "Report" }, new Color(189, 226, 249)), gbc);
@@ -97,6 +97,7 @@ public class DashboardChef extends JFrame {
         JMenuItem itemAggiungiSessione = new JMenuItem("Aggiungi Sessione");
         JMenuItem itemSessioniDisponibili = new JMenuItem("Calendario Sessioni");
         JMenuItem itemListaRicette = new JMenuItem("Lista Ricette");
+        JMenuItem itemCreaRicetta = new JMenuItem("Crea Ricetta");
         JMenuItem itemStatistiche = new JMenuItem("Statistiche");
         JMenuItem itemReport = new JMenuItem("Report");
         JMenuItem itemInfo = new JMenuItem("Il mio profilo");
@@ -151,6 +152,13 @@ public class DashboardChef extends JFrame {
             }
         });
         
+        itemCreaRicetta.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                new CreaRicettaFrame(c).setVisible(true);
+                dispose();
+            }
+        });
+        
         itemStatistiche.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 new StatisticheFrame(c).setVisible(true);
@@ -197,6 +205,7 @@ public class DashboardChef extends JFrame {
         menuSessioni.add(itemAggiungiSessione);
         menuSessioni.add(itemSessioniDisponibili);
         menuRicette.add(itemListaRicette);
+        menuRicette.add(itemCreaRicetta);
         menuStatsNReport.add(itemStatistiche);
         menuStatsNReport.add(itemReport);
         menuAccount.add(itemInfo);
@@ -305,6 +314,15 @@ public class DashboardChef extends JFrame {
                 voce.addMouseListener(new MouseAdapter() {
                     public void mouseClicked(MouseEvent e) {
                         new ListaRicetteFrame(c).setVisible(true);
+                        dispose();
+                    }
+                });
+            }
+            
+            if (voceText.equals("Crea ricetta")) {
+                voce.addMouseListener(new MouseAdapter() {
+                    public void mouseClicked(MouseEvent e) {
+                        new CreaRicettaFrame(c).setVisible(true);
                         dispose();
                     }
                 });

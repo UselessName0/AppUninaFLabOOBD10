@@ -32,7 +32,7 @@ public class CorsiDisponibiliFrame extends JFrame {
         setSize(800, 600);
         setLocationRelativeTo(null);
         setResizable(false);
-        setJMenuBar(creaMenuBar(this));
+        setJMenuBar(CreaMenuBar(this));
 
         Color sfondoPrincipale = new Color(220, 240, 250);  
         Color sfondoTabella = new Color(210, 240, 210);   
@@ -326,21 +326,25 @@ public class CorsiDisponibiliFrame extends JFrame {
         finestraDettagli.setResizable(false);
         finestraDettagli.setVisible(true);
     }
-
-    private JMenuBar creaMenuBar(JFrame frame) {
+    
+    //Metodi
+    private JMenuBar CreaMenuBar(JFrame frame) {
         JMenuBar menuBar = new JMenuBar();
+
         JMenu menuCorsi = new JMenu("Corsi");
         JMenu menuSessioni = new JMenu("Sessioni");
-        JMenu menuChef = new JMenu("Chef");
         JMenu menuRicette = new JMenu("Ricette");
+        JMenu menuStatsNReport = new JMenu("Stats&Reports");
         JMenu menuAccount = new JMenu("Account");
 
-        JMenuItem itemVediCorsi = new JMenuItem("Corsi Disponibili");
-        JMenuItem itemMieIscrizioni = new JMenuItem("Le Mie Iscrizioni");
-        JMenuItem itemVediSessioni = new JMenuItem("Le Mie Sessioni");
-        JMenuItem itemVediCalendario = new JMenuItem("Calendario Sessioni");
-        JMenuItem itemListaChef = new JMenuItem("Lista Chef");
-        JMenuItem itemLeMieRicette = new JMenuItem("Le Mie Ricette");
+        JMenuItem itemVediCorsi = new JMenuItem("Corsi Altrui");
+        JMenuItem itemAggiungiCorso = new JMenuItem("Aggiungi Corso");
+        JMenuItem itemImieiCorsi = new JMenuItem("I Miei Corsi");
+        JMenuItem itemAggiungiSessione = new JMenuItem("Aggiungi Sessione");
+        JMenuItem itemSessioniDisponibili = new JMenuItem("Calendario Sessioni");
+        JMenuItem itemListaRicette = new JMenuItem("Lista Ricette");
+        JMenuItem itemStatistiche = new JMenuItem("Statistiche");
+        JMenuItem itemReport = new JMenuItem("Report");
         JMenuItem itemInfo = new JMenuItem("Il mio profilo");
         JMenuItem itemLogout = new JMenuItem("Logout");
 
@@ -353,49 +357,63 @@ public class CorsiDisponibiliFrame extends JFrame {
 
         itemVediCorsi.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                new CorsiDisponibiliFrame(p).setVisible(true);
+                new CorsiDisponibiliFrame(c).setVisible(true);
                 dispose();
             }
         });
 
-        itemMieIscrizioni.addActionListener(new ActionListener() {
+        itemAggiungiCorso.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                new LeMieIscrizioniFrame(p).setVisible(true);
+                new AggiungiCorsoFrame(c).setVisible(true);
+                dispose();
+            }
+        });
+        
+        itemImieiCorsi.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                new IMieiCorsiFrame(c).setVisible(true);
                 dispose();
             }
         });
 
-        itemVediSessioni.addActionListener(new ActionListener() {
+        itemAggiungiSessione.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                new LeMieSessioniFrame(p).setVisible(true);
+                new AggiungiSessioneFrame(c).setVisible(true);
                 dispose();
             }
         });
 
-        itemVediCalendario.addActionListener(new ActionListener() {
+        itemSessioniDisponibili.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                new CalendarioSessioniFrame(p).setVisible(true);
+                new CalendarioSessioniFrame(c).setVisible(true);
                 dispose();
             }
         });
 
-        itemListaChef.addActionListener(new ActionListener() {
+        itemListaRicette.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                new ListaChefFrame(p).setVisible(true);
+                new ListaRicetteFrame(c).setVisible(true);
                 dispose();
             }
         });
-
-        itemLeMieRicette.addActionListener(new ActionListener() {
+        
+        itemStatistiche.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                new LeMieRicetteFrame(p).setVisible(true);
+                new StatisticheFrame(c).setVisible(true);
+                dispose();
+            }
+        });
+        
+        itemReport.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                new ReportFrame(c).setVisible(true);
                 dispose();
             }
         });
 
         itemInfo.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                new ilMioProfiloFrame(p).setVisible(true);
+                new ilMioProfiloFrame(c).setVisible(true);
                 dispose();
             }
         });
@@ -414,25 +432,29 @@ public class CorsiDisponibiliFrame extends JFrame {
 
         menuCorsi.addMenuListener(menuListener);
         menuSessioni.addMenuListener(menuListener);
-        menuChef.addMenuListener(menuListener);
         menuRicette.addMenuListener(menuListener);
+        menuRicette.addMenuListener(menuListener);
+        menuStatsNReport.addMenuListener(menuListener);
         menuAccount.addMenuListener(menuListener);
 
         menuCorsi.add(itemVediCorsi);
-        menuCorsi.add(itemMieIscrizioni);
-        menuSessioni.add(itemVediSessioni);
-        menuSessioni.add(itemVediCalendario);
-        menuChef.add(itemListaChef);
-        menuRicette.add(itemLeMieRicette);
+        menuCorsi.add(itemAggiungiCorso);
+        menuCorsi.add(itemImieiCorsi);
+        menuSessioni.add(itemAggiungiSessione);
+        menuSessioni.add(itemSessioniDisponibili);
+        menuRicette.add(itemListaRicette);
+        menuStatsNReport.add(itemStatistiche);
+        menuStatsNReport.add(itemReport);
         menuAccount.add(itemInfo);
         menuAccount.add(itemLogout);
 
         menuBar.add(menuCorsi);
         menuBar.add(menuSessioni);
         menuBar.add(menuRicette);
-        menuBar.add(menuChef);
+        menuBar.add(menuStatsNReport);
         menuBar.add(menuAccount);
 
+        setJMenuBar(menuBar);
         return menuBar;
     }
 
@@ -465,13 +487,12 @@ public class CorsiDisponibiliFrame extends JFrame {
         JMenu menuRicette = new JMenu("Ricette");
         JMenu menuStatsNReport = new JMenu("Stats&Reports");
         JMenu menuAccount = new JMenu("Account");
-
         JMenuItem itemVediCorsi = new JMenuItem("Corsi Altrui");
         JMenuItem itemAggiungiCorso = new JMenuItem("Aggiungi Corso");
-        
         JMenuItem itemAggiungiSessione = new JMenuItem("Aggiungi Sessione");
         JMenuItem itemSessioniDisponibili = new JMenuItem("Calendario Sessioni");
         JMenuItem itemListaRicette = new JMenuItem("Lista Ricette");
+        JMenuItem itemCreaRicetta = new JMenuItem("Crea Ricetta");
         JMenuItem itemStatistiche = new JMenuItem("Statistiche");
         JMenuItem itemReport = new JMenuItem("Report");
         JMenuItem itemInfo = new JMenuItem("Il mio profilo");
@@ -515,6 +536,13 @@ public class CorsiDisponibiliFrame extends JFrame {
         itemListaRicette.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 new ListaRicetteFrame(c).setVisible(true);
+                dispose();
+            }
+        });
+        
+        itemCreaRicetta.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                new CreaRicettaFrame(c).setVisible(true);
                 dispose();
             }
         });
@@ -564,6 +592,7 @@ public class CorsiDisponibiliFrame extends JFrame {
         menuSessioni.add(itemAggiungiSessione);
         menuSessioni.add(itemSessioniDisponibili);
         menuRicette.add(itemListaRicette);
+        menuRicette.add(itemCreaRicetta);
         menuStatsNReport.add(itemStatistiche);
         menuStatsNReport.add(itemReport);
         menuAccount.add(itemInfo);
