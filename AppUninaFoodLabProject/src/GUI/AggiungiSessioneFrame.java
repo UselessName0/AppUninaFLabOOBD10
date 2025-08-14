@@ -66,7 +66,7 @@ public class AggiungiSessioneFrame extends JFrame {
         titoloLabel.setForeground(new Color(50, 80, 150));
         titoloLabel.setFont(new Font("Arial", Font.BOLD, 24));
         
-        // Bottoni
+        //Bottoni
         JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout(new FlowLayout(FlowLayout.RIGHT));
         
@@ -126,14 +126,14 @@ public class AggiungiSessioneFrame extends JFrame {
         					.addGroup(layout.createParallelGroup(Alignment.LEADING)
         						.addComponent(labelCorsoRelativo, GroupLayout.DEFAULT_SIZE, 446, Short.MAX_VALUE)
         						.addComponent(labelDataInizio, GroupLayout.DEFAULT_SIZE, 446, Short.MAX_VALUE)
-        						.addComponent(labelPratica, GroupLayout.DEFAULT_SIZE, 446, Short.MAX_VALUE) // <- aggiunta
+        						.addComponent(labelPratica, GroupLayout.DEFAULT_SIZE, 446, Short.MAX_VALUE) 
         						.addComponent(labelLuogo, GroupLayout.DEFAULT_SIZE, 446, Short.MAX_VALUE)
         						.addComponent(labelConferenza, GroupLayout.DEFAULT_SIZE, 446, Short.MAX_VALUE))
         					.addPreferredGap(ComponentPlacement.RELATED)
         					.addGroup(layout.createParallelGroup(Alignment.LEADING)
         						.addComponent(selezionaCorsoComboBox, 300, 300, 300)
         						.addComponent(dataInizioField, 300, 300, 300)
-        						.addComponent(praticaCheckBox, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE) // <- aggiunta
+        						.addComponent(praticaCheckBox, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
         						.addComponent(luogoField, 300, 300, 300)
         						.addComponent(conferenzaField, 300, 300, 300))))
         			.addContainerGap())
@@ -158,7 +158,7 @@ public class AggiungiSessioneFrame extends JFrame {
         				.addComponent(dataInizioField, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
         				.addComponent(labelDataInizio))
         			.addGap(6)
-        			.addGroup(layout.createParallelGroup(Alignment.BASELINE) // <- aggiunta
+        			.addGroup(layout.createParallelGroup(Alignment.BASELINE)
         				.addComponent(praticaCheckBox, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
         				.addComponent(labelPratica))
         			.addGap(6)
@@ -182,8 +182,9 @@ public class AggiungiSessioneFrame extends JFrame {
 	}
 	
 	// METODI 
-	private JMenu menuAttivo = null;
-	private JMenuBar CreaMenuBar(JFrame frame) {
+    private JMenu menuAttivo = null;
+    
+    private JMenuBar CreaMenuBar(JFrame frame) {
         JMenuBar menuBar = new JMenuBar();
 
         JMenu menuCorsi = new JMenu("Corsi");
@@ -198,6 +199,7 @@ public class AggiungiSessioneFrame extends JFrame {
         JMenuItem itemAggiungiSessione = new JMenuItem("Aggiungi Sessione");
         JMenuItem itemSessioniDisponibili = new JMenuItem("Calendario Sessioni");
         JMenuItem itemListaRicette = new JMenuItem("Lista Ricette");
+        JMenuItem itemCreaRicetta = new JMenuItem("Crea Ricetta");
         JMenuItem itemStatistiche = new JMenuItem("Statistiche");
         JMenuItem itemReport = new JMenuItem("Report");
         JMenuItem itemInfo = new JMenuItem("Il mio profilo");
@@ -216,17 +218,17 @@ public class AggiungiSessioneFrame extends JFrame {
                 dispose();
             }
         });
-        
-        itemImieiCorsi.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                new IMieiCorsiFrame(c).setVisible(true);
-                dispose();
-            }
-        });
 
         itemAggiungiCorso.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 new AggiungiCorsoFrame(c).setVisible(true);
+                dispose();
+            }
+        });
+        
+        itemImieiCorsi.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                new IMieiCorsiFrame(c).setVisible(true);
                 dispose();
             }
         });
@@ -248,6 +250,13 @@ public class AggiungiSessioneFrame extends JFrame {
         itemListaRicette.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 new ListaRicetteFrame(c).setVisible(true);
+                dispose();
+            }
+        });
+        
+        itemCreaRicetta.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                new CreaRicettaFrame(c).setVisible(true);
                 dispose();
             }
         });
@@ -298,6 +307,7 @@ public class AggiungiSessioneFrame extends JFrame {
         menuSessioni.add(itemAggiungiSessione);
         menuSessioni.add(itemSessioniDisponibili);
         menuRicette.add(itemListaRicette);
+        menuRicette.add(itemCreaRicetta);
         menuStatsNReport.add(itemStatistiche);
         menuStatsNReport.add(itemReport);
         menuAccount.add(itemInfo);

@@ -331,6 +331,7 @@ public class CalendarioSessioniFrame extends JFrame {
         JMenuItem itemAggiungiSessione = new JMenuItem("Aggiungi Sessione");
         JMenuItem itemSessioniDisponibili = new JMenuItem("Calendario Sessioni");
         JMenuItem itemListaRicette = new JMenuItem("Lista Ricette");
+        JMenuItem itemCreaRicetta = new JMenuItem("Crea Ricetta");
         JMenuItem itemStatistiche = new JMenuItem("Statistiche");
         JMenuItem itemReport = new JMenuItem("Report");
         JMenuItem itemInfo = new JMenuItem("Il mio profilo");
@@ -374,6 +375,13 @@ public class CalendarioSessioniFrame extends JFrame {
         itemListaRicette.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 new ListaRicetteFrame(c).setVisible(true);
+                dispose();
+            }
+        });
+        
+        itemCreaRicetta.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                new CreaRicettaFrame(c).setVisible(true);
                 dispose();
             }
         });
@@ -423,6 +431,7 @@ public class CalendarioSessioniFrame extends JFrame {
         menuSessioni.add(itemAggiungiSessione);
         menuSessioni.add(itemSessioniDisponibili);
         menuRicette.add(itemListaRicette);
+        menuRicette.add(itemCreaRicetta);
         menuStatsNReport.add(itemStatistiche);
         menuStatsNReport.add(itemReport);
         menuAccount.add(itemInfo);
