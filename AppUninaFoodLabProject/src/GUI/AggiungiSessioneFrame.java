@@ -8,6 +8,8 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Date;
 import java.util.List;
 
 import javax.swing.BorderFactory;
@@ -22,16 +24,16 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.border.EmptyBorder;
-import javax.swing.border.LineBorder;
 import javax.swing.event.MenuEvent;
 import javax.swing.event.MenuListener;
+
+import com.toedter.calendar.JCalendar;
 
 import Controller.ControllerChef;
 import DAO.CorsoDAO;
@@ -46,7 +48,7 @@ public class AggiungiSessioneFrame extends JFrame {
 	private Chef c;
     private JComboBox<String> selezionaCorsoComboBox;
     private JTextField discriminatoField;
-    private JTextField dataInizioField;
+    private JCalendar dataInizioCalendar;
     private JCheckBox  praticaCheckBox;
     ControllerChef CC = new ControllerChef();
     
@@ -104,7 +106,12 @@ public class AggiungiSessioneFrame extends JFrame {
 				String idCorso = parts[1].replace(")", "");
 				Ricetta ricettaSelezionata = null; // Placeholder per la ricetta selezionata
 				
-				LocalDate data = LocalDate.parse(dataInizioField.getText());
+				Date dataSelezionata = dataInizioCalendar.getDate();
+				if(dataSelezionata == null) {
+					JOptionPane.showMessageDialog(null, "Seleziona una data.", "Errore", JOptionPane.ERROR_MESSAGE);
+					return;
+				}
+				LocalDate data = dataSelezionata.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 				if(data.isBefore(LocalDate.now())) {
 					JOptionPane.showMessageDialog(null, "La data non può essere precedente a oggi.", "Errore", JOptionPane.ERROR_MESSAGE);
 					return;
@@ -134,10 +141,10 @@ public class AggiungiSessioneFrame extends JFrame {
 			selezionaCorsoComboBox.addItem(corso.getNome_Corso() + " (" + corso.getID_Corso() + ")");
 		}
         
-        
-        JLabel labelDataInizio = new JLabel("Data :");
+        JLabel labelDataInizio = new JLabel("Data:");
         labelDataInizio.setFont(new Font("Arial", Font.BOLD, 18));
-        dataInizioField = new JTextField();
+        dataInizioCalendar = new JCalendar();
+        dataInizioCalendar.setFont(new Font("Arial", Font.PLAIN, 14));
         
         JLabel labelPratica = new JLabel("Sessione pratica:");
         labelPratica.setFont(new Font("Arial", Font.BOLD, 18));
@@ -156,9 +163,7 @@ public class AggiungiSessioneFrame extends JFrame {
         });
         
   	  	List<Ricetta> ricette = CC.GetAllRicette();
-        
-        //aggiungere coso di ricetta che non so
-                        
+                                
         GroupLayout layout = new GroupLayout(contentPane);
         layout.setHorizontalGroup(
         	layout.createParallelGroup(Alignment.TRAILING)
@@ -170,13 +175,13 @@ public class AggiungiSessioneFrame extends JFrame {
         					.addGroup(layout.createParallelGroup(Alignment.LEADING)
         						.addComponent(labelCorsoRelativo, GroupLayout.DEFAULT_SIZE, 446, Short.MAX_VALUE)
         						.addComponent(labelDataInizio, GroupLayout.DEFAULT_SIZE, 446, Short.MAX_VALUE)
-        						.addComponent(labelPratica, GroupLayout.DEFAULT_SIZE, 446, Short.MAX_VALUE) // <- aggiunta
+        						.addComponent(labelPratica, GroupLayout.DEFAULT_SIZE, 446, Short.MAX_VALUE)
         						.addComponent(labelDiscriminato, GroupLayout.DEFAULT_SIZE, 446, Short.MAX_VALUE))
         					.addPreferredGap(ComponentPlacement.RELATED)
         					.addGroup(layout.createParallelGroup(Alignment.LEADING)
         						.addComponent(selezionaCorsoComboBox, 300, 300, 300)
-        						.addComponent(dataInizioField, 300, 300, 300)
-        						.addComponent(praticaCheckBox, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE) // <- aggiunta
+        						.addComponent(dataInizioCalendar, 300, 300, 300)
+        						.addComponent(praticaCheckBox, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
         						.addComponent(discriminatoField, 300, 300, 300))))
         			.addContainerGap())
         		.addGroup(layout.createSequentialGroup()
@@ -196,19 +201,17 @@ public class AggiungiSessioneFrame extends JFrame {
         				.addComponent(selezionaCorsoComboBox, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
         				.addComponent(labelCorsoRelativo))
         			.addPreferredGap(ComponentPlacement.UNRELATED)
-        			.addGroup(layout.createParallelGroup(Alignment.BASELINE)
-        				.addComponent(dataInizioField, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
+        			.addGroup(layout.createParallelGroup(Alignment.LEADING)
+        				.addComponent(dataInizioCalendar, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
         				.addComponent(labelDataInizio))
         			.addGap(6)
-        			.addGroup(layout.createParallelGroup(Alignment.BASELINE) // <- aggiunta
+        			.addGroup(layout.createParallelGroup(Alignment.BASELINE)
         				.addComponent(praticaCheckBox, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
         				.addComponent(labelPratica))
         			.addGap(6)
         			.addGroup(layout.createParallelGroup(Alignment.BASELINE)
         				.addComponent(discriminatoField, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
         				.addComponent(labelDiscriminato))
-        			.addGap(18)
-        			.addGroup(layout.createParallelGroup(Alignment.BASELINE))
         			.addPreferredGap(ComponentPlacement.RELATED, 199, Short.MAX_VALUE)
         			.addGroup(layout.createParallelGroup(Alignment.BASELINE)
         				.addComponent(btnAggiungi_1, GroupLayout.PREFERRED_SIZE, 35, GroupLayout.PREFERRED_SIZE)
