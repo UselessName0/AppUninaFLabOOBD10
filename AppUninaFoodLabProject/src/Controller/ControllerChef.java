@@ -162,7 +162,7 @@ public class ControllerChef {
 		return false;
 	}
 	
-	public boolean InserisciSessione(Chef Ch, Corso Co, LocalDate DataSe, boolean IsPratica, String Luogo, String LinkConferenza) {
+	public boolean InserisciSessione(Chef Ch, Corso Co, LocalDate DataSe, boolean IsPratica, String Luogo, String LinkConferenza, Ricetta R) {
 		SessioneDAO sDAO = new SessioneDAO();
 		CorsoDAO cDAO = new CorsoDAO();
 		if(!Ch.equals(null) && !Co.equals(null) && !DataSe.equals(null)) {
@@ -261,5 +261,10 @@ public class ControllerChef {
 			System.out.println("Dati sessione non validi.");
 			return false;
 		}
+	}
+	
+	public List<Ricetta> GetAllRicette(){
+		RicettaDAO rDAO = new RicettaDAO();
+		return rDAO.GetAllRicettaDAO();
 	}
 }

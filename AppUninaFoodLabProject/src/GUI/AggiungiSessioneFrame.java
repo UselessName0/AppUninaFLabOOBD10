@@ -7,6 +7,8 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.time.LocalDate;
+import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.GroupLayout;
@@ -18,6 +20,7 @@ import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
@@ -30,7 +33,11 @@ import javax.swing.border.LineBorder;
 import javax.swing.event.MenuEvent;
 import javax.swing.event.MenuListener;
 
+import Controller.ControllerChef;
+import DAO.CorsoDAO;
 import Entities.Chef;
+import Entities.Corso;
+import Entities.Ricetta;
 
 public class AggiungiSessioneFrame extends JFrame {
 
@@ -38,11 +45,11 @@ public class AggiungiSessioneFrame extends JFrame {
 	private JPanel contentPane;
 	private Chef c;
     private JComboBox<String> selezionaCorsoComboBox;
-    private JTextField luogoField;
-    private JTextField conferenzaField;
+    private JTextField discriminatoField;
     private JTextField dataInizioField;
     private JCheckBox  praticaCheckBox;
-
+    ControllerChef CC = new ControllerChef();
+    
 	// COSTRUTTORI
 	public AggiungiSessioneFrame(Chef C) {
 		this.c = C;
@@ -88,15 +95,47 @@ public class AggiungiSessioneFrame extends JFrame {
         btnAggiungi_1.setFocusPainted(false);
         btnAggiungi_1.setBorder(BorderFactory.createLineBorder(new Color(50, 80, 150), 1));
         btnAggiungi_1.setBackground(UIManager.getColor("Button.background"));
+        btnAggiungi_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				CorsoDAO coDAO = new CorsoDAO();
+				String corsoSelezionato = (String) selezionaCorsoComboBox.getSelectedItem();
+				String[] parts = corsoSelezionato.split(" \\(");
+				String nomeCorso = parts[0];
+				String idCorso = parts[1].replace(")", "");
+				Ricetta ricettaSelezionata = null; // Placeholder per la ricetta selezionata
+				
+				LocalDate data = LocalDate.parse(dataInizioField.getText());
+				if(data.isBefore(LocalDate.now())) {
+					JOptionPane.showMessageDialog(null, "La data non può essere precedente a oggi.", "Errore", JOptionPane.ERROR_MESSAGE);
+					return;
+				}
+				boolean sessionePratica = praticaCheckBox.isSelected();
+				String discriminato = discriminatoField.getText();
+				if(sessionePratica) {
+					if(CC.InserisciSessione(c, coDAO.getCorsoByID(idCorso), data, sessionePratica, discriminato, null, ricettaSelezionata)) {	
+						new DashboardChef(c).setVisible(true);
+						dispose();
+					}
+				} else {
+					if(CC.InserisciSessione(c, coDAO.getCorsoByID(idCorso), data, sessionePratica, null, discriminato, ricettaSelezionata)) {
+						new DashboardChef(c).setVisible(true);
+						dispose();
+				}
+				}
+			}
+		});
 
         JLabel labelCorsoRelativo = new JLabel("Corso relativo:");
         labelCorsoRelativo.setFont(new Font("Arial", Font.BOLD, 18));
 
+        List<Corso> corsi = CC.GetCorsiByChef(c);
         selezionaCorsoComboBox = new JComboBox<>();
-        selezionaCorsoComboBox.addItem("");
-        selezionaCorsoComboBox.addItem("METTERE I CORSI CHEF");
+        for (Corso corso : corsi) {
+			selezionaCorsoComboBox.addItem(corso.getNome_Corso() + " (" + corso.getID_Corso() + ")");
+		}
         
-        JLabel labelDataInizio = new JLabel("Data inizio:");
+        
+        JLabel labelDataInizio = new JLabel("Data :");
         labelDataInizio.setFont(new Font("Arial", Font.BOLD, 18));
         dataInizioField = new JTextField();
         
@@ -104,14 +143,19 @@ public class AggiungiSessioneFrame extends JFrame {
         labelPratica.setFont(new Font("Arial", Font.BOLD, 18));
         praticaCheckBox = new JCheckBox();
         praticaCheckBox.setBackground(sfondoPrincipale);
+      
+        JLabel labelDiscriminato = new JLabel("Link Conferenza");
+        labelDiscriminato.setFont(new Font("Arial", Font.BOLD, 18));
+        discriminatoField = new JTextField();
 
-        JLabel labelLuogo = new JLabel("Luogo:");
-        labelLuogo.setFont(new Font("Arial", Font.BOLD, 18));
-        luogoField = new JTextField();
-
-        JLabel labelConferenza = new JLabel("Conferenza:");
-        labelConferenza.setFont(new Font("Arial", Font.BOLD, 18));
-        conferenzaField = new JTextField();
+        praticaCheckBox.addItemListener(e -> {
+        		if(praticaCheckBox.isSelected())
+        			labelDiscriminato.setText("Luogo:");
+        		else
+        			labelDiscriminato.setText("Link Conferenza:");
+        });
+        
+  	  	List<Ricetta> ricette = CC.GetAllRicette();
         
         //aggiungere coso di ricetta che non so
                         
@@ -127,15 +171,13 @@ public class AggiungiSessioneFrame extends JFrame {
         						.addComponent(labelCorsoRelativo, GroupLayout.DEFAULT_SIZE, 446, Short.MAX_VALUE)
         						.addComponent(labelDataInizio, GroupLayout.DEFAULT_SIZE, 446, Short.MAX_VALUE)
         						.addComponent(labelPratica, GroupLayout.DEFAULT_SIZE, 446, Short.MAX_VALUE) // <- aggiunta
-        						.addComponent(labelLuogo, GroupLayout.DEFAULT_SIZE, 446, Short.MAX_VALUE)
-        						.addComponent(labelConferenza, GroupLayout.DEFAULT_SIZE, 446, Short.MAX_VALUE))
+        						.addComponent(labelDiscriminato, GroupLayout.DEFAULT_SIZE, 446, Short.MAX_VALUE))
         					.addPreferredGap(ComponentPlacement.RELATED)
         					.addGroup(layout.createParallelGroup(Alignment.LEADING)
         						.addComponent(selezionaCorsoComboBox, 300, 300, 300)
         						.addComponent(dataInizioField, 300, 300, 300)
         						.addComponent(praticaCheckBox, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE) // <- aggiunta
-        						.addComponent(luogoField, 300, 300, 300)
-        						.addComponent(conferenzaField, 300, 300, 300))))
+        						.addComponent(discriminatoField, 300, 300, 300))))
         			.addContainerGap())
         		.addGroup(layout.createSequentialGroup()
         			.addContainerGap(400, Short.MAX_VALUE)
@@ -163,12 +205,10 @@ public class AggiungiSessioneFrame extends JFrame {
         				.addComponent(labelPratica))
         			.addGap(6)
         			.addGroup(layout.createParallelGroup(Alignment.BASELINE)
-        				.addComponent(luogoField, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
-        				.addComponent(labelLuogo))
+        				.addComponent(discriminatoField, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
+        				.addComponent(labelDiscriminato))
         			.addGap(18)
-        			.addGroup(layout.createParallelGroup(Alignment.BASELINE)
-        				.addComponent(conferenzaField, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
-        				.addComponent(labelConferenza))
+        			.addGroup(layout.createParallelGroup(Alignment.BASELINE))
         			.addPreferredGap(ComponentPlacement.RELATED, 199, Short.MAX_VALUE)
         			.addGroup(layout.createParallelGroup(Alignment.BASELINE)
         				.addComponent(btnAggiungi_1, GroupLayout.PREFERRED_SIZE, 35, GroupLayout.PREFERRED_SIZE)
