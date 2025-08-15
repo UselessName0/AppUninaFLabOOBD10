@@ -49,7 +49,8 @@ public class AggiungiSessioneFrame extends JFrame {
     private JComboBox<String> selezionaCorsoComboBox;
     private JTextField discriminatoField;
     private JCalendar dataInizioCalendar;
-    private JCheckBox  praticaCheckBox;
+    private JCheckBox praticaCheckBox;
+    private JComboBox<String> selezionaRicettaComboBox; 
     ControllerChef CC = new ControllerChef();
     
 	// COSTRUTTORI
@@ -84,7 +85,7 @@ public class AggiungiSessioneFrame extends JFrame {
         btnIndietro.setFont(new Font("Arial", Font.PLAIN, 14));
         btnIndietro.setFocusPainted(false);
         btnIndietro.setBorder(BorderFactory.createLineBorder(new Color(50, 80, 150), 1));
-        btnIndietro.setBackground(new Color(240, 240, 240));
+        btnIndietro.setBackground(UIManager.getColor("Button.background"));
         btnIndietro.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
         		new DashboardChef(c).setVisible(true);
@@ -155,15 +156,21 @@ public class AggiungiSessioneFrame extends JFrame {
         labelDiscriminato.setFont(new Font("Arial", Font.BOLD, 18));
         discriminatoField = new JTextField();
 
-        praticaCheckBox.addItemListener(e -> {
-        		if(praticaCheckBox.isSelected())
-        			labelDiscriminato.setText("Luogo:");
-        		else
-        			labelDiscriminato.setText("Link Conferenza:");
-        });
+        praticaCheckBox.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (praticaCheckBox.isSelected()) {
+					labelDiscriminato.setText("Luogo:");
+				} else {
+					labelDiscriminato.setText("Link Conferenza:");
+				}
+			}
+		});
+
+        JLabel labelRicetta = new JLabel("Ricetta:");
+        labelRicetta.setFont(new Font("Arial", Font.BOLD, 18));
+        selezionaRicettaComboBox = new JComboBox<String>();
+        List<Ricetta> ricette = CC.GetAllRicette();
         
-  	  	List<Ricetta> ricette = CC.GetAllRicette();
-                                
         GroupLayout layout = new GroupLayout(contentPane);
         layout.setHorizontalGroup(
         	layout.createParallelGroup(Alignment.TRAILING)
@@ -176,13 +183,15 @@ public class AggiungiSessioneFrame extends JFrame {
         						.addComponent(labelCorsoRelativo, GroupLayout.DEFAULT_SIZE, 446, Short.MAX_VALUE)
         						.addComponent(labelDataInizio, GroupLayout.DEFAULT_SIZE, 446, Short.MAX_VALUE)
         						.addComponent(labelPratica, GroupLayout.DEFAULT_SIZE, 446, Short.MAX_VALUE)
-        						.addComponent(labelDiscriminato, GroupLayout.DEFAULT_SIZE, 446, Short.MAX_VALUE))
+        						.addComponent(labelDiscriminato, GroupLayout.DEFAULT_SIZE, 446, Short.MAX_VALUE)
+        						.addComponent(labelRicetta, GroupLayout.DEFAULT_SIZE, 446, Short.MAX_VALUE))
         					.addPreferredGap(ComponentPlacement.RELATED)
         					.addGroup(layout.createParallelGroup(Alignment.LEADING)
         						.addComponent(selezionaCorsoComboBox, 300, 300, 300)
         						.addComponent(dataInizioCalendar, 300, 300, 300)
         						.addComponent(praticaCheckBox, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
-        						.addComponent(discriminatoField, 300, 300, 300))))
+        						.addComponent(discriminatoField, 300, 300, 300)
+        						.addComponent(selezionaRicettaComboBox, 300, 300, 300))))
         			.addContainerGap())
         		.addGroup(layout.createSequentialGroup()
         			.addContainerGap(400, Short.MAX_VALUE)
@@ -212,7 +221,11 @@ public class AggiungiSessioneFrame extends JFrame {
         			.addGroup(layout.createParallelGroup(Alignment.BASELINE)
         				.addComponent(discriminatoField, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
         				.addComponent(labelDiscriminato))
-        			.addPreferredGap(ComponentPlacement.RELATED, 199, Short.MAX_VALUE)
+        			.addGap(6)
+        			.addGroup(layout.createParallelGroup(Alignment.BASELINE)
+        				.addComponent(selezionaRicettaComboBox, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
+        				.addComponent(labelRicetta))
+        			.addPreferredGap(ComponentPlacement.RELATED, 140, Short.MAX_VALUE)
         			.addGroup(layout.createParallelGroup(Alignment.BASELINE)
         				.addComponent(btnAggiungi_1, GroupLayout.PREFERRED_SIZE, 35, GroupLayout.PREFERRED_SIZE)
         				.addComponent(btnIndietro, GroupLayout.PREFERRED_SIZE, 35, GroupLayout.PREFERRED_SIZE))
@@ -331,7 +344,6 @@ public class AggiungiSessioneFrame extends JFrame {
         menuCorsi.addMenuListener(menuListener);
         menuSessioni.addMenuListener(menuListener);
         menuRicette.addMenuListener(menuListener);
-        menuRicette.addMenuListener(menuListener);
         menuStatsNReport.addMenuListener(menuListener);
         menuAccount.addMenuListener(menuListener);
 
@@ -377,3 +389,4 @@ public class AggiungiSessioneFrame extends JFrame {
         }
     }
 }
+        			

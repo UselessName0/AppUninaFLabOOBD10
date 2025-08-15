@@ -42,8 +42,6 @@ public class CalendarioSessioniFrame extends JFrame {
     Color sfondoPrincipale = new Color(220, 240, 250);
     Color sfondoTabella = new Color(210, 240, 210);
     
-    
-   //Costruttori
    public CalendarioSessioniFrame(Chef C) {
     	
     	this.c = C;
