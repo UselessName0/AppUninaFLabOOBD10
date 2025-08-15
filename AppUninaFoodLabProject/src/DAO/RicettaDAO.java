@@ -12,13 +12,14 @@ import Entities.Ricetta;
 
 public class RicettaDAO {
 	//Metodo per l'inserimento di una nuova ricetta nel DB usando un oggetto Ricetta (True se l'inserimento va a buon fine, False altrimenti)
-	public boolean InsertRicetta(Ricetta Ricetta_Input) {
+	public boolean InsertRicettaDAO(Ricetta Ricetta_Input) {
 		String sql = "INSERT INTO uninafoodlab.ricetta(idricetta, nominativoricetta)VALUES (?, ?);";
 			try(Connection conn = DBManager.getConnection();
 				PreparedStatement pstmt = conn.prepareStatement(sql)) {
 				
 				pstmt.setString(1, Ricetta_Input.getIDRicetta());
 				pstmt.setString(2, Ricetta_Input.getTitolo());
+				pstmt.setString(3, Ricetta_Input.getDescrizione());
 				
 				int rowsAffected = pstmt.executeUpdate();
 				return rowsAffected > 0;
@@ -113,6 +114,7 @@ public class RicettaDAO {
 						Ricetta R = new Ricetta(); 
 						R.setIDRicetta(rs.getString("idricetta"));
 						R.setTitolo(rs.getString("nominativoricetta"));
+						R.setDescrizione(rs.getString("descrizione"));
 						
 						ListaRicette.add(R);
 					}
@@ -136,6 +138,7 @@ public class RicettaDAO {
 					Ricetta R = new Ricetta();
 					R.setIDRicetta(rs.getString("idricetta"));
 					R.setTitolo(rs.getString("nominativoricetta"));
+					R.setDescrizione(rs.getString("descrizione"));
 					
 					ListaRicette.add(R);
 			
@@ -159,6 +162,7 @@ public class RicettaDAO {
 					Ricetta R = new Ricetta();
 					R.setIDRicetta(rs.getString("idricetta"));
 					R.setTitolo(rs.getString("nominativoricetta"));
+					R.setDescrizione(rs.getString("descrizione"));
 					
 					ListaRicette.add(R);
 				}
@@ -185,5 +189,20 @@ public class RicettaDAO {
 				System.out.println("Errore durante il recupero del numero di ricette del chef : " + e.getMessage());
 				return 0;
 			}
+	}
+
+	public String GetDescrizioneRicettaDAO(String iDRicetta) {
+		String sql = "SELECT descrizione FROM uninafoodlab.ricetta WHERE idricetta = ?;";
+		try (Connection conn = DBManager.getConnection();
+			 PreparedStatement pstmt = conn.prepareStatement(sql)) {
+			pstmt.setString(1, iDRicetta);
+			ResultSet rs = pstmt.executeQuery();
+			if (rs.next()) {
+				return rs.getString("descrizione");
+			}
+		} catch (SQLException e) {
+			System.out.println("Errore durante il recupero della descrizione della ricetta: " + e.getMessage());
+		}
+		return null;
 	}
 }

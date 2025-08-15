@@ -32,7 +32,7 @@ public class CreaRicettaFrame extends JFrame {
         setSize(800, 600);
         setLocationRelativeTo(null);
         setResizable(false);
-        setTitle("Aggiungi Corso");
+        setTitle("Crea Ricetta");
         Color sfondoPrincipale = new Color(220, 240, 250);
 
         contentPane = new JPanel();
