@@ -19,6 +19,7 @@ public class Ricetta {
 		RicettaDAO ricettaDAO = new RicettaDAO();
 		this.IDRicetta = IDRicetta;
 		this.Titolo = ricettaDAO.GetTitoloRicettaDAO(IDRicetta);
+		this.Descrizione = ricettaDAO.GetDescrizioneRicettaDAO(IDRicetta);
 	}
 	
 	public Ricetta() {

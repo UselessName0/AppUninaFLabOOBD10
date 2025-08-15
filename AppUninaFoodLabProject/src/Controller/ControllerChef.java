@@ -2,6 +2,7 @@ package Controller;
 
 import Entities.Chef;
 import Entities.Corso;
+import Entities.Ingrediente;
 import Entities.Partecipante;
 import Entities.Ricetta;
 import Entities.Sessione;
@@ -166,7 +167,7 @@ public class ControllerChef {
 		SessioneDAO sDAO = new SessioneDAO();
 		CorsoDAO cDAO = new CorsoDAO();
 		if(!Ch.equals(null) && !Co.equals(null) && !DataSe.equals(null)) {
-			if(IsPratica && !Luogo.isEmpty() || !IsPratica && !LinkConferenza.isEmpty()) {
+			if(IsPratica && !Luogo.isEmpty() || !IsPratica && !LinkConferenza.isEmpty() && R != null) {
 				Sessione s = new Sessione();
 				s.setRelatedCorso(Co);
 				s.setData_Sessione(DataSe);
@@ -266,5 +267,37 @@ public class ControllerChef {
 	public List<Ricetta> GetAllRicette(){
 		RicettaDAO rDAO = new RicettaDAO();
 		return rDAO.GetAllRicettaDAO();
+	}
+	
+	public boolean InsertRicetta(String Titolo, String Descrizione) {
+		RicettaDAO rDAO = new RicettaDAO();
+		if(!Titolo.isEmpty() && !Descrizione.isEmpty()) {
+			Ricetta r = new Ricetta();
+			r.setTitolo(Titolo);
+			r.setDescrizione(Descrizione);
+			String sql = "SELECT MAX(idricetta) AS max_id FROM uninafoodlab.ricetta";
+			try(Connection conn = DBManager.getConnection();
+				PreparedStatement pstmt = conn.prepareStatement(sql)) {
+				ResultSet rs = pstmt.executeQuery();
+				String nuovoId;
+				if (rs.next()) {
+					String ultimoid = rs.getString("max_id");
+					int numero = Integer.parseInt(ultimoid.substring(2));
+					nuovoId = "RI" + String.valueOf(numero + 1);
+					r.setIDRicetta(nuovoId);
+				}else{
+					System.out.println("Errore durante la generazione dell'ID della ricetta.");
+					return false;
+				}
+				rDAO.InsertRicettaDAO(r);
+			return true;
+			}catch(Exception e) {
+				System.out.println("Errore durante la generazione dell'ID della ricetta: " + e.getMessage());
+				return false;
+			}
+		} else {
+			System.out.println("Dati ricetta non validi.");
+			return false;
+		}
 	}
 }
