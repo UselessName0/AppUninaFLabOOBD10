@@ -175,6 +175,7 @@ public class ControllerChef {
 				s.setLuogo(Luogo);
 				s.setLinkConferenza(LinkConferenza);
 				s.setNumero_Adesioni(0);
+				s.setRicetta_Appresa(R);
 				
 				String sql = "SELECT MAX(idsessione) AS max_id FROM uninafoodlab.sessione";
 				try(Connection conn = DBManager.getConnection();

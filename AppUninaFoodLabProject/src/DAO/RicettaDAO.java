@@ -205,4 +205,23 @@ public class RicettaDAO {
 		}
 		return null;
 	}
+
+	public Ricetta getRicettaByID(String idRicetta) {
+		String sql = "SELECT * FROM uninafoodlab.ricetta WHERE idricetta = ?;";
+		try(Connection conn = DBManager.getConnection();
+			PreparedStatement pstmt = conn.prepareStatement(sql)) {
+			pstmt.setString(1, idRicetta);
+			ResultSet rs = pstmt.executeQuery();
+			if(rs.next()) {
+				Ricetta ricetta = new Ricetta();
+				ricetta.setIDRicetta(rs.getString("idricetta"));
+				ricetta.setTitolo(rs.getString("nominativoricetta"));
+				ricetta.setDescrizione(rs.getString("descrizione"));
+				return ricetta;
+			}
+		} catch(SQLException e) {
+			System.out.println("Errore durante il recupero della ricetta: " + e.getMessage());
+		}
+		return null;
+	}
 }

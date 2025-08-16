@@ -16,7 +16,7 @@ public class SessioneDAO {
 	
 	//Metodo per l'inserimento di una nuova sessione nel DB usando un oggetto Sessione (True se l'inserimento va a buon fine, False altrimenti)	
 	public boolean InsertSessione(Sessione Sessione_Input) {
-		String sql = "INSERT INTO uninafoodlab.sessione(idsessione, idcorso, datasessione, ispratica, adesioni, linkconferenza, luogo, idricetta) VALUES (?, ?, ?, ?, ?, ?, ?, ?);";
+		String sql = "INSERT INTO uninafoodlab.sessione(idsessione, idcorso, datasessione, \"IsPratica\", adesioni, linkconferenza, luogo, idricetta) VALUES (?, ?, ?, ?, ?, ?, ?, ?);";
 			try(Connection conn = DBManager.getConnection();
 				PreparedStatement pstmt = conn.prepareStatement(sql)) {
 				

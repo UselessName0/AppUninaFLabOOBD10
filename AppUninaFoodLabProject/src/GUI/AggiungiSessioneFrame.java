@@ -37,6 +37,7 @@ import com.toedter.calendar.JCalendar;
 
 import Controller.ControllerChef;
 import DAO.CorsoDAO;
+import DAO.RicettaDAO;
 import Entities.Chef;
 import Entities.Corso;
 import Entities.Ricetta;
@@ -105,7 +106,12 @@ public class AggiungiSessioneFrame extends JFrame {
 				String[] parts = corsoSelezionato.split(" \\(");
 				String nomeCorso = parts[0];
 				String idCorso = parts[1].replace(")", "");
-				Ricetta ricettaSelezionata = null; // Placeholder per la ricetta selezionata
+				
+				RicettaDAO rDAO = new RicettaDAO();
+				String ricettaSelezionata = (String) selezionaRicettaComboBox.getSelectedItem();
+				String[] partsRicetta = ricettaSelezionata.split(" \\(");
+				String nomeRicetta = partsRicetta[0];
+				String idRicetta = partsRicetta[1].replace(")", "");
 				
 				Date dataSelezionata = dataInizioCalendar.getDate();
 				if(dataSelezionata == null) {
@@ -120,12 +126,12 @@ public class AggiungiSessioneFrame extends JFrame {
 				boolean sessionePratica = praticaCheckBox.isSelected();
 				String discriminato = discriminatoField.getText();
 				if(sessionePratica) {
-					if(CC.InserisciSessione(c, coDAO.getCorsoByID(idCorso), data, sessionePratica, discriminato, null, ricettaSelezionata)) {	
+					if(CC.InserisciSessione(c, coDAO.getCorsoByID(idCorso), data, sessionePratica, discriminato, null, rDAO.getRicettaByID(idRicetta))) {	
 						new DashboardChef(c).setVisible(true);
 						dispose();
 					}
 				} else {
-					if(CC.InserisciSessione(c, coDAO.getCorsoByID(idCorso), data, sessionePratica, null, discriminato, ricettaSelezionata)) {
+					if(CC.InserisciSessione(c, coDAO.getCorsoByID(idCorso), data, sessionePratica, null, discriminato, rDAO.getRicettaByID(idRicetta))) {
 						new DashboardChef(c).setVisible(true);
 						dispose();
 				}
@@ -170,6 +176,10 @@ public class AggiungiSessioneFrame extends JFrame {
         labelRicetta.setFont(new Font("Arial", Font.BOLD, 18));
         selezionaRicettaComboBox = new JComboBox<String>();
         List<Ricetta> ricette = CC.GetAllRicette();
+        for (Ricetta ricetta : ricette) {
+			selezionaRicettaComboBox.addItem(ricetta.getTitolo() + " (" + ricetta.getIDRicetta() + ")");
+		}
+        
         
         GroupLayout layout = new GroupLayout(contentPane);
         layout.setHorizontalGroup(
