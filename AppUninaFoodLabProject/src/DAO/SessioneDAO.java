@@ -381,7 +381,6 @@ public class SessioneDAO {
 					r.setDescrizione(rs.getString("descrizione"));
 					
 					s.setRicetta_Appresa(r);
-					System.out.println("Sessione recuperata: " + s.getID_Sessione() + " - " + s.getData_Sessione());
 					ListaSessioni.add(s);
 				}
 				return ListaSessioni;	

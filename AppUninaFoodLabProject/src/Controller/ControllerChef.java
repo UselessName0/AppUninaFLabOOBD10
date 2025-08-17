@@ -90,7 +90,6 @@ public class ControllerChef {
 		}
 	}
 	
-	
 	public boolean InsertChef(Chef c) {
 		ChefDAO cDAO = new ChefDAO();
 		

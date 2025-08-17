@@ -57,6 +57,7 @@ public class ListaRicetteFrame extends JFrame {
 
         // Tabella
         List<Ricetta> ricette = CC.GetAllRicette();
+   
         table = new JTable();
         table.setModel(new DefaultTableModel(
             new Object[][] {},
@@ -64,6 +65,10 @@ public class ListaRicetteFrame extends JFrame {
         ));
         table.setBackground(sfondoTabella);
         table.setFillsViewportHeight(true);
+        
+        for (Ricetta r : ricette) {
+			((DefaultTableModel) table.getModel()).addRow(new Object[] { r.getTitolo(), r.getDescrizione() });
+		}
 
         JScrollPane scrollPane = new JScrollPane(table);
         scrollPane.setPreferredSize(new Dimension(700, 400));
