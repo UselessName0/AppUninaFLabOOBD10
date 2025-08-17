@@ -126,15 +126,21 @@ public class AggiungiSessioneFrame extends JFrame {
 				boolean sessionePratica = praticaCheckBox.isSelected();
 				String discriminato = discriminatoField.getText();
 				if(sessionePratica) {
-					if(CC.InserisciSessione(c, coDAO.getCorsoByID(idCorso), data, sessionePratica, discriminato, null, rDAO.getRicettaByID(idRicetta))) {	
+					if(CC.InserisciSessione(c, coDAO.getCorsoByID(idCorso), data, sessionePratica, discriminato, null, rDAO.getRicettaByID(idRicetta)))
+					{
+						JOptionPane.showMessageDialog(null, "Sessione aggiunta con successo!", "Successo", JOptionPane.INFORMATION_MESSAGE);
 						new DashboardChef(c).setVisible(true);
 						dispose();
 					}
 				} else {
 					if(CC.InserisciSessione(c, coDAO.getCorsoByID(idCorso), data, sessionePratica, null, discriminato, rDAO.getRicettaByID(idRicetta))) {
+						JOptionPane.showMessageDialog(null, "Sessione aggiunta con successo!", "Successo", JOptionPane.INFORMATION_MESSAGE);
 						new DashboardChef(c).setVisible(true);
 						dispose();
 				}
+					else {
+						JOptionPane.showMessageDialog(null, "Errore durante l'aggiunta della sessione.", "Errore", JOptionPane.ERROR_MESSAGE);
+					}
 				}
 			}
 		});

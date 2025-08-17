@@ -6,6 +6,7 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -21,6 +22,8 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
 import Entities.Chef;
+import Entities.Ricetta;
+import Controller.ControllerChef;
 
 public class ListaRicetteFrame extends JFrame {
 
@@ -30,7 +33,8 @@ public class ListaRicetteFrame extends JFrame {
 
     private Color sfondoPrincipale = new Color(220, 240, 250);
     private Color sfondoTabella = new Color(210, 240, 210);
-
+    private ControllerChef CC = new ControllerChef();
+    
     public ListaRicetteFrame(Chef C) {
         this.c = C;
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -52,10 +56,11 @@ public class ListaRicetteFrame extends JFrame {
         getContentPane().add(lblTitolo, BorderLayout.NORTH);
 
         // Tabella
+        List<Ricetta> ricette = CC.GetAllRicette();
         table = new JTable();
         table.setModel(new DefaultTableModel(
             new Object[][] {},
-            new String[] { "Nome", "Ingredienti" }
+            new String[] { "Nome", "Descrizione" }
         ));
         table.setBackground(sfondoTabella);
         table.setFillsViewportHeight(true);

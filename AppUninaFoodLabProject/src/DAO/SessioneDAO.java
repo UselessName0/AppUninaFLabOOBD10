@@ -347,13 +347,12 @@ public class SessioneDAO {
 	//Metodo per recuperare tutte le sessioni dal DB
 	public List<Sessione> getAllSessioniDAO() {
 		List<Sessione> ListaSessioni = new ArrayList<>();
-		String sql = "SELECT co.* , s.* , r.* FROM uninafoodlab.sessione AS s JOIN uninafoodlab.iscrizionesessione AS ic ON s.idsessione = ic.idsessione JOIN uninafoodlab.corso AS co ON s.idcorso = co.idcorso JOIN uninafoodlab.ricetta AS r ON r.idricetta = s.idricetta WHERE s.datasessione > ? ORDER BY s.datasessione;";
-		//Funziona, semplicemente non ci sono sessioni dopo oggi, da mettere
+		String sql = "SELECT co.* , s.* , r.* FROM uninafoodlab.sessione AS s LEFT JOIN uninafoodlab.iscrizionesessione AS ic ON s.idsessione = ic.idsessione JOIN uninafoodlab.corso AS co ON s.idcorso = co.idcorso JOIN uninafoodlab.ricetta AS r ON r.idricetta = s.idricetta WHERE s.datasessione > ? ORDER BY s.datasessione;";
+		System.out.println("Recupero sessioni in corso...");
 		try(Connection conn = DBManager.getConnection();
 			PreparedStatement pstmt = conn.prepareStatement(sql)) {
 			pstmt.setDate(1, java.sql.Date.valueOf(LocalDate.now()));
 			ResultSet rs = pstmt.executeQuery(); 
-			
 			
 				while(rs.next()) {
 					Sessione s = new Sessione();
@@ -367,21 +366,22 @@ public class SessioneDAO {
 					co.setData_Inizio(rs.getDate("datainizio").toLocalDate());
 					co.setData_Creazione(rs.getDate("datacreazione").toLocalDate());
 					co.setFrequenza_Corsi(rs.getString("frequenzacorsi"));
-					co.setDescrizione("descrizione");
+					co.setDescrizione(rs.getString("descrizione"));
 					
 					s.setRelatedCorso(co);
 					s.setData_Sessione(rs.getDate("datasessione").toLocalDate());
-					s.setIsPratica(rs.getBoolean("isPratica"));
+					s.setIsPratica(rs.getBoolean("IsPratica"));
 					s.setNumero_Adesioni(rs.getInt("adesioni"));
-					s.setLinkConferenza("linkconferenza");
-					s.setLuogo("luogo");
+					s.setLinkConferenza(rs.getString("linkconferenza"));
+					s.setLuogo(rs.getString("luogo"));
 					
 					Ricetta r = new Ricetta();
 					r.setIDRicetta(rs.getString("idricetta"));
 					r.setTitolo(rs.getString("nominativoricetta"));
+					r.setDescrizione(rs.getString("descrizione"));
 					
 					s.setRicetta_Appresa(r);
-					
+					System.out.println("Sessione recuperata: " + s.getID_Sessione() + " - " + s.getData_Sessione());
 					ListaSessioni.add(s);
 				}
 				return ListaSessioni;	

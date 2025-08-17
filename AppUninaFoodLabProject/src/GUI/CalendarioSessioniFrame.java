@@ -18,6 +18,7 @@ import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -66,6 +67,10 @@ public class CalendarioSessioniFrame extends JFrame {
     	
       //Tabella
         List<Sessione> listaSessioni = CP.GetListaSessioni();
+        if(listaSessioni == null || listaSessioni.isEmpty()) {
+        	JOptionPane.showMessageDialog(null, "Nessuna sessione disponibile.");
+			return;
+		}
         String[] colonne = { "Nome Corso", "Data Sessione" };
         Object[][] righe = new Object[listaSessioni.size()][2];
         

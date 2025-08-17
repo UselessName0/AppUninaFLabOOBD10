@@ -185,7 +185,7 @@ public class ControllerChef {
 					if (rs.next()) {
 						String ultimoid = rs.getString("max_id");
 						int numero = Integer.parseInt(ultimoid.substring(2));
-						nuovoId = "IS" + String.valueOf(numero + 1);
+						nuovoId = "IS000000" + String.valueOf(numero + 1);
 						s.setID_Sessione(nuovoId);
 					}else{
 						System.out.println("Errore durante la generazione dell'ID della sessione.");
