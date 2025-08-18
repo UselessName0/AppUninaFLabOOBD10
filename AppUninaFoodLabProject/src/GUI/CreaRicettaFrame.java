@@ -63,7 +63,7 @@ public class CreaRicettaFrame extends JFrame {
         txtNomeRicetta = new JTextField();
         txtNomeRicetta.setColumns(20);
 
-        JLabel lblIngredienti = new JLabel("Ingredienti ricetta:");
+        JLabel lblIngredienti = new JLabel("Descrizione ricetta:");
         lblIngredienti.setFont(new Font("Arial", Font.BOLD, 16));
 
         txtIngredienti = new JTextArea(5, 20);

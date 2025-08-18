@@ -29,7 +29,7 @@ public class ListaRicetteFrame extends JFrame {
 
     private Chef c;
     private JTable table;
-    private JMenu menuAttivo; // menu evidenziato
+    private JMenu menuAttivo; 
 
     private Color sfondoPrincipale = new Color(220, 240, 250);
     private Color sfondoTabella = new Color(210, 240, 210);
