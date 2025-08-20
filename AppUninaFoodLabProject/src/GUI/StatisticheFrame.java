@@ -94,7 +94,6 @@ public class StatisticheFrame extends JFrame {
         JMenuItem itemSessioniDisponibili = new JMenuItem("Calendario Sessioni");
         JMenuItem itemListaRicette = new JMenuItem("Lista Ricette");
         JMenuItem itemStatistiche = new JMenuItem("Statistiche");
-        JMenuItem itemReport = new JMenuItem("Report");
         JMenuItem itemInfo = new JMenuItem("Il mio profilo");
         JMenuItem itemLogout = new JMenuItem("Logout");
 
@@ -153,13 +152,6 @@ public class StatisticheFrame extends JFrame {
                 dispose();
             }
         });
-        
-        itemReport.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                new ReportFrame(c).setVisible(true);
-                dispose();
-            }
-        });
 
         itemInfo.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -193,7 +185,6 @@ public class StatisticheFrame extends JFrame {
         menuSessioni.add(itemSessioniDisponibili);
         menuRicette.add(itemListaRicette);
         menuStatsNReport.add(itemStatistiche);
-        menuStatsNReport.add(itemReport);
         menuAccount.add(itemInfo);
         menuAccount.add(itemLogout);
 

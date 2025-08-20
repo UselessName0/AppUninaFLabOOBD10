@@ -205,7 +205,6 @@ public class AggiungiCorsoFrame extends JFrame {
         JMenuItem itemListaRicette = new JMenuItem("Lista Ricette");
         JMenuItem itemCreaRicetta = new JMenuItem("Crea Ricetta");
         JMenuItem itemStatistiche = new JMenuItem("Statistiche");
-        JMenuItem itemReport = new JMenuItem("Report");
         JMenuItem itemInfo = new JMenuItem("Il mio profilo");
         JMenuItem itemLogout = new JMenuItem("Logout");
 
@@ -271,13 +270,6 @@ public class AggiungiCorsoFrame extends JFrame {
                 dispose();
             }
         });
-        
-        itemReport.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                new ReportFrame(c).setVisible(true);
-                dispose();
-            }
-        });
 
         itemInfo.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -313,7 +305,6 @@ public class AggiungiCorsoFrame extends JFrame {
         menuRicette.add(itemListaRicette);
         menuRicette.add(itemCreaRicetta);
         menuStatsNReport.add(itemStatistiche);
-        menuStatsNReport.add(itemReport);
         menuAccount.add(itemInfo);
         menuAccount.add(itemLogout);
 

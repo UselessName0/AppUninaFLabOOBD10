@@ -71,7 +71,7 @@ public class DashboardChef extends JFrame {
         contentPanel.add(creaSezione("Ricette", new String[] { "Lista ricette", "Crea ricetta" }, new Color(200, 240, 210)), gbc);
 
         gbc.gridx = 1; gbc.gridy = 1;
-        contentPanel.add(creaSezione("Stats & Reports", new String[] { "Statistiche", "Report" }, new Color(189, 226, 249)), gbc);
+        contentPanel.add(creaSezione("Stats & Reports", new String[] { "Statistiche" }, new Color(189, 226, 249)), gbc);
 
         gbc.gridx = 0; gbc.gridy = 2;
         gbc.gridwidth = 2;
@@ -99,7 +99,6 @@ public class DashboardChef extends JFrame {
         JMenuItem itemListaRicette = new JMenuItem("Lista Ricette");
         JMenuItem itemCreaRicetta = new JMenuItem("Crea Ricetta");
         JMenuItem itemStatistiche = new JMenuItem("Statistiche");
-        JMenuItem itemReport = new JMenuItem("Report");
         JMenuItem itemInfo = new JMenuItem("Il mio profilo");
         JMenuItem itemLogout = new JMenuItem("Logout");
 
@@ -165,13 +164,6 @@ public class DashboardChef extends JFrame {
                 dispose();
             }
         });
-        
-        itemReport.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                new ReportFrame(c).setVisible(true);
-                dispose();
-            }
-        });
 
         itemInfo.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -207,7 +199,6 @@ public class DashboardChef extends JFrame {
         menuRicette.add(itemListaRicette);
         menuRicette.add(itemCreaRicetta);
         menuStatsNReport.add(itemStatistiche);
-        menuStatsNReport.add(itemReport);
         menuAccount.add(itemInfo);
         menuAccount.add(itemLogout);
 
@@ -336,16 +327,7 @@ public class DashboardChef extends JFrame {
                     }
                 });
             }
-            
-            if (voceText.equals("Report")) {
-                voce.addMouseListener(new MouseAdapter() {
-                    public void mouseClicked(MouseEvent e) {
-                        new ReportFrame(c).setVisible(true);
-                        dispose();
-                    }
-                });
-            }
-            
+                       
             if (voceText.equals("Il mio profilo")) {
                 voce.addMouseListener(new MouseAdapter() {
                     public void mouseClicked(MouseEvent e) {
