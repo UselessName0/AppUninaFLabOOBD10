@@ -22,6 +22,13 @@ import javax.swing.event.MenuListener;
 import Controller.ControllerChef;
 import Entities.Chef;
 
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartPanel;
+import org.jfree.chart.JFreeChart;
+import org.jfree.data.general.DefaultPieDataset;
+
+import javax.swing.LayoutStyle.ComponentPlacement;
+
 public class StatisticheFrame extends JFrame {
 
     private static final long serialVersionUID = 1L;
@@ -38,11 +45,11 @@ public class StatisticheFrame extends JFrame {
         setResizable(false);
         setJMenuBar(CreaMenuBar(this));
         Color sfondoPrincipale = new Color(220, 240, 250);
-        setTitle("Aggiungi Sessione");
+        setTitle("Statistiche");
         contentPane = new JPanel();
         contentPane.setBorder(new EmptyBorder(10, 10, 10, 10));
-        setContentPane(contentPane);
         contentPane.setBackground(sfondoPrincipale);
+        setContentPane(contentPane);
         
         JButton btnIndietro = new JButton("← Indietro");
         btnIndietro.setFont(new Font("Arial", Font.PLAIN, 14));
@@ -55,28 +62,54 @@ public class StatisticheFrame extends JFrame {
                 dispose();
             }
         });
+        
+        //setting dei dati per il grafico a torta
+        DefaultPieDataset dataset = new DefaultPieDataset();
+        dataset.setValue("Corso 1", 40);
+        dataset.setValue("Corso 2", 30);
+        dataset.setValue("Corso 3", 30);
+
+        //creazione del grafico
+        JFreeChart chart = ChartFactory.createPieChart(
+            "Statistiche Corso", 
+            dataset, 
+            true,  
+            true,  
+            false  
+        );
+
+        //pannello con grafico
+        ChartPanel chartPanel = new ChartPanel(chart);
+        chartPanel.setPreferredSize(new java.awt.Dimension(700, 320));
 
         GroupLayout gl_contentPane = new GroupLayout(contentPane);
         gl_contentPane.setHorizontalGroup(
-        	gl_contentPane.createParallelGroup(Alignment.TRAILING)
+        	gl_contentPane.createParallelGroup(Alignment.CENTER)
         		.addGroup(gl_contentPane.createSequentialGroup()
-        			.addContainerGap(606, Short.MAX_VALUE)
-        			.addComponent(btnIndietro, GroupLayout.PREFERRED_SIZE, 150, GroupLayout.PREFERRED_SIZE)
-        			.addContainerGap())
+        			.addContainerGap(10, Short.MAX_VALUE)
+        			.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+        				.addComponent(chartPanel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+        				.addGroup(Alignment.TRAILING, gl_contentPane.createSequentialGroup()
+        					.addComponent(btnIndietro, GroupLayout.PREFERRED_SIZE, 150, GroupLayout.PREFERRED_SIZE)
+        					.addGap(306))))
         );
         gl_contentPane.setVerticalGroup(
-        	gl_contentPane.createParallelGroup(Alignment.TRAILING)
+        	gl_contentPane.createParallelGroup(Alignment.LEADING)
         		.addGroup(gl_contentPane.createSequentialGroup()
-        			.addContainerGap(500, Short.MAX_VALUE)
+        			.addComponent(chartPanel, GroupLayout.PREFERRED_SIZE, 320, GroupLayout.PREFERRED_SIZE)
+        			.addGap(151)
         			.addComponent(btnIndietro, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
         			.addContainerGap())
         );
+        gl_contentPane.setAutoCreateGaps(true);
+        gl_contentPane.setAutoCreateContainerGaps(true);
+
         contentPane.setLayout(gl_contentPane);
 
         CC.GetNumeroSessioniByMonth(C);
     }
     
-    // METODI
+    // METODI MENU
     private JMenu menuAttivo = null;
     private JMenuBar CreaMenuBar(JFrame frame) {
         JMenuBar menuBar = new JMenuBar();
@@ -194,7 +227,6 @@ public class StatisticheFrame extends JFrame {
         menuBar.add(menuStatsNReport);
         menuBar.add(menuAccount);
 
-        setJMenuBar(menuBar);
         return menuBar;
     }
     
