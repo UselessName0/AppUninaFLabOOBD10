@@ -81,28 +81,49 @@ public class StatisticheFrame extends JFrame {
         //pannello con grafico
         ChartPanel chartPanel = new ChartPanel(chart);
         chartPanel.setPreferredSize(new java.awt.Dimension(700, 320));
+        
+        org.jfree.data.category.DefaultCategoryDataset barDataset = new org.jfree.data.category.DefaultCategoryDataset();
+        barDataset.addValue(40, "Partecipanti", "Corso 1");
+        barDataset.addValue(30, "Partecipanti", "Corso 2");
+        barDataset.addValue(30, "Partecipanti", "Corso 3");
+
+        JFreeChart barChart = ChartFactory.createBarChart(
+            "Partecipanti per Corso",   
+            "Numero di sessioni tenute",                   
+            "Numero Partecipanti",    
+            barDataset,                
+            org.jfree.chart.plot.PlotOrientation.VERTICAL,
+            true,
+            true,   
+            false  
+        );
+        ChartPanel barChartPanel = new ChartPanel(barChart);
+        barChartPanel.setPreferredSize(new java.awt.Dimension(700, 200));
 
         GroupLayout gl_contentPane = new GroupLayout(contentPane);
         gl_contentPane.setHorizontalGroup(
         	gl_contentPane.createParallelGroup(Alignment.CENTER)
-        		.addGroup(gl_contentPane.createSequentialGroup()
-        			.addContainerGap(10, Short.MAX_VALUE)
+        		.addGroup(Alignment.LEADING, gl_contentPane.createSequentialGroup()
+        			.addGap(34)
         			.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-        				.addComponent(chartPanel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-        				.addGroup(Alignment.TRAILING, gl_contentPane.createSequentialGroup()
-        					.addComponent(btnIndietro, GroupLayout.PREFERRED_SIZE, 150, GroupLayout.PREFERRED_SIZE)
-        					.addGap(306))))
+        				.addComponent(barChartPanel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+        				.addComponent(chartPanel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+        			.addContainerGap(32, Short.MAX_VALUE))
+        		.addGroup(Alignment.TRAILING, gl_contentPane.createSequentialGroup()
+        			.addContainerGap(314, Short.MAX_VALUE)
+        			.addComponent(btnIndietro, GroupLayout.PREFERRED_SIZE, 150, GroupLayout.PREFERRED_SIZE)
+        			.addGap(302))
         );
         gl_contentPane.setVerticalGroup(
         	gl_contentPane.createParallelGroup(Alignment.LEADING)
         		.addGroup(gl_contentPane.createSequentialGroup()
-        			.addComponent(chartPanel, GroupLayout.PREFERRED_SIZE, 320, GroupLayout.PREFERRED_SIZE)
-        			.addGap(151)
+        			.addComponent(chartPanel, GroupLayout.PREFERRED_SIZE, 248, GroupLayout.PREFERRED_SIZE)
+        			.addGap(18)
+        			.addComponent(barChartPanel, GroupLayout.PREFERRED_SIZE, 200, GroupLayout.PREFERRED_SIZE)
+        			.addGap(29)
         			.addComponent(btnIndietro, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
-        			.addContainerGap())
+        			.addGap(65))
         );
-        gl_contentPane.setAutoCreateGaps(true);
-        gl_contentPane.setAutoCreateContainerGaps(true);
 
         contentPane.setLayout(gl_contentPane);
 
