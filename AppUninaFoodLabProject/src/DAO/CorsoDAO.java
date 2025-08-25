@@ -261,6 +261,7 @@ public class CorsoDAO {
 	
 	//Metodo per recuperare lo chef proprietario con un oggetto Corso
 	public String getIDChefProprietarioDAO(Corso Corso_Input) {
+		System.out.println("1 Sto cercando l'id chef proprietario del corso: " + Corso_Input.getID_Corso());
 		String sql = "SELECT idchef FROM uninafoodlab.Corso AS Co WHERE Co.idcorso = ?";
 		try(Connection conn = DBManager.getConnection();
 			PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -268,7 +269,7 @@ public class CorsoDAO {
 			pstmt.setString(1, Corso_Input.getID_Corso());
 			
 			ResultSet rs = pstmt.executeQuery();
-	        if (rs.next()) 
+	        if (rs.next())
 	            return rs.getString("idchef");
 	        else 
 	            return null;
@@ -281,6 +282,7 @@ public class CorsoDAO {
 	
 	//Metodo per recuperare lo chef proprietario con un IDCorso
 	public String getIDChefProprietarioDAO(String IDCorso_Input) {
+		System.out.println("2 ID Corso passato al DAO: " + IDCorso_Input);
 		String sql = "SELECT idchef FROM uninafoodlab.Corso AS Co WHERE Co.idcorso = ?";
 		try(Connection conn = DBManager.getConnection();
 			PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -288,8 +290,10 @@ public class CorsoDAO {
 			pstmt.setString(1, IDCorso_Input);
 			
 			ResultSet rs = pstmt.executeQuery();
-	        if (rs.next()) 
+	        if (rs.next()) {
+	        	System.out.println("ID Chef proprietario del corso: " + rs.getString("idchef"));
 	            return rs.getString("idchef");
+	        }
 	        else 
 	            return null;
 			

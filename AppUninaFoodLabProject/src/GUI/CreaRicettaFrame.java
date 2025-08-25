@@ -10,11 +10,15 @@ import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
 
+import Controller.ControllerChef;
+import DAO.RicettaDAO;
 import Entities.Chef;
+import Entities.Ricetta;
 
 import javax.swing.BorderFactory;
 import javax.swing.GroupLayout;
@@ -29,6 +33,7 @@ public class CreaRicettaFrame extends JFrame {
 
 	private JPanel contentPane;
 	Chef c;
+	private ControllerChef CC = new ControllerChef();
 	private JTextField txtNomeRicetta;
 	private JTextArea txtIngredienti;
 	
@@ -81,6 +86,21 @@ public class CreaRicettaFrame extends JFrame {
         btnAggiungi.setFocusPainted(false);
         btnAggiungi.setBorder(BorderFactory.createLineBorder(new Color(50, 80, 150), 1));
         btnAggiungi.setBackground(UIManager.getColor("Button.background"));
+        btnAggiungi.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+        	
+        	String TitoloRicetta = txtNomeRicetta.getText();
+        	String DescrizioneRicetta = txtIngredienti.getText();
+        	
+        	if(CC.InsertRicetta(TitoloRicetta, DescrizioneRicetta)) {
+				JOptionPane.showMessageDialog(null, "Ricetta inserita con successo!");
+				dispose();
+				new DashboardChef(c).setVisible(true);
+				} else {
+				JOptionPane.showMessageDialog(null, "Errore durante l'inserimento della ricetta. Riprova.");
+				}
+            }	
+        });
 
         GroupLayout gl_contentPane = new GroupLayout(contentPane);
         gl_contentPane.setHorizontalGroup(

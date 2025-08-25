@@ -9,6 +9,7 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.time.LocalDate;
 import java.util.List;
 
 import javax.swing.BorderFactory;
@@ -22,15 +23,19 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.JTextArea;
 import javax.swing.ListSelectionModel;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.event.MenuEvent;
 import javax.swing.event.MenuListener;
 
 import Controller.ControllerPartecipante;
 import Controller.ControllerChef;
 import Entities.Chef;
+import Entities.Corso;
 import Entities.Partecipante;
 import Entities.Sessione;
 
@@ -143,7 +148,7 @@ public class CalendarioSessioniFrame extends JFrame {
         panel.add(titolo, BorderLayout.NORTH);
     	
       //Tabella
-        List<Sessione> listaSessioni = CP.GetListaSessioni();
+        List<Sessione> listaSessioni = CP.GetListaSessioniDovePartecipanteNonIscritto(p);
         String[] colonne = { "Nome Corso", "Data Sessione" };
         Object[][] righe = new Object[listaSessioni.size()][2];
         
@@ -158,6 +163,18 @@ public class CalendarioSessioniFrame extends JFrame {
         tabellaCorsi.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         tabellaCorsi.setBackground(sfondoTabella);
         tabellaCorsi.setGridColor(Color.LIGHT_GRAY);
+        
+        tabellaCorsi.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+            public void valueChanged(ListSelectionEvent event) {
+                if (!event.getValueIsAdjusting()) {
+                    int riga = tabellaCorsi.getSelectedRow();
+                    if (riga >= 0) {
+                    	Sessione s = listaSessioni.get(riga);
+                        mostraDettagliSessionePartecipante(s, p);
+                    }
+                }
+            }
+        });
    
         JScrollPane scrollPane = new JScrollPane(tabellaCorsi);
         scrollPane.setPreferredSize(new Dimension(700, 360));
@@ -190,6 +207,63 @@ public class CalendarioSessioniFrame extends JFrame {
     }
     
     //Metodi
+    
+    private void mostraDettagliSessionePartecipante(Sessione s, Partecipante p) {
+    	JFrame finestraDettagli = new JFrame("Dettagli della Sessione");
+        finestraDettagli.setSize(440, 360);
+        finestraDettagli.setLocationRelativeTo(null);
+        finestraDettagli.getContentPane().setLayout(null);
+        finestraDettagli.getContentPane().setBackground(new Color(230, 240, 250));
+
+        JLabel lblNome = new JLabel("Corso: " + s.getRelatedCorso().getNome_Corso());
+        lblNome.setBounds(20, 20, 400, 25);
+        lblNome.setFont(new Font("Arial", Font.BOLD, 16));
+        
+        Corso co = s.getRelatedCorso();
+        
+        Chef c = co.getChef_Proprietario();
+        System.out.println("ciao" + c.getNome());
+        JLabel lblChef = new JLabel("Chef: " + c.getNome() + " " + c.getCognome());
+        lblChef.setBounds(20, 55, 400, 25);
+        lblChef.setFont(new Font("Arial", Font.PLAIN, 14));
+
+        LocalDate dataSessione = s.getData_Sessione();
+        
+        String dataSessioneString = "Data Sessione: " + dataSessione.toString();
+
+        JLabel lblData = new JLabel(dataSessioneString);
+        lblData.setBounds(20, 160, 400, 25);
+        lblData.setFont(new Font("Arial", Font.PLAIN, 14));
+
+        finestraDettagli.getContentPane().add(lblNome);
+        finestraDettagli.getContentPane().add(lblChef);
+        finestraDettagli.getContentPane().add(lblData);
+
+        
+        JButton btnIscriviti = new JButton("Iscriviti");
+        btnIscriviti.setBounds(160, 230, 100, 30);
+        btnIscriviti.setBackground(new Color(180, 220, 240));
+        btnIscriviti.setBorder(BorderFactory.createLineBorder(new Color(120, 180, 220), 1));
+        btnIscriviti.setFocusPainted(false);
+        btnIscriviti.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+            	if(CP.IscriviPartecipanteASessione(p, s))
+            		{
+            		JOptionPane.showMessageDialog(finestraDettagli, "🎉 Iscritto alla sessione!");
+            		}
+            	else
+            		{
+            		JOptionPane.showMessageDialog(finestraDettagli, "Errore nell'iscrizione alla sessione!");
+            		}
+                finestraDettagli.dispose();
+            }
+        });
+
+        finestraDettagli.setResizable(false);
+        finestraDettagli.setVisible(true);
+        finestraDettagli.getContentPane().add(btnIscriviti);
+		
+	}
     private JMenuBar creaMenuBar() {
         JMenuBar menuBar = new JMenuBar();
 

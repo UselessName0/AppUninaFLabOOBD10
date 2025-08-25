@@ -220,6 +220,16 @@ public class ControllerPartecipante {
 		return sDAO.getAllSessioniDAO();
 	}
 	
+	public List<Sessione> GetListaSessioniDovePartecipanteNonIscritto(Partecipante p){
+		SessioneDAO sDAO = new SessioneDAO();
+		if(!p.equals(null))
+			return sDAO.getSessioniDovePartecipanteNonIscritto(p);
+		else {
+			System.out.println("Partecipante nullo impossibile recuperare le sue sessioni.");
+			return sDAO.getAllSessioniDAO();
+		}
+	}
+	
 	public boolean IscriviPartecipanteASessione(Partecipante p, Sessione s) {
 		if(p != null && s != null) {
 			IscrizioneCorsoDAO icDAO = new IscrizioneCorsoDAO();

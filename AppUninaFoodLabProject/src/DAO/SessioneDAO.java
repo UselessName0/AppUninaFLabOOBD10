@@ -347,7 +347,7 @@ public class SessioneDAO {
 	//Metodo per recuperare tutte le sessioni dal DB
 	public List<Sessione> getAllSessioniDAO() {
 		List<Sessione> ListaSessioni = new ArrayList<>();
-		String sql = "SELECT co.* , s.* , r.* FROM uninafoodlab.sessione AS s LEFT JOIN uninafoodlab.iscrizionesessione AS ic ON s.idsessione = ic.idsessione JOIN uninafoodlab.corso AS co ON s.idcorso = co.idcorso JOIN uninafoodlab.ricetta AS r ON r.idricetta = s.idricetta WHERE s.datasessione > ? ORDER BY s.datasessione;";
+		String sql = "SELECT co.* , s.* , r.*, ch.* FROM uninafoodlab.sessione AS s LEFT JOIN uninafoodlab.iscrizionesessione AS ic ON s.idsessione = ic.idsessione JOIN uninafoodlab.corso AS co ON s.idcorso = co.idcorso JOIN uninafoodlab.ricetta AS r ON r.idricetta = s.idricetta JOIN uninafoodlab.chef AS ch ON ch.idchef = co.idchef WHERE s.datasessione > ? ORDER BY s.datasessione;";
 		System.out.println("Recupero sessioni in corso...");
 		try(Connection conn = DBManager.getConnection();
 			PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -359,6 +359,12 @@ public class SessioneDAO {
 					
 					s.setID_Sessione(rs.getString("idsessione"));
 					
+					Chef ch = new Chef();
+					ch.setID_Chef(rs.getString("idchef"));
+					ch.setNome(rs.getString("nomechef"));
+					ch.setCognome(rs.getString("cognomechef"));
+					ch.setEmail(rs.getString("email"));
+					
 					Corso co = new Corso();
 					co.setID_Corso(rs.getString("idcorso"));
 					co.setNome_Corso(rs.getString("nomecorso"));
@@ -367,6 +373,7 @@ public class SessioneDAO {
 					co.setData_Creazione(rs.getDate("datacreazione").toLocalDate());
 					co.setFrequenza_Corsi(rs.getString("frequenzacorsi"));
 					co.setDescrizione(rs.getString("descrizione"));
+					co.setChef_Proprietario(ch);
 					
 					s.setRelatedCorso(co);
 					s.setData_Sessione(rs.getDate("datasessione").toLocalDate());
@@ -664,5 +671,50 @@ public class SessioneDAO {
 			System.out.println("Errore durante l'aggiornamento della sessione: " + e.getMessage());
 			return false;
 		}
+	}
+
+	public List<Sessione> getSessioniDovePartecipanteNonIscritto(Partecipante p) {
+		List<Sessione> ListaSessioni = new ArrayList<>();
+		String sql = "SELECT co.* , s.* , r.*, ch.* FROM uninafoodlab.sessione AS s LEFT JOIN uninafoodlab.iscrizionesessione AS ic ON s.idsessione = ic.idsessione JOIN uninafoodlab.corso AS co ON s.idcorso = co.idcorso JOIN uninafoodlab.ricetta AS r ON r.idricetta = s.idricetta JOIN uninafoodlab.chef AS ch ON ch.idchef = co.idchef WHERE s.datasessione > ? AND s.idsessione NOT IN (SELECT ises.idsessione FROM uninafoodlab.iscrizionesessione AS ises WHERE ises.idpartecipante = ?) ORDER BY s.datasessione;";
+		try(Connection conn = DBManager.getConnection();
+				PreparedStatement pstmt = conn.prepareStatement(sql)) {
+				
+				pstmt.setDate(1, java.sql.Date.valueOf(LocalDate.now()));
+				pstmt.setString(2, p.getID_Partecipante());
+				ResultSet rs = pstmt.executeQuery();
+				while(rs.next()) {
+					Sessione s = new Sessione();
+					
+					s.setID_Sessione(rs.getString("idsessione"));
+					
+					Corso co = new Corso();
+					co.setID_Corso(rs.getString("idcorso"));
+					co.setNome_Corso(rs.getString("nomecorso"));
+					co.setArgomento(rs.getString("argomento"));
+					co.setData_Inizio(rs.getDate("datainizio").toLocalDate());
+					co.setData_Creazione(rs.getDate("datacreazione").toLocalDate());
+					co.setFrequenza_Corsi(rs.getString("frequenzacorsi"));
+					co.setDescrizione("descrizione");
+					
+					s.setRelatedCorso(co);
+					s.setData_Sessione(rs.getDate("datasessione").toLocalDate());
+					s.setIsPratica(rs.getBoolean("isPratica"));
+					s.setNumero_Adesioni(rs.getInt("adesioni"));
+					s.setLinkConferenza("linkconferenza");
+					s.setLuogo("luogo");
+					
+					Ricetta r = new Ricetta();
+					r.setIDRicetta(rs.getString("idricetta"));
+					r.setTitolo(rs.getString("nominativoricetta"));
+					
+					s.setRicetta_Appresa(r);
+					
+					ListaSessioni.add(s);
+				}
+				return ListaSessioni;
+			}catch(SQLException e) {
+				System.out.println("Errore durante il recupero delle sessioni dove il partecipante non è iscritto : " + e.getMessage());
+				return null;
+			}
 	}
 }

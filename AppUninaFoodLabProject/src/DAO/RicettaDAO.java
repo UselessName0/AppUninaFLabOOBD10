@@ -13,7 +13,7 @@ import Entities.Ricetta;
 public class RicettaDAO {
 	//Metodo per l'inserimento di una nuova ricetta nel DB usando un oggetto Ricetta (True se l'inserimento va a buon fine, False altrimenti)
 	public boolean InsertRicettaDAO(Ricetta Ricetta_Input) {
-		String sql = "INSERT INTO uninafoodlab.ricetta(idricetta, nominativoricetta)VALUES (?, ?);";
+		String sql = "INSERT INTO uninafoodlab.ricetta(idricetta, nominativoricetta, descrizione)VALUES (?, ?, ?);";
 			try(Connection conn = DBManager.getConnection();
 				PreparedStatement pstmt = conn.prepareStatement(sql)) {
 				

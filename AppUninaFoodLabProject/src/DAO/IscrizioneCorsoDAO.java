@@ -109,12 +109,12 @@ public class IscrizioneCorsoDAO {
 	
 	//Metodo per controllare l'iscrizione al corso di un partecipante, restituisce true se il partecipante è iscritto al corso
 	public boolean CheckIscrizioneCorso(Partecipante p, Corso c) {
-		String sql = "SELECT * FROM uninafoodlab.iscrizionecorso AS ic WHERE ic.idcorso = ? AND idpartecipante ?;";
+		String sql = "SELECT * FROM uninafoodlab.iscrizionecorso AS ic WHERE ic.idcorso = ? AND ic.idpartecipante = ?;";
 		try(Connection conn = DBManager.getConnection();
 			PreparedStatement pstmt = conn.prepareStatement(sql)) {
 			
 			pstmt.setString(1, c.getID_Corso());
-			pstmt.setString(1, p.getID_Partecipante());
+			pstmt.setString(2, p.getID_Partecipante());
 			
 			ResultSet rs = pstmt.executeQuery();
 			

@@ -283,7 +283,7 @@ public class ControllerChef {
 				if (rs.next()) {
 					String ultimoid = rs.getString("max_id");
 					int numero = Integer.parseInt(ultimoid.substring(2));
-					nuovoId = "RI" + String.valueOf(numero + 1);
+					nuovoId = "RC" + String.valueOf(numero + 1);
 					r.setIDRicetta(nuovoId);
 				}else{
 					System.out.println("Errore durante la generazione dell'ID della ricetta.");

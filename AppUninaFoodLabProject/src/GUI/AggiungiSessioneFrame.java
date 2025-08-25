@@ -180,6 +180,19 @@ public class AggiungiSessioneFrame extends JFrame {
 
         JLabel labelRicetta = new JLabel("Ricetta:");
         labelRicetta.setFont(new Font("Arial", Font.BOLD, 18));
+        
+        // Nuovo testo cliccabile accanto alla JComboBox
+        JLabel testoCliccabile = new JLabel("Crea ricetta");
+        testoCliccabile.setFont(new Font("Arial", Font.PLAIN, 14));
+        testoCliccabile.setForeground(Color.BLUE);
+        testoCliccabile.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        testoCliccabile.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                new CreaRicettaFrame(c).setVisible(true);
+                dispose();
+            }
+        });
+
         selezionaRicettaComboBox = new JComboBox<String>();
         List<Ricetta> ricette = CC.GetAllRicette();
         for (Ricetta ricetta : ricette) {
@@ -207,7 +220,10 @@ public class AggiungiSessioneFrame extends JFrame {
         						.addComponent(dataInizioCalendar, 300, 300, 300)
         						.addComponent(praticaCheckBox, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
         						.addComponent(discriminatoField, 300, 300, 300)
-        						.addComponent(selezionaRicettaComboBox, 300, 300, 300))))
+        						.addGroup(layout.createSequentialGroup()
+        							.addComponent(selezionaRicettaComboBox, 200, 200, 200)
+        							.addPreferredGap(ComponentPlacement.UNRELATED)
+        							.addComponent(testoCliccabile, GroupLayout.PREFERRED_SIZE, 150, GroupLayout.PREFERRED_SIZE)))))
         			.addContainerGap())
         		.addGroup(layout.createSequentialGroup()
         			.addContainerGap(400, Short.MAX_VALUE)
@@ -240,7 +256,8 @@ public class AggiungiSessioneFrame extends JFrame {
         			.addGap(6)
         			.addGroup(layout.createParallelGroup(Alignment.BASELINE)
         				.addComponent(selezionaRicettaComboBox, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
-        				.addComponent(labelRicetta))
+        				.addComponent(labelRicetta)
+        				.addComponent(testoCliccabile))
         			.addPreferredGap(ComponentPlacement.RELATED, 140, Short.MAX_VALUE)
         			.addGroup(layout.createParallelGroup(Alignment.BASELINE)
         				.addComponent(btnAggiungi_1, GroupLayout.PREFERRED_SIZE, 35, GroupLayout.PREFERRED_SIZE)
@@ -396,4 +413,3 @@ public class AggiungiSessioneFrame extends JFrame {
         }
     }
 }
-        			
