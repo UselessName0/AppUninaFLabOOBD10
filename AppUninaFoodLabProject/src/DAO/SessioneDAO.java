@@ -563,7 +563,7 @@ public class SessioneDAO {
 	
 	public List<Sessione> getAllSessioniDiChef(Chef c){
 		List<Sessione> ListaSessioni = new ArrayList<>();
-		String sql = "SELECT s.*, co.*, r.* FROM uninafoodlab.sessione JOIN uninafoodlab.corso AS co ON s.idcorso = co.idcorso JOIN uninafoodlab.ricetta AS r ON r.idricetta = s.idricetta WHERE co.idchef = ?;";
+		String sql = "SELECT s.*, co.*, r.* FROM uninafoodlab.sessione AS s JOIN uninafoodlab.corso AS co ON s.idcorso = co.idcorso JOIN uninafoodlab.ricetta AS r ON r.idricetta = s.idricetta WHERE co.idchef = ?;";
 		try(Connection conn = DBManager.getConnection();
 			PreparedStatement pstmt = conn.prepareStatement(sql)) {
 			

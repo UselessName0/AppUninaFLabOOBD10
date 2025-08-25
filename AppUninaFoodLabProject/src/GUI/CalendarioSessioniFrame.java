@@ -29,6 +29,7 @@ import javax.swing.event.MenuEvent;
 import javax.swing.event.MenuListener;
 
 import Controller.ControllerPartecipante;
+import Controller.ControllerChef;
 import Entities.Chef;
 import Entities.Partecipante;
 import Entities.Sessione;
@@ -37,6 +38,7 @@ public class CalendarioSessioniFrame extends JFrame {
 	
 	//Attributi
     private ControllerPartecipante CP = new ControllerPartecipante();
+    private ControllerChef CC = new ControllerChef();
     private Partecipante p;
     private Chef c;
     private JMenu menuAttivo = null;
@@ -66,9 +68,10 @@ public class CalendarioSessioniFrame extends JFrame {
         panel.add(titolo, BorderLayout.NORTH);
     	
       //Tabella
-        List<Sessione> listaSessioni = CP.GetListaSessioni();
+        List<Sessione> listaSessioni = CC.GetSessioniByChef(c);
         if(listaSessioni == null || listaSessioni.isEmpty()) {
         	JOptionPane.showMessageDialog(null, "Nessuna sessione disponibile.");
+        	dispose();
 			return;
 		}
         String[] colonne = { "Nome Corso", "Data Sessione" };

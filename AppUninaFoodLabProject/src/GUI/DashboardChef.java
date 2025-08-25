@@ -14,6 +14,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -22,13 +23,16 @@ import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.event.MenuEvent;
 import javax.swing.event.MenuListener;
 
+import DAO.SessioneDAO;
 import Entities.Chef;
+import Entities.Sessione;
 
 public class DashboardChef extends JFrame {
 	
@@ -139,8 +143,16 @@ public class DashboardChef extends JFrame {
 
         itemSessioniDisponibili.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                new CalendarioSessioniFrame(c).setVisible(true);
-                dispose();
+                SessioneDAO sDAO = new SessioneDAO();
+                List<Sessione> listaSessioni = sDAO.getAllSessioniDiChef(c);
+                if(listaSessioni == null || listaSessioni.isEmpty()) {
+                	JOptionPane.showMessageDialog(null, "Nessuna sessione disponibile.");
+        			return;
+        		}else{
+        			new CalendarioSessioniFrame(c).setVisible(true);
+        			dispose();
+        			return;
+        		}
             }
         });
 
@@ -295,8 +307,16 @@ public class DashboardChef extends JFrame {
             if (voceText.equals("Calendario sessioni")) {
                 voce.addMouseListener(new MouseAdapter() {
                     public void mouseClicked(MouseEvent e) {
-                        new CalendarioSessioniFrame(c).setVisible(true);
-                        dispose();
+                        SessioneDAO sDAO = new SessioneDAO();
+                        List<Sessione> listaSessioni = sDAO.getAllSessioniDiChef(c);
+                        if(listaSessioni == null || listaSessioni.isEmpty()) {
+                        	JOptionPane.showMessageDialog(null, "Nessuna sessione disponibile.");
+                			return;
+                		}else{
+                			new CalendarioSessioniFrame(c).setVisible(true);
+                			dispose();
+                			return;
+                		}
                     }
                 });
             }
