@@ -80,17 +80,19 @@ public class StatisticheFrame extends JFrame {
 
         //pannello con grafico
         ChartPanel chartPanel = new ChartPanel(chart);
-        chartPanel.setPreferredSize(new java.awt.Dimension(700, 320));
+        chartPanel.setPreferredSize(new java.awt.Dimension(700, 200));
         
         org.jfree.data.category.DefaultCategoryDataset barDataset = new org.jfree.data.category.DefaultCategoryDataset();
-        barDataset.addValue(40, "Partecipanti", "Corso 1");
-        barDataset.addValue(30, "Partecipanti", "Corso 2");
-        barDataset.addValue(30, "Partecipanti", "Corso 3");
+        int[] numeroSessioniPerMese = CC.GetNumeroSessioniByMonth(C);
+        for(int i = 0; i < numeroSessioniPerMese.length; i++) {
+			barDataset.addValue(numeroSessioniPerMese[i], "Sessioni", i+1 + "");
+		}
+        
 
         JFreeChart barChart = ChartFactory.createBarChart(
-            "Partecipanti per Corso",   
-            "Numero di sessioni tenute",                   
-            "Numero Partecipanti",    
+            "Sessioni tenute per mese",   
+            "Mese",                   
+            "Numero Sessioni",    
             barDataset,                
             org.jfree.chart.plot.PlotOrientation.VERTICAL,
             true,
@@ -127,7 +129,7 @@ public class StatisticheFrame extends JFrame {
 
         contentPane.setLayout(gl_contentPane);
 
-        CC.GetNumeroSessioniByMonth(C);
+        
     }
     
     // METODI MENU

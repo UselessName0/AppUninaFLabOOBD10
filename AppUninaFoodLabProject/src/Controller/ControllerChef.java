@@ -183,8 +183,10 @@ public class ControllerChef {
 					String nuovoId;
 					if (rs.next()) {
 						String ultimoid = rs.getString("max_id");
+						System.out.println("Ultimo ID della sessione: " + ultimoid);
 						int numero = Integer.parseInt(ultimoid.substring(2));
-						nuovoId = "IS000000" + String.valueOf(numero + 1);
+						nuovoId = "IS" + String.valueOf(numero + 1);
+						System.out.println("Nuovo ID della sessione: " + nuovoId);
 						s.setID_Sessione(nuovoId);
 					}else{
 						System.out.println("Errore durante la generazione dell'ID della sessione.");
@@ -229,8 +231,8 @@ public class ControllerChef {
 		SessioneDAO sDAO = new SessioneDAO();
 		if(c != null) {
 			int [] numeroSessioni = sDAO.getNumeroSessioniByMonth(c);
-			for(int i = 0; i < 12; i++) {
-				System.out.println("Numero di sessioni nel mese " + (i + 1) + ": " + numeroSessioni[i]);
+			for(int i = 0; i < numeroSessioni.length; i++) {
+				System.out.println("Mese " + (i+1) + ": " + numeroSessioni[i] + " sessioni.");
 			}
 			return numeroSessioni;
 		}
