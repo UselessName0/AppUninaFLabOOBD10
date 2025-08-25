@@ -64,10 +64,11 @@ public class StatisticheFrame extends JFrame {
         });
         
         //setting dei dati per il grafico a torta
+        int[] modalitaInsegnamento = CC.GetModalitaDiSessionePerChef(C);
+        int totaleSessioni = modalitaInsegnamento[0] + modalitaInsegnamento[1];
         DefaultPieDataset dataset = new DefaultPieDataset();
-        dataset.setValue("Corso 1", 40);
-        dataset.setValue("Corso 2", 30);
-        dataset.setValue("Corso 3", 30);
+        dataset.setValue("Pratiche", modalitaInsegnamento[0]/(totaleSessioni*1.0) * 100);
+        dataset.setValue("Online", modalitaInsegnamento[1]/(totaleSessioni*1.0) * 100);
 
         //creazione del grafico
         JFreeChart chart = ChartFactory.createPieChart(

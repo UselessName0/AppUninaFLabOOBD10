@@ -142,11 +142,9 @@ public class ControllerChef {
 				ResultSet rs = pstmt.executeQuery();
 				String nuovoId;
 				if (rs.next()) {
-					String ultimoid = rs.getString("max_id");
-					System.out.println("Ultimo ID del corso: " + ultimoid);
+					String ultimoid = rs.getString("max_id");					
 					int numero = Integer.parseInt(ultimoid.substring(2));
-					nuovoId = "CO" + String.valueOf(numero + 1);
-					System.out.println("Nuovo ID del corso: " + nuovoId);
+					nuovoId = "CO" + String.valueOf(numero + 1);				
 					c.setID_Corso(nuovoId);
 				}else{
 				System.out.println("Errore durante la generazione dell'ID del corso.");
@@ -230,11 +228,7 @@ public class ControllerChef {
 	public int[] GetNumeroSessioniByMonth(Chef c) {
 		SessioneDAO sDAO = new SessioneDAO();
 		if(c != null) {
-			int [] numeroSessioni = sDAO.getNumeroSessioniByMonth(c);
-			for(int i = 0; i < numeroSessioni.length; i++) {
-				System.out.println("Mese " + (i+1) + ": " + numeroSessioni[i] + " sessioni.");
-			}
-			return numeroSessioni;
+			return sDAO.getNumeroSessioniByMonth(c);
 		}
 		
 		return null;
@@ -301,5 +295,16 @@ public class ControllerChef {
 			System.out.println("Dati ricetta non validi.");
 			return false;
 		}
+	}
+	
+	public int[] GetModalitaDiSessionePerChef(Chef c) {
+		int [] modalita = new int[2];
+		SessioneDAO sDAO = new SessioneDAO();
+		if(c != null) {
+			modalita[0] = sDAO.getNumeroSessioniPraticheByChef(c);
+			modalita[1] = sDAO.getNumeroSessioniOnlineByChef(c);
+			return modalita;
+		}
+		return null;
 	}
 }

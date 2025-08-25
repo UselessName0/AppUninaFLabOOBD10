@@ -717,4 +717,42 @@ public class SessioneDAO {
 				return null;
 			}
 	}
+
+	public int getNumeroSessioniPraticheByChef(Chef c) {
+		String sql = "SELECT COUNT(*) AS nSessioniPratiche FROM uninafoodlab.sessione AS s JOIN uninafoodlab.corso AS co ON s.idcorso = co.idcorso WHERE co.idchef = ? AND s.\"IsPratica\"  = TRUE;";
+		try(Connection conn = DBManager.getConnection();
+			PreparedStatement pstmt = conn.prepareStatement(sql)) {
+			
+			pstmt.setString(1, c.getID_Chef());
+			ResultSet rs = pstmt.executeQuery();
+			if(rs.next()) {
+				return rs.getInt("nSessioniPratiche");
+			} else {
+				return 0;
+			}
+			} catch(SQLException e) {
+				System.out.println("Errore durante il recupero del numero di sessioni pratiche dello chef: " + e.getMessage());
+				return 0;
+			}
+	}
+
+	public int getNumeroSessioniOnlineByChef(Chef c) {
+		String sql = "SELECT COUNT(*) AS nSessioniOnline FROM uninafoodlab.sessione AS s JOIN uninafoodlab.corso AS co ON s.idcorso = co.idcorso WHERE co.idchef = ? AND s.\"IsPratica\" = FALSE;";
+		try(Connection conn = DBManager.getConnection();
+			PreparedStatement pstmt = conn.prepareStatement(sql)) {
+			
+			pstmt.setString(1, c.getID_Chef());
+			ResultSet rs = pstmt.executeQuery();
+			if(rs.next()) {
+				return rs.getInt("nSessioniOnline");
+			} else {
+				return 0;
+			}
+			} catch(SQLException e) {
+				System.out.println("Errore durante il recupero del numero di sessioni online dello chef: " + e.getMessage());
+				return 0;
+			}
+	}
+
+	
 }

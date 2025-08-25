@@ -79,13 +79,14 @@ public class CalendarioSessioniFrame extends JFrame {
         	dispose();
 			return;
 		}
-        String[] colonne = { "Nome Corso", "Data Sessione" };
-        Object[][] righe = new Object[listaSessioni.size()][2];
+        String[] colonne = { "Nome Corso", "Data Sessione" , "Ricetta"};
+        Object[][] righe = new Object[listaSessioni.size()][3];
         
         for(int i = 0; i<listaSessioni.size(); i++) {
 			Sessione s = listaSessioni.get(i);
 			righe[i][0] = s.getRelatedCorso().getNome_Corso();
 			righe[i][1] = s.getData_Sessione().toString();
+			righe[i][2] = s.getRicetta_Appresa().getTitolo();
 		}
         JTable tabellaCorsi = new JTable(righe, colonne);
         tabellaCorsi.setFont(new Font("Arial", Font.PLAIN, 16));
