@@ -11,22 +11,19 @@ import Entities.Partecipante;
 
 public class IscrizioneSessioneDAO {
 	
-	// Metodo per l'inserimento di una nuova iscrizione alla sessione nel DB usando un oggetto IscrizioneSessione (True se l'inserimento va a buon fine, False altrimenti)
+	//METODO
+	// Metodo per l'inserimento di una nuova iscrizione alla sessione nel DB
 	public boolean insertIscrizioneSessione(IscrizioneSessione IscrizioneSessione_Input) {
 		String sql = "INSERT INTO uninafoodlab.iscrizionesessione(idpartecipante, idsessione, adesione) VALUES (?, ?, ?)";
 		try(Connection conn = DBManager.getConnection();
 			PreparedStatement pstmt = conn.prepareStatement(sql)) {
-			
 			Partecipante tempPartecipante = IscrizioneSessione_Input.getP();
 			Sessione tempSessione = IscrizioneSessione_Input.getS();
-			
 			pstmt.setString(1, tempPartecipante.getID_Partecipante());
 			pstmt.setString(2, tempSessione.getID_Sessione());
 			pstmt.setBoolean(3, IscrizioneSessione_Input.isAdesione());
-			
 			int rowsAffected = pstmt.executeUpdate();
 			return rowsAffected > 0;
-			
 		} catch(SQLException e) {
 			System.out.println("Errore durante l'inserimento di un'iscrizione alla sessione");
 			return false;
@@ -39,10 +36,8 @@ public class IscrizioneSessioneDAO {
 		String sql = "SELECT * FROM uninafooddlab.iscrizionesessione WHERE idpartecipante = ?";
 		try(Connection conn = DBManager.getConnection();
 			PreparedStatement pstmt = conn.prepareStatement(sql)) {
-			
 				pstmt.setString(1, p.getID_Partecipante());
 				ResultSet rs = pstmt.executeQuery();
-				
 				while(rs.next()) {
 					IscrizioneSessione is = new IscrizioneSessione();
 					is.setP(p);
@@ -51,15 +46,12 @@ public class IscrizioneSessioneDAO {
 					is.setAdesione(rs.getBoolean("adesione"));
 					ListaIscrizioni.add(is);
 				}
-				
 				return ListaIscrizioni;
-				
-				}catch(SQLException e) {
-					System.out.println("Errore nella selezione delle iscrizioni sessioni"+ e.getMessage());
-					return null;
-				}
-				
+		}catch(SQLException e) {
+			System.out.println("Errore nella selezione delle iscrizioni sessioni"+ e.getMessage());
+			return null;
 		}
+	}
 	
 	// Metodo per ottenere le iscrizioni alle sessioni di una sessione
 	public List<IscrizioneSessione> GetIscrizioniSessioniBySessione(Sessione s) {
@@ -67,10 +59,8 @@ public class IscrizioneSessioneDAO {
 		String sql = "SELECT * FROM uninafooddlab.iscrizionesessione WHERE idsessione = ?";
 		try(Connection conn = DBManager.getConnection();
 			PreparedStatement pstmt = conn.prepareStatement(sql)) {
-			
 				pstmt.setString(1, s.getID_Sessione());
 				ResultSet rs = pstmt.executeQuery();
-				
 				while(rs.next()) {
 					IscrizioneSessione is = new IscrizioneSessione();
 					is.setS(s);
@@ -79,28 +69,22 @@ public class IscrizioneSessioneDAO {
 					is.setAdesione(rs.getBoolean("adesione"));
 					ListaIscrizioni.add(is);
 				}
-				
 				return ListaIscrizioni;
-				
 				}catch(SQLException e) {
 					System.out.println("Errore nella selezione delle iscrizioni sessioni"+ e.getMessage());
 					return null;
 				}
-				
-		}
-	
-	// Metodo per eliminare un'iscrizione a una sessione dal DB usando un oggetto IscrizioneSessione (True se l'eliminazione va a buon fine, False altrimenti)
+	}
+
+	// Metodo per eliminare un'iscrizione a una sessione dal DB
 	public boolean DeleteIscrizioneSessione(IscrizioneSessione iscrizioneSessione) {
 		String sql = "DELETE FROM uninafooddlab.iscrizionesessione WHERE idpartecipante = ? AND idsessione = ?";
 		try(Connection conn = DBManager.getConnection();
 			PreparedStatement pstmt = conn.prepareStatement(sql)) {
-			
 			pstmt.setString(1, iscrizioneSessione.getP().getID_Partecipante());
 			pstmt.setString(2, iscrizioneSessione.getS().getID_Sessione());
-			
 			int rowsAffected = pstmt.executeUpdate();
 			return rowsAffected > 0;
-			
 		} catch(SQLException e) {
 			System.out.println("Errore durante l'eliminazione dell'iscrizione alla sessione: " + e.getMessage());
 			return false;

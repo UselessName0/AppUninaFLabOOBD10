@@ -11,19 +11,18 @@ import Entities.Partecipante;
 import Entities.Ricetta;
 
 public class RicettaDAO {
-	//Metodo per l'inserimento di una nuova ricetta nel DB usando un oggetto Ricetta (True se l'inserimento va a buon fine, False altrimenti)
+	
+	//METODI
+	//Metodo per l'inserimento di una nuova ricetta nel DB
 	public boolean InsertRicettaDAO(Ricetta Ricetta_Input) {
 		String sql = "INSERT INTO uninafoodlab.ricetta(idricetta, nominativoricetta, descrizione)VALUES (?, ?, ?);";
 			try(Connection conn = DBManager.getConnection();
 				PreparedStatement pstmt = conn.prepareStatement(sql)) {
-				
 				pstmt.setString(1, Ricetta_Input.getIDRicetta());
 				pstmt.setString(2, Ricetta_Input.getTitolo());
-				pstmt.setString(3, Ricetta_Input.getDescrizione());
-				
+				pstmt.setString(3, Ricetta_Input.getDescrizione());				
 				int rowsAffected = pstmt.executeUpdate();
-				return rowsAffected > 0;
-				
+				return rowsAffected > 0;				
 			} catch(SQLException e) {
 				System.out.println("Errore durante l'inserimento della nuova ricetta: "+ e.getMessage());
 				return false;
@@ -35,7 +34,6 @@ public class RicettaDAO {
 		String sql = "SELECT IDRicetta FROM uninafoodlab.ricetta WHERE nominativoricetta = ?;";
 			try(Connection conn = DBManager.getConnection();
 				PreparedStatement pstmt = conn.prepareStatement(sql)) {
-				
 				pstmt.setString(1, Titolo);
 				ResultSet rs = pstmt.executeQuery();
 				if(rs.next())
@@ -53,7 +51,6 @@ public class RicettaDAO {
 		String sql = "SELECT IDRicetta FROM uninafoodlab.ricetta WHERE nominativoricetta = ?;";
 			try(Connection conn = DBManager.getConnection();
 				PreparedStatement pstmt = conn.prepareStatement(sql)) {
-				
 				pstmt.setString(1, Ricetta_Input.getIDRicetta());
 				ResultSet rs = pstmt.executeQuery();
 				if(rs.next())
@@ -71,7 +68,6 @@ public class RicettaDAO {
 		String sql = "SELECT IDRicetta FROM uninafoodlab.ricetta WHERE nominativoricetta = ?;";
 			try(Connection conn = DBManager.getConnection();
 				PreparedStatement pstmt = conn.prepareStatement(sql)) {
-				
 				pstmt.setString(1, IDRicetta_Input);
 				ResultSet rs = pstmt.executeQuery();
 				if(rs.next())
@@ -84,17 +80,14 @@ public class RicettaDAO {
 			}
 	}
 	
-	//Metodo per eliminare una ricetta dal DB usando l'IDRicetta (True se l'eliminazione va a buon fine, False altrimenti)
+	//Metodo per eliminare una ricetta dal DB usando l'IDRicetta
 	public boolean DeleteRicettaDAO(String IDRicetta_Input) {
 		String sql ="DELETE FROM uninafoodlab.ricetta WHERE ricetta.idricetta = ?;";
 			try(Connection conn = DBManager.getConnection();
 				PreparedStatement pstmt = conn.prepareStatement(sql)) {
-				
 				pstmt.setString(1, IDRicetta_Input);
 				int rowsAffected = pstmt.executeUpdate();
-				
 				return rowsAffected > 0;
-				
 			} catch(SQLException e) {
 				System.out.println("Errore durante l'eliminazione della ricetta : "+ e.getMessage());
 				return false;
@@ -107,15 +100,12 @@ public class RicettaDAO {
 		String sql = "SELECT * FROM uninafoodlab.ricetta;";
 		try(Connection conn = DBManager.getConnection();
 			PreparedStatement pstmt = conn.prepareStatement(sql);
-			
 			ResultSet rs = pstmt.executeQuery()) {
-			
 					while(rs.next()) {
 						Ricetta R = new Ricetta(); 
 						R.setIDRicetta(rs.getString("idricetta"));
 						R.setTitolo(rs.getString("nominativoricetta"));
 						R.setDescrizione(rs.getString("descrizione"));
-						
 						ListaRicette.add(R);
 					}
 					return ListaRicette;	
@@ -139,9 +129,7 @@ public class RicettaDAO {
 					R.setIDRicetta(rs.getString("idricetta"));
 					R.setTitolo(rs.getString("nominativoricetta"));
 					R.setDescrizione(rs.getString("descrizione"));
-					
 					ListaRicette.add(R);
-			
 					}
 				return ListaRicette;
 			}catch(SQLException e) {
@@ -150,6 +138,7 @@ public class RicettaDAO {
 			}
 	}
 
+	//Metodo che restituisce la lista di ricette di uno chef
 	public List<Ricetta> getRicetteByChef(Chef c) {
 		List<Ricetta> ListaRicette = new ArrayList<>();
 		String sql = "SELECT r.* FROM uninafoodlab.ricetta AS r JOIN uninafoodlab.sessione AS s ON r.idricetta = s.idricetta JOIN uninafoodlab.corso AS co ON co.idcorso = s.idcorso WHERE co.idchef = ?";
@@ -163,7 +152,6 @@ public class RicettaDAO {
 					R.setIDRicetta(rs.getString("idricetta"));
 					R.setTitolo(rs.getString("nominativoricetta"));
 					R.setDescrizione(rs.getString("descrizione"));
-					
 					ListaRicette.add(R);
 				}
 				return ListaRicette;
@@ -173,6 +161,7 @@ public class RicettaDAO {
 			}
 	}
 
+	//Metodo che prende il numero di ricette di uno chef 
 	public int getNumeroRicetteByChef(Chef c) {
 		String sql = "SELECT COUNT(*) AS nricette FROM uninafoodlab.ricetta AS r JOIN uninafoodlab.sessione AS s ON r.idricetta = s.idricetta JOIN uninafoodlab.corso AS co ON co.idcorso = s.idcorso WHERE co.idchef = ?";
 		try(Connection conn = DBManager.getConnection();
@@ -191,6 +180,7 @@ public class RicettaDAO {
 			}
 	}
 
+	//Metodo che prende la descrizione di una ricetta tramite il suo stesso ID
 	public String GetDescrizioneRicettaDAO(String iDRicetta) {
 		String sql = "SELECT descrizione FROM uninafoodlab.ricetta WHERE idricetta = ?;";
 		try (Connection conn = DBManager.getConnection();
@@ -206,6 +196,7 @@ public class RicettaDAO {
 		return null;
 	}
 
+	//Metodo che prende la ricetta tramite il suo stesso ID
 	public Ricetta getRicettaByID(String idRicetta) {
 		String sql = "SELECT * FROM uninafoodlab.ricetta WHERE idricetta = ?;";
 		try(Connection conn = DBManager.getConnection();

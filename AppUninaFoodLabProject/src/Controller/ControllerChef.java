@@ -22,8 +22,11 @@ import Database.DBManager;
 
 public class ControllerChef {
 	
+	//COSTRUTTORI
 	private ChefDAO chefDAO = new ChefDAO();
 	
+	//METODI
+	//Metodo per il check del login da parte di uno chef
 	public Chef LoginCheck(String email_Input, String password_Input) {
 		try {
 			if (!chefDAO.checkEmail(email_Input)) {
@@ -35,16 +38,15 @@ public class ControllerChef {
 				System.out.println("Password errata.");
 				return null;
 			}
-
 			Chef chef = chefDAO.getChefByEmail(email_Input);
 			return chef;
-
 		} catch (Exception e) {
 			System.out.println("Errore durante il login: " + e.getMessage());
 			return null;
 		}
 	}
 	
+	//Metodo per il check della registrazione di uno chef
 	public Chef RegisterCheck(String Email_Input, String Password_Input, String Nome_Input, String Cognome_Input) {
 		try {
 			if(chefDAO.checkEmail(Email_Input)) {
@@ -76,23 +78,20 @@ public class ControllerChef {
 							System.out.println("Uno dei campi è vuoto");
 							return null;
 						}
-							
-						
 					}
 					else 
 						return null;
 				}
 			}
-			
 		} catch(Exception e) {
 			System.out.println("Errore durante la registrzione: " + e.getMessage());
 			return null;
 		}
 	}
 	
+	//Metodo che permette l'inserimento di un nuovo chef (dopo avvenuta registrazione) nel DB
 	public boolean InsertChef(Chef c) {
 		ChefDAO cDAO = new ChefDAO();
-		
 		if(cDAO.InsertChefDAO(c)) {
 			return true;
 		}
@@ -100,30 +99,31 @@ public class ControllerChef {
 			return false;
 	}
 	
+	//Metodo che permette di avere una lista di tutti i corsi partendo da uno chef 
 	public List<Corso> GetCorsiByChef(Chef C){
 		CorsoDAO cDAO = new CorsoDAO();
-		if(!C.equals(null)) {
+		if(!C.equals(null)) 
 			return cDAO.getAllCorsiByChef(C);
-		}
 		return cDAO.getAllCorsi();
 	}
 	
+	//Metodo che permette di avere una lista di tutte le sessioni partendo da uno chef 	
 	public List<Sessione> GetSessioniByChef(Chef c){
 		SessioneDAO sDAO = new SessioneDAO();
-		if(!c.equals(null) ) {
+		if(!c.equals(null) ) 
 			return sDAO.getAllSessioniDiChef(c);
-		}
 		return sDAO.getAllSessioniDAO();
 	}
 	
+	//Metodo per permette di avere tutti i corsi creati da uno chef
 	public int GetNumeroCorsiCreati(Chef c) {
 		ChefDAO cDAO = new ChefDAO();
-		if(!c.equals(null)) {
+		if(!c.equals(null)) 
 			return cDAO.getNumeroCorsiByChef(c);
-		}
 		return 0;
 	}
 	
+	//Metoto che permette di avere una lista di tutti i corsi di uno chef e non 
 	public List<Corso> GetCorsiExceptChef(Chef c){
 		CorsoDAO cDAO = new CorsoDAO();
 		if(!c.equals(null)) {
@@ -132,6 +132,7 @@ public class ControllerChef {
 		return cDAO.getAllCorsi();
 	}
 	
+	//Metodo che permette di inserire un nuovo corso 
 	public boolean InsertCorso(Corso c) {
 		CorsoDAO cDAO = new CorsoDAO();
 		if(!c.equals(null) && !(c.getChef_Proprietario() ==null) && !c.getNome_Corso().isEmpty() && !c.getArgomento().isEmpty() && !c.getDescrizione().isEmpty() && !c.getFrequenza_Corsi().isEmpty()) {
@@ -156,10 +157,11 @@ public class ControllerChef {
 			}
 			return cDAO.InsertCorso(c);
 		}
-		System.out.println("ERRORE Dati corso non validi.");
+		System.out.println("Errore dati corso non validi.");
 		return false;
 	}
 	
+	//Metodo che permette di inserire una sessione 
 	public boolean InserisciSessione(Chef Ch, Corso Co, LocalDate DataSe, boolean IsPratica, String Luogo, String LinkConferenza, Ricetta R) {
 		SessioneDAO sDAO = new SessioneDAO();
 		CorsoDAO cDAO = new CorsoDAO();
@@ -173,7 +175,6 @@ public class ControllerChef {
 				s.setLinkConferenza(LinkConferenza);
 				s.setNumero_Adesioni(0);
 				s.setRicetta_Appresa(R);
-				
 				String sql = "SELECT MAX(idsessione) AS max_id FROM uninafoodlab.sessione";
 				try(Connection conn = DBManager.getConnection();
 					PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -201,14 +202,15 @@ public class ControllerChef {
 				return sDAO.InsertSessione(s);
 			}
 			else {
-				System.out.println("ERRORE Dati sessione non validi.");
+				System.out.println("Errore dati sessione non validi.");
 				return false;
 			}
 		}
-		System.out.println("ERRORE Dati sessione non validi.");
+		System.out.println("Errore dati sessione non validi.");
 		return false;
 	}
 	
+	//Metodo che permette di avere tutta li lista di ricette di uno chef
 	public List<Ricetta> GetRicetteByChef(Chef c) {
 		RicettaDAO rDAO = new RicettaDAO();
 		if(c != null) {
@@ -217,6 +219,7 @@ public class ControllerChef {
 		return null;
 	}
 	
+	//Metodo che permette di avere il numero esatto di ricette di uno chef
 	public int GetNumeroRicetteByChef(Chef c) {
 		RicettaDAO rDAO = new RicettaDAO();
 		if(c != null) {
@@ -225,6 +228,7 @@ public class ControllerChef {
 		return 0;
 	}
 	
+	//Metodo che restituisce un array di tutte le sessioni per singolo mese 
 	public int[] GetNumeroSessioniByMonth(Chef c) {
 		SessioneDAO sDAO = new SessioneDAO();
 		if(c != null) {
@@ -234,6 +238,7 @@ public class ControllerChef {
 		return null;
 	}
 	
+	//Metoto che permette di avere il numero di tutti gli iscritti ad un corso preciso 
 	public int GetNumeroIscrittiCorso(Corso c) {
 		CorsoDAO cDAO = new CorsoDAO();
 		if(c != null) {
@@ -242,6 +247,7 @@ public class ControllerChef {
 		return 0;
 	}
 	
+	//Metodo che permette di avere il numero di tutti i partecipanti ad una specifica sessione
 	public int GetNumeroIscrittiSessione(Sessione s) {
 		SessioneDAO sDAO = new SessioneDAO();
 		if(s != null) {
@@ -250,6 +256,7 @@ public class ControllerChef {
 		return 0;
 	}
 	
+	//Metodo che permette di fare un Update di una specifica sessione inserita precedentemente 
 	public boolean UpdateSessione(Sessione s) {
 		SessioneDAO sDAO = new SessioneDAO();
 		if(s != null && !s.getID_Sessione().isEmpty() && s.getRelatedCorso() != null && s.getData_Sessione() != null) {
@@ -260,11 +267,13 @@ public class ControllerChef {
 		}
 	}
 	
+	//Metodo che permette di avere la lista di tutte le ricette
 	public List<Ricetta> GetAllRicette(){
 		RicettaDAO rDAO = new RicettaDAO();
 		return rDAO.GetAllRicettaDAO();
 	}
 	
+	//Metodo che premtte di inserire: titolo e descrizione di una ricetta 
 	public boolean InsertRicetta(String Titolo, String Descrizione) {
 		RicettaDAO rDAO = new RicettaDAO();
 		if(!Titolo.isEmpty() && !Descrizione.isEmpty()) {
@@ -297,6 +306,7 @@ public class ControllerChef {
 		}
 	}
 	
+	//Metodo che restituisce un array di tutte le sessioni con specifica modalità per un singolo chef 
 	public int[] GetModalitaDiSessionePerChef(Chef c) {
 		int [] modalita = new int[2];
 		SessioneDAO sDAO = new SessioneDAO();

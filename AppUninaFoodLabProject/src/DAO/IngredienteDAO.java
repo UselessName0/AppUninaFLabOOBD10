@@ -11,18 +11,16 @@ import Entities.Ricetta;
 
 public class IngredienteDAO {
 	
-	//Metodo per inserire un nuovo ingrediente nel database(ritorna true se l'inserimento va a buon fine, false altrimenti)
+	//METODI 
+	//Metodo per inserire un nuovo ingrediente nel DB
 	public boolean InsertIngrediente(Ingrediente Ingrediente_Input) {
 		String sql = "INSERT INTO uninafoodlab.ricetta(idricetta, nominativoricetta)VALUES (?, ?);";
 			try(Connection conn = DBManager.getConnection();
 				PreparedStatement pstmt = conn.prepareStatement(sql)) {
-				
 				pstmt.setString(1, Ingrediente_Input.getIDIngrediente());
 				pstmt.setString(2, Ingrediente_Input.getNome());
-				
 				int rowsAffected = pstmt.executeUpdate();
 				return rowsAffected > 0;
-				
 			} catch(SQLException e) {
 				System.out.println("Errore durante l'inserimento del nuovo ingrediente: "+ e.getMessage());
 				return false;	
@@ -34,7 +32,6 @@ public class IngredienteDAO {
 		String sql = "SELECT IDIngrediente FROM uninafoodlab.ingrediente WHERE nomeingrediente = ?;";
 			try(Connection conn = DBManager.getConnection();
 				PreparedStatement pstmt = conn.prepareStatement(sql)) {
-				
 				pstmt.setString(1, NomeIngrediente);
 				ResultSet rs = pstmt.executeQuery();
 				if(rs.next())
@@ -51,8 +48,7 @@ public class IngredienteDAO {
 	public String GetNomeIngredienteDAO(Ingrediente Ingrediente_Input) {
 		String sql = "SELECT nomeingrediente FROM uninafoodlab.ingrediente WHERE idingrediente = ?";
 			try(Connection conn = DBManager.getConnection();
-				PreparedStatement pstmt = conn.prepareCall(sql)) {
-				
+				PreparedStatement pstmt = conn.prepareCall(sql)) {			
 				pstmt.setString(1, Ingrediente_Input.getIDIngrediente());
 				ResultSet rs = pstmt.executeQuery();
 				if(rs.next())
@@ -70,7 +66,6 @@ public class IngredienteDAO {
 		String sql = "SELECT nomeingrediente FROM uninafoodlab.ingrediente WHERE idingrediente = ?";
 			try(Connection conn = DBManager.getConnection();
 				PreparedStatement pstmt = conn.prepareCall(sql)) {
-				
 				pstmt.setString(1, IDIngrediente_Input);
 				ResultSet rs = pstmt.executeQuery();
 				if(rs.next())
@@ -88,19 +83,16 @@ public class IngredienteDAO {
 		String sql ="DELETE FROM uninafoodlab.corso WHERE corso.IDcorso = ?";
 			try(Connection conn = DBManager.getConnection();
 				PreparedStatement pstmt = conn.prepareStatement(sql)) {
-				
 				pstmt.setString(1, IDIngrediente_Input);
 				int rowsAffected = pstmt.executeUpdate();
-				
 				return rowsAffected > 0;
-				
 			} catch(SQLException e) {
 				System.out.println("Errore durante l'eliminazione del partecipante : "+ e.getMessage());
 				return false;
 			}
 	}
 	
-	//Metodo per selezionare tutti gli ingredienti dal database
+	//Metodo che restituisce la lista di tutti gli ingredienti 
 	public List<Ingrediente> getAllIngredienteDAO() {
 		List<Ingrediente> ListaIngredienti = new ArrayList<>();
 		String sql = "SELECT * FROM uninafoodlab.ingredienti;";
@@ -118,7 +110,4 @@ public class IngredienteDAO {
 				return null;
 			}
 	}
-	
-	
-	
 }

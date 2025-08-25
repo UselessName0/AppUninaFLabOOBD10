@@ -22,31 +22,31 @@ import DAO.RicettaDAO;
 import Database.DBManager;
 public class ControllerPartecipante {
 
+	//COSTRUTTORE
 	private PartecipanteDAO partecipanteDAO = new PartecipanteDAO();
 	
+	//METODI
+	//Metodo che permette check del login di un partecipante
 	public Partecipante LoginCheck(String Email_Input, String Password_Input) {
 	    try {
 	        if (!partecipanteDAO.checkEmail(Email_Input)) {
 	            System.out.println("Email non registrata.");
 	            return null;
 	        }
-
 	        if (!partecipanteDAO.checkPassword(Email_Input, Password_Input)) {
 	            System.out.println("Password errata.");
 	            return null;
 	        }
-
-	        // Se tutto è corretto, recupera il partecipante dal DB
 	        Partecipante partecipante = partecipanteDAO.getPartecipanteByEmail(Email_Input);
 	        return partecipante;
-
 	    } catch(Exception e){
 	        System.out.println("Errore durante il login: " + e.getMessage());
 	        e.printStackTrace();
 	        return null;
 	    }
 	}
-	//Controllare che la mail non è già stata registrata
+	
+	//Metodo che controlla che l'email non è già stata registrata
 	public Partecipante RegisterCheck(String Email_Input, String Password_Input, String Nome_Input, String Cognome_Input) {
 		try {
 			if(partecipanteDAO.checkEmail(Email_Input)) {
@@ -78,15 +78,15 @@ public class ControllerPartecipante {
 						return null;
 				}
 			}
-			
 		} catch(Exception e) {
 			System.out.println("Errore durante la registrzione: " + e.getMessage());
 			return null;
 		}
 	}
+	
+	//Metodo che peremtte l'inserimento di un nuovo partecipante 
 	public boolean InsertPartecipante(Partecipante p) {
 		PartecipanteDAO pDAO = new PartecipanteDAO();
-		
 		if(pDAO.InsertPartecipanteDAO(p)) {
 			System.out.println("Inserimento nel DB avvenuto con successo");
 			return true;
@@ -94,11 +94,14 @@ public class ControllerPartecipante {
 		else
 			return false;
 	}
+	
+	//Metodo che restituisce una lista di tutti i corsi presenti nel DB 
 	public List<Corso> GetCorsiFromDB(){
 		CorsoDAO cDAO = new CorsoDAO();
 		return cDAO.getAllCorsi();
 	}
 	
+	//Metodo che restituisce una lista di tutti i corsi per nome
 	public List<Corso> GetCorsiByNome(String Nome){
 		CorsoDAO cDAO = new CorsoDAO();
 		if(!Nome.isEmpty()) {			
@@ -107,6 +110,7 @@ public class ControllerPartecipante {
 		return cDAO.getAllCorsi();
 	}
 	
+	//Metodo che restituisce una lista di corsi per argomento
 	public List<Corso> GetCorsiByArgomento(String Argomento){
 		CorsoDAO cDAO = new CorsoDAO();
 		if(!Argomento.isEmpty()) {
@@ -115,6 +119,7 @@ public class ControllerPartecipante {
 		return cDAO.getAllCorsi();
 	}
 	
+	//Metodo che restituisce una lista di corsi per data
 	public List<Corso> GetCorsiByData(LocalDate Date){
 		CorsoDAO cDAO = new CorsoDAO();
 		if(!Date.equals(null)){
@@ -123,6 +128,7 @@ public class ControllerPartecipante {
 		return cDAO.getAllCorsi();
 	}
 	
+	//Metodo che restituisce una lista di corsi per chef
 	public List<Corso> GetCorsiByChef(Chef C){
 		CorsoDAO cDAO = new CorsoDAO();
 		if(!C.equals(null)) {
@@ -131,6 +137,7 @@ public class ControllerPartecipante {
 		return cDAO.getAllCorsi();
 	}
 	
+	//Metodo che restituisce una lista di corsi con i vari filtri
 	public List<Corso> GetCorsiDaPiuFiltri(List<Corso> Corso1, List<Corso> Corso2){
 		List<Corso> Temp = Corso1;
 		Temp.retainAll(Corso2);
@@ -138,15 +145,16 @@ public class ControllerPartecipante {
 		return Temp;
 	}
 	
+	//Metodo che restituisce una lista di corsi in cui il partecipante non è iscritto
 	public List<Corso> GetCorsiDovePartecipanteNonIscritto(Partecipante p){
 		CorsoDAO cDAO = new CorsoDAO();
 		if(!p.equals(null))
 			return cDAO.getCorsiDovePartecipanteNonIscrittoDAO(p);
 		else
 			return cDAO.getAllCorsi();
-		
 	}
 	
+	//Metodo che restituisce una lista di ID corsi dove il partecipante non è iscritto  
 	public List<String> GetIDCorsiDovePartecipanteNonIscritto(Partecipante p){
 		CorsoDAO cDAO = new CorsoDAO();
 		if(!p.equals(null))
@@ -155,6 +163,7 @@ public class ControllerPartecipante {
 			return cDAO.getAllidCorsi();
 	}
 
+	//Metodo che restituisce una lista di tutti i corsi dove il partecipanete è iscritto
 	public List<Corso> GetCorsiDovePartecipanteIscritto(Partecipante p){
 		CorsoDAO cDAO = new CorsoDAO();
 		if(!p.equals(null))
@@ -163,6 +172,7 @@ public class ControllerPartecipante {
 			return cDAO.getAllCorsi();
 	}
 	
+	//Metodo che permette di iscrivere un partecipante ad un corso 
 	public boolean IscriviPartecipanteACorso(Partecipante p, Corso c) {
 		if(p != null && c != null) {
 			IscrizioneCorso IC = new IscrizioneCorso(c, p, LocalDate.now());
@@ -180,6 +190,7 @@ public class ControllerPartecipante {
 		}
 	}
 	
+	//Metodo che restituisce una lista di sessioni dove partecipante è iscritto 
 	public List<Sessione> GetSessioneDovePartecipanteIscritto(Partecipante p){
 		SessioneDAO sDAO = new SessioneDAO();
 		if(!p.equals(null))
@@ -190,6 +201,7 @@ public class ControllerPartecipante {
 		}
 	}
 	
+	//Metodo che restituisce la lista di ricette del partecipante 
 	public List<Ricetta> GetRicettaDiPartecipante(Partecipante p){
 		RicettaDAO rDAO = new RicettaDAO();
 		if(!p.equals(null))
@@ -200,11 +212,13 @@ public class ControllerPartecipante {
 		}
 	}
 	
+	//Metodo che restituisce tutti gli chef presenti nel DB 
 	public List<Chef> GetListaChefFromDB(){
 		ChefDAO cDAO = new ChefDAO();
 		return cDAO.getAllChef();
 	}
 	
+	//Metodo che restituisce il numero di corsi al quale un partecipante è iscritto
 	public int GetNumeroCorsiSeguiti(Partecipante p) {
 		if(p != null) {
 			CorsoDAO cDAO = new CorsoDAO();
@@ -215,11 +229,13 @@ public class ControllerPartecipante {
 		}
 	}
 	
+	//Metodo che restituisce una lista di sessioni 
 	public List<Sessione> GetListaSessioni() {
 		SessioneDAO sDAO = new SessioneDAO();
 		return sDAO.getAllSessioniDAO();
 	}
 	
+	//Metodo che restituisce una lista di sessioni dove il partecipante non è iscritto
 	public List<Sessione> GetListaSessioniDovePartecipanteNonIscritto(Partecipante p){
 		SessioneDAO sDAO = new SessioneDAO();
 		if(!p.equals(null))
@@ -230,6 +246,7 @@ public class ControllerPartecipante {
 		}
 	}
 	
+	//Metodo che permette di iscrivere partecipante ad una sessione 
 	public boolean IscriviPartecipanteASessione(Partecipante p, Sessione s) {
 		if(p != null && s != null) {
 			IscrizioneCorsoDAO icDAO = new IscrizioneCorsoDAO();
@@ -242,6 +259,7 @@ public class ControllerPartecipante {
 		return false;
 	}
 	
+	//Metodo che permette di iscrivere partecipante a sessione con adesione pratica
 	public boolean IscriviPartecipanteASessioneConAdesione(Partecipante p, Sessione s, boolean adesione) {
 		if(p != null && s != null) {
 			IscrizioneCorsoDAO icDAO = new IscrizioneCorsoDAO();
