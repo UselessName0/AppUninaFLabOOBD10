@@ -115,7 +115,8 @@ public class RicettaDAO {
 				}
 	}
 	
-	public List<Ricetta> GetAllRicettaImparateDaPartecipante(Partecipante p) { //PRENDO SOLO LE RICETTE DELLE SESSIONI AVVENUTE PRIMA DI OGGI
+	//Metodo per selezionare tutte le ricette imparate dal partecipante prima di oggi
+	public List<Ricetta> GetAllRicettaImparateDaPartecipante(Partecipante p) { 
 		List<Ricetta> ListaRicette = new ArrayList<>();
 		String sql = "SELECT r.* FROM uninafoodlab.ricetta AS r JOIN uninafoodlab.sessione AS s ON r.idricetta = s.idricetta JOIN uninafoodlab.iscrizionesessione AS ises ON ises.idsessione = s.idsessione WHERE ises.idpartecipante = ? AND s.datasessione < ?;";
 		try(Connection conn = DBManager.getConnection();

@@ -394,7 +394,7 @@ public class CorsoDAO {
 					C.setData_Creazione(null);
 				}
 				C.setFrequenza_Corsi(rs.getString("frequenzacorsi"));
-				
+				C.setDescrizione(rs.getString("descrizione"));
 				ListaCorsi.add(C);
 			}
 			return ListaCorsi;			
@@ -620,6 +620,7 @@ public class CorsoDAO {
 					C.setData_Inizio(null);
 				C.setData_Creazione(rs.getDate("datacreazione").toLocalDate());
 				C.setFrequenza_Corsi(rs.getString("frequenzacorsi"));
+				C.setDescrizione(rs.getString("descrizione"));
 				ListaCorsi.add(C);
 			}
 			return ListaCorsi;

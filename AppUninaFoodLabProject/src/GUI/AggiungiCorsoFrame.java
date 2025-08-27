@@ -75,7 +75,6 @@ public class AggiungiCorsoFrame extends JFrame {
         labelFrequenza.setFont(new Font("Arial", Font.BOLD, 18));
 
         frequenzaComboBox = new JComboBox<>();
-        frequenzaComboBox.addItem("");
         frequenzaComboBox.addItem("1 volta a settimana");
         frequenzaComboBox.addItem("2 volte a settimana");
         frequenzaComboBox.addItem("3 volte a settimana");
@@ -115,7 +114,10 @@ public class AggiungiCorsoFrame extends JFrame {
                 corso.setChef_Proprietario(C);
                 corso.setData_Creazione(LocalDate.now());
                 corso.setDescrizione(textArea.getText());
-                corso.setFrequenza_Corsi((String) frequenzaComboBox.getSelectedItem());
+                String Frequenza = (String) frequenzaComboBox.getSelectedItem();
+                if(Frequenza.equals("Libera"))
+                	Frequenza = null;
+                corso.setFrequenza_Corsi(Frequenza);
                 if(CC.InsertCorso(corso)) {
 					JOptionPane.showMessageDialog(contentPane, "Corso aggiunto con successo!", "Successo", JOptionPane.INFORMATION_MESSAGE);
 					new DashboardChef(c).setVisible(true);

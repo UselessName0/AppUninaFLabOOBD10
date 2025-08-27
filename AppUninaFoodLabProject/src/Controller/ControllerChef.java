@@ -135,7 +135,7 @@ public class ControllerChef {
 	//Metodo che permette di inserire un nuovo corso 
 	public boolean InsertCorso(Corso c) {
 		CorsoDAO cDAO = new CorsoDAO();
-		if(!c.equals(null) && !(c.getChef_Proprietario() ==null) && !c.getNome_Corso().isEmpty() && !c.getArgomento().isEmpty() && !c.getDescrizione().isEmpty() && !c.getFrequenza_Corsi().isEmpty()) {
+		if(!c.equals(null) && !(c.getChef_Proprietario() ==null) && !c.getNome_Corso().isEmpty() && !c.getArgomento().isEmpty() && !c.getDescrizione().isEmpty()) {
 			c.setData_Creazione(java.time.LocalDate.now());
 			String sql = "SELECT MAX(idcorso) AS max_id FROM uninafoodlab.corso";
 			try(Connection conn = DBManager.getConnection();
@@ -182,10 +182,8 @@ public class ControllerChef {
 					String nuovoId;
 					if (rs.next()) {
 						String ultimoid = rs.getString("max_id");
-						System.out.println("Ultimo ID della sessione: " + ultimoid);
 						int numero = Integer.parseInt(ultimoid.substring(2));
 						nuovoId = "IS" + String.valueOf(numero + 1);
-						System.out.println("Nuovo ID della sessione: " + nuovoId);
 						s.setID_Sessione(nuovoId);
 					}else{
 						System.out.println("Errore durante la generazione dell'ID della sessione.");

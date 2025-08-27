@@ -472,7 +472,7 @@ public class SessioneDAO {
 	//Metodo che ritorna la lista di sessioni di un partecipante specifico
 	public List<Sessione> getSessioniDiPartecipante(Partecipante p) {
 		List<Sessione> ListaSessioni = new ArrayList<>();
-		String sql = "SELECT co.* , s.* , r.* FROM uninafoodlab.sessione AS s JOIN uninafoodlab.iscrizionesessione AS ic ON s.idsessione = ic.idsessione JOIN uninafoodlab.corso AS co ON s.idcorso = co.idcorso JOIN uninafoodlab.ricetta AS r ON r.idricetta = s.idricetta WHERE ic.idpartecipante = ?;";
+		String sql = "SELECT co.* , s.* , r.*, ch.* FROM uninafoodlab.sessione AS s JOIN uninafoodlab.iscrizionesessione AS ic ON s.idsessione = ic.idsessione JOIN uninafoodlab.corso AS co ON s.idcorso = co.idcorso JOIN uninafoodlab.ricetta AS r ON r.idricetta = s.idricetta JOIN uninafoodlab.chef AS ch ON ch.idchef = co.idchef WHERE ic.idpartecipante = ?;";
 		try(Connection conn = DBManager.getConnection();
 			PreparedStatement pstmt = conn.prepareStatement(sql)) {
 			pstmt.setString(1, p.getID_Partecipante());
@@ -488,6 +488,12 @@ public class SessioneDAO {
 				co.setData_Creazione(rs.getDate("datacreazione").toLocalDate());
 				co.setFrequenza_Corsi(rs.getString("frequenzacorsi"));
 				co.setDescrizione("descrizione");
+				Chef ch = new Chef();
+				ch.setID_Chef(rs.getString("idchef"));
+				ch.setNome(rs.getString("nomechef"));
+				ch.setCognome(rs.getString("cognomechef"));
+				ch.setEmail(rs.getString("email"));
+				co.setChef_Proprietario(ch);
 				s.setRelatedCorso(co);
 				s.setData_Sessione(rs.getDate("datasessione").toLocalDate());
 				s.setIsPratica(rs.getBoolean("isPratica"));
@@ -624,6 +630,12 @@ public class SessioneDAO {
 					co.setData_Creazione(rs.getDate("datacreazione").toLocalDate());
 					co.setFrequenza_Corsi(rs.getString("frequenzacorsi"));
 					co.setDescrizione("descrizione");
+					Chef ch = new Chef();
+					ch.setID_Chef(rs.getString("idchef"));
+					ch.setNome(rs.getString("nomechef"));
+					ch.setCognome(rs.getString("cognomechef"));
+					ch.setEmail(rs.getString("email"));
+					co.setChef_Proprietario(ch);
 					s.setRelatedCorso(co);
 					s.setData_Sessione(rs.getDate("datasessione").toLocalDate());
 					s.setIsPratica(rs.getBoolean("isPratica"));

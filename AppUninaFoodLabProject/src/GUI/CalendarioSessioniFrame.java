@@ -225,7 +225,6 @@ public class CalendarioSessioniFrame extends JFrame {
         
         Corso co = s.getRelatedCorso();
         Chef c = co.getChef_Proprietario();
-        System.out.println("ciao" + c.getNome());
         JLabel lblChef = new JLabel("Chef: " + c.getNome() + " " + c.getCognome());
         lblChef.setBounds(20, 55, 400, 25);
         lblChef.setFont(new Font("Arial", Font.PLAIN, 14));
