@@ -38,16 +38,15 @@ import javax.swing.UIManager;
 
 public class IMieiCorsiFrame extends JFrame {
 
-	// ATTRIBUTI
+	//ATTRIBUTI
 	private JPanel contentPane;
 	Chef c;
 	ControllerChef CC = new ControllerChef();
 	Color sfondoTabella = new Color(210, 240, 210);
 	Color sfondoPrincipale = new Color(220, 240, 250);
 
-	// COSTRUTTORI
+	//COSTRUTTORI
 	public IMieiCorsiFrame(Chef C) {
-
 		this.c = C;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setSize(800, 600);
@@ -55,15 +54,18 @@ public class IMieiCorsiFrame extends JFrame {
 		setResizable(false);
 		setJMenuBar(CreaMenuBar(this));
 		setTitle("I miei corsi");
-
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(20, 20, 20, 20));
 		setContentPane(contentPane);
 		contentPane.setBackground(sfondoPrincipale);
 		
-		// Tabella
-		final List<Corso> datiCorsi = CC.GetCorsiByChef(C);
+		//Label titolo
+		JLabel lblIMieiCorsi = new JLabel("I miei corsi", SwingConstants.CENTER);
+		lblIMieiCorsi.setForeground(new Color(50, 80, 150));
+		lblIMieiCorsi.setFont(new Font("Arial", Font.BOLD, 24));
 		
+		//Lista di corsi presi dal DB passando uno chef preciso 
+		final List<Corso> datiCorsi = CC.GetCorsiByChef(C);
 		String[] colonne = { "Nome Corso" };
 		Object[][] righe = new Object[datiCorsi.size()][1];
 		for(int i = 0; i < datiCorsi.size(); i++) {
@@ -71,16 +73,13 @@ public class IMieiCorsiFrame extends JFrame {
 			righe[i][0] = co.getNome_Corso();
 		}
 		
+		//Creazione tabella
 		JTable tabellaCorsi = new JTable(righe, colonne);
 		tabellaCorsi.setFont(new Font("Arial", Font.PLAIN, 16));
 		tabellaCorsi.setRowHeight(28);
 		tabellaCorsi.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		tabellaCorsi.setBackground(sfondoTabella);
 		tabellaCorsi.setGridColor(sfondoTabella);
-   
-		JScrollPane scrollPane = new JScrollPane(tabellaCorsi);
-		scrollPane.setPreferredSize(new Dimension(700, 360));
-		
 		tabellaCorsi.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
             public void valueChanged(ListSelectionEvent event) {
                 if (!event.getValueIsAdjusting()) {
@@ -92,7 +91,12 @@ public class IMieiCorsiFrame extends JFrame {
                 }
             }
         });
+   
+		//ScrollPane per la tabella
+		JScrollPane scrollPane = new JScrollPane(tabellaCorsi);
+		scrollPane.setPreferredSize(new Dimension(700, 360));
 
+		//Back Button 
 		JButton btnIndietro = new JButton("← Indietro");
 		btnIndietro.setFont(new Font("Arial", Font.PLAIN, 14));
 		btnIndietro.setFocusPainted(false);
@@ -105,10 +109,7 @@ public class IMieiCorsiFrame extends JFrame {
 			}
 		});
 
-		JLabel lblIMieiCorsi = new JLabel("I miei corsi", SwingConstants.CENTER);
-		lblIMieiCorsi.setForeground(new Color(50, 80, 150));
-		lblIMieiCorsi.setFont(new Font("Arial", Font.BOLD, 24));
-
+		//Layout
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
@@ -140,6 +141,7 @@ public class IMieiCorsiFrame extends JFrame {
 	}
 
 	// METODI
+	//Metodo per mostrare i dettagli dei corsi per lo chef
 	private void mostraDettagliCorsoChef(Corso c) {
         JFrame finestraDettagli = new JFrame("Dettagli del Corso");
         finestraDettagli.setSize(440, 360);
@@ -147,15 +149,17 @@ public class IMieiCorsiFrame extends JFrame {
         finestraDettagli.getContentPane().setLayout(null);
         finestraDettagli.getContentPane().setBackground(new Color(230, 240, 250));
 
+        //Label per il nome 
         JLabel lblNome = new JLabel("Corso: " + c.getNome_Corso());
         lblNome.setBounds(20, 20, 400, 25);
         lblNome.setFont(new Font("Arial", Font.BOLD, 16));
-
+        
         String descrizione = c.getDescrizione();
         LocalDate dataInizio = c.getData_Inizio();
         String dataInizioStringa = (dataInizio!= null) ? dataInizio.toString() : "Data inizio non ancora pubblicata";
         String frequenza = c.getFrequenza_Corsi();
 
+        //Text Area per la descrizione del corso 
         JTextArea txtDescrizione = new JTextArea(descrizione);
         txtDescrizione.setBounds(20, 90, 400, 60);
         txtDescrizione.setFont(new Font("Arial", Font.PLAIN, 14));
@@ -165,34 +169,33 @@ public class IMieiCorsiFrame extends JFrame {
         txtDescrizione.setBackground(new Color(245, 250, 255));
         txtDescrizione.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
 
+        //Label per la data
         JLabel lblData = new JLabel(dataInizioStringa);
         lblData.setBounds(20, 160, 400, 25);
         lblData.setFont(new Font("Arial", Font.PLAIN, 14));
 
+        //Label per la frequenza
         JLabel lblFrequenza = new JLabel(frequenza);
         lblFrequenza.setBounds(20, 190, 400, 25);
         lblFrequenza.setFont(new Font("Arial", Font.PLAIN, 14));
-
+        
         finestraDettagli.getContentPane().add(lblNome);
         finestraDettagli.getContentPane().add(txtDescrizione);
         finestraDettagli.getContentPane().add(lblData);
         finestraDettagli.getContentPane().add(lblFrequenza);
-        
         finestraDettagli.setResizable(false);
         finestraDettagli.setVisible(true);
     }
 
+	//Metodo per creazione del menù bar 
     private JMenu menuAttivo = null;
-    
     private JMenuBar CreaMenuBar(JFrame frame) {
         JMenuBar menuBar = new JMenuBar();
-
         JMenu menuCorsi = new JMenu("Corsi");
         JMenu menuSessioni = new JMenu("Sessioni");
         JMenu menuRicette = new JMenu("Ricette");
         JMenu menuStatsNReport = new JMenu("Stats&Reports");
         JMenu menuAccount = new JMenu("Account");
-
         JMenuItem itemVediCorsi = new JMenuItem("Corsi Altrui");
         JMenuItem itemAggiungiCorso = new JMenuItem("Aggiungi Corso");
         JMenuItem itemImieiCorsi = new JMenuItem("I Miei Corsi");
@@ -204,6 +207,7 @@ public class IMieiCorsiFrame extends JFrame {
         JMenuItem itemInfo = new JMenuItem("Il mio profilo");
         JMenuItem itemLogout = new JMenuItem("Logout");
 
+        //Listener
         itemLogout.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 new WelcomeFrame().setVisible(true);
@@ -292,7 +296,6 @@ public class IMieiCorsiFrame extends JFrame {
         menuRicette.addMenuListener(menuListener);
         menuStatsNReport.addMenuListener(menuListener);
         menuAccount.addMenuListener(menuListener);
-
         menuCorsi.add(itemVediCorsi);
         menuCorsi.add(itemAggiungiCorso);
         menuCorsi.add(itemImieiCorsi);
@@ -303,18 +306,17 @@ public class IMieiCorsiFrame extends JFrame {
         menuStatsNReport.add(itemStatistiche);
         menuAccount.add(itemInfo);
         menuAccount.add(itemLogout);
-
         menuBar.add(menuCorsi);
         menuBar.add(menuSessioni);
         menuBar.add(menuRicette);
         menuBar.add(menuStatsNReport);
         menuBar.add(menuAccount);
-
         setJMenuBar(menuBar);
+        
         return menuBar;
 	}
 
-	// Metodo che permette di evidenziare il menù
+	//Metodo che permette di evidenziare il menù
 	private void evidenziaMenu(JMenu nuovoMenu) {
 		if (menuAttivo != null) {
 			ripristinaMenu(menuAttivo);
@@ -325,7 +327,7 @@ public class IMieiCorsiFrame extends JFrame {
 		menuAttivo = nuovoMenu;
 	}
 
-	// Metodo che permette di ripristinare il menù dopo che è stato evidenziato
+	//Metodo che permette di ripristinare il menù dopo che è stato evidenziato
 	private void ripristinaMenu(JMenu menu) {
 		menu.setOpaque(false);
 		menu.setBackground(null);

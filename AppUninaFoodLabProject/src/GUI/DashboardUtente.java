@@ -13,7 +13,6 @@ public class DashboardUtente extends JFrame {
 	Partecipante p;
 
 	//COSTRUTTORI
-	
     public DashboardUtente(Partecipante P) {
     	this.p = P;
         setTitle("Dashboard Utente - UninaFoodLab");
@@ -33,6 +32,7 @@ public class DashboardUtente extends JFrame {
         contentPanel.setBackground(new Color(210, 255, 255));
         contentPanel.setBorder(BorderFactory.createEmptyBorder(30, 40, 30, 40));
 
+        //Layout GridBagCostraint
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(20, 20, 20, 20);
         gbc.fill = GridBagConstraints.BOTH;
@@ -60,16 +60,13 @@ public class DashboardUtente extends JFrame {
     
     //Metodo per creare una menù bar
     private JMenu menuAttivo = null;
-    
     private JMenuBar CreaMenuBar(JFrame frame) {
         JMenuBar menuBar = new JMenuBar();
-
         JMenu menuCorsi = new JMenu("Corsi");
         JMenu menuSessioni = new JMenu("Sessioni");
         JMenu menuChef = new JMenu("Chef");
         JMenu menuRicette = new JMenu("Ricette");
         JMenu menuAccount = new JMenu("Account");
-
         JMenuItem itemVediCorsi = new JMenuItem("Corsi disponibili");
         JMenuItem itemMieIscrizioni = new JMenuItem("Le Mie Iscrizioni");
         JMenuItem itemVediSessioni = new JMenuItem("Le Mie Sessioni");
@@ -79,6 +76,7 @@ public class DashboardUtente extends JFrame {
         JMenuItem itemInfo = new JMenuItem("Il mio profilo");
         JMenuItem itemLogout = new JMenuItem("Logout");
 
+        //Listener
         itemLogout.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 new WelcomeFrame().setVisible(true);
@@ -152,7 +150,6 @@ public class DashboardUtente extends JFrame {
         menuChef.addMenuListener(menuListener);
         menuRicette.addMenuListener(menuListener);
         menuAccount.addMenuListener(menuListener);
-
         menuCorsi.add(itemVediCorsi);
         menuCorsi.add(itemMieIscrizioni);
         menuSessioni.add(itemVediSessioni);
@@ -161,7 +158,6 @@ public class DashboardUtente extends JFrame {
         menuRicette.add(itemLeMieRicette);
         menuAccount.add(itemInfo);
         menuAccount.add(itemLogout);
-
         menuBar.add(menuCorsi);
         menuBar.add(menuSessioni);
         menuBar.add(menuRicette);
@@ -295,14 +291,17 @@ public class DashboardUtente extends JFrame {
         return panel;
     }
 
-    //Metodo che attraverso HTML permette di creare l'effetto hover sul testo, al passaggio del mouse
+    //Metodo che attraverso HTML permette di creare l'effetto hover sul testo, al passaggio del mouse (mouse listener)
     private MouseListener creaHoverEffect(final JLabel voce) {
         return new MouseAdapter() {
+        	
+        	//mouse entered
             public void mouseEntered(MouseEvent e) {
                 voce.setText("<html><u>" + voce.getText() + "</u></html>");
                 voce.setForeground(new Color(0, 0, 0));
             }
-
+            
+            //moude exited
             public void mouseExited(MouseEvent e) {
                 voce.setText(voce.getText().replace("<html><u>", "").replace("</u></html>", ""));
                 voce.setForeground(Color.BLACK);

@@ -14,6 +14,7 @@ import javax.swing.GroupLayout.Alignment;
 
 public class RegisterChefFrame extends JFrame {
 
+//COSTRUTTORI
  public RegisterChefFrame() {
      setTitle("Registrazione Chef - UninaFoodLab");
      setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -21,11 +22,13 @@ public class RegisterChefFrame extends JFrame {
      setResizable(false);
      setLocationRelativeTo(null);
 
+     //Content Pane
      JPanel contentPane = new JPanel();
      contentPane.setBackground(Color.WHITE);
      contentPane.setBorder(new EmptyBorder(20, 30, 30, 30));
      setContentPane(contentPane);
 
+     //Back Button
      JButton backButton = new JButton("← Indietro");
      backButton.setForeground(new Color(0, 0, 0));
      backButton.setFont(new Font("SansSerif", Font.PLAIN, 14));
@@ -41,30 +44,37 @@ public class RegisterChefFrame extends JFrame {
          }
      });
 
+     //Label per il titolo
      JLabel title = new JLabel("Registrazione Chef");
      title.setFont(new Font("SansSerif", Font.BOLD, 25));
      title.setHorizontalAlignment(SwingConstants.CENTER);
 
+     //Field per inserimento nome
      JTextField nomeField = new JTextField();
      nomeField.setFont(new Font("SansSerif", Font.PLAIN, 16));
      nomeField.setBorder(BorderFactory.createTitledBorder("Nome"));
 
+     //Field per inserimento cognome 
      JTextField cognomeField = new JTextField();
      cognomeField.setFont(new Font("SansSerif", Font.PLAIN, 16));
      cognomeField.setBorder(BorderFactory.createTitledBorder("Cognome"));
 
+     //Field per inserimento email 
      JTextField emailField = new JTextField();
      emailField.setFont(new Font("SansSerif", Font.PLAIN, 16));
      emailField.setBorder(BorderFactory.createTitledBorder("Email"));
 
+     //Field per inserimento password
      JPasswordField passwordField = new JPasswordField();
      passwordField.setFont(new Font("SansSerif", Font.PLAIN, 16));
      passwordField.setBorder(BorderFactory.createTitledBorder("Password"));
 
+     //Field per conferma password
      JPasswordField confirmField = new JPasswordField();
      confirmField.setFont(new Font("SansSerif", Font.PLAIN, 16));
      confirmField.setBorder(BorderFactory.createTitledBorder("Conferma Password"));
 
+     //Box per il check della password inserita
      JCheckBox showPasswordCheck = new JCheckBox("Mostra password");
      showPasswordCheck.setBackground(Color.WHITE);
      showPasswordCheck.setFont(new Font("SansSerif", Font.PLAIN, 14));
@@ -81,6 +91,7 @@ public class RegisterChefFrame extends JFrame {
          }
      });
 
+     //Register Button 
      JButton registerButton = new JButton("Registrati");
      registerButton.setFont(new Font("SansSerif", Font.PLAIN, 18));
      registerButton.setBackground(new Color(46, 187, 39));
@@ -92,7 +103,6 @@ public class RegisterChefFrame extends JFrame {
          @Override
          public void actionPerformed(ActionEvent e) {
              ControllerChef CC = new ControllerChef();
-             
              String nome = nomeField.getText();
              String cognome = cognomeField.getText();
              String email = emailField.getText();
@@ -118,6 +128,7 @@ public class RegisterChefFrame extends JFrame {
          }
      });
 
+     //Layout
      GroupLayout gl_contentPane = new GroupLayout(contentPane);
      gl_contentPane.setHorizontalGroup(
          gl_contentPane.createParallelGroup(Alignment.LEADING)
@@ -162,4 +173,3 @@ public class RegisterChefFrame extends JFrame {
      contentPane.setLayout(gl_contentPane);
  }
 }
-

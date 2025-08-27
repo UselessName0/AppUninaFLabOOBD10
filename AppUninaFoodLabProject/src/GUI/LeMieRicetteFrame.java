@@ -32,23 +32,21 @@ import Entities.Ricetta;
 
 public class LeMieRicetteFrame extends JFrame {
 	
-	//Attributi
+	//ATTRIBUTI
     private ControllerPartecipante CP = new ControllerPartecipante();
     private Partecipante p;
     private JMenu menuAttivo = null;
     Color sfondoPrincipale = new Color(220, 240, 250);
     Color sfondoTabella = new Color(210, 240, 210);
     
-    //Costruttori
+    //COSTRUTTORI
     public LeMieRicetteFrame(Partecipante p) {
-    	
     	this.p = p;
         setTitle("Le Mie Ricette");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(800, 600);
         setLocationRelativeTo(null);
         setResizable(false);
-
         setJMenuBar(creaMenuBar());
         
         //Pannello principale
@@ -58,14 +56,14 @@ public class LeMieRicetteFrame extends JFrame {
         panel.setBackground(sfondoPrincipale);
         panel.setLayout(new BorderLayout(0, 20));
 
+        //Label per il Titolo
         JLabel titolo = new JLabel("Le mie Ricette", SwingConstants.CENTER);
         titolo.setForeground(new Color(50, 80, 150));
         titolo.setFont(new Font("Arial", Font.BOLD, 28));
         panel.add(titolo, BorderLayout.NORTH);
     	
-        //Tabella
-        final List<Ricetta> datiRicette = CP.GetRicettaDiPartecipante(p);
-        
+        //Lista per tutte le ricette apprese dal partecipante
+        final List<Ricetta> datiRicette = CP.GetRicettaDiPartecipante(p);    
         String[] colonne = { "Nome Ricetta" };
         Object[][] righe = new Object[datiRicette.size()][1];
         for(int i = 0; i < datiRicette.size(); i++) {
@@ -73,6 +71,7 @@ public class LeMieRicetteFrame extends JFrame {
         	righe[i][0] = r.getTitolo();
         }
         
+        //Creazione della tabella
         JTable tabellaCorsi = new JTable(righe, colonne);
         tabellaCorsi.setFont(new Font("Arial", Font.PLAIN, 16));
         tabellaCorsi.setRowHeight(28);
@@ -80,6 +79,7 @@ public class LeMieRicetteFrame extends JFrame {
         tabellaCorsi.setBackground(sfondoTabella);
         tabellaCorsi.setGridColor(Color.LIGHT_GRAY);
    
+        //ScrollPane per la tabella
         JScrollPane scrollPane = new JScrollPane(tabellaCorsi);
         scrollPane.setPreferredSize(new Dimension(700, 360));
 
@@ -93,33 +93,31 @@ public class LeMieRicetteFrame extends JFrame {
         JPanel pannellobtn = new JPanel(new FlowLayout(FlowLayout.CENTER));
         pannellobtn.setBackground(sfondoPrincipale);
 
+        //Back Button 
         JButton btnIndietro = new JButton("← Indietro");
         btnIndietro.setFont(new Font("Arial", Font.PLAIN, 14));
         btnIndietro.setFocusPainted(false);
         btnIndietro.setBorder(BorderFactory.createLineBorder(new Color(50, 80, 150), 1));
         btnIndietro.setBackground(new Color(220, 240, 250));
         pannellobtn.add(btnIndietro);
-
         btnIndietro.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 new DashboardUtente(p).setVisible(true);
                 dispose();
             }
         });
-
         panel.add(pannellobtn, BorderLayout.SOUTH);	
     }
     
-  //Metodi
+    //METODI
+    //Metodo per la creazione del menù bar
     private JMenuBar creaMenuBar() {
         JMenuBar menuBar = new JMenuBar();
-
         JMenu menuCorsi = new JMenu("Corsi");
         JMenu menuSessioni = new JMenu("Sessioni");
         JMenu menuChef = new JMenu("Chef");
         JMenu menuRicette = new JMenu("Ricette");
         JMenu menuAccount = new JMenu("Account");
-
         JMenuItem itemVediCorsi = new JMenuItem("Corsi Disponibili");
         JMenuItem itemMieIscrizioni = new JMenuItem("Le Mie Iscrizioni");
         JMenuItem itemVediSessioni = new JMenuItem("Le Mie Sessioni");
@@ -129,6 +127,7 @@ public class LeMieRicetteFrame extends JFrame {
         JMenuItem itemInfo = new JMenuItem("Il mio profilo");
         JMenuItem itemLogout = new JMenuItem("Logout");
 
+        //Listener
         itemLogout.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 new WelcomeFrame().setVisible(true);
@@ -204,7 +203,6 @@ public class LeMieRicetteFrame extends JFrame {
         menuChef.addMenuListener(evidenziaListener);
         menuRicette.addMenuListener(evidenziaListener);
         menuAccount.addMenuListener(evidenziaListener);
-
         menuCorsi.add(itemVediCorsi);
         menuCorsi.add(itemMieIscrizioni);
         menuSessioni.add(itemVediSessioni);
@@ -213,7 +211,6 @@ public class LeMieRicetteFrame extends JFrame {
         menuRicette.add(itemLeMieRicette);
         menuAccount.add(itemInfo);
         menuAccount.add(itemLogout);
-
         menuBar.add(menuCorsi);
         menuBar.add(menuSessioni);
         menuBar.add(menuRicette);
@@ -223,6 +220,7 @@ public class LeMieRicetteFrame extends JFrame {
         return menuBar;
     }
 
+    //Metodo per evidenziare il menù
     private void evidenziaMenu(JMenu nuovoMenu) {
         if (menuAttivo != null) {
             ripristinaMenu(menuAttivo);
@@ -233,6 +231,7 @@ public class LeMieRicetteFrame extends JFrame {
         menuAttivo = nuovoMenu;
     }
 
+    //Metodo per ripristinare il menù
     private void ripristinaMenu(JMenu menu) {
         menu.setOpaque(false);
         menu.setBackground(null);
@@ -240,6 +239,5 @@ public class LeMieRicetteFrame extends JFrame {
         if (menu == menuAttivo) {
             menuAttivo = null;
         }
-    }
-	
+    }	
 }

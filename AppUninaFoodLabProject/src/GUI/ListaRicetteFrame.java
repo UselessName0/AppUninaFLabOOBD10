@@ -27,14 +27,15 @@ import Controller.ControllerChef;
 
 public class ListaRicetteFrame extends JFrame {
 
+	//ATTRIBUTI
     private Chef c;
     private JTable table;
     private JMenu menuAttivo; 
-
     private Color sfondoPrincipale = new Color(220, 240, 250);
     private Color sfondoTabella = new Color(210, 240, 210);
     private ControllerChef CC = new ControllerChef();
     
+    //COSTRUTTORI
     public ListaRicetteFrame(Chef C) {
         this.c = C;
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -42,22 +43,19 @@ public class ListaRicetteFrame extends JFrame {
         setLocationRelativeTo(null);
         setResizable(false);
         setTitle("Lista Ricette");
-
         getContentPane().setBackground(sfondoPrincipale);
         getContentPane().setLayout(new BorderLayout(10, 10));
         ((JPanel)getContentPane()).setBorder(new EmptyBorder(10, 10, 10, 10));
-
         creaMenuBar();
 
-        // Titolo
+        //Label Titolo
         JLabel lblTitolo = new JLabel("Lista Ricette", JLabel.CENTER);
         lblTitolo.setForeground(new Color(50, 80, 150));
         lblTitolo.setFont(new Font("Arial", Font.BOLD, 24));
         getContentPane().add(lblTitolo, BorderLayout.NORTH);
 
-        // Tabella
+        //Creazione della Tabella
         List<Ricetta> ricette = CC.GetAllRicette();
-   
         table = new JTable();
         table.setModel(new DefaultTableModel(
             new Object[][] {},
@@ -70,16 +68,17 @@ public class ListaRicetteFrame extends JFrame {
 			((DefaultTableModel) table.getModel()).addRow(new Object[] { r.getTitolo(), r.getDescrizione() });
 		}
 
+        //ScrollPane per lo scorrimento di tutta la tabella 
         JScrollPane scrollPane = new JScrollPane(table);
         scrollPane.setPreferredSize(new Dimension(700, 400));
 
-        // Pannello centrale
+        //Pannello centrale (usato per la tabella) 
         JPanel centerPanel = new JPanel();
         centerPanel.setBackground(sfondoPrincipale);
         centerPanel.add(scrollPane);
         getContentPane().add(centerPanel, BorderLayout.CENTER);
 
-        // Bottone indietro
+        //Back Button
         JButton btnIndietro = new JButton("← Indietro");
         btnIndietro.setFont(new Font("Arial", Font.PLAIN, 14));
         btnIndietro.setFocusPainted(false);
@@ -92,21 +91,22 @@ public class ListaRicetteFrame extends JFrame {
             }
         });
 
+        //Pannello sottostante usato per centrare il Back Button 
         JPanel southPanel = new JPanel();
         southPanel.setBackground(sfondoPrincipale);
         southPanel.add(btnIndietro);
         getContentPane().add(southPanel, BorderLayout.SOUTH);
     }
 
+    //METODI
+    //Metodo per la creazione della menu bar 
     private void creaMenuBar() {
         JMenuBar menuBar = new JMenuBar();
-
         JMenu menuCorsi = new JMenu("Corsi");
         JMenu menuSessioni = new JMenu("Sessioni");
         JMenu menuRicette = new JMenu("Ricette");
         JMenu menuStatsNReport = new JMenu("Stats&Reports");
         JMenu menuAccount = new JMenu("Account");
-
         JMenuItem itemVediCorsi = new JMenuItem("Corsi Altrui");
         JMenuItem itemAggiungiCorso = new JMenuItem("Aggiungi Corso");
         JMenuItem itemImieiCorsi = new JMenuItem("I Miei Corsi");
@@ -118,7 +118,7 @@ public class ListaRicetteFrame extends JFrame {
         JMenuItem itemInfo = new JMenuItem("Il mio profilo");
         JMenuItem itemLogout = new JMenuItem("Logout");
 
-        // Listener logout
+        //Listener 
         itemLogout.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 new WelcomeFrame().setVisible(true);
@@ -126,7 +126,6 @@ public class ListaRicetteFrame extends JFrame {
             }
         });
 
-        // Listener corsi
         itemVediCorsi.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 new CorsiDisponibiliFrame(c).setVisible(true);
@@ -146,13 +145,13 @@ public class ListaRicetteFrame extends JFrame {
             }
         });
 
-        // Listener sessioni
         itemAggiungiSessione.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 new AggiungiSessioneFrame(c).setVisible(true);
                 dispose();
             }
         });
+        
         itemSessioniDisponibili.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 new CalendarioSessioniFrame(c).setVisible(true);
@@ -160,13 +159,13 @@ public class ListaRicetteFrame extends JFrame {
             }
         });
 
-        // Listener ricette
         itemListaRicette.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 new ListaRicetteFrame(c).setVisible(true);
                 dispose();
             }
         });
+        
         itemCreaRicetta.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 new CreaRicettaFrame(c).setVisible(true);
@@ -174,7 +173,6 @@ public class ListaRicetteFrame extends JFrame {
             }
         });
 
-        // Listener stats & report
         itemStatistiche.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 new StatisticheFrame(c).setVisible(true);
@@ -182,7 +180,6 @@ public class ListaRicetteFrame extends JFrame {
             }
         });
 
-        // Listener account
         itemInfo.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 new ilMioProfiloFrame(c).setVisible(true);
@@ -190,7 +187,6 @@ public class ListaRicetteFrame extends JFrame {
             }
         });
 
-        // Aggiungi elementi ai menu
         menuCorsi.add(itemVediCorsi);
         menuCorsi.add(itemAggiungiCorso);
         menuCorsi.add(itemImieiCorsi);
@@ -201,17 +197,15 @@ public class ListaRicetteFrame extends JFrame {
         menuStatsNReport.add(itemStatistiche);
         menuAccount.add(itemInfo);
         menuAccount.add(itemLogout);
-
-        // Aggiungi menu alla barra
         menuBar.add(menuCorsi);
         menuBar.add(menuSessioni);
         menuBar.add(menuRicette);
         menuBar.add(menuStatsNReport);
         menuBar.add(menuAccount);
-
         setJMenuBar(menuBar);
     }
 
+    //Metodo per evidenzare il menù
     private void evidenziaMenu(JMenu nuovoMenu) {
         if (menuAttivo != null) {
             ripristinaMenu(menuAttivo);
@@ -222,6 +216,7 @@ public class ListaRicetteFrame extends JFrame {
         menuAttivo = nuovoMenu;
     }
 
+    //Metodo per ripristinare il menù
     private void ripristinaMenu(JMenu menu) {
         menu.setOpaque(false);
         menu.setBackground(null);

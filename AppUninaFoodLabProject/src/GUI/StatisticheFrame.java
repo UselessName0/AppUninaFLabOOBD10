@@ -31,13 +31,14 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 
 public class StatisticheFrame extends JFrame {
 
+	//ATTRIBUTI
     private static final long serialVersionUID = 1L;
     private JPanel contentPane;
     Chef c;
     ControllerChef CC = new ControllerChef();
     
+    //COSTRUTTORI
     public StatisticheFrame(Chef C) {
-        
         this.c = C;
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(800, 600);
@@ -51,6 +52,7 @@ public class StatisticheFrame extends JFrame {
         contentPane.setBackground(sfondoPrincipale);
         setContentPane(contentPane);
         
+        //Back Button
         JButton btnIndietro = new JButton("← Indietro");
         btnIndietro.setFont(new Font("Arial", Font.PLAIN, 14));
         btnIndietro.setFocusPainted(false);
@@ -63,14 +65,14 @@ public class StatisticheFrame extends JFrame {
             }
         });
         
-        //setting dei dati per il grafico a torta
+        //Setting dei dati per il grafico a torta
         int[] modalitaInsegnamento = CC.GetModalitaDiSessionePerChef(C);
         int totaleSessioni = modalitaInsegnamento[0] + modalitaInsegnamento[1];
         DefaultPieDataset dataset = new DefaultPieDataset();
         dataset.setValue("Pratiche", modalitaInsegnamento[0]/(totaleSessioni*1.0) * 100);
         dataset.setValue("Online", modalitaInsegnamento[1]/(totaleSessioni*1.0) * 100);
 
-        //creazione del grafico
+        //Creazione effettiva del grafico
         JFreeChart chart = ChartFactory.createPieChart(
             "Statistiche Corso", 
             dataset, 
@@ -79,17 +81,16 @@ public class StatisticheFrame extends JFrame {
             false  
         );
 
-        //pannello con grafico
+        //Pannello che contiene il grafico
         ChartPanel chartPanel = new ChartPanel(chart);
         chartPanel.setPreferredSize(new java.awt.Dimension(700, 200));
-        
         org.jfree.data.category.DefaultCategoryDataset barDataset = new org.jfree.data.category.DefaultCategoryDataset();
         int[] numeroSessioniPerMese = CC.GetNumeroSessioniByMonth(C);
         for(int i = 0; i < numeroSessioniPerMese.length; i++) {
 			barDataset.addValue(numeroSessioniPerMese[i], "Sessioni", i+1 + "");
 		}
         
-
+        //Setting e creazione del grafico BarChart
         JFreeChart barChart = ChartFactory.createBarChart(
             "Sessioni tenute per mese",   
             "Mese",                   
@@ -100,9 +101,12 @@ public class StatisticheFrame extends JFrame {
             true,   
             false  
         );
+        
+        //Panel per il barChart
         ChartPanel barChartPanel = new ChartPanel(barChart);
         barChartPanel.setPreferredSize(new java.awt.Dimension(700, 200));
 
+        //Layout (GroupLayout)
         GroupLayout gl_contentPane = new GroupLayout(contentPane);
         gl_contentPane.setHorizontalGroup(
         	gl_contentPane.createParallelGroup(Alignment.CENTER)
@@ -127,23 +131,19 @@ public class StatisticheFrame extends JFrame {
         			.addComponent(btnIndietro, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
         			.addGap(65))
         );
-
         contentPane.setLayout(gl_contentPane);
-
-        
     }
     
-    // METODI MENU
+    //METODI
+    //Creazione del MenuBar
     private JMenu menuAttivo = null;
     private JMenuBar CreaMenuBar(JFrame frame) {
         JMenuBar menuBar = new JMenuBar();
-
         JMenu menuCorsi = new JMenu("Corsi");
         JMenu menuSessioni = new JMenu("Sessioni");
         JMenu menuRicette = new JMenu("Ricette");
         JMenu menuStatsNReport = new JMenu("Stats&Reports");
         JMenu menuAccount = new JMenu("Account");
-
         JMenuItem itemVediCorsi = new JMenuItem("Corsi Altrui");
         JMenuItem itemAggiungiCorso = new JMenuItem("Aggiungi Corso");
         JMenuItem itemImieiCorsi = new JMenuItem("I Miei Corsi");
@@ -154,6 +154,7 @@ public class StatisticheFrame extends JFrame {
         JMenuItem itemInfo = new JMenuItem("Il mio profilo");
         JMenuItem itemLogout = new JMenuItem("Logout");
 
+        //ActionListener per ogni voce del menù e de sottomenù
         itemLogout.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 new WelcomeFrame().setVisible(true);
@@ -217,6 +218,7 @@ public class StatisticheFrame extends JFrame {
             }
         });
 
+        //Metodi per evidenziare la singola voce del menù al passaggio del cursore
         MenuListener menuListener = new MenuListener() {
             public void menuSelected(MenuEvent e) {
                 evidenziaMenu((JMenu) e.getSource());
@@ -234,7 +236,6 @@ public class StatisticheFrame extends JFrame {
         menuRicette.addMenuListener(menuListener);
         menuStatsNReport.addMenuListener(menuListener);
         menuAccount.addMenuListener(menuListener);
-
         menuCorsi.add(itemVediCorsi);
         menuCorsi.add(itemAggiungiCorso);
         menuCorsi.add(itemImieiCorsi);
@@ -244,7 +245,6 @@ public class StatisticheFrame extends JFrame {
         menuStatsNReport.add(itemStatistiche);
         menuAccount.add(itemInfo);
         menuAccount.add(itemLogout);
-
         menuBar.add(menuCorsi);
         menuBar.add(menuSessioni);
         menuBar.add(menuRicette);
@@ -254,6 +254,7 @@ public class StatisticheFrame extends JFrame {
         return menuBar;
     }
     
+    //Metodo per evidenziare il menù
     private void evidenziaMenu(JMenu nuovoMenu) {
         if (menuAttivo != null) {
             ripristinaMenu(menuAttivo);
@@ -264,6 +265,7 @@ public class StatisticheFrame extends JFrame {
         menuAttivo = nuovoMenu;
     }
     
+    //Metodo per ripristinare il menù 
     private void ripristinaMenu(JMenu menu) {
         menu.setOpaque(false);
         menu.setBackground(null);

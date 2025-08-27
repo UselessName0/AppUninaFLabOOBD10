@@ -8,6 +8,7 @@ import javax.swing.GroupLayout.Alignment;
 
 public class LoginFrame extends JFrame {
 
+	//COSTRUTTORI
     public LoginFrame() {
         setTitle("Login - UninaFoodLab");
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -15,12 +16,13 @@ public class LoginFrame extends JFrame {
         setResizable(false);
         setLocationRelativeTo(null);
 
+        //Panel
         JPanel contentPane = new JPanel();
         contentPane.setBackground(Color.WHITE);
         contentPane.setBorder(new EmptyBorder(20, 30, 30, 30));
         setContentPane(contentPane);
 
-        // Bottone Indietro
+        //Back Button
         JButton backButton = new JButton("← Indietro");
         backButton.setForeground(new Color(0, 0, 0));
         backButton.setFont(new Font("SansSerif", Font.PLAIN, 14));
@@ -36,12 +38,12 @@ public class LoginFrame extends JFrame {
             }
         });
 
-        // Titolo
+        //Label per il titolo 
         JLabel lblLoginCome = new JLabel("Login:");
         lblLoginCome.setHorizontalAlignment(SwingConstants.CENTER);
         lblLoginCome.setFont(new Font("SansSerif", Font.BOLD, 25));
 
-        // Pulsante Utente
+        //User Button 
         JButton userButton = new JButton("Utente");
         styleButton(userButton, new Color(100, 149, 237));
         userButton.addActionListener(new ActionListener() {
@@ -52,7 +54,7 @@ public class LoginFrame extends JFrame {
             }
         });
 
-        // Pulsante Chef
+        //Chef Button
         JButton chefButton = new JButton("Chef");
         styleButton(chefButton, new Color(46, 187, 39));
         chefButton.addActionListener(new ActionListener() {
@@ -63,6 +65,7 @@ public class LoginFrame extends JFrame {
             }
         });
 
+        //Layout
         GroupLayout gl_contentPane = new GroupLayout(contentPane);
         gl_contentPane.setHorizontalGroup(
         	gl_contentPane.createParallelGroup(Alignment.TRAILING)
@@ -92,10 +95,11 @@ public class LoginFrame extends JFrame {
         			.addComponent(chefButton, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
         			.addContainerGap(133, Short.MAX_VALUE))
         );
-
         contentPane.setLayout(gl_contentPane);
     }
 
+    //METODI
+    //Metodo per lo styling dei bottoni 
     private void styleButton(JButton button, Color color) {
         button.setMaximumSize(new Dimension(250, 40));
         button.setForeground(Color.WHITE);

@@ -33,22 +33,21 @@ import Entities.Sessione;
 
 public class LeMieSessioniFrame extends JFrame {
 	
-	
+	//ATTRIBUTI
     private ControllerPartecipante CP = new ControllerPartecipante();
     private Partecipante p;
     private JMenu menuAttivo = null;
     Color sfondoPrincipale = new Color(220, 240, 250);
     Color sfondoTabella = new Color(210, 240, 210);
 
-    public LeMieSessioniFrame(Partecipante p) {
-    	
+    //COSTRUTTORI
+    public LeMieSessioniFrame(Partecipante p) {	
         this.p = p;
         setTitle("Le Mie Sessioni");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(800, 600);
         setLocationRelativeTo(null);
         setResizable(false);
-
         setJMenuBar(creaMenuBar());
         
         //Pannello principale
@@ -58,14 +57,14 @@ public class LeMieSessioniFrame extends JFrame {
         panel.setBackground(sfondoPrincipale);
         panel.setLayout(new BorderLayout(0, 20));
 
+        //Label per inserimento del titolo
         JLabel titolo = new JLabel("Le mie Sessioni", SwingConstants.CENTER);
         titolo.setForeground(new Color(50, 80, 150));
         titolo.setFont(new Font("Arial", Font.BOLD, 28));
         panel.add(titolo, BorderLayout.NORTH);
     	
-      //Tabella
-        final List<Sessione> datiSessioni = CP.GetSessioneDovePartecipanteIscritto(p);
-        
+        //Lista per prendere tutti i corsi dove il partecipante non è iscritto 
+        final List<Sessione> datiSessioni = CP.GetSessioneDovePartecipanteIscritto(p);   
         String[] colonne = { "Nome Corso", "Data Sessione" };
         Object[][] righe = new Object[datiSessioni.size()][2];
         for(int i = 0; i < datiSessioni.size(); i++) {
@@ -74,6 +73,7 @@ public class LeMieSessioniFrame extends JFrame {
         	righe[i][1] = s.getData_Sessione();
         }
         
+        //Costruzione della tabella
         JTable tabellaCorsi = new JTable(righe, colonne);
         tabellaCorsi.setFont(new Font("Arial", Font.PLAIN, 16));
         tabellaCorsi.setRowHeight(28);
@@ -81,6 +81,7 @@ public class LeMieSessioniFrame extends JFrame {
         tabellaCorsi.setBackground(sfondoTabella);
         tabellaCorsi.setGridColor(Color.LIGHT_GRAY);
    
+        //ScrollPane per la tabella
         JScrollPane scrollPane = new JScrollPane(tabellaCorsi);
         scrollPane.setPreferredSize(new Dimension(700, 360));
 
@@ -94,6 +95,7 @@ public class LeMieSessioniFrame extends JFrame {
         JPanel pannellobtn = new JPanel(new FlowLayout(FlowLayout.CENTER));
         pannellobtn.setBackground(sfondoPrincipale);
 
+        //Back Button
         JButton btnIndietro = new JButton("← Indietro");
         btnIndietro.setFont(new Font("Arial", Font.PLAIN, 14));
         btnIndietro.setFocusPainted(false);
@@ -101,25 +103,25 @@ public class LeMieSessioniFrame extends JFrame {
         btnIndietro.setBackground(new Color(220, 240, 250));
         pannellobtn.add(btnIndietro);
 
+        //Listener
         btnIndietro.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 new DashboardUtente(p).setVisible(true);
                 dispose();
             }
         });
-
         panel.add(pannellobtn, BorderLayout.SOUTH);
     }
     
+    //METODI
+    //Metodo per la creazione del menù bar
     private JMenuBar creaMenuBar() {
         JMenuBar menuBar = new JMenuBar();
-
         JMenu menuCorsi = new JMenu("Corsi");
         JMenu menuSessioni = new JMenu("Sessioni");
         JMenu menuChef = new JMenu("Chef");
         JMenu menuRicette = new JMenu("Ricette");
         JMenu menuAccount = new JMenu("Account");
-
         JMenuItem itemVediCorsi = new JMenuItem("Corsi Disponibili");
         JMenuItem itemMieIscrizioni = new JMenuItem("Le Mie Iscrizioni");
         JMenuItem itemVediSessioni = new JMenuItem("Le Mie Sessioni");
@@ -129,6 +131,7 @@ public class LeMieSessioniFrame extends JFrame {
         JMenuItem itemInfo = new JMenuItem("Il mio profilo");
         JMenuItem itemLogout = new JMenuItem("Logout");
 
+        //Listener
         itemLogout.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 new WelcomeFrame().setVisible(true);
@@ -204,7 +207,6 @@ public class LeMieSessioniFrame extends JFrame {
         menuChef.addMenuListener(evidenziaListener);
         menuRicette.addMenuListener(evidenziaListener);
         menuAccount.addMenuListener(evidenziaListener);
-
         menuCorsi.add(itemVediCorsi);
         menuCorsi.add(itemMieIscrizioni);
         menuSessioni.add(itemVediSessioni);
@@ -213,7 +215,6 @@ public class LeMieSessioniFrame extends JFrame {
         menuRicette.add(itemLeMieRicette);
         menuAccount.add(itemInfo);
         menuAccount.add(itemLogout);
-
         menuBar.add(menuCorsi);
         menuBar.add(menuSessioni);
         menuBar.add(menuRicette);
@@ -223,6 +224,7 @@ public class LeMieSessioniFrame extends JFrame {
         return menuBar;
     }
 
+    //Metodo per evidenziare il menù
     private void evidenziaMenu(JMenu nuovoMenu) {
         if (menuAttivo != null) {
             ripristinaMenu(menuAttivo);
@@ -233,6 +235,7 @@ public class LeMieSessioniFrame extends JFrame {
         menuAttivo = nuovoMenu;
     }
 
+    //Metodo per ripristinare il menù
     private void ripristinaMenu(JMenu menu) {
         menu.setOpaque(false);
         menu.setBackground(null);

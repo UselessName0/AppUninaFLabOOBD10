@@ -12,7 +12,6 @@ import javax.swing.SwingUtilities;
 import Database.DBManager;
 import GUI.WelcomeFrame;
 
-//Main
 public class Main {
     public static void main(String[] args) {
         SwingUtilities.invokeLater(new Runnable() {
@@ -32,6 +31,5 @@ public class Main {
         } catch (SQLException e) {
             System.out.println("❌ Errore di connessione: " + e.getMessage());
         }
-        
     }
 }

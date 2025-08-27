@@ -19,7 +19,7 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 
 public class ilMioProfiloFrame extends JFrame {
 
-	//Attributi
+	//ATTRIBUTI
     private ControllerPartecipante CP = new ControllerPartecipante();
     private ControllerChef CC = new ControllerChef();
     private Partecipante p;
@@ -28,7 +28,7 @@ public class ilMioProfiloFrame extends JFrame {
     Color sfondoPrincipale = new Color(220, 240, 250);
     private JPanel contentPane;
 
-    //Costruttori
+    //COSTRUTTORI
     public ilMioProfiloFrame(Partecipante p) {
         setTitle("Il Mio Profilo");
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -36,46 +36,45 @@ public class ilMioProfiloFrame extends JFrame {
         setTitle("Profilo Partecipante");
         setLocationRelativeTo(null);
         setResizable(false);
-
         contentPane = new JPanel();
         contentPane.setBorder(new EmptyBorder(30, 30, 30, 30));
         contentPane.setBackground(sfondoPrincipale);
         setContentPane(contentPane);
 
+        //Font 
         Font labelFont = new Font("Segoe UI", Font.BOLD, 16);
         Font dataFont = new Font("Segoe UI", Font.PLAIN, 16);
 
+        //Label per il titolo 
         JLabel lblTitolo = new JLabel("Profilo Partecipante");
         lblTitolo.setForeground(new Color(50, 80, 150));
         lblTitolo.setFont(new Font("Arial", Font.BOLD, 26));
         lblTitolo.setHorizontalAlignment(SwingConstants.CENTER);
 
+        //Label per nome, cognome, email e corsi seguiti 
         JLabel lblNome = new JLabel("Nome:");
         JLabel lblCognome = new JLabel("Cognome:");
         JLabel lblEmail = new JLabel("Email:");
         JLabel lblCorsiSeguiti = new JLabel("Corsi Seguiti:");
-
         lblNome.setFont(labelFont);
         lblCognome.setFont(labelFont);
         lblEmail.setFont(labelFont);
         lblCorsiSeguiti.setFont(labelFont);
-
         JLabel dataNome = new JLabel(p.getNome());
         JLabel dataCognome = new JLabel(p.getCognome());
         JLabel dataEmail = new JLabel(p.getEmail());
         JLabel dataCorsiSeguiti = new JLabel(CP.GetNumeroCorsiSeguiti(p) + " Corsi");
-
         dataNome.setFont(dataFont);
         dataCognome.setFont(dataFont);
         dataEmail.setFont(dataFont);
         dataCorsiSeguiti.setFont(dataFont);
 
+        //Back Button
         JButton btnIndietro = new JButton("← Indietro");
         btnIndietro.setFont(new Font("Arial", Font.PLAIN, 14));
         btnIndietro.setFocusPainted(false);
         btnIndietro.setBorder(BorderFactory.createLineBorder(new Color(50, 80, 150), 1));
         btnIndietro.setBackground(new Color(220, 240, 250));
-
         btnIndietro.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 new DashboardUtente(p).setVisible(true);
@@ -139,7 +138,6 @@ public class ilMioProfiloFrame extends JFrame {
         setTitle("Profilo Chef");
         setLocationRelativeTo(null);
         setResizable(false);
-
         contentPane = new JPanel();
         contentPane.setBorder(new EmptyBorder(30, 30, 30, 30));
         contentPane.setBackground(sfondoPrincipale);
@@ -234,16 +232,15 @@ public class ilMioProfiloFrame extends JFrame {
         contentPane.setLayout(gl);
     }
     
-    //Metodi
+    //METODI
+    //Metodo per la creazione della Menù Bar
     private JMenuBar creaMenuBar() {
         JMenuBar menuBar = new JMenuBar();
-
         JMenu menuCorsi = new JMenu("Corsi");
         JMenu menuSessioni = new JMenu("Sessioni");
         JMenu menuChef = new JMenu("Chef");
         JMenu menuRicette = new JMenu("Ricette");
         JMenu menuAccount = new JMenu("Account");
-
         JMenuItem itemVediCorsi = new JMenuItem("Corsi Disponibili");
         JMenuItem itemMieIscrizioni = new JMenuItem("Le Mie Iscrizioni");
         JMenuItem itemVediSessioni = new JMenuItem("Le Mie Sessioni");
@@ -253,6 +250,7 @@ public class ilMioProfiloFrame extends JFrame {
         JMenuItem itemInfo = new JMenuItem("Il mio profilo");
         JMenuItem itemLogout = new JMenuItem("Logout");
 
+        //Listener
         itemLogout.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 new WelcomeFrame().setVisible(true);
@@ -347,6 +345,7 @@ public class ilMioProfiloFrame extends JFrame {
         return menuBar;
     }
 
+    //Metodi per evidenziare e resettare il menù
     private void evidenziaMenu(JMenu nuovoMenu) {
         if (menuAttivo != null) {
             ripristinaMenu(menuAttivo);

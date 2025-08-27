@@ -17,10 +17,9 @@ import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.border.LineBorder;
 
-
 public class AggiungiCorsoFrame extends JFrame {
 
-    // ATTRIBUTI
+    //ATTRIBUTI
     private ControllerChef CC = new ControllerChef();
     private JPanel contentPane;
     private Chef c;
@@ -28,7 +27,7 @@ public class AggiungiCorsoFrame extends JFrame {
     private JTextField nomeCorsoField;
     private JComboBox<String> frequenzaComboBox;
 
-    // COSTRUTTORE
+    //COSTRUTTORI
     public AggiungiCorsoFrame(Chef C) {
         this.c = C;
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -44,12 +43,12 @@ public class AggiungiCorsoFrame extends JFrame {
         setContentPane(contentPane);
         contentPane.setBackground(sfondoPrincipale);
 
-        // Titolo
+        //Titolo
         JLabel titoloLabel = new JLabel("Aggiungi un corso", SwingConstants.CENTER);
         titoloLabel.setForeground(new Color(50, 80, 150));
         titoloLabel.setFont(new Font("Arial", Font.BOLD, 24));
 
-        // Label e campi
+        //Label e campi
         JLabel labelNomeCorso = new JLabel("Nome corso:");
         labelNomeCorso.setFont(new Font("Arial", Font.BOLD, 18));
         nomeCorsoField = new JTextField();
@@ -87,6 +86,7 @@ public class AggiungiCorsoFrame extends JFrame {
         textArea.setLineWrap(true);
         textArea.setBorder(new LineBorder(Color.BLACK, 1));
         
+        //Back Button 
         JButton btnIndietro = new JButton("← Indietro");
         btnIndietro.setFont(new Font("Arial", Font.PLAIN, 14));
         btnIndietro.setFocusPainted(false);
@@ -99,6 +99,7 @@ public class AggiungiCorsoFrame extends JFrame {
             }
         });
         
+        //Add Button (con check)
         JButton btnAggiungi_1 = new JButton("Aggiungi");
         btnAggiungi_1.setFont(new Font("Arial", Font.PLAIN, 14));
         btnAggiungi_1.setFocusPainted(false);
@@ -113,7 +114,6 @@ public class AggiungiCorsoFrame extends JFrame {
                 corso.setData_Creazione(LocalDate.now());
                 corso.setDescrizione(textArea.getText());
                 corso.setFrequenza_Corsi((String) frequenzaComboBox.getSelectedItem());
-
                 if(CC.InsertCorso(corso)) {
 					JOptionPane.showMessageDialog(contentPane, "Corso aggiunto con successo!", "Successo", JOptionPane.INFORMATION_MESSAGE);
 					new DashboardChef(c).setVisible(true);
@@ -124,7 +124,7 @@ public class AggiungiCorsoFrame extends JFrame {
             }
         });
 
-        // Layout aggiornato
+        //Layout
         GroupLayout layout = new GroupLayout(contentPane);
         layout.setHorizontalGroup(
         	layout.createParallelGroup(Alignment.TRAILING)
@@ -185,18 +185,16 @@ public class AggiungiCorsoFrame extends JFrame {
         layout.setAutoCreateContainerGaps(true);
     }
     
-    //METODI 
+    //METODI
+    //Metodo per la creazione del menù bar
     private JMenu menuAttivo = null;
-    
  		private JMenuBar CreaMenuBar(JFrame frame) {
         JMenuBar menuBar = new JMenuBar();
-
         JMenu menuCorsi = new JMenu("Corsi");
         JMenu menuSessioni = new JMenu("Sessioni");
         JMenu menuRicette = new JMenu("Ricette");
         JMenu menuStatsNReport = new JMenu("Stats&Reports");
         JMenu menuAccount = new JMenu("Account");
-
         JMenuItem itemVediCorsi = new JMenuItem("Corsi Altrui");
         JMenuItem itemAggiungiCorso = new JMenuItem("Aggiungi Corso");
         JMenuItem itemImieiCorsi = new JMenuItem("I Miei Corsi");
@@ -208,6 +206,7 @@ public class AggiungiCorsoFrame extends JFrame {
         JMenuItem itemInfo = new JMenuItem("Il mio profilo");
         JMenuItem itemLogout = new JMenuItem("Logout");
 
+        //Listener
         itemLogout.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 new WelcomeFrame().setVisible(true);
@@ -296,7 +295,6 @@ public class AggiungiCorsoFrame extends JFrame {
         menuRicette.addMenuListener(menuListener);
         menuStatsNReport.addMenuListener(menuListener);
         menuAccount.addMenuListener(menuListener);
-
         menuCorsi.add(itemVediCorsi);
         menuCorsi.add(itemAggiungiCorso);
         menuCorsi.add(itemImieiCorsi);
@@ -307,7 +305,6 @@ public class AggiungiCorsoFrame extends JFrame {
         menuStatsNReport.add(itemStatistiche);
         menuAccount.add(itemInfo);
         menuAccount.add(itemLogout);
-
         menuBar.add(menuCorsi);
         menuBar.add(menuSessioni);
         menuBar.add(menuRicette);

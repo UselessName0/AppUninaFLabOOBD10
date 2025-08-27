@@ -41,7 +41,7 @@ import Entities.Sessione;
 
 public class CalendarioSessioniFrame extends JFrame {
 	
-	//Attributi
+	//ATTRIBUTI
     private ControllerPartecipante CP = new ControllerPartecipante();
     private ControllerChef CC = new ControllerChef();
     private Partecipante p;
@@ -50,7 +50,8 @@ public class CalendarioSessioniFrame extends JFrame {
     Color sfondoPrincipale = new Color(220, 240, 250);
     Color sfondoTabella = new Color(210, 240, 210);
     
-   public CalendarioSessioniFrame(Chef C) {
+    //COSTRUTTORI
+    public CalendarioSessioniFrame(Chef C) {
     	
     	this.c = C;
         setTitle("Calendario Sessioni");
@@ -72,7 +73,7 @@ public class CalendarioSessioniFrame extends JFrame {
         titolo.setFont(new Font("Arial", Font.BOLD, 28));
         panel.add(titolo, BorderLayout.NORTH);
     	
-      //Tabella
+        //Creazione lista delle sessioni per chef 
         List<Sessione> listaSessioni = CC.GetSessioniByChef(c);
         if(listaSessioni == null || listaSessioni.isEmpty()) {
         	JOptionPane.showMessageDialog(null, "Nessuna sessione disponibile.");
@@ -81,13 +82,14 @@ public class CalendarioSessioniFrame extends JFrame {
 		}
         String[] colonne = { "Nome Corso", "Data Sessione" , "Ricetta"};
         Object[][] righe = new Object[listaSessioni.size()][3];
-        
         for(int i = 0; i<listaSessioni.size(); i++) {
 			Sessione s = listaSessioni.get(i);
 			righe[i][0] = s.getRelatedCorso().getNome_Corso();
 			righe[i][1] = s.getData_Sessione().toString();
 			righe[i][2] = s.getRicetta_Appresa().getTitolo();
 		}
+        
+        //Creazione tabella
         JTable tabellaCorsi = new JTable(righe, colonne);
         tabellaCorsi.setFont(new Font("Arial", Font.PLAIN, 16));
         tabellaCorsi.setRowHeight(28);
@@ -95,6 +97,7 @@ public class CalendarioSessioniFrame extends JFrame {
         tabellaCorsi.setBackground(sfondoTabella);
         tabellaCorsi.setGridColor(Color.LIGHT_GRAY);
    
+        //Creazione ScrollPane per la tabella
         JScrollPane scrollPane = new JScrollPane(tabellaCorsi);
         scrollPane.setPreferredSize(new Dimension(700, 360));
 
@@ -108,13 +111,13 @@ public class CalendarioSessioniFrame extends JFrame {
         JPanel pannellobtn = new JPanel(new FlowLayout(FlowLayout.CENTER));
         pannellobtn.setBackground(sfondoPrincipale);
 
+        //Back Button 
         JButton btnIndietro = new JButton("← Indietro");
         btnIndietro.setFont(new Font("Arial", Font.PLAIN, 14));
         btnIndietro.setFocusPainted(false);
         btnIndietro.setBorder(BorderFactory.createLineBorder(new Color(50, 80, 150), 1));
         btnIndietro.setBackground(new Color(220, 240, 250));
         pannellobtn.add(btnIndietro);
-
         btnIndietro.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 new DashboardChef(c).setVisible(true);
@@ -125,15 +128,14 @@ public class CalendarioSessioniFrame extends JFrame {
         panel.add(pannellobtn, BorderLayout.SOUTH);
     }
     
+    //Costruttore ma per un oggetto di tipo partecipante 
     public CalendarioSessioniFrame(Partecipante p) {
-    	
     	this.p = p;
         setTitle("Calendario Sessioni");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(800, 600);
         setLocationRelativeTo(null);
         setResizable(false);
-
         setJMenuBar(creaMenuBar());
         
         //Pannello principale
@@ -148,11 +150,10 @@ public class CalendarioSessioniFrame extends JFrame {
         titolo.setFont(new Font("Arial", Font.BOLD, 28));
         panel.add(titolo, BorderLayout.NORTH);
     	
-      //Tabella
+        //Lista per ospitare tutte le sessioni dove il partecipante (nel DB) non è iscritto
         List<Sessione> listaSessioni = CP.GetListaSessioniDovePartecipanteNonIscritto(p);
         String[] colonne = { "Nome Corso", "Data Sessione", "Ricetta" };
         Object[][] righe = new Object[listaSessioni.size()][3];
-        
         for(int i = 0; i<listaSessioni.size(); i++) {
 			Sessione s = listaSessioni.get(i);
 			righe[i][0] = s.getRelatedCorso().getNome_Corso();
@@ -160,13 +161,13 @@ public class CalendarioSessioniFrame extends JFrame {
 			righe[i][2] = s.getRicetta_Appresa().getTitolo();		
 		}
         
+        //Creazione della tabella 
         JTable tabellaCorsi = new JTable(righe, colonne);
         tabellaCorsi.setFont(new Font("Arial", Font.PLAIN, 16));
         tabellaCorsi.setRowHeight(28);
         tabellaCorsi.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         tabellaCorsi.setBackground(sfondoTabella);
         tabellaCorsi.setGridColor(Color.LIGHT_GRAY);
-        
         tabellaCorsi.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
             public void valueChanged(ListSelectionEvent event) {
                 if (!event.getValueIsAdjusting()) {
@@ -179,6 +180,7 @@ public class CalendarioSessioniFrame extends JFrame {
             }
         });
    
+        //ScrollPane per la tabella
         JScrollPane scrollPane = new JScrollPane(tabellaCorsi);
         scrollPane.setPreferredSize(new Dimension(700, 360));
 
@@ -192,25 +194,25 @@ public class CalendarioSessioniFrame extends JFrame {
         JPanel pannellobtn = new JPanel(new FlowLayout(FlowLayout.CENTER));
         pannellobtn.setBackground(sfondoPrincipale);
 
+        //Back Button 
         JButton btnIndietro = new JButton("← Indietro");
         btnIndietro.setFont(new Font("Arial", Font.PLAIN, 14));
         btnIndietro.setFocusPainted(false);
         btnIndietro.setBorder(BorderFactory.createLineBorder(new Color(50, 80, 150), 1));
         btnIndietro.setBackground(new Color(220, 240, 250));
         pannellobtn.add(btnIndietro);
-
         btnIndietro.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 new DashboardUtente(p).setVisible(true);
                 dispose();
             }
         });
-
         panel.add(pannellobtn, BorderLayout.SOUTH);
     }
     
-    //Metodi
     
+    //METODI
+    //Metodo per mostrare tutti i dettaglli delle sessioni per un partecipante
     private void mostraDettagliSessionePartecipante(Sessione s, Partecipante p) {
     	JFrame finestraDettagli = new JFrame("Dettagli della Sessione");
         finestraDettagli.setSize(440, 360);
@@ -223,7 +225,6 @@ public class CalendarioSessioniFrame extends JFrame {
         lblNome.setFont(new Font("Arial", Font.BOLD, 16));
         
         Corso co = s.getRelatedCorso();
-        
         Chef c = co.getChef_Proprietario();
         System.out.println("ciao" + c.getNome());
         JLabel lblChef = new JLabel("Chef: " + c.getNome() + " " + c.getCognome());
@@ -231,7 +232,6 @@ public class CalendarioSessioniFrame extends JFrame {
         lblChef.setFont(new Font("Arial", Font.PLAIN, 14));
 
         LocalDate dataSessione = s.getData_Sessione();
-        
         String dataSessioneString = "Data Sessione: " + dataSessione.toString();
 
         JLabel lblData = new JLabel(dataSessioneString);
@@ -242,7 +242,7 @@ public class CalendarioSessioniFrame extends JFrame {
         finestraDettagli.getContentPane().add(lblChef);
         finestraDettagli.getContentPane().add(lblData);
 
-        
+        //Bottone per iscrizione 
         JButton btnIscriviti = new JButton("Iscriviti");
         btnIscriviti.setBounds(160, 230, 100, 30);
         btnIscriviti.setBackground(new Color(180, 220, 240));
@@ -267,15 +267,15 @@ public class CalendarioSessioniFrame extends JFrame {
         finestraDettagli.getContentPane().add(btnIscriviti);
 		
 	}
+    
+    //Metodo per la creazione della menù bar
     private JMenuBar creaMenuBar() {
         JMenuBar menuBar = new JMenuBar();
-
         JMenu menuCorsi = new JMenu("Corsi");
         JMenu menuSessioni = new JMenu("Sessioni");
         JMenu menuChef = new JMenu("Chef");
         JMenu menuRicette = new JMenu("Ricette");
         JMenu menuAccount = new JMenu("Account");
-
         JMenuItem itemVediCorsi = new JMenuItem("Corsi altrui");
         JMenuItem itemMieIscrizioni = new JMenuItem("Le Mie Iscrizioni");
         JMenuItem itemVediSessioni = new JMenuItem("Le Mie Sessioni");
@@ -285,6 +285,7 @@ public class CalendarioSessioniFrame extends JFrame {
         JMenuItem itemInfo = new JMenuItem("Il mio profilo");
         JMenuItem itemLogout = new JMenuItem("Logout");
 
+        //Listener
         itemLogout.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 new WelcomeFrame().setVisible(true);
@@ -360,7 +361,6 @@ public class CalendarioSessioniFrame extends JFrame {
         menuChef.addMenuListener(evidenziaListener);
         menuRicette.addMenuListener(evidenziaListener);
         menuAccount.addMenuListener(evidenziaListener);
-
         menuCorsi.add(itemVediCorsi);
         menuCorsi.add(itemMieIscrizioni);
         menuSessioni.add(itemVediSessioni);
@@ -369,7 +369,6 @@ public class CalendarioSessioniFrame extends JFrame {
         menuRicette.add(itemLeMieRicette);
         menuAccount.add(itemInfo);
         menuAccount.add(itemLogout);
-
         menuBar.add(menuCorsi);
         menuBar.add(menuSessioni);
         menuBar.add(menuRicette);
@@ -379,6 +378,7 @@ public class CalendarioSessioniFrame extends JFrame {
         return menuBar;
     }
 
+    //Metodo per evidenziare menù bar 
     private void evidenziaMenu(JMenu nuovoMenu) {
         if (menuAttivo != null) {
             ripristinaMenu(menuAttivo);
@@ -389,6 +389,7 @@ public class CalendarioSessioniFrame extends JFrame {
         menuAttivo = nuovoMenu;
     }
 
+    //Metodo per ripristinare menù bar
     private void ripristinaMenu(JMenu menu) {
         menu.setOpaque(false);
         menu.setBackground(null);
@@ -401,16 +402,13 @@ public class CalendarioSessioniFrame extends JFrame {
     //Metodo menu bar chef
     private JMenuBar CreaMenuBarChef(JFrame frame) {
         JMenuBar menuBar = new JMenuBar();
-
         JMenu menuCorsi = new JMenu("Corsi");
         JMenu menuSessioni = new JMenu("Sessioni");
         JMenu menuRicette = new JMenu("Ricette");
         JMenu menuStatsNReport = new JMenu("Stats&Reports");
         JMenu menuAccount = new JMenu("Account");
-
         JMenuItem itemVediCorsi = new JMenuItem("Corsi Altrui");
         JMenuItem itemAggiungiCorso = new JMenuItem("Aggiungi Corso");
-        
         JMenuItem itemAggiungiSessione = new JMenuItem("Aggiungi Sessione");
         JMenuItem itemSessioniDisponibili = new JMenuItem("Calendario Sessioni");
         JMenuItem itemListaRicette = new JMenuItem("Lista Ricette");
@@ -500,7 +498,6 @@ public class CalendarioSessioniFrame extends JFrame {
         menuRicette.addMenuListener(menuListener);
         menuStatsNReport.addMenuListener(menuListener);
         menuAccount.addMenuListener(menuListener);
-
         menuCorsi.add(itemVediCorsi);
         menuCorsi.add(itemAggiungiCorso);
         menuSessioni.add(itemAggiungiSessione);
@@ -510,7 +507,6 @@ public class CalendarioSessioniFrame extends JFrame {
         menuStatsNReport.add(itemStatistiche);
         menuAccount.add(itemInfo);
         menuAccount.add(itemLogout);
-
         menuBar.add(menuCorsi);
         menuBar.add(menuSessioni);
         menuBar.add(menuRicette);
