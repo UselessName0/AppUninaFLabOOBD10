@@ -60,23 +60,6 @@ public class PartecipanteDAO {
 			}
 	}
 	
-	//Metodo per selezionare il nome di un partecipante dal DB 
-	public String getNomePartecipanteDAO(Partecipante Partecipante_Input) {
-		String sql = "SELECT P.Nomepartecipante FROM uninafoodlab.Partecipante AS P WHERE P.IDPartecipante = ?";
-			try(Connection conn = DBManager.getConnection(); 
-				PreparedStatement pstmt = conn.prepareStatement(sql)) {
-				pstmt.setString(1, Partecipante_Input.getID_Partecipante());
-				ResultSet rs = pstmt.executeQuery();
-		        if (rs.next()) 
-		            return rs.getString("Nomepartecipante");
-		        else 
-		            return null;
-			} catch(SQLException e) {
-				e.printStackTrace();
-		        return null;
-			}
-	}
-	
 	//Metodo per selezionare il nome di un partecipante dal DB tramite il suo stesso ID
 	public String getNomePartecipanteDAO(String IDPartecipante_Input) {
 		String sql = "SELECT P.Nomepartecipante FROM uninafoodlab.partecipante AS P WHERE P.IDPartecipante = ?";
@@ -94,22 +77,6 @@ public class PartecipanteDAO {
 			}
 	}
 	
-	//Metodo per selezionare il cognome di un partecipante dal DB usando un oggetto Partecipante
-	public String getCognomePartecipanteDAO(Partecipante Partecipante_Input) {
-		String sql = "SELECT P.Cognomepartecipante FROM uninafoodlab.partecipante AS P WHERE P.IDPartecipante = ?";
-			try(Connection conn = DBManager.getConnection(); 
-				PreparedStatement pstmt = conn.prepareStatement(sql)) {
-				pstmt.setString(1, Partecipante_Input.getID_Partecipante());
-				ResultSet rs = pstmt.executeQuery();
-		        if (rs.next()) 
-		            return rs.getString("Cognomepartecipante");
-		        else 
-		            return null;
-			} catch(SQLException e) {
-				e.printStackTrace();
-		        return null;
-			}
-	}
 	//Metodo per selezionare il cognome di un partecipante dal DB usando l'IDPartecipante
 	public String getCognomePartecipanteDAO(String IDPartecipante_Input) {
 		String sql = "SELECT P.Cognomepartecipante FROM uninafoodlab.Partecipante AS P WHERE P.IDPartecipante = ?";
@@ -119,23 +86,6 @@ public class PartecipanteDAO {
 				ResultSet rs = pstmt.executeQuery();
 		        if (rs.next()) 
 		            return rs.getString("Cognomepartecipante");
-		        else 
-		            return null;
-			} catch(SQLException e) {
-				e.printStackTrace();
-		        return null;
-			}
-	}
-	
-	//Metodo per selezionare l'email di un partecipante dal DB usando un oggetto Partecipante
-	public String getEmailPartecipanteDAO(Partecipante Partecipante_Input) {
-		String sql = "SELECT P.Email FROM uninafoodlab.Partecipante AS P WHERE P.IDPartecipante = ?";
-			try(Connection conn = DBManager.getConnection(); 
-				PreparedStatement pstmt = conn.prepareStatement(sql)) {
-				pstmt.setString(1, Partecipante_Input.getID_Partecipante());
-				ResultSet rs = pstmt.executeQuery();
-		        if (rs.next()) 
-		            return rs.getString("Email");
 		        else 
 		            return null;
 			} catch(SQLException e) {
@@ -198,66 +148,5 @@ public class PartecipanteDAO {
 				e.printStackTrace();
 		        return null;
 			}
-	}
-	
-	//Metodo per eliminare un partecipante dal DB usando l'IDPartecipante
-	public boolean DeletePartecipanteDAO(String IDPartecipante_Input) {
-		String sql ="DELETE FROM uninafoodlab.corso WHERE corso.IDcorso = ?";
-			try(Connection conn = DBManager.getConnection();
-				PreparedStatement pstmt = conn.prepareStatement(sql)) {
-				pstmt.setString(1, IDPartecipante_Input);
-				int rowsAffected = pstmt.executeUpdate();
-				return rowsAffected > 0;
-			} catch(SQLException e) {
-				System.out.println("Errore durante l'eliminazione del partecipante : "+ e.getMessage());
-				return false;
-			}
-	}
-	
-	//Metodo per selezionare tutti i partecipanti dal DB e restituirli come una lista di oggetti
-	public List<Partecipante> getAllPartecipanti() {
-		List<Partecipante> ListaPartecipanti = new ArrayList<>();
-		String sql = "SELECT * FROM uninafoodlab.partecipante;";
-		try(Connection conn = DBManager.getConnection();
-			PreparedStatement pstmt = conn.prepareStatement(sql);
-			ResultSet rs = pstmt.executeQuery()) {
-				while(rs.next()) {
-					Partecipante p = new Partecipante();
-					p.setID_Partecipante(rs.getString("idpartecipante"));
-					p.setNome(rs.getString("nomepartecipante"));
-					p.setCognome("cognomepartecipante");
-					p.setEmail("email");
-					p.setPassword("pass");
-					ListaPartecipanti.add(p);
-				}
-				return ListaPartecipanti;	
-			}catch(SQLException e) {
-				System.out.println("Errore durante il recupero dei partecipanti: " + e.getMessage());
-				return null;
-			}
-	}
-	
-	//Metodo per selezionare i partecipanti dal DB in base al nome e restituirli come una lista di oggetti
-	public List<Partecipante> getPartecipantiByNome(String nome) {
-		List<Partecipante> ListaPartecipanti = new ArrayList<>();
-		String sql = "SELECT * FROM uninafoodlab.partecipante WHERE nomepartecipante LIKE ?";
-		try(Connection conn = DBManager.getConnection();
-			PreparedStatement pstmt = conn.prepareStatement(sql)) {
-			pstmt.setString(1, "%" + nome + "%");
-			ResultSet rs = pstmt.executeQuery();
-			while(rs.next()) {
-				Partecipante p = new Partecipante();
-				p.setID_Partecipante(rs.getString("idpartecipante"));
-				p.setNome(rs.getString("nomepartecipante"));
-				p.setCognome(rs.getString("cognomepartecipante"));
-				p.setEmail(rs.getString("email"));
-				p.setPassword(rs.getString("pass"));
-				ListaPartecipanti.add(p);
-			}
-			return ListaPartecipanti;	
-		} catch(SQLException e) {
-			System.out.println("Errore durante il recupero dei partecipanti: " + e.getMessage());
-			return null;
-		}
 	}
 }

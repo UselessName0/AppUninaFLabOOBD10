@@ -22,7 +22,7 @@ import DAO.RicettaDAO;
 import Database.DBManager;
 public class ControllerPartecipante {
 
-	//COSTRUTTORE
+	//ATTRIBUTI
 	private PartecipanteDAO partecipanteDAO = new PartecipanteDAO();
 	
 	//METODI
@@ -101,33 +101,6 @@ public class ControllerPartecipante {
 		return cDAO.getAllCorsi();
 	}
 	
-	//Metodo che restituisce una lista di tutti i corsi per nome
-	public List<Corso> GetCorsiByNome(String Nome){
-		CorsoDAO cDAO = new CorsoDAO();
-		if(!Nome.isEmpty()) {			
-			return cDAO.getAllCorsiByNome(Nome);
-		}
-		return cDAO.getAllCorsi();
-	}
-	
-	//Metodo che restituisce una lista di corsi per argomento
-	public List<Corso> GetCorsiByArgomento(String Argomento){
-		CorsoDAO cDAO = new CorsoDAO();
-		if(!Argomento.isEmpty()) {
-			return cDAO.getAllCorsiByArgomento(Argomento);
-		}
-		return cDAO.getAllCorsi();
-	}
-	
-	//Metodo che restituisce una lista di corsi per data
-	public List<Corso> GetCorsiByData(LocalDate Date){
-		CorsoDAO cDAO = new CorsoDAO();
-		if(!Date.equals(null)){
-			return cDAO.getAllCorsiByDataInizio(Date);
-		}
-		return cDAO.getAllCorsi();
-	}
-	
 	//Metodo che restituisce una lista di corsi per chef
 	public List<Corso> GetCorsiByChef(Chef C){
 		CorsoDAO cDAO = new CorsoDAO();
@@ -137,14 +110,6 @@ public class ControllerPartecipante {
 		return cDAO.getAllCorsi();
 	}
 	
-	//Metodo che restituisce una lista di corsi con i vari filtri
-	public List<Corso> GetCorsiDaPiuFiltri(List<Corso> Corso1, List<Corso> Corso2){
-		List<Corso> Temp = Corso1;
-		Temp.retainAll(Corso2);
-		
-		return Temp;
-	}
-	
 	//Metodo che restituisce una lista di corsi in cui il partecipante non è iscritto
 	public List<Corso> GetCorsiDovePartecipanteNonIscritto(Partecipante p){
 		CorsoDAO cDAO = new CorsoDAO();
@@ -152,15 +117,6 @@ public class ControllerPartecipante {
 			return cDAO.getCorsiDovePartecipanteNonIscrittoDAO(p);
 		else
 			return cDAO.getAllCorsi();
-	}
-	
-	//Metodo che restituisce una lista di ID corsi dove il partecipante non è iscritto  
-	public List<String> GetIDCorsiDovePartecipanteNonIscritto(Partecipante p){
-		CorsoDAO cDAO = new CorsoDAO();
-		if(!p.equals(null))
-			return cDAO.getIDCorsiDovePartecipanteNonIscrittoDAO(p);
-		else
-			return cDAO.getAllidCorsi();
 	}
 
 	//Metodo che restituisce una lista di tutti i corsi dove il partecipanete è iscritto

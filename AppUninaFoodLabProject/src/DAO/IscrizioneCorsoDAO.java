@@ -79,21 +79,6 @@ public class IscrizioneCorsoDAO {
 			}
 	}
 	
-	// Metodo per eliminare un'iscrizione al corso dal DB
-	public boolean DeleteIscrizioneCorso(IscrizioneCorso iscrizioneCorso) {
-		String sql = "DELETE FROM uninafooddlab.iscrizionecorso WHERE idcorso = ? AND idpartecipante = ?";
-		try(Connection conn = DBManager.getConnection();
-			PreparedStatement pstmt = conn.prepareStatement(sql)) {
-			pstmt.setString(1, iscrizioneCorso.getC().getID_Corso());
-			pstmt.setString(2, iscrizioneCorso.getP().getID_Partecipante());
-			int rowsAffected = pstmt.executeUpdate();
-			return rowsAffected > 0;
-		} catch(SQLException e) {
-			System.out.println("Errore durante l'eliminazione dell'iscrizione al corso: " + e.getMessage());
-			return false;
-		}
-	}
-	
 	//Metodo per controllare l'iscrizione al corso di un partecipante
 	public boolean CheckIscrizioneCorso(Partecipante p, Corso c) {
 		String sql = "SELECT * FROM uninafoodlab.iscrizionecorso AS ic WHERE ic.idcorso = ? AND ic.idpartecipante = ?;";

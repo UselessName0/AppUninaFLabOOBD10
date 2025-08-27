@@ -35,23 +35,6 @@ public class CorsoDAO {
 			}
 	}
 	
-	//Metodo per recuperare il nome del corso con un oggetto Corso
-	public String getNomeCorsoDAO(Corso Corso_Input) {
-		String sql = "SELECT Nomecorso FROM uninafoodlab.Corso AS Co WHERE Co.idcorso = ? ";
-		try(Connection conn = DBManager.getConnection();
-			PreparedStatement pstmt = conn.prepareStatement(sql)) {
-			pstmt.setString(1, Corso_Input.getNome_Corso());
-			ResultSet rs = pstmt.executeQuery();
-	        if (rs.next()) 
-	            return rs.getString("Nomecorso");
-	        else 
-	            return null;
-		} catch(SQLException e) {
-			System.out.println("Errore durante la selezione del nome corso");
-			return null;
-		}
-	}
-	
 	//Metodo per recuperare il nome del corso con un IDCorso
 	public String getNomeCorsoDAO(String IDCorso_Input) {
 		String sql = "SELECT Nomecorso FROM uninafoodlab.Corso AS Co WHERE Co.idcorso = ? ";
@@ -69,23 +52,6 @@ public class CorsoDAO {
 		}
 	}
 	
-	//Metodo per recuperare l'argomento del corso con un oggetto Corso
-	public String getArgomentoCorsoDAO(Corso Corso_Input) {
-		String sql = "SELECT argomento FROM uninafoodlab.Corso AS Co WHERE Co.idcorso = ? ";
-		try(Connection conn = DBManager.getConnection();
-			PreparedStatement pstmt = conn.prepareStatement(sql)) {
-			pstmt.setString(1, Corso_Input.getNome_Corso());
-			ResultSet rs = pstmt.executeQuery();
-	        if (rs.next()) 
-	            return rs.getString("argomento");
-	        else 
-	            return null;
-		} catch(SQLException e) {
-			System.out.println("Errore durante la selezione dell'argomento del corso");
-			return null;
-		}
-	}
-	
 	//Metodo per recuperare l'argomento del corso con un IDCorso
 	public String getArgomentoCorsoDAO(String IDCorso_Input) {
 		String sql = "SELECT argomento FROM uninafoodlab.Corso AS Co WHERE Co.idcorso = ? ";
@@ -99,23 +65,6 @@ public class CorsoDAO {
 	            return null;
 		} catch(SQLException e) {
 			System.out.println("Errore durante la selezione dell'argomento del corso");
-			return null;
-		}
-	}
-	
-	//Metodo per recuperare la data di inizio del corso con un oggetto Corso
-	public Date getDataInizioCorsoDAO(Corso Corso_Input) {
-		String sql = "SELECT DataInizio FROM uninafoodlab.Corso AS Co WHERE Co.idcorso = ? ";
-		try(Connection conn = DBManager.getConnection();
-			PreparedStatement pstmt = conn.prepareStatement(sql)) {
-			pstmt.setString(1, Corso_Input.getNome_Corso());
-			ResultSet rs = pstmt.executeQuery();
-	        if (rs.next()) 
-	            return rs.getDate("DataInizio");
-	        else 
-	            return null;
-		} catch(SQLException e) {
-			System.out.println("Errore durante la selezione della data di inizio corso");
 			return null;
 		}
 	}
@@ -143,23 +92,6 @@ public class CorsoDAO {
 		}
 	}
 	
-	//Metodo per recuperare la data di creazione del corso con un oggetto Corso
-	public Date getDataCreazioneCorsoDAO(Corso Corso_Input) {
-		String sql = "SELECT datacreazione FROM uninafoodlab.Corso AS Co WHERE Co.idcorso = ? ";
-		try(Connection conn = DBManager.getConnection();
-			PreparedStatement pstmt = conn.prepareStatement(sql)) {			
-			pstmt.setString(1, Corso_Input.getNome_Corso());
-			ResultSet rs = pstmt.executeQuery();
-	        if (rs.next()) 
-	            return rs.getDate("datacreazione");
-	        else 
-	            return null;		
-		} catch(SQLException e) {
-			System.out.println("Errore durante la selezione della data di creazione del corso");
-			return null;
-		}
-	}
-	
 	//Metodo per recuperare la data di creazione del corso con un IDCorso
 	public Date getDataCreazioneCorsoDAO(String IDCorso_Input) {
 		String sql = "SELECT datacreazione FROM uninafoodlab.Corso AS Co WHERE Co.idcorso = ? ";
@@ -173,23 +105,6 @@ public class CorsoDAO {
 	            return null;			
 		} catch(SQLException e) {
 			System.out.println("Errore durante la selezione della data di creazione del corso");
-			return null;
-		}
-	}
-	
-	//Metodo per recuperare la frequenza del corso con un oggetto Corso
-	public String getFrequenzaCorsoDAO(Corso Corso_Input) {
-		String sql = "SELECT frequenzacorsi FROM uninafoodlab.Corso AS Co WHERE Co.idcorso = ? ";
-		try(Connection conn = DBManager.getConnection();
-			PreparedStatement pstmt = conn.prepareStatement(sql)) {			
-			pstmt.setString(1, Corso_Input.getNome_Corso());
-			ResultSet rs = pstmt.executeQuery();
-	        if (rs.next()) 
-	            return rs.getString("frequenzacorsi");
-	        else 
-	            return null;			
-		} catch(SQLException e) {
-			System.out.println("Errore durante la selezione della frequenza dei corsi");
 			return null;
 		}
 	}
@@ -231,24 +146,6 @@ public class CorsoDAO {
 		}
 	}
 	
-	//Metodo per recuperare lo chef proprietario con un oggetto Corso
-	public String getIDChefProprietarioDAO(Corso Corso_Input) {
-		System.out.println("1 Sto cercando l'id chef proprietario del corso: " + Corso_Input.getID_Corso());
-		String sql = "SELECT idchef FROM uninafoodlab.Corso AS Co WHERE Co.idcorso = ?";
-		try(Connection conn = DBManager.getConnection();
-			PreparedStatement pstmt = conn.prepareStatement(sql)) {		
-			pstmt.setString(1, Corso_Input.getID_Corso());		
-			ResultSet rs = pstmt.executeQuery();
-	        if (rs.next())
-	            return rs.getString("idchef");
-	        else 
-	            return null;		
-		} catch(SQLException e) {
-			System.out.println("Errore durante la selezione dell'id chef proprietario del corso");
-			return null;
-		}
-	}
-	
 	//Metodo per recuperare lo chef proprietario con un IDCorso
 	public String getIDChefProprietarioDAO(String IDCorso_Input) {
 		System.out.println("2 ID Corso passato al DAO: " + IDCorso_Input);
@@ -269,23 +166,6 @@ public class CorsoDAO {
 		}
 	}
 	
-	//Metodo che restituisce la descrizione di un corso
-	public String getDescrizioneDAO(Corso Corso_Input) {
-		String sql = "SELECT descrizione from uninafoodlab.corso AS co WHERE co.idcorso = ?";
-		try(Connection conn = DBManager.getConnection();
-			PreparedStatement pstmt = conn.prepareStatement(sql)) {			
-			pstmt.setString(1, Corso_Input.getID_Corso());			
-			ResultSet rs = pstmt.executeQuery();
-			if(rs.next())
-				return rs.getString("descrizione");
-			else
-				return null;			
-		} catch(SQLException e) {
-			System.out.println("Errore durante la selezione della descrizione del corso");
-			return null;
-		}
-	}
-	
 	//Metodo che restituisce la descrizione con ID corso in input (di un corso)
 	public String getDescrizioneDAO(String idcorso_input) {
 		String sql = "SELECT descrizione from uninafoodlab.corso AS co WHERE co.idcorso = ?";
@@ -301,20 +181,6 @@ public class CorsoDAO {
 			System.out.println("Errore durante la selezione della descrizione del corso");
 			return null;
 		}
-	}
-	
-	//Metodo per eliminare un corso dal database
-	public boolean DeleteCorsoDAO(String IDCorso_Input) {
-		String sql ="DELETE FROM uninafoodlab.corso WHERE corso.IDcorso = ?";
-			try(Connection conn = DBManager.getConnection();
-				PreparedStatement pstmt = conn.prepareStatement(sql)) {			
-				pstmt.setString(1, IDCorso_Input);
-				int rowsAffected = pstmt.executeUpdate();			
-				return rowsAffected > 0;			
-			} catch(SQLException e) {
-				System.out.println("Errore durante l'eliminazione del corso : "+ e.getMessage());
-				return false;
-			}
 	}
 	
 	//Metodo per aggiornare un corso nel database

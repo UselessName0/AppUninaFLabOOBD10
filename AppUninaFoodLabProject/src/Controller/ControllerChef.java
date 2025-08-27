@@ -2,7 +2,6 @@ package Controller;
 
 import Entities.Chef;
 import Entities.Corso;
-import Entities.Ingrediente;
 import Entities.Partecipante;
 import Entities.Ricetta;
 import Entities.Sessione;
@@ -22,7 +21,7 @@ import Database.DBManager;
 
 public class ControllerChef {
 	
-	//COSTRUTTORI
+	//ATTRIBUTI
 	private ChefDAO chefDAO = new ChefDAO();
 	
 	//METODI
@@ -217,15 +216,6 @@ public class ControllerChef {
 		return null;
 	}
 	
-	//Metodo che permette di avere il numero esatto di ricette di uno chef
-	public int GetNumeroRicetteByChef(Chef c) {
-		RicettaDAO rDAO = new RicettaDAO();
-		if(c != null) {
-			return rDAO.getNumeroRicetteByChef(c);
-		}
-		return 0;
-	}
-	
 	//Metodo che restituisce un array di tutte le sessioni per singolo mese 
 	public int[] GetNumeroSessioniByMonth(Chef c) {
 		SessioneDAO sDAO = new SessioneDAO();
@@ -234,35 +224,6 @@ public class ControllerChef {
 		}
 		
 		return null;
-	}
-	
-	//Metoto che permette di avere il numero di tutti gli iscritti ad un corso preciso 
-	public int GetNumeroIscrittiCorso(Corso c) {
-		CorsoDAO cDAO = new CorsoDAO();
-		if(c != null) {
-			return cDAO.getNumeroIscrittiCorso(c);
-		}
-		return 0;
-	}
-	
-	//Metodo che permette di avere il numero di tutti i partecipanti ad una specifica sessione
-	public int GetNumeroIscrittiSessione(Sessione s) {
-		SessioneDAO sDAO = new SessioneDAO();
-		if(s != null) {
-			return sDAO.getNumeroIscrittiSessione(s);
-		}
-		return 0;
-	}
-	
-	//Metodo che permette di fare un Update di una specifica sessione inserita precedentemente 
-	public boolean UpdateSessione(Sessione s) {
-		SessioneDAO sDAO = new SessioneDAO();
-		if(s != null && !s.getID_Sessione().isEmpty() && s.getRelatedCorso() != null && s.getData_Sessione() != null) {
-			return sDAO.UpdateSessione(s);
-		} else {
-			System.out.println("Dati sessione non validi.");
-			return false;
-		}
 	}
 	
 	//Metodo che permette di avere la lista di tutte le ricette

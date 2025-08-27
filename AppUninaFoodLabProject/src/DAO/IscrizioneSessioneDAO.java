@@ -11,7 +11,7 @@ import Entities.Partecipante;
 
 public class IscrizioneSessioneDAO {
 	
-	//METODO
+	//METODI
 	// Metodo per l'inserimento di una nuova iscrizione alla sessione nel DB
 	public boolean insertIscrizioneSessione(IscrizioneSessione IscrizioneSessione_Input) {
 		String sql = "INSERT INTO uninafoodlab.iscrizionesessione(idpartecipante, idsessione, adesione) VALUES (?, ?, ?)";
@@ -74,20 +74,5 @@ public class IscrizioneSessioneDAO {
 					System.out.println("Errore nella selezione delle iscrizioni sessioni"+ e.getMessage());
 					return null;
 				}
-	}
-
-	// Metodo per eliminare un'iscrizione a una sessione dal DB
-	public boolean DeleteIscrizioneSessione(IscrizioneSessione iscrizioneSessione) {
-		String sql = "DELETE FROM uninafooddlab.iscrizionesessione WHERE idpartecipante = ? AND idsessione = ?";
-		try(Connection conn = DBManager.getConnection();
-			PreparedStatement pstmt = conn.prepareStatement(sql)) {
-			pstmt.setString(1, iscrizioneSessione.getP().getID_Partecipante());
-			pstmt.setString(2, iscrizioneSessione.getS().getID_Sessione());
-			int rowsAffected = pstmt.executeUpdate();
-			return rowsAffected > 0;
-		} catch(SQLException e) {
-			System.out.println("Errore durante l'eliminazione dell'iscrizione alla sessione: " + e.getMessage());
-			return false;
-		}
 	}
 }

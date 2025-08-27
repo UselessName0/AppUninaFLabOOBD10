@@ -46,23 +46,6 @@ public class RicettaDAO {
 			}
 	}
 	
-	//Metodo per selezionare il titolo di una ricetta dal DB usando un oggetto Ricetta 
-	public String GetTitoloRicettaDAO(Ricetta Ricetta_Input){
-		String sql = "SELECT IDRicetta FROM uninafoodlab.ricetta WHERE nominativoricetta = ?;";
-			try(Connection conn = DBManager.getConnection();
-				PreparedStatement pstmt = conn.prepareStatement(sql)) {
-				pstmt.setString(1, Ricetta_Input.getIDRicetta());
-				ResultSet rs = pstmt.executeQuery();
-				if(rs.next())
-					return rs.getString("titolo");
-				else
-					return null;
-			} catch(SQLException e) {
-				e.printStackTrace();
-				return null;
-			}
-	}
-	
 	//Metodo per selezionare il titolo di una ricetta dal DB usando l'IDRicetta 
 	public String GetTitoloRicettaDAO(String IDRicetta_Input){
 		String sql = "SELECT IDRicetta FROM uninafoodlab.ricetta WHERE nominativoricetta = ?;";
@@ -77,20 +60,6 @@ public class RicettaDAO {
 			} catch(SQLException e) {
 				e.printStackTrace();
 				return null;
-			}
-	}
-	
-	//Metodo per eliminare una ricetta dal DB usando l'IDRicetta
-	public boolean DeleteRicettaDAO(String IDRicetta_Input) {
-		String sql ="DELETE FROM uninafoodlab.ricetta WHERE ricetta.idricetta = ?;";
-			try(Connection conn = DBManager.getConnection();
-				PreparedStatement pstmt = conn.prepareStatement(sql)) {
-				pstmt.setString(1, IDRicetta_Input);
-				int rowsAffected = pstmt.executeUpdate();
-				return rowsAffected > 0;
-			} catch(SQLException e) {
-				System.out.println("Errore durante l'eliminazione della ricetta : "+ e.getMessage());
-				return false;
 			}
 	}
 	

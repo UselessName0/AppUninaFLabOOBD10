@@ -249,21 +249,7 @@ public class ChefDAO {
 		        return null;
 			}
 	}	
-	
-	//Metodo per eliminare i dati di uno Chef nel DB usando un oggetto Chef
-	public boolean DeleteChefDAO(String IDChef_Input) {
-		String sql ="DELETE FROM uninafoodlab.chef WHERE Chef.IDChef = ?";
-			try(Connection conn = DBManager.getConnection();
-				PreparedStatement pstmt = conn.prepareStatement(sql)) {
-				pstmt.setString(1, IDChef_Input);
-				int rowsAffected = pstmt.executeUpdate();				
-				return rowsAffected > 0;				
-			} catch(SQLException e) {
-				System.out.println("Errore durante l'eliminazione dello Chef : "+ e.getMessage());
-				return false;
-			}
-	}
-	
+		
 	//Metodo per prendere tutti gli Chef presenti nel DB
 	public List<Chef> getAllChef() {
 		List<Chef> ListaChef = new ArrayList<>();
@@ -287,36 +273,12 @@ public class ChefDAO {
 		}
 	}
 	
-	//Metodo per prendere tutti gli Chef presenti nel DB che hanno un nome simile a quello passato come parametro
-	public List<Chef> getAllChefByNome(String nome) {
-		List<Chef> ListaChef = new ArrayList<>();
-		String sql = "SELECT * FROM uninafoodlab.Chef WHERE nomechef LIKE ?";
-		try(Connection conn = DBManager.getConnection();
-			PreparedStatement pstmt = conn.prepareStatement(sql)) {			
-			pstmt.setString(1, "%" + nome + "%");
-			ResultSet rs = pstmt.executeQuery();			
-			while(rs.next()) {
-				Chef Ch = new Chef();
-				Ch.setID_Chef(rs.getString("idchef"));
-				Ch.setNome(rs.getString("nomechef"));
-				Ch.setCognome(rs.getString("cognomechef"));
-				Ch.setEmail(rs.getString("email"));
-				Ch.setPassword(rs.getString("pass"));
-				ListaChef.add(Ch);
-			}
-			return ListaChef;			
-		} catch(SQLException e) {
-			System.out.println("Errore durante il recupero dei Chef: " + e.getMessage());
-			return null;
-		}
-	}
-	
 	//Metodo che restituisce il numero di corsi di uno chef 
-	public int getNumeroCorsiByChef(Chef c) {
+	public int getNumeroCorsiByChef(Chef Chef_Input) {
 		String sql = "SELECT COUNT(*) AS ncorsi FROM uninafoodlab.Corso WHERE idchef = ?";
 		try (Connection conn = DBManager.getConnection();
 			 PreparedStatement pstmt = conn.prepareStatement(sql)) {		
-			pstmt.setString(1, c.getID_Chef());
+			pstmt.setString(1, Chef_Input.getID_Chef());
 			ResultSet rs = pstmt.executeQuery();
 			if (rs.next()) {
 				return rs.getInt("ncorsi");
