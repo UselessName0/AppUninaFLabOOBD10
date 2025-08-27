@@ -2,7 +2,6 @@ package Entities;
 
 import DAO.PartecipanteDAO;
 
-
 public class Partecipante extends Utente {
 	
 	//ATTRIBUTI
@@ -14,10 +13,9 @@ public class Partecipante extends Utente {
 		this.ID_Partecipante = ID_Partecipante;
 	}
 	
-	public Partecipante(String IDPartecipante) {//COSTRUTTORE PER LA CREAZIONE DI UN PARTECIPANTE PRESENTE NEL DATABASE VIA IDPARTECIPANTE
+	public Partecipante(String IDPartecipante) {
 		super(null, null, null, null);
 		PartecipanteDAO partecipanteDAO = new PartecipanteDAO();
-		
 		this.ID_Partecipante = IDPartecipante;
 		this.Nome = partecipanteDAO.getNomePartecipanteDAO(IDPartecipante);
 		this.Cognome = partecipanteDAO.getCognomePartecipanteDAO(IDPartecipante);
@@ -30,20 +28,15 @@ public class Partecipante extends Utente {
 	}
 	
 	//METODI
-		//GETTERS E SETTERS
-		public String getID_Partecipante() {
-			return ID_Partecipante;
-		}
+	public String getID_Partecipante() {
+		return ID_Partecipante;
+	}
 	
-		public void setID_Partecipante(String iD_Partecipante) {
-			ID_Partecipante = iD_Partecipante;
-		}
+	public void setID_Partecipante(String iD_Partecipante) {
+		ID_Partecipante = iD_Partecipante;
+	}
 		
-		public String getCognome() {
-			return Cognome;
-		}
-		
-	
-	
-	
+	public String getCognome() {
+		return Cognome;
+	}
 }

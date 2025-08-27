@@ -2,8 +2,8 @@ package Entities;
 
 import java.util.*;
 import java.time.LocalDate;
-
 import DAO.SessioneDAO;
+
 public class Sessione {
 	
 	//ATTRIBUTI
@@ -28,7 +28,7 @@ public class Sessione {
 		this.Ricetta_Appresa = Ricetta_Appresa;
 	}
 	
-	public Sessione(String IDSessione) {//Costruttore di una Sessione già presente nel database via IDSessione
+	public Sessione(String IDSessione) {
 		this.ID_Sessione = IDSessione;
 		SessioneDAO sessioneDAO = new SessioneDAO();
 		String idCorsoTemp = sessioneDAO.getIDCorsoSessioneDAO(IDSessione);
@@ -42,77 +42,75 @@ public class Sessione {
 		this.Ricetta_Appresa = new Ricetta(idRicettaTemp);
 	}
 	
-	//METODI
-		//GETTER AND SETTER
-	
-		public Sessione() {
+	public Sessione() {
 	}
-
-		public String getID_Sessione() {
-			return ID_Sessione;
-		}
 	
-		public void setID_Sessione(String iD_Sessione) {
-			ID_Sessione = iD_Sessione;
-		}
-		public Corso getRelatedCorso() {
-			return RelatedCorso;
-		}
-		public void setRelatedCorso(Corso relatedCorso) {
-			RelatedCorso = relatedCorso;
-		}
+	//METODI
+	public String getID_Sessione() {
+		return ID_Sessione;
+	}
 	
-		public LocalDate getData_Sessione() {
-			return Data_Sessione;
-		}
+	public void setID_Sessione(String iD_Sessione) {
+		ID_Sessione = iD_Sessione;
+	}
 		
-		public java.sql.Date getDataSessioneAsSQLDate() {
-			return java.sql.Date.valueOf(Data_Sessione);
-		}
-	
-		public void setData_Sessione(LocalDate data_Sessione) {
-			Data_Sessione = data_Sessione;
-		}
-	
-		public int getNumero_Adesioni() {
-			return Numero_Adesioni;
-		}
-	
-		public void setNumero_Adesioni(int numero_Adesioni) {
-			Numero_Adesioni = numero_Adesioni;
-		}
-	
-		public boolean isIsPratica() {
-			return IsPratica;
-		}
-	
-		public void setIsPratica(boolean isPratica) {
-			IsPratica = isPratica;
-		}
-	
-		public String getLuogo() {
-			return Luogo;
-		}
-	
-		public void setLuogo(String luogo) {
-			Luogo = luogo;
-		}
-	
-		public String getLinkConferenza() {
-			return LinkConferenza;
-		}
-	
-		public void setLinkConferenza(String linkConferenza) {
-			LinkConferenza = linkConferenza;
-		}
-	
-		public Ricetta getRicetta_Appresa() {
-			return Ricetta_Appresa;
-		}
-	
-		public void setRicetta_Appresa(Ricetta ricetta_Appresa) {
-			Ricetta_Appresa = ricetta_Appresa;
-		}
+	public Corso getRelatedCorso() {
+		return RelatedCorso;
+	}
 		
+	public void setRelatedCorso(Corso relatedCorso) {
+		RelatedCorso = relatedCorso;
+	}
 	
+	public LocalDate getData_Sessione() {
+		return Data_Sessione;
+	}
+		
+	public java.sql.Date getDataSessioneAsSQLDate() {
+		return java.sql.Date.valueOf(Data_Sessione);
+	}
+	
+	public void setData_Sessione(LocalDate data_Sessione) {
+		Data_Sessione = data_Sessione;
+	}
+	
+	public int getNumero_Adesioni() {
+		return Numero_Adesioni;
+	}
+	
+	public void setNumero_Adesioni(int numero_Adesioni) {
+		Numero_Adesioni = numero_Adesioni;
+	}
+	
+	public boolean isIsPratica() {
+		return IsPratica;
+	}
+	
+	public void setIsPratica(boolean isPratica) {
+		IsPratica = isPratica;
+	}
+	
+	public String getLuogo() {
+		return Luogo;
+	}
+	
+	public void setLuogo(String luogo) {
+		Luogo = luogo;
+	}
+	
+	public String getLinkConferenza() {
+		return LinkConferenza;
+	}
+	
+	public void setLinkConferenza(String linkConferenza) {
+		LinkConferenza = linkConferenza;
+	}
+	
+	public Ricetta getRicetta_Appresa() {
+		return Ricetta_Appresa;
+	}
+	
+	public void setRicetta_Appresa(Ricetta ricetta_Appresa) {
+		Ricetta_Appresa = ricetta_Appresa;
+	}	
 }

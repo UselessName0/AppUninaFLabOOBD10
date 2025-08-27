@@ -11,6 +11,7 @@ import javax.swing.GroupLayout.Alignment;
 
 public class LoginChefFrame extends JFrame {
 
+	//COSTRUTTORI
     public LoginChefFrame() {
         setTitle("Login Chef - UninaFoodLab");
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -18,11 +19,13 @@ public class LoginChefFrame extends JFrame {
         setResizable(false);
         setLocationRelativeTo(null);
 
+        //Panel
         JPanel contentPane = new JPanel();
         contentPane.setBackground(Color.WHITE);
         contentPane.setBorder(new EmptyBorder(20, 30, 30, 30));
         setContentPane(contentPane);
 
+        //Back Button 
         JButton backButton = new JButton("← Indietro");
         backButton.setForeground(new Color(0, 0, 0));
         backButton.setFont(new Font("SansSerif", Font.PLAIN, 14));
@@ -38,18 +41,22 @@ public class LoginChefFrame extends JFrame {
             }
         });
 
+        //Label per il titolo
         JLabel title = new JLabel("Login Chef");
         title.setFont(new Font("SansSerif", Font.BOLD, 25));
         title.setHorizontalAlignment(SwingConstants.CENTER);
 
+        //Field per inserimento email 
         JTextField emailField = new JTextField();
         emailField.setFont(new Font("SansSerif", Font.PLAIN, 16));
         emailField.setBorder(BorderFactory.createTitledBorder("Email"));
 
+        //Field per inserimento password 
         JPasswordField passwordField = new JPasswordField();
         passwordField.setFont(new Font("SansSerif", Font.PLAIN, 16));
         passwordField.setBorder(BorderFactory.createTitledBorder("Password"));
 
+        //Login Button
         JButton loginButton = new JButton("Accedi");
         loginButton.setFont(new Font("SansSerif", Font.PLAIN, 18));
         loginButton.setBackground(new Color(46, 187, 39));
@@ -61,7 +68,6 @@ public class LoginChefFrame extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
             	ControllerChef CC = new ControllerChef();
-                
             	String email = emailField.getText();
                 String password = String.valueOf(passwordField.getPassword());
                 Chef chef = CC.LoginCheck(email, password);
@@ -73,7 +79,6 @@ public class LoginChefFrame extends JFrame {
                 } else {
                     JOptionPane.showMessageDialog(LoginChefFrame.this,
                         "Benvenuto " + chef.getNome() +" "+ chef.getCognome());
-
                     DashboardChef dashboard = new DashboardChef(chef);
                     dashboard.setVisible(true);
                     dispose();
@@ -81,6 +86,7 @@ public class LoginChefFrame extends JFrame {
             }
         });
 
+        //Layout
         GroupLayout gl_contentPane = new GroupLayout(contentPane);
         gl_contentPane.setHorizontalGroup(
             gl_contentPane.createParallelGroup(Alignment.LEADING)
@@ -111,9 +117,5 @@ public class LoginChefFrame extends JFrame {
                     .addContainerGap(50, Short.MAX_VALUE))
         );
         contentPane.setLayout(gl_contentPane);
-        
-      
-        
-        
     }
 }

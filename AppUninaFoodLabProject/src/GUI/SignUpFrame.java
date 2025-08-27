@@ -7,7 +7,8 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.GroupLayout.Alignment;
 
 public class SignUpFrame extends JFrame {
-
+	
+	//COSTRUTTORI
     public SignUpFrame() {
         setTitle("Registrazione - UninaFoodLab");
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -15,11 +16,13 @@ public class SignUpFrame extends JFrame {
         setResizable(false);
         setLocationRelativeTo(null);
 
+        //Content Pane
         JPanel contentPane = new JPanel();
         contentPane.setBackground(Color.WHITE);
         contentPane.setBorder(new EmptyBorder(20, 30, 30, 30));
         setContentPane(contentPane);
         
+        //Back Button
         JButton backButton = new JButton("← Indietro");
         backButton.setForeground(new Color(0, 0, 0));
         backButton.setFont(new Font("SansSerif", Font.PLAIN, 14));
@@ -36,11 +39,13 @@ public class SignUpFrame extends JFrame {
             }
         });
         
+        //Label per la registrazione 
         JLabel lblRegistratiCome = new JLabel("Registrati come:");
         lblRegistratiCome.setHorizontalAlignment(SwingConstants.CENTER);
         lblRegistratiCome.setFont(new Font("SansSerif", Font.BOLD, 25));
         lblRegistratiCome.setAlignmentX(0.5f);
         
+        //User Button 
         JButton userButton = new JButton("Utente");
         userButton.setMaximumSize(new Dimension(250, 40));
         userButton.setForeground(Color.WHITE);
@@ -57,7 +62,7 @@ public class SignUpFrame extends JFrame {
             }
         });
         
-        
+        //Chef Button
         JButton btnChef = new JButton("Chef");
         btnChef.setMaximumSize(new Dimension(250, 40));
         btnChef.setForeground(Color.WHITE);
@@ -74,6 +79,7 @@ public class SignUpFrame extends JFrame {
                 }
             });
         
+        //Layout
         GroupLayout gl_contentPane = new GroupLayout(contentPane);
         gl_contentPane.setHorizontalGroup(
         	gl_contentPane.createParallelGroup(Alignment.TRAILING)

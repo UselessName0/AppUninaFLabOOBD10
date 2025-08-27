@@ -17,37 +17,35 @@ abstract class Utente {
 	}
 	
 	//METODI
-		//GETTER AND SETTER
-		public String getNome() {
-			return Nome;
-		}
+	public String getNome() {
+		return Nome;
+	}
 	
-		public void setNome(String nome) {
-			Nome = nome;
-		}
+	public void setNome(String nome) {
+		Nome = nome;
+	}
 	
-		public String getCognome() {
-			return Cognome;
-		}
+	public String getCognome() {
+		return Cognome;
+	}
 	
-		public void setCognome(String cognome) {
-			Cognome = cognome;
-		}
+	public void setCognome(String cognome) {
+		Cognome = cognome;
+	}
 	
-		public String getEmail() {
-			return Email;
-		}
+	public String getEmail() {
+		return Email;
+	}
 	
-		public void setEmail(String email) {
-			Email = email;
-		}
+	public void setEmail(String email) {
+		Email = email;
+	}
 	
-		public String getPassword() {
-			return Password;
-		}
+	public String getPassword() {
+		return Password;
+	}
 	
-		public void setPassword(String password) {
-			Password = password;
-		}
-	
+	public void setPassword(String password) {
+		Password = password;
+	}
 }

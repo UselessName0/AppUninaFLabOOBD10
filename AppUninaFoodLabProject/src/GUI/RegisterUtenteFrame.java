@@ -12,6 +12,7 @@ import javax.swing.GroupLayout.Alignment;
 
 public class RegisterUtenteFrame extends JFrame {
 
+//COSTRUTTORI
  public RegisterUtenteFrame() {
      setTitle("Registrazione Utente - UninaFoodLab");
      setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -19,11 +20,13 @@ public class RegisterUtenteFrame extends JFrame {
      setResizable(false);
      setLocationRelativeTo(null);
 
+     //Content Pane
      JPanel contentPane = new JPanel();
      contentPane.setBackground(Color.WHITE);
      contentPane.setBorder(new EmptyBorder(20, 30, 30, 30));
      setContentPane(contentPane);
 
+     //Back Button 
      JButton backButton = new JButton("← Indietro");
      backButton.setForeground(new Color(0, 0, 0));
      backButton.setFont(new Font("SansSerif", Font.PLAIN, 14));
@@ -39,30 +42,37 @@ public class RegisterUtenteFrame extends JFrame {
          }
      });
 
+     //Label per il titolo 
      JLabel title = new JLabel("Registrazione Utente");
      title.setFont(new Font("SansSerif", Font.BOLD, 25));
      title.setHorizontalAlignment(SwingConstants.CENTER);
 
+     //Field per inserimento nome
      JTextField nomeField = new JTextField();
      nomeField.setFont(new Font("SansSerif", Font.PLAIN, 16));
      nomeField.setBorder(BorderFactory.createTitledBorder("Nome"));
 
+     //Field per inserimento cognome
      JTextField cognomeField = new JTextField();
      cognomeField.setFont(new Font("SansSerif", Font.PLAIN, 16));
      cognomeField.setBorder(BorderFactory.createTitledBorder("Cognome"));
 
+     //Field per inserimento email 
      JTextField emailField = new JTextField();
      emailField.setFont(new Font("SansSerif", Font.PLAIN, 16));
      emailField.setBorder(BorderFactory.createTitledBorder("Email"));
 
+     //Field per inserimento password 
      JPasswordField passwordField = new JPasswordField();
      passwordField.setFont(new Font("SansSerif", Font.PLAIN, 16));
      passwordField.setBorder(BorderFactory.createTitledBorder("Password"));
 
+     //Filed per conferma email 
      JPasswordField confirmField = new JPasswordField();
      confirmField.setFont(new Font("SansSerif", Font.PLAIN, 16));
      confirmField.setBorder(BorderFactory.createTitledBorder("Conferma Password"));
 
+     //Check Box per il controllo della password inserita 
      JCheckBox showPasswordCheck = new JCheckBox("Mostra password");
      showPasswordCheck.setBackground(Color.WHITE);
      showPasswordCheck.setFont(new Font("SansSerif", Font.PLAIN, 14));
@@ -79,6 +89,7 @@ public class RegisterUtenteFrame extends JFrame {
          }
      });
 
+     //Register Button
      JButton registerButton = new JButton("Registrati");
      registerButton.setFont(new Font("SansSerif", Font.PLAIN, 18));
      registerButton.setBackground(new Color(100, 149, 237));
@@ -90,7 +101,6 @@ public class RegisterUtenteFrame extends JFrame {
          @Override
          public void actionPerformed(ActionEvent e) {
              ControllerPartecipante CP = new ControllerPartecipante();
-             
              String nome = nomeField.getText();
              String cognome = cognomeField.getText();
              String email = emailField.getText();
@@ -117,6 +127,7 @@ public class RegisterUtenteFrame extends JFrame {
          }
      });
 
+     //Layout
      GroupLayout gl_contentPane = new GroupLayout(contentPane);
      gl_contentPane.setHorizontalGroup(
          gl_contentPane.createParallelGroup(Alignment.LEADING)
@@ -162,4 +173,3 @@ public class RegisterUtenteFrame extends JFrame {
      contentPane.setLayout(gl_contentPane);
  }
 }
-

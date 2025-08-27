@@ -12,15 +12,15 @@ import java.time.LocalDate;
 
 import Entities.Chef;
 import Entities.Corso;
+import Entities.MenuFactory;
 import Controller.ControllerChef;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.border.LineBorder;
 
-
 public class AggiungiCorsoFrame extends JFrame {
 
-    // ATTRIBUTI
+    //ATTRIBUTI
     private ControllerChef CC = new ControllerChef();
     private JPanel contentPane;
     private Chef c;
@@ -28,14 +28,15 @@ public class AggiungiCorsoFrame extends JFrame {
     private JTextField nomeCorsoField;
     private JComboBox<String> frequenzaComboBox;
 
-    // COSTRUTTORE
+    //COSTRUTTORI
     public AggiungiCorsoFrame(Chef C) {
         this.c = C;
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(800, 600);
         setLocationRelativeTo(null);
         setResizable(false);
-        setJMenuBar(CreaMenuBar(this));
+        setJMenuBar(MenuFactory.creaMenuBarChef(this, c));
+        
         setTitle("Aggiungi Corso");
         Color sfondoPrincipale = new Color(220, 240, 250);
 
@@ -44,12 +45,12 @@ public class AggiungiCorsoFrame extends JFrame {
         setContentPane(contentPane);
         contentPane.setBackground(sfondoPrincipale);
 
-        // Titolo
+        //Titolo
         JLabel titoloLabel = new JLabel("Aggiungi un corso", SwingConstants.CENTER);
         titoloLabel.setForeground(new Color(50, 80, 150));
         titoloLabel.setFont(new Font("Arial", Font.BOLD, 24));
 
-        // Label e campi
+        //Label e campi
         JLabel labelNomeCorso = new JLabel("Nome corso:");
         labelNomeCorso.setFont(new Font("Arial", Font.BOLD, 18));
         nomeCorsoField = new JTextField();
@@ -87,6 +88,7 @@ public class AggiungiCorsoFrame extends JFrame {
         textArea.setLineWrap(true);
         textArea.setBorder(new LineBorder(Color.BLACK, 1));
         
+        //Back Button 
         JButton btnIndietro = new JButton("← Indietro");
         btnIndietro.setFont(new Font("Arial", Font.PLAIN, 14));
         btnIndietro.setFocusPainted(false);
@@ -99,6 +101,7 @@ public class AggiungiCorsoFrame extends JFrame {
             }
         });
         
+        //Add Button (con check)
         JButton btnAggiungi_1 = new JButton("Aggiungi");
         btnAggiungi_1.setFont(new Font("Arial", Font.PLAIN, 14));
         btnAggiungi_1.setFocusPainted(false);
@@ -113,7 +116,6 @@ public class AggiungiCorsoFrame extends JFrame {
                 corso.setData_Creazione(LocalDate.now());
                 corso.setDescrizione(textArea.getText());
                 corso.setFrequenza_Corsi((String) frequenzaComboBox.getSelectedItem());
-
                 if(CC.InsertCorso(corso)) {
 					JOptionPane.showMessageDialog(contentPane, "Corso aggiunto con successo!", "Successo", JOptionPane.INFORMATION_MESSAGE);
 					new DashboardChef(c).setVisible(true);
@@ -124,7 +126,7 @@ public class AggiungiCorsoFrame extends JFrame {
             }
         });
 
-        // Layout aggiornato
+        //Layout
         GroupLayout layout = new GroupLayout(contentPane);
         layout.setHorizontalGroup(
         	layout.createParallelGroup(Alignment.TRAILING)
@@ -183,159 +185,5 @@ public class AggiungiCorsoFrame extends JFrame {
 
         layout.setAutoCreateGaps(true);
         layout.setAutoCreateContainerGaps(true);
-    }
-    
-    //METODI 
-    private JMenu menuAttivo = null;
-    
- 		private JMenuBar CreaMenuBar(JFrame frame) {
-        JMenuBar menuBar = new JMenuBar();
-
-        JMenu menuCorsi = new JMenu("Corsi");
-        JMenu menuSessioni = new JMenu("Sessioni");
-        JMenu menuRicette = new JMenu("Ricette");
-        JMenu menuStatsNReport = new JMenu("Stats&Reports");
-        JMenu menuAccount = new JMenu("Account");
-
-        JMenuItem itemVediCorsi = new JMenuItem("Corsi Altrui");
-        JMenuItem itemAggiungiCorso = new JMenuItem("Aggiungi Corso");
-        JMenuItem itemImieiCorsi = new JMenuItem("I Miei Corsi");
-        JMenuItem itemAggiungiSessione = new JMenuItem("Aggiungi Sessione");
-        JMenuItem itemSessioniDisponibili = new JMenuItem("Calendario Sessioni");
-        JMenuItem itemListaRicette = new JMenuItem("Lista Ricette");
-        JMenuItem itemCreaRicetta = new JMenuItem("Crea Ricetta");
-        JMenuItem itemStatistiche = new JMenuItem("Statistiche");
-        JMenuItem itemInfo = new JMenuItem("Il mio profilo");
-        JMenuItem itemLogout = new JMenuItem("Logout");
-
-        itemLogout.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                new WelcomeFrame().setVisible(true);
-                dispose();
-            }
-        });
-
-        itemVediCorsi.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                new CorsiDisponibiliFrame(c).setVisible(true);
-                dispose();
-            }
-        });
-
-        itemAggiungiCorso.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                new AggiungiCorsoFrame(c).setVisible(true);
-                dispose();
-            }
-        });
-        
-        itemImieiCorsi.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                new IMieiCorsiFrame(c).setVisible(true);
-                dispose();
-            }
-        });
-
-        itemAggiungiSessione.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                new AggiungiSessioneFrame(c).setVisible(true);
-                dispose();
-            }
-        });
-
-        itemSessioniDisponibili.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                new CalendarioSessioniFrame(c).setVisible(true);
-                dispose();
-            }
-        });
-
-        itemListaRicette.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                new ListaRicetteFrame(c).setVisible(true);
-                dispose();
-            }
-        });
-        
-        itemCreaRicetta.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                new CreaRicettaFrame(c).setVisible(true);
-                dispose();
-            }
-        });
-        
-        itemStatistiche.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                new StatisticheFrame(c).setVisible(true);
-                dispose();
-            }
-        });
-
-        itemInfo.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                new ilMioProfiloFrame(c).setVisible(true);
-                dispose();
-            }
-        });
-
-        MenuListener menuListener = new MenuListener() {
-            public void menuSelected(MenuEvent e) {
-                evidenziaMenu((JMenu) e.getSource());
-            }
-            public void menuDeselected(MenuEvent e) {
-                ripristinaMenu((JMenu) e.getSource());
-            }
-            public void menuCanceled(MenuEvent e) {
-                ripristinaMenu((JMenu) e.getSource());
-            }
-        };
-
-        menuCorsi.addMenuListener(menuListener);
-        menuSessioni.addMenuListener(menuListener);
-        menuRicette.addMenuListener(menuListener);
-        menuRicette.addMenuListener(menuListener);
-        menuStatsNReport.addMenuListener(menuListener);
-        menuAccount.addMenuListener(menuListener);
-
-        menuCorsi.add(itemVediCorsi);
-        menuCorsi.add(itemAggiungiCorso);
-        menuCorsi.add(itemImieiCorsi);
-        menuSessioni.add(itemAggiungiSessione);
-        menuSessioni.add(itemSessioniDisponibili);
-        menuRicette.add(itemListaRicette);
-        menuRicette.add(itemCreaRicetta);
-        menuStatsNReport.add(itemStatistiche);
-        menuAccount.add(itemInfo);
-        menuAccount.add(itemLogout);
-
-        menuBar.add(menuCorsi);
-        menuBar.add(menuSessioni);
-        menuBar.add(menuRicette);
-        menuBar.add(menuStatsNReport);
-        menuBar.add(menuAccount);
-
-        setJMenuBar(menuBar);
-        return menuBar;
-    }
-    
-    //Metodo che permette di evidenziare il menù
-    private void evidenziaMenu(JMenu nuovoMenu) {
-        if (menuAttivo != null) {
-            ripristinaMenu(menuAttivo);
-        }
-        nuovoMenu.setOpaque(true);
-        nuovoMenu.setBackground(new Color(100, 149, 37));
-        nuovoMenu.setForeground(Color.BLACK);
-        menuAttivo = nuovoMenu;
-    }
-    
-    //Metodo che permette di ripristinare il menù dopo che è stato evidenziato
-    private void ripristinaMenu(JMenu menu) {
-        menu.setOpaque(false);
-        menu.setBackground(null);
-        menu.setForeground(Color.BLACK);
-        if (menu == menuAttivo) {
-            menuAttivo = null;
-        }
     }
 }

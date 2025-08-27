@@ -59,6 +59,7 @@ public class DashboardChef extends JFrame {
         contentPanel.setBackground(new Color(210, 255, 255));
         contentPanel.setBorder(BorderFactory.createEmptyBorder(30, 40, 30, 40));
 
+        //Layout GridBagCostraints
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(20, 20, 20, 20);
         gbc.fill = GridBagConstraints.BOTH;
@@ -84,17 +85,17 @@ public class DashboardChef extends JFrame {
         return contentPanel;
     }
     
+    //METODI
+    //Metodo per la creazione della menù bar
     private JMenu menuAttivo = null;
     
     private JMenuBar CreaMenuBar(JFrame frame) {
         JMenuBar menuBar = new JMenuBar();
-
         JMenu menuCorsi = new JMenu("Corsi");
         JMenu menuSessioni = new JMenu("Sessioni");
         JMenu menuRicette = new JMenu("Ricette");
         JMenu menuStatsNReport = new JMenu("Stats&Reports");
         JMenu menuAccount = new JMenu("Account");
-
         JMenuItem itemVediCorsi = new JMenuItem("Corsi Altrui");
         JMenuItem itemAggiungiCorso = new JMenuItem("Aggiungi Corso");
         JMenuItem itemImieiCorsi = new JMenuItem("I Miei Corsi");
@@ -106,6 +107,7 @@ public class DashboardChef extends JFrame {
         JMenuItem itemInfo = new JMenuItem("Il mio profilo");
         JMenuItem itemLogout = new JMenuItem("Logout");
 
+        //Listener
         itemLogout.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 new WelcomeFrame().setVisible(true);
@@ -141,6 +143,7 @@ public class DashboardChef extends JFrame {
             }
         });
 
+        //Check per verificare se ci sono sessioni presenti
         itemSessioniDisponibili.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 SessioneDAO sDAO = new SessioneDAO();
@@ -202,7 +205,6 @@ public class DashboardChef extends JFrame {
         menuRicette.addMenuListener(menuListener);
         menuStatsNReport.addMenuListener(menuListener);
         menuAccount.addMenuListener(menuListener);
-
         menuCorsi.add(itemVediCorsi);
         menuCorsi.add(itemAggiungiCorso);
         menuCorsi.add(itemImieiCorsi);
@@ -213,7 +215,6 @@ public class DashboardChef extends JFrame {
         menuStatsNReport.add(itemStatistiche);
         menuAccount.add(itemInfo);
         menuAccount.add(itemLogout);
-
         menuBar.add(menuCorsi);
         menuBar.add(menuSessioni);
         menuBar.add(menuRicette);

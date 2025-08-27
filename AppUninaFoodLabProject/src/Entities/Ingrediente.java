@@ -1,6 +1,7 @@
 package Entities;
 
 import DAO.IngredienteDAO;
+
 public class Ingrediente {
 	
 	//ATTRIBUTI
@@ -12,28 +13,29 @@ public class Ingrediente {
 		this.ID_Ingrediente = IDIngrediente;
 		this.Nome = Nome;
 	}
-	public Ingrediente(String IDIngrediente) {//Costruttore di un ingrediente già presente nel database via IDIngrediente
+	public Ingrediente(String IDIngrediente) {
 		IngredienteDAO ingredienteDAO = new IngredienteDAO();
-		
 		this.ID_Ingrediente = IDIngrediente;
 		this.Nome = ingredienteDAO.GetNomeIngredienteDAO(IDIngrediente);
 	}
 	
 	public Ingrediente() {
 	}
-		//METODI
-		//GETTER AND SETTER
-		public String getNome() {
-			return Nome;
-		}
-		public void setNome(String nome) {
-			Nome = nome;
-		}
-		public String getIDIngrediente() {
-			return ID_Ingrediente;
-		}
-		public void setIDIngrediente(String iDIngrediente) {
-			ID_Ingrediente = iDIngrediente;
-		}
-			
+	
+	//METODI
+	public String getNome() {
+		return Nome;
+	}
+	
+	public void setNome(String nome) {
+		Nome = nome;
+	}
+	
+	public String getIDIngrediente() {
+		return ID_Ingrediente;
+	}
+		
+	public void setIDIngrediente(String iDIngrediente) {
+		ID_Ingrediente = iDIngrediente;
+	}
 }

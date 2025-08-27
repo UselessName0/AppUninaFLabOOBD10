@@ -12,6 +12,7 @@ import Controller.ControllerPartecipante;
 
 public class LoginUtenteFrame extends JFrame {
 
+	//COSTRUTTORI
     public LoginUtenteFrame() {
         setTitle("Login Utente - UninaFoodLab");
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -19,12 +20,13 @@ public class LoginUtenteFrame extends JFrame {
         setResizable(false);
         setLocationRelativeTo(null);
 
+        //Panel
         JPanel contentPane = new JPanel();
         contentPane.setBackground(Color.WHITE);
         contentPane.setBorder(new EmptyBorder(20, 30, 30, 30));
         setContentPane(contentPane);
 
-        // Bottone Indietro
+        //Back Button
         JButton backButton = new JButton("← Indietro");
         backButton.setForeground(new Color(0, 0, 0));
         backButton.setFont(new Font("SansSerif", Font.PLAIN, 14));
@@ -40,18 +42,22 @@ public class LoginUtenteFrame extends JFrame {
             }
         });
 
+        //Label titolo
         JLabel title = new JLabel("Login Utente");
         title.setFont(new Font("SansSerif", Font.BOLD, 25));
         title.setHorizontalAlignment(SwingConstants.CENTER);
 
+        //Field per insrimento email
         JTextField emailField = new JTextField();
         emailField.setFont(new Font("SansSerif", Font.PLAIN, 16));
         emailField.setBorder(BorderFactory.createTitledBorder("Email"));
 
+        //Field per insrimento password
         JPasswordField passwordField = new JPasswordField();
         passwordField.setFont(new Font("SansSerif", Font.PLAIN, 16));
         passwordField.setBorder(BorderFactory.createTitledBorder("Password"));
 
+        //Login Button
         JButton loginButton = new JButton("Accedi");
         loginButton.setFont(new Font("SansSerif", Font.PLAIN, 18));
         loginButton.setBackground(new Color(100, 149, 237));
@@ -62,13 +68,10 @@ public class LoginUtenteFrame extends JFrame {
         loginButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
                 ControllerPartecipante CP = new ControllerPartecipante();
-
                 String email = emailField.getText();
                 String password = String.valueOf(passwordField.getPassword());
                 Partecipante partecipante = CP.LoginCheck(email, password);
-
                 if (partecipante == null) {
                     JOptionPane.showMessageDialog(LoginUtenteFrame.this,
                         "Ricontrollare le credenziali inserite","ERRORE",
@@ -76,7 +79,6 @@ public class LoginUtenteFrame extends JFrame {
                 } else {
                     JOptionPane.showMessageDialog(LoginUtenteFrame.this,
                         "Benvenuto " + partecipante.getNome());
-
                     DashboardUtente dashboard = new DashboardUtente(partecipante);
                     dashboard.setVisible(true);
                     dispose();
@@ -84,6 +86,7 @@ public class LoginUtenteFrame extends JFrame {
             }
         });
 
+        //Layout
         GroupLayout gl_contentPane = new GroupLayout(contentPane);
         gl_contentPane.setHorizontalGroup(
             gl_contentPane.createParallelGroup(Alignment.LEADING)
