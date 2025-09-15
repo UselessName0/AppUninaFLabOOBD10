@@ -36,6 +36,7 @@ public class ListaRicetteFrame extends JFrame {
     private ControllerChef CC = new ControllerChef();
     
     //COSTRUTTORI
+  //COSTRUTTORE
     public ListaRicetteFrame(Chef C) {
         this.c = C;
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -54,19 +55,25 @@ public class ListaRicetteFrame extends JFrame {
         lblTitolo.setFont(new Font("Arial", Font.BOLD, 24));
         getContentPane().add(lblTitolo, BorderLayout.NORTH);
 
-        //Creazione della Tabella
+        //Creazione della Tabella con modello non editabile
         List<Ricetta> ricette = CC.GetAllRicette();
-        table = new JTable();
-        table.setModel(new DefaultTableModel(
+        DefaultTableModel model = new DefaultTableModel(
             new Object[][] {},
             new String[] { "Nome", "Descrizione" }
-        ));
+        ) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false; 
+            }
+        };
+
+        for (Ricetta r : ricette) {
+            model.addRow(new Object[] { r.getTitolo(), r.getDescrizione() });
+        }
+
+        table = new JTable(model);
         table.setBackground(sfondoTabella);
         table.setFillsViewportHeight(true);
-        
-        for (Ricetta r : ricette) {
-			((DefaultTableModel) table.getModel()).addRow(new Object[] { r.getTitolo(), r.getDescrizione() });
-		}
 
         //ScrollPane per lo scorrimento di tutta la tabella 
         JScrollPane scrollPane = new JScrollPane(table);
@@ -97,4 +104,5 @@ public class ListaRicetteFrame extends JFrame {
         southPanel.add(btnIndietro);
         getContentPane().add(southPanel, BorderLayout.SOUTH);
     }
+
 }

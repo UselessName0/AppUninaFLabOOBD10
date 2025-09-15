@@ -31,6 +31,7 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.event.MenuEvent;
 import javax.swing.event.MenuListener;
+import javax.swing.table.DefaultTableModel;
 
 import Controller.ControllerPartecipante;
 import Controller.ControllerChef;
@@ -89,12 +90,20 @@ public class CalendarioSessioniFrame extends JFrame {
 		}
         
         //Creazione tabella
-        JTable tabellaCorsi = new JTable(righe, colonne);
+        DefaultTableModel modelloNonEditabile = new DefaultTableModel(righe, colonne) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false; // tutte le celle non editabili
+            }
+        };
+
+        JTable tabellaCorsi = new JTable(modelloNonEditabile);
         tabellaCorsi.setFont(new Font("Arial", Font.PLAIN, 16));
         tabellaCorsi.setRowHeight(28);
         tabellaCorsi.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         tabellaCorsi.setBackground(sfondoTabella);
         tabellaCorsi.setGridColor(Color.LIGHT_GRAY);
+
    
         //Creazione ScrollPane per la tabella
         JScrollPane scrollPane = new JScrollPane(tabellaCorsi);
@@ -160,8 +169,15 @@ public class CalendarioSessioniFrame extends JFrame {
 			righe[i][2] = s.getRicetta_Appresa().getTitolo();		
 		}
         
-        //Creazione della tabella 
-        JTable tabellaCorsi = new JTable(righe, colonne);
+        //Creazione tabella
+        DefaultTableModel modelloNonEditabile = new DefaultTableModel(righe, colonne) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+
+        JTable tabellaCorsi = new JTable(modelloNonEditabile);
         tabellaCorsi.setFont(new Font("Arial", Font.PLAIN, 16));
         tabellaCorsi.setRowHeight(28);
         tabellaCorsi.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -172,12 +188,13 @@ public class CalendarioSessioniFrame extends JFrame {
                 if (!event.getValueIsAdjusting()) {
                     int riga = tabellaCorsi.getSelectedRow();
                     if (riga >= 0) {
-                    	Sessione s = listaSessioni.get(riga);
+                        Sessione s = listaSessioni.get(riga);
                         mostraDettagliSessionePartecipante(s, p);
                     }
                 }
             }
         });
+
    
         //ScrollPane per la tabella
         JScrollPane scrollPane = new JScrollPane(tabellaCorsi);

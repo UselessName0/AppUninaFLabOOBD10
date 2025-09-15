@@ -25,6 +25,7 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.event.MenuEvent;
 import javax.swing.event.MenuListener;
+import javax.swing.table.DefaultTableModel;
 
 import Controller.ControllerPartecipante;
 import Entities.Chef;
@@ -72,12 +73,20 @@ public class ListaChefFrame extends JFrame {
 		}
         
         //Tabella per tutti i Corsi 
-        JTable tabellaCorsi = new JTable(righe, colonne);
+        DefaultTableModel modelloNonEditabile = new DefaultTableModel(righe, colonne) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+
+        JTable tabellaCorsi = new JTable(modelloNonEditabile);
         tabellaCorsi.setFont(new Font("Arial", Font.PLAIN, 16));
         tabellaCorsi.setRowHeight(28);
         tabellaCorsi.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         tabellaCorsi.setBackground(sfondoTabella);
         tabellaCorsi.setGridColor(Color.LIGHT_GRAY);
+
    
         //ScrollPane per la tabella
         JScrollPane scrollPane = new JScrollPane(tabellaCorsi);

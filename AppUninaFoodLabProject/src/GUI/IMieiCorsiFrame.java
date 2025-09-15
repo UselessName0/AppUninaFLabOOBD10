@@ -29,6 +29,7 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.event.MenuEvent;
 import javax.swing.event.MenuListener;
+import javax.swing.table.DefaultTableModel;
 
 import Entities.Chef;
 import Entities.Corso;
@@ -76,24 +77,31 @@ public class IMieiCorsiFrame extends JFrame {
 		}
 		
 		//Creazione tabella
-		JTable tabellaCorsi = new JTable(righe, colonne);
+		DefaultTableModel modelloNonEditabile = new DefaultTableModel(righe, colonne) {
+		    @Override
+		    public boolean isCellEditable(int row, int column) {
+		        return false;
+		    }
+		};
+
+		JTable tabellaCorsi = new JTable(modelloNonEditabile);
 		tabellaCorsi.setFont(new Font("Arial", Font.PLAIN, 16));
 		tabellaCorsi.setRowHeight(28);
 		tabellaCorsi.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		tabellaCorsi.setBackground(sfondoTabella);
 		tabellaCorsi.setGridColor(sfondoTabella);
 		tabellaCorsi.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
-            public void valueChanged(ListSelectionEvent event) {
-                if (!event.getValueIsAdjusting()) {
-                    int riga = tabellaCorsi.getSelectedRow();
-                    if (riga >= 0) {
-                    	Corso c = datiCorsi.get(riga);
-                        mostraDettagliCorsoChef(c);
-                    }
-                }
-            }
-        });
-   
+		    public void valueChanged(ListSelectionEvent event) {
+		        if (!event.getValueIsAdjusting()) {
+		            int riga = tabellaCorsi.getSelectedRow();
+		            if (riga >= 0) {
+		                Corso c = datiCorsi.get(riga);
+		                mostraDettagliCorsoChef(c);
+		            }
+		        }
+		    }
+		});
+
 		//ScrollPane per la tabella
 		JScrollPane scrollPane = new JScrollPane(tabellaCorsi);
 		scrollPane.setPreferredSize(new Dimension(700, 360));

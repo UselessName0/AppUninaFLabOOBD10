@@ -8,6 +8,7 @@ import java.time.LocalDate;
 
 import javax.swing.*;
 import javax.swing.event.*;
+import javax.swing.table.DefaultTableModel;
 
 import Controller.ControllerChef;
 import Controller.ControllerPartecipante;
@@ -60,8 +61,15 @@ public class CorsiDisponibiliFrame extends JFrame {
         	righe[i][2] = c.getDescrizione();
         }
 
-        //Creazione della tabella per i vari corsi presi da DB
-        final JTable tabellaCorsi = new JTable(righe, colonne);
+        //Creazione della tabella NON EDITABILE
+        DefaultTableModel modelloNonEditabile = new DefaultTableModel(righe, colonne) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false; // nessuna cella modificabile
+            }
+        };
+
+        final JTable tabellaCorsi = new JTable(modelloNonEditabile);
         tabellaCorsi.setFont(new Font("Arial", Font.PLAIN, 16));
         tabellaCorsi.setRowHeight(28);
         tabellaCorsi.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -155,7 +163,15 @@ public class CorsiDisponibiliFrame extends JFrame {
         	righe[i][2] = c.getDescrizione();
         }
 
-        final JTable tabellaCorsi = new JTable(righe, colonne);
+        //Creazione della tabella NON EDITABILE
+        DefaultTableModel modelloNonEditabile = new DefaultTableModel(righe, colonne) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+
+        final JTable tabellaCorsi = new JTable(modelloNonEditabile);
         tabellaCorsi.setFont(new Font("Arial", Font.PLAIN, 16));
         tabellaCorsi.setRowHeight(28);
         tabellaCorsi.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -189,7 +205,7 @@ public class CorsiDisponibiliFrame extends JFrame {
             }
         });
 
-        //Pannello centrale per centrare la tabelloa
+        //Pannello centrale per centrare la tabella
         JPanel pannelloCentrale = new JPanel();
         pannelloCentrale.setBackground(sfondoPrincipale);
         
@@ -216,7 +232,7 @@ public class CorsiDisponibiliFrame extends JFrame {
     }
     
     //METODI
-    //Metodo che prmette di mostrare tutti i dettagli dei vari corsi 
+    //Metodo che permette di mostrare tutti i dettagli dei vari corsi 
     private void mostraDettagliCorsoPartecipante(Corso c) {
         JFrame finestraDettagli = new JFrame("Dettagli del Corso");
         finestraDettagli.setSize(440, 360);
