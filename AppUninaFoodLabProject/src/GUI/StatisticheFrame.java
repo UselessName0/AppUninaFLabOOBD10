@@ -1,0 +1,137 @@
+package GUI;
+
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.BorderFactory;
+import javax.swing.GroupLayout;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.JPanel;
+import javax.swing.UIManager;
+import javax.swing.GroupLayout.Alignment;
+import javax.swing.border.EmptyBorder;
+import javax.swing.event.MenuEvent;
+import javax.swing.event.MenuListener;
+
+import Controller.ControllerChef;
+import Entities.Chef;
+import Entities.MenuFactory;
+
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartPanel;
+import org.jfree.chart.JFreeChart;
+import org.jfree.data.general.DefaultPieDataset;
+
+import javax.swing.LayoutStyle.ComponentPlacement;
+
+public class StatisticheFrame extends JFrame {
+
+	//ATTRIBUTI
+    private static final long serialVersionUID = 1L;
+    private JPanel contentPane;
+    Chef c;
+    ControllerChef CC = new ControllerChef();
+    
+    //COSTRUTTORI
+    public StatisticheFrame(Chef C) {
+        this.c = C;
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setSize(800, 600);
+        setLocationRelativeTo(null);
+        setResizable(false);
+        setJMenuBar(MenuFactory.creaMenuBarChef(this, c));
+        Color sfondoPrincipale = new Color(220, 240, 250);
+        setTitle("Statistiche");
+        contentPane = new JPanel();
+        contentPane.setBorder(new EmptyBorder(10, 10, 10, 10));
+        contentPane.setBackground(sfondoPrincipale);
+        setContentPane(contentPane);
+        
+        //Back Button
+        JButton btnIndietro = new JButton("← Indietro");
+        btnIndietro.setFont(new Font("Arial", Font.PLAIN, 14));
+        btnIndietro.setFocusPainted(false);
+        btnIndietro.setBorder(BorderFactory.createLineBorder(new Color(50, 80, 150), 1));
+        btnIndietro.setBackground(UIManager.getColor("Button.background"));
+        btnIndietro.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                new DashboardChef(c).setVisible(true);
+                dispose();
+            }
+        });
+        
+        //Setting dei dati per il grafico a torta
+        int[] modalitaInsegnamento = CC.GetModalitaDiSessionePerChef(C);
+        int totaleSessioni = modalitaInsegnamento[0] + modalitaInsegnamento[1];
+        DefaultPieDataset dataset = new DefaultPieDataset();
+        dataset.setValue("Pratiche", modalitaInsegnamento[0]/(totaleSessioni*1.0) * 100);
+        dataset.setValue("Online", modalitaInsegnamento[1]/(totaleSessioni*1.0) * 100);
+
+        //Creazione effettiva del grafico
+        JFreeChart chart = ChartFactory.createPieChart(
+            "Statistiche Corso", 
+            dataset, 
+            true,  
+            true,  
+            false  
+        );
+
+        //Pannello che contiene il grafico
+        ChartPanel chartPanel = new ChartPanel(chart);
+        chartPanel.setPreferredSize(new java.awt.Dimension(700, 200));
+        org.jfree.data.category.DefaultCategoryDataset barDataset = new org.jfree.data.category.DefaultCategoryDataset();
+        int[] numeroSessioniPerMese = CC.GetNumeroSessioniByMonth(C);
+        for(int i = 0; i < numeroSessioniPerMese.length; i++) {
+			barDataset.addValue(numeroSessioniPerMese[i], "Sessioni", i+1 + "");
+		}
+        
+        //Setting e creazione del grafico BarChart
+        JFreeChart barChart = ChartFactory.createBarChart(
+            "Sessioni tenute per mese",   
+            "Mese",                   
+            "Numero Sessioni",    
+            barDataset,                
+            org.jfree.chart.plot.PlotOrientation.VERTICAL,
+            true,
+            true,   
+            false  
+        );
+        
+        //Panel per il barChart
+        ChartPanel barChartPanel = new ChartPanel(barChart);
+        barChartPanel.setPreferredSize(new java.awt.Dimension(700, 200));
+
+        //Layout (GroupLayout)
+        GroupLayout gl_contentPane = new GroupLayout(contentPane);
+        gl_contentPane.setHorizontalGroup(
+        	gl_contentPane.createParallelGroup(Alignment.CENTER)
+        		.addGroup(Alignment.LEADING, gl_contentPane.createSequentialGroup()
+        			.addGap(34)
+        			.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+        				.addComponent(barChartPanel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+        				.addComponent(chartPanel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+        			.addContainerGap(32, Short.MAX_VALUE))
+        		.addGroup(Alignment.TRAILING, gl_contentPane.createSequentialGroup()
+        			.addContainerGap(314, Short.MAX_VALUE)
+        			.addComponent(btnIndietro, GroupLayout.PREFERRED_SIZE, 150, GroupLayout.PREFERRED_SIZE)
+        			.addGap(302))
+        );
+        gl_contentPane.setVerticalGroup(
+        	gl_contentPane.createParallelGroup(Alignment.LEADING)
+        		.addGroup(gl_contentPane.createSequentialGroup()
+        			.addComponent(chartPanel, GroupLayout.PREFERRED_SIZE, 248, GroupLayout.PREFERRED_SIZE)
+        			.addGap(18)
+        			.addComponent(barChartPanel, GroupLayout.PREFERRED_SIZE, 200, GroupLayout.PREFERRED_SIZE)
+        			.addGap(29)
+        			.addComponent(btnIndietro, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
+        			.addGap(65))
+        );
+        contentPane.setLayout(gl_contentPane);
+    }
+}
