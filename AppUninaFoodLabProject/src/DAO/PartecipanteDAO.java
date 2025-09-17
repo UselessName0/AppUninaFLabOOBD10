@@ -45,13 +45,14 @@ public class PartecipanteDAO {
 	
 	//Metodo per l'inserimento di un nuovo partecipante nel DB
 	public boolean InsertPartecipanteDAO(Partecipante Partecipante_Input) {
-		String sql = "INSERT INTO uninafoodlab.partecipante(idpartecipante, nomepartecipante, email, pass)VALUES (?, ?, ?, ?);";
+		String sql = "INSERT INTO uninafoodlab.partecipante(idpartecipante, nomepartecipante, cognomepartecipante, email, pass)VALUES (?, ?, ?, ?, ?);";
 			try(Connection conn = DBManager.getConnection();
 				PreparedStatement pstmt = conn.prepareStatement(sql)) {
 				pstmt.setString(1, Partecipante_Input.getID_Partecipante());
 				pstmt.setString(2, Partecipante_Input.getNome());
-				pstmt.setString(3, Partecipante_Input.getEmail());
-				pstmt.setString(4, Partecipante_Input.getPassword());
+				pstmt.setString(3, Partecipante_Input.getCognome());
+				pstmt.setString(4, Partecipante_Input.getEmail());
+				pstmt.setString(5, Partecipante_Input.getPassword());
 				int rowsAffected = pstmt.executeUpdate();
 				return rowsAffected > 0;
 			} catch(SQLException e) {
