@@ -269,7 +269,7 @@ public class CalendarioSessioniFrame extends JFrame {
         	lblTipologia.setText("Tipologia: Teorica");
         	lblDiscriminato.setText("Link: " + s.getLinkConferenza());
 		}
-
+        
         finestraDettagli.getContentPane().add(lblNome);
         finestraDettagli.getContentPane().add(lblChef);
         finestraDettagli.getContentPane().add(lblData);
