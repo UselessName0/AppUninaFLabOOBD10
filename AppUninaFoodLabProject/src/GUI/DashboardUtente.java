@@ -25,7 +25,7 @@ public class DashboardUtente extends JFrame {
         getContentPane().add(creaContentPanel(), BorderLayout.CENTER);
     }
     
- //METODI
+    //METODI
     //Metodo per creare il contentPanel centrale
     private JPanel creaContentPanel() {
         JPanel contentPanel = new JPanel(new GridBagLayout());
@@ -43,7 +43,7 @@ public class DashboardUtente extends JFrame {
         contentPanel.add(creaSezione("Corsi", new String[] { "Corsi disponibili", "Le mie iscrizioni" }, new Color(189, 226, 249)), gbc);
 
         gbc.gridx = 1; gbc.gridy = 0;
-        contentPanel.add(creaSezione("Sessioni", new String[] { "Le mie sessioni", "Calendario sessioni" }, new Color(200, 240, 210)), gbc);
+        contentPanel.add(creaSezione("Sessioni", new String[] { "Calendario sessioni", "Le mie sessioni" }, new Color(200, 240, 210)), gbc);
 
         gbc.gridx = 0; gbc.gridy = 1;
         contentPanel.add(creaSezione("Ricette", new String[] { "Le mie ricette" }, new Color(200, 240, 210)), gbc);
@@ -230,19 +230,19 @@ public class DashboardUtente extends JFrame {
                 });
             }
             
-            if (voceText.equals("Le mie sessioni")) {
+            if (voceText.equals("Calendario sessioni")) {
                 voce.addMouseListener(new MouseAdapter() {
                     public void mouseClicked(MouseEvent e) {
-                        new LeMieSessioniFrame(p).setVisible(true);
+                        new CalendarioSessioniFrame(p).setVisible(true);
                         dispose();
                     }
                 });
             }
             
-            if (voceText.equals("Calendario sessioni")) {
+            if (voceText.equals("Le mie sessioni")) {
                 voce.addMouseListener(new MouseAdapter() {
                     public void mouseClicked(MouseEvent e) {
-                        new CalendarioSessioniFrame(p).setVisible(true);
+                        new LeMieSessioniFrame(p).setVisible(true);
                         dispose();
                     }
                 });
