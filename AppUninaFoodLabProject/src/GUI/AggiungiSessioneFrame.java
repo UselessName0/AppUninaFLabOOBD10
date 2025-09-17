@@ -108,42 +108,49 @@ public class AggiungiSessioneFrame extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				CorsoDAO coDAO = new CorsoDAO();
 				String corsoSelezionato = (String) selezionaCorsoComboBox.getSelectedItem();
-				String[] parts = corsoSelezionato.split(" \\(");
-				String nomeCorso = parts[0];
-				String idCorso = parts[1].replace(")", "");
-				RicettaDAO rDAO = new RicettaDAO();
-				String ricettaSelezionata = (String) selezionaRicettaComboBox.getSelectedItem();
-				String[] partsRicetta = ricettaSelezionata.split(" \\(");
-				String nomeRicetta = partsRicetta[0];
-				String idRicetta = partsRicetta[1].replace(")", "");
-				Date dataSelezionata = dataInizioCalendar.getDate();
-				if(dataSelezionata == null) {
-					JOptionPane.showMessageDialog(null, "Seleziona una data.", "Errore", JOptionPane.ERROR_MESSAGE);
-					return;
+				if(corsoSelezionato==null) {
+					JOptionPane.showMessageDialog(null, "Errore durante l'aggiunta della sessione, nessun corso disponibile", "Errore", JOptionPane.ERROR_MESSAGE);
 				}
-				LocalDate data = dataSelezionata.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-				if(data.isBefore(LocalDate.now())) {
-					JOptionPane.showMessageDialog(null, "La data non può essere precedente a oggi.", "Errore", JOptionPane.ERROR_MESSAGE);
-					return;
-				}
-				boolean sessionePratica = praticaCheckBox.isSelected();
-				String discriminato = discriminatoField.getText();
-				if(sessionePratica) {
-					if(CC.InserisciSessione(c, coDAO.getCorsoByID(idCorso), data, sessionePratica, discriminato, null, rDAO.getRicettaByID(idRicetta)))
-					{
-						JOptionPane.showMessageDialog(null, "Sessione aggiunta con successo!", "Successo", JOptionPane.INFORMATION_MESSAGE);
-						new DashboardChef(c).setVisible(true);
-						dispose();
+				else {
+					String[] parts = corsoSelezionato.split(" \\(");
+					String nomeCorso = parts[0];
+					String idCorso = parts[1].replace(")", "");
+					RicettaDAO rDAO = new RicettaDAO();
+					String ricettaSelezionata = (String) selezionaRicettaComboBox.getSelectedItem();
+					String[] partsRicetta = ricettaSelezionata.split(" \\(");
+					String nomeRicetta = partsRicetta[0];
+					String idRicetta = partsRicetta[1].replace(")", "");
+					Date dataSelezionata = dataInizioCalendar.getDate();
+					if(dataSelezionata == null) {
+						JOptionPane.showMessageDialog(null, "Seleziona una data.", "Errore", JOptionPane.ERROR_MESSAGE);
+						return;
 					}
-				} else {
-					if(CC.InserisciSessione(c, coDAO.getCorsoByID(idCorso), data, sessionePratica, null, discriminato, rDAO.getRicettaByID(idRicetta))) {
-						JOptionPane.showMessageDialog(null, "Sessione aggiunta con successo!", "Successo", JOptionPane.INFORMATION_MESSAGE);
-						new DashboardChef(c).setVisible(true);
-						dispose();
-				}
-					else {
-						JOptionPane.showMessageDialog(null, "Errore durante l'aggiunta della sessione.", "Errore", JOptionPane.ERROR_MESSAGE);
+					LocalDate data = dataSelezionata.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+					if(data.isBefore(LocalDate.now())) {
+						JOptionPane.showMessageDialog(null, "La data non può essere precedente a oggi.", "Errore", JOptionPane.ERROR_MESSAGE);
+						return;
 					}
+					boolean sessionePratica = praticaCheckBox.isSelected();
+					String discriminato = discriminatoField.getText();
+						if(sessionePratica) {
+						if(CC.InserisciSessione(c, coDAO.getCorsoByID(idCorso), data, sessionePratica, discriminato, null, rDAO.getRicettaByID(idRicetta)))
+						{
+							JOptionPane.showMessageDialog(null, "Sessione aggiunta con successo!", "Successo", JOptionPane.INFORMATION_MESSAGE);
+							new DashboardChef(c).setVisible(true);
+							dispose();
+						} else{
+							JOptionPane.showMessageDialog(null, "Errore durante l'aggiunta della sessione.", "Errore", JOptionPane.ERROR_MESSAGE);
+						}
+					}else{
+						if(CC.InserisciSessione(c, coDAO.getCorsoByID(idCorso), data, sessionePratica, null, discriminato, rDAO.getRicettaByID(idRicetta))) {
+							JOptionPane.showMessageDialog(null, "Sessione aggiunta con successo!", "Successo", JOptionPane.INFORMATION_MESSAGE);
+							new DashboardChef(c).setVisible(true);
+							dispose();
+						} else {
+							JOptionPane.showMessageDialog(null, "Errore durante l'aggiunta della sessione.", "Errore", JOptionPane.ERROR_MESSAGE);
+						}
+					}
+					
 				}
 			}
 		});
