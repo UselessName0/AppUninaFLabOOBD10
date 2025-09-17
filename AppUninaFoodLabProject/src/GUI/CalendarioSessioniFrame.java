@@ -243,23 +243,34 @@ public class CalendarioSessioniFrame extends JFrame {
         Corso co = s.getRelatedCorso();
         Chef c = co.getChef_Proprietario();
         JLabel lblChef = new JLabel("Chef: " + c.getNome() + " " + c.getCognome());
-        lblChef.setBounds(20, 55, 400, 25);
+        lblChef.setBounds(20, 50, 400, 25);
         lblChef.setFont(new Font("Arial", Font.PLAIN, 14));
 
         LocalDate dataSessione = s.getData_Sessione();
         String dataSessioneString = "Data Sessione: " + dataSessione.toString();
 
         JLabel lblData = new JLabel(dataSessioneString);
-        lblData.setBounds(20, 160, 400, 25);
+        lblData.setBounds(20, 80, 400, 25);
         lblData.setFont(new Font("Arial", Font.PLAIN, 14));
+        
+        JLabel lblTipologia = new JLabel("Prova");
+        lblTipologia.setBounds(20, 110, 400, 25);
+        lblTipologia.setFont(new Font("Arial", Font.PLAIN, 14));
+        		
+        JLabel lblDiscriminato = new JLabel("Prova");
+        lblDiscriminato.setBounds(20, 140, 400, 25);
+        lblDiscriminato.setFont(new Font("Arial", Font.PLAIN, 14));
 
         finestraDettagli.getContentPane().add(lblNome);
         finestraDettagli.getContentPane().add(lblChef);
         finestraDettagli.getContentPane().add(lblData);
+        finestraDettagli.getContentPane().add(lblTipologia);
+        finestraDettagli.getContentPane().add(lblDiscriminato);
+        
 
         //Bottone per iscrizione 
         JButton btnIscriviti = new JButton("Iscriviti");
-        btnIscriviti.setBounds(160, 230, 100, 30);
+        btnIscriviti.setBounds(160, 260, 100, 30);
         btnIscriviti.setBackground(new Color(180, 220, 240));
         btnIscriviti.setBorder(BorderFactory.createLineBorder(new Color(120, 180, 220), 1));
         btnIscriviti.setFocusPainted(false);
