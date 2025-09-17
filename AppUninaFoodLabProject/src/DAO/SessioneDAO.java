@@ -415,8 +415,8 @@ public class SessioneDAO {
 					s.setData_Sessione(rs.getDate("datasessione").toLocalDate());
 					s.setIsPratica(rs.getBoolean("isPratica"));
 					s.setNumero_Adesioni(rs.getInt("adesioni"));
-					s.setLinkConferenza("linkconferenza");
-					s.setLuogo("luogo");
+					s.setLinkConferenza(rs.getString("linkconferenza"));
+					s.setLuogo(rs.getString("luogo"));
 					Ricetta r = new Ricetta();
 					r.setIDRicetta(rs.getString("idricetta"));
 					r.setTitolo(rs.getString("nominativoricetta"));

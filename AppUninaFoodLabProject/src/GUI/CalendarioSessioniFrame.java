@@ -253,13 +253,22 @@ public class CalendarioSessioniFrame extends JFrame {
         lblData.setBounds(20, 80, 400, 25);
         lblData.setFont(new Font("Arial", Font.PLAIN, 14));
         
-        JLabel lblTipologia = new JLabel("Prova");
+   
+        JLabel lblTipologia = new JLabel("");
         lblTipologia.setBounds(20, 110, 400, 25);
         lblTipologia.setFont(new Font("Arial", Font.PLAIN, 14));
         		
-        JLabel lblDiscriminato = new JLabel("Prova");
+        JLabel lblDiscriminato = new JLabel("");
         lblDiscriminato.setBounds(20, 140, 400, 25);
         lblDiscriminato.setFont(new Font("Arial", Font.PLAIN, 14));
+        
+        if(s.isIsPratica()) {
+			lblTipologia.setText("Tipologia: Pratica");
+			lblDiscriminato.setText("Luogo: " + s.getLuogo());	
+        }else {
+        	lblTipologia.setText("Tipologia: Teorica");
+        	lblDiscriminato.setText("Link: " + s.getLinkConferenza());
+		}
 
         finestraDettagli.getContentPane().add(lblNome);
         finestraDettagli.getContentPane().add(lblChef);
