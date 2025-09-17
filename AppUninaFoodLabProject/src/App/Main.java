@@ -12,6 +12,7 @@ import javax.swing.SwingUtilities;
 import Database.DBManager;
 import GUI.WelcomeFrame;
 
+//Classe Main
 public class Main {
     public static void main(String[] args) {
         SwingUtilities.invokeLater(new Runnable() {

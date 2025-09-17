@@ -113,12 +113,12 @@ public class AggiungiSessioneFrame extends JFrame {
 				}
 				else {
 					String[] parts = corsoSelezionato.split(" \\(");
-					String nomeCorso = parts[0];
+					
 					String idCorso = parts[1].replace(")", "");
 					RicettaDAO rDAO = new RicettaDAO();
 					String ricettaSelezionata = (String) selezionaRicettaComboBox.getSelectedItem();
 					String[] partsRicetta = ricettaSelezionata.split(" \\(");
-					String nomeRicetta = partsRicetta[0];
+					
 					String idRicetta = partsRicetta[1].replace(")", "");
 					Date dataSelezionata = dataInizioCalendar.getDate();
 					if(dataSelezionata == null) {
@@ -133,24 +133,20 @@ public class AggiungiSessioneFrame extends JFrame {
 					boolean sessionePratica = praticaCheckBox.isSelected();
 					String discriminato = discriminatoField.getText();
 						if(sessionePratica) {
-						if(CC.InserisciSessione(c, coDAO.getCorsoByID(idCorso), data, sessionePratica, discriminato, null, rDAO.getRicettaByID(idRicetta)))
-						{
-							JOptionPane.showMessageDialog(null, "Sessione aggiunta con successo!", "Successo", JOptionPane.INFORMATION_MESSAGE);
-							new DashboardChef(c).setVisible(true);
-							dispose();
-						} else{
-							JOptionPane.showMessageDialog(null, "Errore durante l'aggiunta della sessione.", "Errore", JOptionPane.ERROR_MESSAGE);
+							if(CC.InserisciSessione(c, coDAO.getCorsoByID(idCorso), data, sessionePratica, discriminato, null, rDAO.getRicettaByID(idRicetta))) {
+								JOptionPane.showMessageDialog(null, "Sessione aggiunta con successo!", "Successo", JOptionPane.INFORMATION_MESSAGE);
+								new DashboardChef(c).setVisible(true);
+								dispose();
+							}else
+								JOptionPane.showMessageDialog(null, "Errore durante l'aggiunta della sessione.", "Errore", JOptionPane.ERROR_MESSAGE);
+						}else{
+							if(CC.InserisciSessione(c, coDAO.getCorsoByID(idCorso), data, sessionePratica, null, discriminato, rDAO.getRicettaByID(idRicetta)))	{
+								JOptionPane.showMessageDialog(null, "Sessione aggiunta con successo!", "Successo", JOptionPane.INFORMATION_MESSAGE);
+								new DashboardChef(c).setVisible(true);
+								dispose();
+							}else
+								JOptionPane.showMessageDialog(null, "Errore durante l'aggiunta della sessione.", "Errore", JOptionPane.ERROR_MESSAGE);
 						}
-					}else{
-						if(CC.InserisciSessione(c, coDAO.getCorsoByID(idCorso), data, sessionePratica, null, discriminato, rDAO.getRicettaByID(idRicetta))) {
-							JOptionPane.showMessageDialog(null, "Sessione aggiunta con successo!", "Successo", JOptionPane.INFORMATION_MESSAGE);
-							new DashboardChef(c).setVisible(true);
-							dispose();
-						} else {
-							JOptionPane.showMessageDialog(null, "Errore durante l'aggiunta della sessione.", "Errore", JOptionPane.ERROR_MESSAGE);
-						}
-					}
-					
 				}
 			}
 		});
