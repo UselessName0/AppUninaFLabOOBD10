@@ -113,12 +113,10 @@ public class AggiungiSessioneFrame extends JFrame {
 				}
 				else {
 					String[] parts = corsoSelezionato.split(" \\(");
-					String nomeCorso = parts[0];
 					String idCorso = parts[1].replace(")", "");
 					RicettaDAO rDAO = new RicettaDAO();
 					String ricettaSelezionata = (String) selezionaRicettaComboBox.getSelectedItem();
 					String[] partsRicetta = ricettaSelezionata.split(" \\(");
-					String nomeRicetta = partsRicetta[0];
 					String idRicetta = partsRicetta[1].replace(")", "");
 					Date dataSelezionata = dataInizioCalendar.getDate();
 					if(dataSelezionata == null) {
