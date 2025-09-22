@@ -93,7 +93,7 @@ public class CalendarioSessioniFrame extends JFrame {
         DefaultTableModel modelloNonEditabile = new DefaultTableModel(righe, colonne) {
             @Override
             public boolean isCellEditable(int row, int column) {
-                return false; // tutte le celle non editabili
+                return false; 
             }
         };
 
@@ -287,7 +287,7 @@ public class CalendarioSessioniFrame extends JFrame {
             public void actionPerformed(ActionEvent e) {
             	if(CP.IscriviPartecipanteASessione(p, s))
             		{
-            		JOptionPane.showMessageDialog(finestraDettagli, "🎉 Iscritto alla sessione!");
+            		JOptionPane.showMessageDialog(finestraDettagli, "Iscritto alla sessione!");
             		}
             	else
             		{

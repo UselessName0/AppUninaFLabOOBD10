@@ -25,12 +25,12 @@ public class Main {
         
         try (Connection conn = DBManager.getConnection()) {
             if (conn != null && !conn.isClosed()) {
-                System.out.println("✅ Connessione al database riuscita!");
+                System.out.println("Connessione al database riuscita!");
             } else {
-                System.out.println("⚠️ Connessione non riuscita.");
+                System.out.println("Connessione non riuscita.");
             }
         } catch (SQLException e) {
-            System.out.println("❌ Errore di connessione: " + e.getMessage());
+            System.out.println("Errore di connessione: " + e.getMessage());
         }
     }
 }

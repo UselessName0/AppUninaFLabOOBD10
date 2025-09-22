@@ -101,12 +101,12 @@ public class AggiungiCorsoFrame extends JFrame {
         });
         
         //Add Button (con check)
-        JButton btnAggiungi_1 = new JButton("Aggiungi");
-        btnAggiungi_1.setFont(new Font("Arial", Font.PLAIN, 14));
-        btnAggiungi_1.setFocusPainted(false);
-        btnAggiungi_1.setBorder(BorderFactory.createLineBorder(new Color(50, 80, 150), 1));
-        btnAggiungi_1.setBackground(UIManager.getColor("Button.background"));
-        btnAggiungi_1.addActionListener(new ActionListener() {
+        JButton btnAggiungi = new JButton("Aggiungi");
+        btnAggiungi.setFont(new Font("Arial", Font.PLAIN, 14));
+        btnAggiungi.setFocusPainted(false);
+        btnAggiungi.setBorder(BorderFactory.createLineBorder(new Color(50, 80, 150), 1));
+        btnAggiungi.setBackground(UIManager.getColor("Button.background"));
+        btnAggiungi.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 Corso corso = new Corso();
                 corso.setArgomento((String) categoriaComboBox.getSelectedItem());
@@ -153,7 +153,7 @@ public class AggiungiCorsoFrame extends JFrame {
         						.addGroup(layout.createSequentialGroup()
         							.addComponent(btnIndietro, GroupLayout.PREFERRED_SIZE, 120, GroupLayout.PREFERRED_SIZE)
         							.addGap(43)
-        							.addComponent(btnAggiungi_1, GroupLayout.PREFERRED_SIZE, 120, GroupLayout.PREFERRED_SIZE)))
+        							.addComponent(btnAggiungi, GroupLayout.PREFERRED_SIZE, 120, GroupLayout.PREFERRED_SIZE)))
         					.addContainerGap())))
         );
         layout.setVerticalGroup(
@@ -179,7 +179,7 @@ public class AggiungiCorsoFrame extends JFrame {
         				.addComponent(labelDescrizione))
         			.addPreferredGap(ComponentPlacement.RELATED, 199, Short.MAX_VALUE)
         			.addGroup(layout.createParallelGroup(Alignment.BASELINE)
-        				.addComponent(btnAggiungi_1, GroupLayout.PREFERRED_SIZE, 35, GroupLayout.PREFERRED_SIZE)
+        				.addComponent(btnAggiungi, GroupLayout.PREFERRED_SIZE, 35, GroupLayout.PREFERRED_SIZE)
         				.addComponent(btnIndietro, GroupLayout.PREFERRED_SIZE, 35, GroupLayout.PREFERRED_SIZE))
         			.addContainerGap())
         );

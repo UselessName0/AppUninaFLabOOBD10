@@ -235,9 +235,15 @@ public class MenuFactory {
     //utility per evidenziare i menù
     private static void aggiungiMenuListener(JMenu... menus) {
         MenuListener menuListener = new MenuListener() {
-            public void menuSelected(MenuEvent e) { evidenziaMenu((JMenu) e.getSource()); }
-            public void menuDeselected(MenuEvent e) { ripristinaMenu((JMenu) e.getSource()); }
-            public void menuCanceled(MenuEvent e) { ripristinaMenu((JMenu) e.getSource()); }
+            public void menuSelected(MenuEvent e) {
+            	evidenziaMenu((JMenu) e.getSource());
+            }
+            public void menuDeselected(MenuEvent e) { 
+            	ripristinaMenu((JMenu) e.getSource());
+            }
+            public void menuCanceled(MenuEvent e) { 
+            	ripristinaMenu((JMenu) e.getSource());
+            }
         };
         for (JMenu m : menus) {
             m.addMenuListener(menuListener);
